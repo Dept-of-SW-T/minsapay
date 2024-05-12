@@ -25,8 +25,10 @@ const router = createBrowserRouter([
 
 const GlobalStyles = createGlobalStyle`
   ${reset};
+  font-family: sans-serif;
 `;
 const Wrapper = styled.div`
+  background-color: #F5F5F5;
   height: 100vh;
   display: flex;
   justify-content: center;

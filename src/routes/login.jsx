@@ -1,50 +1,61 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { styled } from "styled-components";
+import styled from "styled-components";
+const MINSAPAY_BLUE = "#66A3FF"
 
-export const Wrapper = styled.div`
+const WRAPPER_WIDTH = 420; // figma 제대로 된 치수 필요
+const Wrapper = styled.div`
+  width: ${WRAPPER_WIDTH}px;
   height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 420px;
-  padding: 50px 0px;
+  justify-content: center;
 `;
-
-export const Title = styled.h1`
-  font-size: 42px;
+const LoginBox = styled.div`
+  height: 600px;
+  background-color: white;
+  border-radius: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 `;
-
-export const Form = styled.form`
+const Form = styled.form`
   margin-top: 50px;
   margin-bottom: 10px;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  align-items: center;
   width: 100%;
 `;
-
-export const Input = styled.input`
+const Title = styled.h1`
+  font-size: 42px;
+`;
+const Input = styled.input`
   padding: 10px 20px;
-  border-radius: 50px;
   border: none;
-  width: 380px;
-  font-size: 16px;
+  width: ${WRAPPER_WIDTH - 40}px;
+  font-size: 16px; // 및줄 형식으로 바꾸기
   &[type="submit"] {
-    width: 100%;
     cursor: pointer;
-    background-color: #1d9bf0;
+    width: 183px; // figma 제대로 된 치수 필요
+    height: 71px;
+    border-radius: 50px;
+    background-color: ${MINSAPAY_BLUE};
     color: white;
+    font-size: 24px; // 폰트 크기 맞추기
+    font-weight: bold;
     &:hover {
       opacity: 0.8;
     }
   }
 `;
-
-export const Error = styled.span`
+const LoginError = styled.span`
   font-weight: 600;
   color: tomato;
 `;
+// 
 
 export default function Login() {
   const [studentID, setStudentID] = useState("");
@@ -52,26 +63,28 @@ export default function Login() {
 
   return (
     <Wrapper>
-      <Title>Login 𝕏</Title>
-      <Form>
-        <Input
-          onChange={ e => setStudentID(e.target.value) }
-          value={studentID}
-          name="StudentID"
-          placeholder="학번"
-          type="text"
-          required
-        />
-        <Input
-          onChange={ e => setPassword(e.target.value) }
-          value={password}
-          name="password"
-          placeholder="비번"
-          type="password"
-          required
-        />
-        <Input type="submit" value={"Log in"} />
-      </Form>
+      <LoginBox>
+        <Title>Login 𝕏</Title>
+        <Form>
+          <Input
+            onChange={ e => setStudentID(e.target.value) }
+            value={studentID}
+            name="StudentID"
+            placeholder="학번"
+            type="text"
+            required
+          />
+          <Input
+            onChange={ e => setPassword(e.target.value) }
+            value={password}
+            name="password"
+            placeholder="비번"
+            type="password"
+            required
+          />
+          <Input type="submit" value={"확인"} />
+        </Form>
+      </LoginBox>
     </Wrapper>
   );
 }
