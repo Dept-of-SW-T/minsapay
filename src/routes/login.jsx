@@ -28,9 +28,10 @@ export const Input = styled.input`
   padding: 10px 20px;
   border-radius: 50px;
   border: none;
-  width: 100%;
+  width: 380px;
   font-size: 16px;
   &[type="submit"] {
+    width: 100%;
     cursor: pointer;
     background-color: #1d9bf0;
     color: white;
@@ -39,7 +40,6 @@ export const Input = styled.input`
     }
   }
 `;
-// 학번 비번 입력란이 너무 길다
 
 export const Error = styled.span`
   font-weight: 600;
