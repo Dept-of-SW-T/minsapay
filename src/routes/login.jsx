@@ -52,10 +52,11 @@ export default function Login() {
 
   return (
     <Wrapper>
-      <Title>Log into 𝕏</Title>
+      <Title>Login 𝕏</Title>
       <Form>
         <Input
           onChange={ e => setStudentID(e.target.value) }
+          value={studentID}
           name="StudentID"
           placeholder="학번"
           type="text"
@@ -63,8 +64,9 @@ export default function Login() {
         />
         <Input
           onChange={ e => setPassword(e.target.value) }
+          value={password}
           name="password"
-          placeholder="Password"
+          placeholder="비번"
           type="password"
           required
         />
