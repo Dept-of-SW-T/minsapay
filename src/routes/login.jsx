@@ -39,8 +39,8 @@ const Input = styled.input`
   font-size: 16px; // 및줄 형식으로 바꾸기
   &[type="submit"] {
     cursor: pointer;
-    width: 183px; // figma 제대로 된 치수 필요
-    height: 71px;
+    width: 160px; // figma 제대로 된 치수 필요
+    height: 60px;
     border-radius: 50px;
     background-color: ${MINSAPAY_BLUE};
     color: white;
