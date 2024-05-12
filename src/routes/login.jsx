@@ -39,30 +39,30 @@ export const Input = styled.input`
     }
   }
 `;
+// 학번 비번 입력란이 너무 길다
 
 export const Error = styled.span`
   font-weight: 600;
   color: tomato;
 `;
 
-export const Switcher = styled.span`
-  margin-top: 20px;
-  a {
-    color: #1d9bf0;
-  }
-`;
 export default function Login() {
+  const [studentID, setStudentID] = useState("");
+  const [password, setPassword] = useState("");
+
   return (
     <Wrapper>
       <Title>Log into 𝕏</Title>
       <Form>
         <Input
-          name="email"
-          placeholder="Email"
-          type="email"
+          onChange={ e => setStudentID(e.target.value) }
+          name="StudentID"
+          placeholder="학번"
+          type="text"
           required
         />
         <Input
+          onChange={ e => setPassword(e.target.value) }
           name="password"
           placeholder="Password"
           type="password"
@@ -70,10 +70,6 @@ export default function Login() {
         />
         <Input type="submit" value={"Log in"} />
       </Form>
-      <Switcher>
-        Don't have an account?{" "}
-        <Link to="/create-account">Create one &rarr;</Link>
-      </Switcher>
     </Wrapper>
   );
 }
