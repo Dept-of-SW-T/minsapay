@@ -90,6 +90,7 @@ export default function Login() {
     if (userID === "" || password === "") return;
     await auth.signIn(userID, password);
     setError(auth.error);
+    auth.error = "";
     //navigate("/");
   }
 

@@ -29,10 +29,9 @@ function isStudent(userID) {
     }
 }
 
-// 해시 함수를 통하여 비밀번호 암호화!!
 export const auth = {
     currentUser: null,
-    error: "No Error",
+    error: "",
     async signIn(userID, password) {
         if(isStudent(userID)) {
             // 학생 로그인
@@ -41,7 +40,7 @@ export const auth = {
             );
             const students = await getDocs(studentsQuery)
             let documentIndex = -1;
-            for(let i=0;i<students.docs.length;i++) {
+            for(let i=0;i<students.docs.length;i++) { // 학생 아이디 대조
                 if(userID === students.docs[i].id) {
                     documentIndex = i;
                     break;
@@ -49,24 +48,24 @@ export const auth = {
             }
         if(documentIndex === -1) { this.error = "아이디가 존재하지 않습니다."; return;}
         const user = students.docs[documentIndex].data();
-        if(cryptoJS.SHA256(password).toString()  === user.password) {
-            // approve
-            console.log("approved");
+        if(cryptoJS.SHA256(password).toString()  === user.password) { // 학생 비번 대조
+            console.log("Approved as Buyer"); // Buyer로 로그인
         } else {
             const teamsQuery = query(
                 collection(database, "Teams")
             );
             const teams = await getDocs(teamsQuery)
-            const encryptedPassword = cryptoJS.SHA256(password).toString()
-            for(let i=0;i<teams.docs.length;i++) {
+            const encryptedPassword = cryptoJS.SHA256(password).toString();
+            documentIndex = -1;
+            for(let i=0;i<teams.docs.length;i++) { // 부스 비번 대조
                 if(encryptedPassword === teams.docs[i].data().password) {
                     documentIndex = i;
+                    console.log("Approved as Seller") // Seller로 로그인
                     break;
                 }
             }
             if (documentIndex === -1) { this.error = '비밀번호를 잘못 입력하셨습니다.'; return }
         }
-        //console.log(documentIndex);
         
         } 
         else {
