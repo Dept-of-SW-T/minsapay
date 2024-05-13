@@ -1,9 +1,13 @@
+import { FirebaseError } from "firebase/app";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import { auth } from "../firebase";
+import { signInWithEmailAndPassword } from "firebase/auth";
 const MINSAPAY_BLUE = "#66A3FF"
 
-const WRAPPER_WIDTH = 420; // figma 제대로 된 치수 필요
+// figma 제대로 된 치수 필요
+const WRAPPER_WIDTH = 420;
 const Wrapper = styled.div`
   width: ${WRAPPER_WIDTH}px;
   height: 100%;
@@ -61,21 +65,45 @@ const Input = styled.input`
     }
   }
 `;
-const LoginError = styled.span`
+const Error = styled.span`
   font-weight: 600;
   color: tomato;
 `;
-// 
+
+function returnError(error) {
+  switch (error) {
+    case "auth/invalid-credential":
+      return "아이디 또는 비번이 잘못되었습니다."
+    default:
+      return error;
+  }
+} // 자세한 에러 목록 추가
+
 
 export default function Login() {
   const [studentID, setStudentID] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const navigate = useNavigate();
+  const onSubmit = async (e) => {
+    e.preventDefault();
+    setError("");
+    if (studentID === "" || password === "") return;
+    try {
+      //await signInWithEmailAndPassword(auth, studentID + "@gmail.com", password);
+      navigate("/");
+    } catch(e) {
+      if (e instanceof FirebaseError) {
+        setError(returnError(e.code));
+      }
+    }
+  }
 
   return (
     <Wrapper>
       <LoginBox>
         <Title>Login 𝕏</Title>
-        <Form>
+        <Form onSubmit={onSubmit}>
           <Input
             onChange={ e => setStudentID(e.target.value) }
             value={studentID}
@@ -94,6 +122,7 @@ export default function Login() {
           />
           <Input type="submit" value={"로그인"} />
         </Form>
+        {error !== "" ? <Error>{error}</Error> : null}
       </LoginBox>
     </Wrapper>
   );
