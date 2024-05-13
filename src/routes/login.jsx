@@ -89,9 +89,9 @@ export default function Login() {
     setError("");
     if (userID === "" || password === "") return;
     auth.signIn(userID, password);
-    const pError = JSON.parse(JSON.stringify(auth)).error;
-    console.log(pError);
-    if(pError.error !== "") setError(pError.error);
+    const fakeAuth = JSON.parse(JSON.stringify(auth));
+    const pError = fakeAuth.error;
+    if(pError !== "No Error") setError(pError);
     //navigate("/");
   }
 

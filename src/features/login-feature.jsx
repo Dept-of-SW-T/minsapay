@@ -32,7 +32,7 @@ function isStudent(userID) {
 // 해시 함수를 통하여 비밀번호 암호화!!
 export const auth = {
     currentUser: null,
-    error: "",
+    error: "No Error",
     async signIn(userID, password) {
         try 
         {
@@ -50,6 +50,7 @@ export const auth = {
                     }
             }
             if(documentIndex === -1) throw new Error("아이디가 존재하지 않습니다.");
+            user = students.docs[documentIndex].data();
             if(cryptoJS.SHA256(password).toString()  === user.password) {
                 // approve
                 console.log("approved");
