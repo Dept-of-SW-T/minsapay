@@ -34,50 +34,45 @@ export const auth = {
     currentUser: null,
     error: "No Error",
     async signIn(userID, password) {
-        try 
-        {
-            if(isStudent(userID)) {
-                // 학생 로그인
-                const studentsQuery = query(
-                    collection(database, "Students")
-                );
-                const students = await getDocs(studentsQuery)
-                let documentIndex = -1;
-                for(let i=0;i<students.docs.length;i++) {
-                    if(userID === students.docs[i].id) {
-                        documentIndex = i;
-                        break;
-                    }
+        if(isStudent(userID)) {
+            // 학생 로그인
+            const studentsQuery = query(
+                collection(database, "Students")
+            );
+            const students = await getDocs(studentsQuery)
+            let documentIndex = -1;
+            for(let i=0;i<students.docs.length;i++) {
+                if(userID === students.docs[i].id) {
+                    documentIndex = i;
+                    break;
                 }
-            if(documentIndex === -1) throw new Error("아이디가 존재하지 않습니다.");
-            const user = students.docs[documentIndex].data();
-            if(cryptoJS.SHA256(password).toString()  === user.password) {
-                // approve
-                console.log("approved");
-            } else {
-                const teamsQuery = query(
-                    collection(database, "Teams")
-                );
-                const teams = await getDocs(teamsQuery)
-                const encryptedPassword = cryptoJS.SHA256(password).toString()
-                for(let i=0;i<teams.docs.length;i++) {
-                    if(encryptedPassword === teams.docs[i].data().password) {
-                        documentIndex = i;
-                        break;
-                    }
-                }
-                if (documentIndex === -1) throw new Error('비밀번호를 잘못 입력하셨습니다.')
             }
-            //console.log(documentIndex);
-            
-            } 
-            else {
-                // 부스 로그인
-                console.log("I am team");
+        if(documentIndex === -1) { this.error = "아이디가 존재하지 않습니다."; return;}
+        const user = students.docs[documentIndex].data();
+        if(cryptoJS.SHA256(password).toString()  === user.password) {
+            // approve
+            console.log("approved");
+        } else {
+            const teamsQuery = query(
+                collection(database, "Teams")
+            );
+            const teams = await getDocs(teamsQuery)
+            const encryptedPassword = cryptoJS.SHA256(password).toString()
+            for(let i=0;i<teams.docs.length;i++) {
+                if(encryptedPassword === teams.docs[i].data().password) {
+                    documentIndex = i;
+                    break;
+                }
+            }
+            if (documentIndex === -1) { this.error = '비밀번호를 잘못 입력하셨습니다.'; return }
+        }
+        //console.log(documentIndex);
+        
+        } 
+        else {
+            // 부스 로그인
+            console.log("I am team");
 
-            }
-        } catch(e) {
-            this.error = e;
         }
 
     },
