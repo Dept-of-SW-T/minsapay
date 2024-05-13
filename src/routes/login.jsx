@@ -1,9 +1,8 @@
 import { FirebaseError } from "firebase/app";
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { auth } from "../features/login-feature";
 import styled from "styled-components";
-import { auth } from "../firebase";
-import { signInWithEmailAndPassword } from "firebase/auth";
 const MINSAPAY_BLUE = "#66A3FF"
 
 // figma 제대로 된 치수 필요
@@ -81,21 +80,19 @@ function returnError(error) {
 
 
 export default function Login() {
-  const [studentID, setStudentID] = useState("");
+  const [userID, setUserID] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
   const onSubmit = async (e) => {
     e.preventDefault();
     setError("");
-    if (studentID === "" || password === "") return;
+    if (userID === "" || password === "") return;
     try {
-      //await signInWithEmailAndPassword(auth, studentID + "@gmail.com", password);
-      navigate("/");
+      auth.signIn(userID, password);
+      //navigate("/");
     } catch(e) {
-      if (e instanceof FirebaseError) {
-        setError(returnError(e.code));
-      }
+      setError(e);
     }
   }
 
@@ -105,9 +102,9 @@ export default function Login() {
         <Title>Login 𝕏</Title>
         <Form onSubmit={onSubmit}>
           <Input
-            onChange={ e => setStudentID(e.target.value) }
-            value={studentID}
-            name="StudentID"
+            onChange={ e => setUserID(e.target.value) }
+            value={userID}
+            name="UserID"
             placeholder="Student ID"
             type="text"
             required
