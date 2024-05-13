@@ -48,13 +48,26 @@ export const auth = {
                         documentIndex = i;
                         break;
                     }
-            }
+                }
             if(documentIndex === -1) throw new Error("아이디가 존재하지 않습니다.");
-            user = students.docs[documentIndex].data();
+            const user = students.docs[documentIndex].data();
             if(cryptoJS.SHA256(password).toString()  === user.password) {
                 // approve
                 console.log("approved");
-            } else {console.log("disapproved")}
+            } else {
+                const teamsQuery = query(
+                    collection(database, "Teams")
+                );
+                const teams = await getDocs(teamsQuery)
+                const encryptedPassword = cryptoJS.SHA256(password).toString()
+                for(let i=0;i<teams.docs.length;i++) {
+                    if(encryptedPassword === teams.docs[i].data().password) {
+                        documentIndex = i;
+                        break;
+                    }
+                }
+                if (documentIndex === -1) throw new Error('비밀번호를 잘못 입력하셨습니다.')
+            }
             //console.log(documentIndex);
             
             } 
