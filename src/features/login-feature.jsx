@@ -1,5 +1,6 @@
 import { collection, getDocs, orderBy, query } from "firebase/firestore";
 import { database } from "../firebase";
+import cryptoJS from 'crypto-js'
 
 function isStudent(userID) {
     switch(userID[0]) {
@@ -39,6 +40,7 @@ export const auth = {
             );
             const students = await getDocs(studentsQuery);
             console.log(students.docs[0].data());
+            console.log(cryptoJS.SHA256(password))
         } 
         else {
             // 부스 로그인
