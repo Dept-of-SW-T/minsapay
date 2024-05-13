@@ -32,21 +32,40 @@ function isStudent(userID) {
 // 해시 함수를 통하여 비밀번호 암호화!!
 export const auth = {
     currentUser: null,
+    error: "",
     async signIn(userID, password) {
-        if(isStudent(userID)) {
-            // 학생 로그인
-            const studentsQuery = query(
-                collection(database, "Students")
-            );
-            const students = await getDocs(studentsQuery);
-            console.log(students.docs[0].data());
-            console.log(cryptoJS.SHA256(password))
-        } 
-        else {
-            // 부스 로그인
-            console.log("I am team");
+        try 
+        {
+            if(isStudent(userID)) {
+                // 학생 로그인
+                const studentsQuery = query(
+                    collection(database, "Students")
+                );
+                const students = await getDocs(studentsQuery)
+                let documentIndex = -1;
+                for(let i=0;i<students.docs.length;i++) {
+                    if(userID === students.docs[i].id) {
+                        documentIndex = i;
+                        break;
+                    }
+            }
+            if(documentIndex === -1) throw new Error("아이디가 존재하지 않습니다.");
+            if(cryptoJS.SHA256(password).toString()  === user.password) {
+                // approve
+                console.log("approved");
+            } else {console.log("disapproved")}
+            //console.log(documentIndex);
+            
+            } 
+            else {
+                // 부스 로그인
+                console.log("I am team");
 
+            }
+        } catch(e) {
+            this.error = e;
         }
+
     },
 }
 

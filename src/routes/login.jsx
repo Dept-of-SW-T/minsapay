@@ -88,12 +88,11 @@ export default function Login() {
     e.preventDefault();
     setError("");
     if (userID === "" || password === "") return;
-    try {
-      auth.signIn(userID, password);
-      //navigate("/");
-    } catch(e) {
-      setError(e);
-    }
+    auth.signIn(userID, password);
+    const pError = JSON.parse(JSON.stringify(auth)).error;
+    console.log(pError);
+    if(pError.error !== "") setError(pError.error);
+    //navigate("/");
   }
 
   return (
