@@ -25,7 +25,7 @@ const router = createBrowserRouter([
 
 const GlobalStyles = createGlobalStyle`
   ${reset};
-  font-family: sans-serif;
+  font-family: 'Spoqa Han Sans Neo', 'sans-serif';
 `;
 const Wrapper = styled.div`
   background-color: #F5F5F5;
