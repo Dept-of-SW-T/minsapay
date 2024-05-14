@@ -28,11 +28,18 @@ function isStudent(userID) {
             return false;
     }
 }
-
+/*
+    currentUser: {
+        userType --> one of "buyer", "seller", "CPU", "kiosk"
+        
+    }
+*/
 export const auth = {
-    currentUser: null,
+    currentUser: null, // 로그인 되어 있을 때에는 객체이고 로그아웃되어 있을 때에는 null이다.
     error: "",
+    isLoggedIn() { return this.currentUser !== null; }, // 로그인되어 있는지 확인
     async signIn(userID, password) {
+        auth.error = "";
         if(isStudent(userID)) {
             // 학생 로그인
             const studentsQuery = query(
@@ -46,28 +53,40 @@ export const auth = {
                     break;
                 }
             }
-        if(documentIndex === -1) { this.error = "아이디가 존재하지 않습니다."; return;}
-        const user = students.docs[documentIndex].data();
-        if(cryptoJS.SHA256(password).toString()  === user.password) { // 학생 비번 대조
-            console.log("Approved as Buyer"); // Buyer로 로그인
-        } else {
-            const teamsQuery = query(
-                collection(database, "Teams")
-            );
-            const teams = await getDocs(teamsQuery)
-            const encryptedPassword = cryptoJS.SHA256(password).toString();
-            documentIndex = -1;
-            for(let i=0;i<teams.docs.length;i++) { // 부스 비번 대조
-                if(encryptedPassword === teams.docs[i].data().password) {
-                    documentIndex = i;
-                    console.log("Approved as Seller") // Seller로 로그인
-                    break;
+            if(documentIndex === -1) { this.error = "아이디가 존재하지 않습니다."; return;}
+            const userData = students.docs[documentIndex].data();
+            if(cryptoJS.SHA256(password).toString()  === userData.password) { // 학생 비번 대조
+                currentUser = {
+
+                };
+                // Buyer로 로그인
+                
+
+                console.log("Logged in as buyer")
+
+                
+            } else {
+                const teamsQuery = query(
+                    collection(database, "Teams")
+                );
+                const teams = await getDocs(teamsQuery)
+                const encryptedPassword = cryptoJS.SHA256(password).toString();
+                documentIndex = -1;
+                for(let i=0;i<teams.docs.length;i++) { // 부스 비번 대조
+                    if(encryptedPassword === teams.docs[i].data().password) {
+                        documentIndex = i;
+                        
+                        // Seller로 로그인
+                        console.log("Logged in as seller")
+                        
+                        
+                        
+                        break;
+                    }
                 }
-            }
-            if (documentIndex === -1) { this.error = '비밀번호를 잘못 입력하셨습니다.'; return }
+            if (documentIndex === -1) { this.error = '비밀번호를 잘못 입력하셨습니다.'; return; }
+            } 
         }
-        
-        } 
         else {
             // 부스 로그인
             console.log("I am team");
