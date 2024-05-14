@@ -1,10 +1,10 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 import { auth } from "../features/login-feature";
 import styled from "styled-components";
-import Logo from "../images/TempLogoMinsapay.svg"
+import Logo from "../images/TempLogoMinsapay.svg";
 
-const MINSAPAY_BLUE = "#66A3FF"
+const MINSAPAY_BLUE = "#66A3FF";
 
 // figma 제대로 된 치수 필요
 const WRAPPER_WIDTH = 360;
@@ -32,7 +32,7 @@ const TitleDiv = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
-  `;
+`;
 const Title = styled.span`
   font-size: 65px;
 `;
@@ -54,7 +54,7 @@ const Input = styled.input`
   padding: 5px 0px;
   border: none;
   width: ${WRAPPER_WIDTH - 60}px;
-  font-size: 16px; 
+  font-size: 16px;
   outline: none;
   border-bottom: 3px solid #ccc;
   margin-top: 25px;
@@ -81,12 +81,11 @@ const Error = styled.span`
   color: tomato;
 `;
 
-
 export default function Login() {
   const [userID, setUserID] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const onSubmit = async (e) => {
     e.preventDefault();
     setError("");
@@ -94,15 +93,18 @@ export default function Login() {
     await auth.signIn(userID, password);
     setError(auth.error);
     //navigate("/");
-  }
+  };
   console.log(auth.isLoggedIn());
   return (
     <Wrapper>
       <LoginBox>
-        <TitleDiv><Title>Login </Title><Image src={Logo} /></TitleDiv>
+        <TitleDiv>
+          <Title>Login </Title>
+          <Image src={Logo} />
+        </TitleDiv>
         <Form onSubmit={onSubmit}>
           <Input
-            onChange={ e => setUserID(e.target.value) }
+            onChange={(e) => setUserID(e.target.value)}
             value={userID}
             name="UserID"
             placeholder="Student ID"
@@ -110,7 +112,7 @@ export default function Login() {
             required
           />
           <Input
-            onChange={ e => setPassword(e.target.value) }
+            onChange={(e) => setPassword(e.target.value)}
             value={password}
             name="password"
             placeholder="Password"
