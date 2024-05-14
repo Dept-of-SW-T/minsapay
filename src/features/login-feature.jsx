@@ -31,7 +31,8 @@ function isStudent(userID) {
 /*
     currentUser: {
         userType --> one of "buyer", "seller", "CPU", "kiosk"
-        
+        userID
+        username
     }
 */
 export const auth = {
@@ -41,6 +42,7 @@ export const auth = {
     return this.currentUser !== null;
   }, // 로그인되어 있는지 확인
   async signIn(userID, password) {
+    this.currentUser = null;
     auth.error = "";
     if (isStudent(userID)) {
       // 학생 로그인
@@ -61,10 +63,12 @@ export const auth = {
       const userData = students.docs[documentIndex].data();
       if (cryptoJS.SHA256(password).toString() === userData.password) {
         // 학생 비번 대조
-        currentUser = {};
+        this.currentUser = {
+          userType: "buyer",
+          userID: userID,
+          username: userData.username,
+        };
         // Buyer로 로그인
-
-        console.log("Logged in as buyer");
       } else {
         const teamsQuery = query(collection(database, "Teams"));
         const teams = await getDocs(teamsQuery);
@@ -74,10 +78,12 @@ export const auth = {
           // 부스 비번 대조
           if (encryptedPassword === teams.docs[i].data().password) {
             documentIndex = i;
-
+            this.currentUser = {
+              userType: "seller",
+              userID: userID,
+              username: userData.username,
+            };
             // Seller로 로그인
-            console.log("Logged in as seller");
-
             break;
           }
         }
@@ -89,10 +95,6 @@ export const auth = {
     } else {
       // 부스 로그인
       console.log("I am team");
-    }
-    if (documentIndex === -1) {
-      this.error = "비밀번호를 잘못 입력하셨습니다.";
-      return;
     }
   },
 };

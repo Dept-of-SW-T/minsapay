@@ -49,7 +49,6 @@ const Form = styled.form`
   align-items: center;
   width: 100%;
 `;
-
 const Input = styled.input`
   padding: 5px 0px;
   border: none;
@@ -93,8 +92,8 @@ export default function Login() {
     await auth.signIn(userID, password);
     setError(auth.error);
     //navigate("/");
+    console.log(auth.currentUser);
   };
-  console.log(auth.isLoggedIn());
   return (
     <Wrapper>
       <LoginBox>
