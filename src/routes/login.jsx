@@ -1,12 +1,13 @@
-import { FirebaseError } from "firebase/app";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { auth } from "../features/login-feature";
 import styled from "styled-components";
+import Logo from "../images/TempLogoMinsapay.svg"
+
 const MINSAPAY_BLUE = "#66A3FF"
 
 // figma 제대로 된 치수 필요
-const WRAPPER_WIDTH = 420;
+const WRAPPER_WIDTH = 360;
 const Wrapper = styled.div`
   width: ${WRAPPER_WIDTH}px;
   height: 100%;
@@ -25,8 +26,21 @@ const LoginBox = styled.div`
   justify-content: center;
   align-items: center;
 `;
+const TitleDiv = styled.div`
+  margin-top: 70px;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  `;
+const Title = styled.span`
+  font-size: 65px;
+`;
+const Image = styled.img`
+  height: 65px;
+`;
 const Form = styled.form`
-  margin-top: 50px;
+  margin-top: 170px;
   margin-bottom: 10px;
   margin-right: 40px;
   margin-left: 40px;
@@ -35,22 +49,20 @@ const Form = styled.form`
   align-items: center;
   width: 100%;
 `;
-const Title = styled.h1`
-  font-size: 42px;
-`;
+
 const Input = styled.input`
-  padding: 10px 30px;
+  padding: 5px 0px;
   border: none;
   width: ${WRAPPER_WIDTH - 60}px;
-  font-size: 22px; 
+  font-size: 16px; 
   outline: none;
   border-bottom: 3px solid #ccc;
-  margin-top: 30px;
+  margin-top: 25px;
   &:focus {
     border-bottom: 3px solid #000;
   }
   &[type="submit"] {
-    margin-top: 30px;
+    margin-top: 70px;
     cursor: pointer;
     width: 130px;
     height: 60px;
@@ -69,15 +81,6 @@ const Error = styled.span`
   color: tomato;
 `;
 
-function returnError(error) {
-  switch (error) {
-    case "auth/invalid-credential":
-      return "아이디 또는 비번이 잘못되었습니다."
-    default:
-      return error;
-  }
-} // 자세한 에러 목록 추가
-
 
 export default function Login() {
   const [userID, setUserID] = useState("");
@@ -90,14 +93,13 @@ export default function Login() {
     if (userID === "" || password === "") return;
     await auth.signIn(userID, password);
     setError(auth.error);
-    auth.error = "";
     //navigate("/");
   }
-
+  console.log(auth.isLoggedIn());
   return (
     <Wrapper>
       <LoginBox>
-        <Title>Login 𝕏</Title>
+        <TitleDiv><Title>Login </Title><Image src={Logo} /></TitleDiv>
         <Form onSubmit={onSubmit}>
           <Input
             onChange={ e => setUserID(e.target.value) }
