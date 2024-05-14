@@ -89,10 +89,12 @@ export default function Login() {
     e.preventDefault();
     setError("");
     if (userID === "" || password === "") return;
-    await auth.signIn(userID, password);
-    setError(auth.error);
-    //navigate("/");
-    console.log(auth.currentUser);
+    const successfulSignIn = await auth.signIn(userID, password);
+    if (successfulSignIn) {
+      console.log(auth.currentUser);
+      //navigate("/");
+    } else if (auth.error === "") setError("이유불명 로그인 에러");
+    else setError(auth.error);
   };
   return (
     <Wrapper>
