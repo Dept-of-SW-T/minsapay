@@ -4,6 +4,7 @@ import OrderElement from "./order-element";
 const Wrapper = styled.div`
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
 `;
 
 export default function OrderList() {
