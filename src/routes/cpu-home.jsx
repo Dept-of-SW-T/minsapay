@@ -3,6 +3,7 @@ import { auth } from "../features/login-feature";
 import { useState } from "react";
 import Logo from "../images/TempLogoMinsapay.svg";
 import OrderList from "../components/order-list";
+import { Header } from "../components/cpu-header";
 
 const Wrapper = styled.div`
   width: 100%;
@@ -11,18 +12,16 @@ const Wrapper = styled.div`
   align-items: center;
   border-radius: 40px;
 `;
-const Header = styled.div`
-  width: 100%;
-  height: 64px;
-  padding: 8px 100px;
-`;
+
 const Image = styled.img`
   width: 50px;
+  margin-left: 11px;
 `;
 const CPUHomeBox = styled.div`
   width: 1355px;
 `;
 const TopDiv = styled.div`
+  margin-top: 21px;
   display: flex;
   width: 100%;
   flex-direction: row;
@@ -38,9 +37,6 @@ const BodyDiv = styled.div`
   flex-direction: column;
 `;
 const Text = styled.div`
-  width: 50%;
-`;
-const OrderElement = styled.div`
   width: 50%;
 `;
 
@@ -67,7 +63,7 @@ export default function CPUHome() {
   );
 }
 
-/* 
+/* using database!!
 const doc = await addDoc(collection(db, "tweets"), {
   tweet,
   createdAt: Date.now(),
