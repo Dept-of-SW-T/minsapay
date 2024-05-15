@@ -3,7 +3,7 @@ import styled, { createGlobalStyle } from "styled-components";
 import reset from "styled-reset";
 import Layout from "./components/layout";
 import Login from "./routes/login";
-import ProtectedRoute from "./components/protected-route";
+import { ProtectedCPU, ProtectedRoute } from "./components/protected-route";
 import CPUHome from "./routes/cpu-home";
 
 const router = createBrowserRouter([
@@ -17,7 +17,11 @@ const router = createBrowserRouter([
     children: [
       {
         path: "cpu-home",
-        element: <CPUHome />,
+        element: (
+          <ProtectedCPU>
+            <CPUHome />
+          </ProtectedCPU>
+        ),
       },
     ],
   },

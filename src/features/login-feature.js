@@ -1,33 +1,8 @@
 import { collection, getDocs, /*orderBy,*/ query } from "firebase/firestore";
 import { database } from "../firebase";
 import cryptoJS from "crypto-js";
+import { getCookie, removeCookie, setCookie } from "./cookies";
 
-function isStudent(userID) {
-  switch (userID[0]) {
-    case "0":
-      return true;
-    case "1":
-      return true;
-    case "2":
-      return true;
-    case "3":
-      return true;
-    case "4":
-      return true;
-    case "5":
-      return true;
-    case "6":
-      return true;
-    case "7":
-      return true;
-    case "8":
-      return true;
-    case "9":
-      return true;
-    default:
-      return false;
-  }
-}
 /*  1. student id 제외하고는 숫자로 시작하면 안된다
     2. team username은 @ 기호를 포함하면 안된다.  -> kwagibu@kiosk
     student id = start with number, kiosk id = cpu id  + @kiosk
@@ -41,13 +16,52 @@ function isStudent(userID) {
         }
     }
 */
-export const auth = {
+
+const auth = {
   currentUser: null, // 로그인 되어 있을 때에는 객체이고 로그아웃되어 있을 때에는 null이다.
   error: "",
-  async signIn(userID, password) {
-    // return true if successful login else false
+  syncWithStoredLoginInfo() {
+    // cookie에 저장된 loginInfo와 동기화
+    const loginInfo = getCookie("login_info");
+    if (loginInfo !== undefined) {
+      // 이미 로그인된 경우
+      this.currentUser = loginInfo;
+    }
+  },
+  signOut() {
     this.currentUser = null;
     this.error = "";
+    removeCookie("login_info");
+  },
+  async signIn(userID, password) {
+    // return true if successful login else false
+    function isStudent(userID) {
+      switch (userID[0]) {
+        case "0":
+          return true;
+        case "1":
+          return true;
+        case "2":
+          return true;
+        case "3":
+          return true;
+        case "4":
+          return true;
+        case "5":
+          return true;
+        case "6":
+          return true;
+        case "7":
+          return true;
+        case "8":
+          return true;
+        case "9":
+          return true;
+        default:
+          return false;
+      }
+    }
+    this.signOut();
     if (isStudent(userID)) {
       // 학생 로그인
       const studentsQuery = query(collection(database, "Students"));
@@ -137,6 +151,10 @@ export const auth = {
         return false;
       }
     }
+    setCookie("login_info", this.currentUser);
     return true;
   },
 };
+auth.syncWithStoredLoginInfo(); // 첫 로딩 때 sync
+
+export { auth };

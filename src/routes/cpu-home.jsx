@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { auth } from "../features/login-feature";
 import { useState } from "react";
 import Logo from "../images/TempLogoMinsapay.svg";
+import OrderList from "../components/order-list";
 
 const Wrapper = styled.div`
   width: 100%;
@@ -10,42 +11,35 @@ const Wrapper = styled.div`
   align-items: center;
   border-radius: 40px;
 `;
-
 const Header = styled.div`
   width: 100%;
   height: 64px;
-  padding: 8px 11px;
+  padding: 8px 100px;
 `;
 const Image = styled.img`
   width: 50px;
 `;
-
 const CPUHomeBox = styled.div`
   width: 1355px;
 `;
-
 const TopDiv = styled.div`
   display: flex;
   width: 100%;
   flex-direction: row;
 `;
-
 const Title = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
 `;
-
 const BodyDiv = styled.div`
   display: flex;
   width: 100%;
   flex-direction: column;
 `;
-
 const Text = styled.div`
   width: 50%;
 `;
-
 const OrderElement = styled.div`
   width: 50%;
 `;
@@ -66,7 +60,7 @@ export default function CPUHome() {
           </Title>
         </TopDiv>
         <BodyDiv>
-          <OrderElement />
+          <OrderList />
         </BodyDiv>
       </CPUHomeBox>
     </Wrapper>

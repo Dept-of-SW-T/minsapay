@@ -106,8 +106,6 @@ export default function Login() {
           auth.currentUser = null;
       }
       console.log(auth.currentUser);
-
-      //navigate("/");
     } else if (auth.error === "") setError("이유불명 로그인 에러");
     else setError(auth.error);
   };
