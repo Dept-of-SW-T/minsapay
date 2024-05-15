@@ -4,6 +4,8 @@ import { useState } from "react";
 import Logo from "../images/TempLogoMinsapay.svg";
 import OrderList from "../components/order-list";
 import { Header } from "../components/cpu-header";
+import { doc, getDoc } from "firebase/firestore";
+import { database } from "../firebase";
 
 const Wrapper = styled.div`
   width: 100%;
@@ -22,27 +24,32 @@ const CPUHomeBox = styled.div`
 `;
 const TopDiv = styled.div`
   margin-top: 21px;
-  display: flex;
   width: 100%;
-  flex-direction: row;
+  // font size change needed
 `;
 const Title = styled.div`
-  display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  display: flex;
+  align-items: center;
+`;
+const Text = styled.div`
+  width: 221px;
 `;
 const BodyDiv = styled.div`
   display: flex;
   width: 100%;
   flex-direction: column;
 `;
-const Text = styled.div`
-  width: 50%;
-`;
 
 export default function CPUHome() {
+  const userDocRef = doc(database, "Teams", auth.currentUser.userID);
   const [balance, setBalance] = useState(0);
-
+  const init = async () => {
+    const userDoc = await getDoc(userDocRef);
+    const userDocData = userDoc.data();
+    setBalance(userDocData.balance);
+  };
+  init();
   return (
     <Wrapper>
       <Header>
@@ -52,7 +59,7 @@ export default function CPUHome() {
         <TopDiv>
           <Title>
             <Text>{auth.currentUser.username}</Text>
-            <Text>{balance}</Text>
+            <Text>{balance}원</Text>
           </Title>
         </TopDiv>
         <BodyDiv>

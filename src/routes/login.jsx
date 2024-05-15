@@ -91,20 +91,7 @@ export default function Login() {
     if (userID === "" || password === "") return;
     const successfulSignIn = await auth.signIn(userID, password);
     if (successfulSignIn) {
-      switch (auth.currentUser.userType) {
-        case "CPU":
-          navigate("/cpu-home");
-          break;
-        case "kiosk":
-          break;
-        case "buyer":
-          break;
-        case "seller":
-          break;
-        default:
-          setError("적절하지 않은 userType입니다.");
-          auth.currentUser = null;
-      }
+      navigate("/");
       console.log(auth.currentUser);
     } else if (auth.error === "") setError("이유불명 로그인 에러");
     else setError(auth.error);
