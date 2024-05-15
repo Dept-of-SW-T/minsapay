@@ -25,6 +25,9 @@ const CPUHomeBox = styled.div`
 const TopDiv = styled.div`
   margin-top: 21px;
   width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
   // font size change needed
 `;
 const Title = styled.div`
@@ -32,6 +35,25 @@ const Title = styled.div`
   display: flex;
   align-items: center;
 `;
+
+const HeaderBtns = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+  justify-content: space-around;
+  align-items: center;
+`;
+
+const Btn = styled.button`
+  border-radius: 20px;
+  background-color: skyblue;
+  text-align: center;
+  border: 0;
+  width: 20%;
+  margin: 1%;
+  font-size: large;
+`;
+
 const Text = styled.div`
   width: 221px;
 `;
@@ -61,6 +83,10 @@ export default function CPUHome() {
             <Text>{auth.currentUser.username}</Text>
             <Text>{balance}원</Text>
           </Title>
+          <HeaderBtns>
+            <Btn>메뉴편집</Btn>
+            <Btn>환불승인</Btn>
+          </HeaderBtns>
         </TopDiv>
         <BodyDiv>
           <OrderList />
