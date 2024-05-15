@@ -28,6 +28,7 @@ const CPUHomeBox = styled.div`
 const TopDiv = styled.div`
   margin-top: 21px;
   width: 100%;
+  height: 140px;
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
@@ -39,6 +40,7 @@ const HeaderBtns = styled.div`
   display: flex;
   flex-direction: column;
   width: 384px;
+  height: 100%;
   justify-content: space-around;
   align-items: flex-end;
 `;
@@ -53,6 +55,7 @@ const Btn = styled.button`
 
 const Title = styled.div`
   width: 971px;
+  height: 100%;
   flex-direction: row;
   display: flex;
   align-items: center;
@@ -72,6 +75,7 @@ const Balance = styled.div`
 `;
 const BodyDiv = styled.div`
   display: flex;
+  margin-top: 39px;
   width: 100%;
   flex-direction: column;
 `;
