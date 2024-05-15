@@ -3,6 +3,7 @@ import { useState } from "react";
 import { auth } from "../features/login-feature";
 import styled from "styled-components";
 import Logo from "../images/TempLogoMinsapay.svg";
+import { useNavigate } from "react-router-dom";
 
 const MINSAPAY_BLUE = "#66A3FF";
 
@@ -84,14 +85,29 @@ export default function Login() {
   const [userID, setUserID] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
   const onSubmit = async (e) => {
     e.preventDefault();
     setError("");
     if (userID === "" || password === "") return;
     const successfulSignIn = await auth.signIn(userID, password);
     if (successfulSignIn) {
+      switch (auth.currentUser.userType) {
+        case "CPU":
+          navigate("/cpu-home");
+          break;
+        case "kiosk":
+          break;
+        case "buyer":
+          break;
+        case "seller":
+          break;
+        default:
+          setError("적절하지 않은 userType입니다.");
+          auth.currentUser = null;
+      }
       console.log(auth.currentUser);
+
       //navigate("/");
     } else if (auth.error === "") setError("이유불명 로그인 에러");
     else setError(auth.error);

@@ -2,9 +2,9 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import styled, { createGlobalStyle } from "styled-components";
 import reset from "styled-reset";
 import Layout from "./components/layout";
-import Home from "./routes/home";
 import Login from "./routes/login";
 import ProtectedRoute from "./components/protected-route";
+import CPUHome from "./routes/cpu-home";
 
 const router = createBrowserRouter([
   {
@@ -16,8 +16,8 @@ const router = createBrowserRouter([
     ),
     children: [
       {
-        path: "",
-        element: <Home />,
+        path: "cpu-home",
+        element: <CPUHome />,
       },
     ],
   },
