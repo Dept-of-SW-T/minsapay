@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { auth } from "../features/login-feature";
 import { useState } from "react";
 import Logo from "../images/TempLogoMinsapay.svg";
-import OrderList from "../components/order-list";
+import CoupleList from "../components/couple-list";
 import { Header } from "../components/cpu-header";
 import { doc, getDoc } from "firebase/firestore";
 import { database } from "../firebase";
@@ -111,7 +111,7 @@ export default function CPUHome() {
           </HeaderBtns>
         </TopDiv>
         <BodyDiv>
-          <OrderList />
+          <CoupleList />
         </BodyDiv>
       </CPUHomeBox>
     </Wrapper>

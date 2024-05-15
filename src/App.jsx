@@ -2,10 +2,16 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import styled, { createGlobalStyle } from "styled-components";
 import reset from "styled-reset";
 import Login from "./routes/login";
-import { ProtectedCPU, ProtectedRoute } from "./components/protected-routes";
+import {
+  ProtectedCPU,
+  ProtectedKiosk,
+  ProtectedRoute,
+} from "./components/protected-routes";
 import CPUHome from "./routes/cpu-home";
 import ChangeMenu from "./routes/change-menu";
 import RefundApproval from "./routes/refund-approval";
+import KioskHome from "./routes/kiosk-home";
+import KioskAuthentiaction from "./routes/kiosk-authentication";
 
 const router = createBrowserRouter([
   {
@@ -34,6 +40,22 @@ const router = createBrowserRouter([
       <ProtectedCPU>
         <RefundApproval />
       </ProtectedCPU>
+    ),
+  },
+  {
+    path: "/kiosk-home",
+    element: (
+      <ProtectedKiosk>
+        <KioskHome />
+      </ProtectedKiosk>
+    ),
+  },
+  {
+    path: "/kiosk-home/kiosk-authentication",
+    element: (
+      <ProtectedKiosk>
+        <KioskAuthentiaction />
+      </ProtectedKiosk>
     ),
   },
   {
