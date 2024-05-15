@@ -4,16 +4,19 @@ import { useState } from "react";
 
 const Wrapper = styled.div`
   width: 100%;
-  height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
   border-radius: 40px;
 `;
 
+const Header = styled.div`
+  width: 100%;
+  height: 64px;
+`;
+
 const CPUHomeBox = styled.div`
-  width: 90%;
+  width: 1355px;
 `;
 
 const TopDiv = styled.div`
@@ -47,6 +50,7 @@ export default function CPUHome() {
 
   return (
     <Wrapper>
+      <Header />
       <CPUHomeBox>
         <TopDiv>
           <Title>
