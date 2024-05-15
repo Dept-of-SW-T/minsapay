@@ -2,7 +2,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import styled, { createGlobalStyle } from "styled-components";
 import reset from "styled-reset";
 import Login from "./routes/login";
-import { ProtectedCPU, ProtectedRoute } from "./components/protected-route";
+import { ProtectedCPU, ProtectedRoute } from "./components/protected-routes";
 import CPUHome from "./routes/cpu-home";
 
 const router = createBrowserRouter([
