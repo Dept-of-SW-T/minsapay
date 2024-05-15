@@ -4,6 +4,8 @@ import reset from "styled-reset";
 import Login from "./routes/login";
 import { ProtectedCPU, ProtectedRoute } from "./components/protected-routes";
 import CPUHome from "./routes/cpu-home";
+import ChangeMenu from "./routes/change-menu";
+import RefundApproval from "./routes/refund-approval";
 
 const router = createBrowserRouter([
   {
@@ -15,6 +17,22 @@ const router = createBrowserRouter([
     element: (
       <ProtectedCPU>
         <CPUHome />
+      </ProtectedCPU>
+    ),
+  },
+  {
+    path: "cpu-home/change-menu",
+    element: (
+      <ProtectedCPU>
+        <ChangeMenu />
+      </ProtectedCPU>
+    ),
+  },
+  {
+    path: "cpu-home/refund-approval",
+    element: (
+      <ProtectedCPU>
+        <RefundApproval />
       </ProtectedCPU>
     ),
   },

@@ -1,18 +1,19 @@
 import styled from "styled-components";
 
-const Wrapper = styled.div`
+const Wrapper = styled.span`
+  // needs css fixing
   display: flex;
   flex-direction: row;
   border: 1px solid black;
   border-radius: 20px;
   justify-content: space-around;
-  width: 48%;
+  width: 30%;
   background-color: red;
   padding-left: 0.5%;
   padding-right: 0.5%;
 `;
 
-const Text = styled.div`
+const Text = styled.span`
   text-align: center;
   font-size: x-large;
   flex: auto;
