@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { auth } from "../features/login-feature";
 import { useState } from "react";
+import Logo from "../images/TempLogoMinsapay.svg";
 
 const Wrapper = styled.div`
   width: 100%;
@@ -13,6 +14,10 @@ const Wrapper = styled.div`
 const Header = styled.div`
   width: 100%;
   height: 64px;
+  padding: 8px 11px;
+`;
+const Image = styled.img`
+  width: 50px;
 `;
 
 const CPUHomeBox = styled.div`
@@ -50,7 +55,9 @@ export default function CPUHome() {
 
   return (
     <Wrapper>
-      <Header />
+      <Header>
+        <Image src={Logo} />
+      </Header>
       <CPUHomeBox>
         <TopDiv>
           <Title>
