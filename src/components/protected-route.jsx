@@ -5,6 +5,8 @@ export function ProtectedRoute({ children }) {
   const user = auth.currentUser;
   if (user === null) {
     return <Navigate to="/login" />;
+  } else if (user.userType === "CPU") {
+    return <Navigate to="/cpu-home" />;
   }
   return children;
 }
@@ -12,7 +14,7 @@ export function ProtectedRoute({ children }) {
 export function ProtectedCPU({ children }) {
   const user = auth.currentUser;
   if (user.userType !== "CPU") {
-    return <Navigate to="/login" />;
+    return <Navigate to="/" />;
   }
   return children;
 }
