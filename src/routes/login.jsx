@@ -3,8 +3,7 @@ import { auth } from "../features/login-feature";
 import styled from "styled-components";
 import Logo from "../images/TempLogoMinsapay.svg";
 import { useNavigate } from "react-router-dom";
-
-const MINSAPAY_BLUE = "#66A3FF";
+import { MINSAPAY_BLUE } from "../components/theme-definition";
 
 // figma 제대로 된 치수 필요
 const WRAPPER_WIDTH = 360;

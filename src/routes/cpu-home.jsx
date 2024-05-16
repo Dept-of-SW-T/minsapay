@@ -1,12 +1,12 @@
 import styled from "styled-components";
 import { auth } from "../features/login-feature";
 import { useState } from "react";
-import Logo from "../images/TempLogoMinsapay.svg";
 import CoupleList from "../components/couple-list";
 import { Header } from "../components/cpu-header";
 import { doc, getDoc } from "firebase/firestore";
 import { database } from "../firebase";
 import { useNavigate } from "react-router-dom";
+import { MINSAPAY_BLUE } from "../components/theme-definition";
 
 // border 다 추가하기
 
@@ -17,14 +17,10 @@ const Wrapper = styled.div`
   align-items: center;
   border-radius: 40px;
 `;
-
-const Image = styled.img`
-  width: 50px;
-  margin-left: 11px;
-`;
 const CPUHomeBox = styled.div`
   width: 1355px;
 `;
+
 const TopDiv = styled.div`
   margin-top: 21px;
   width: 100%;
@@ -34,25 +30,6 @@ const TopDiv = styled.div`
   justify-content: flex-start;
   // font size change needed
 `;
-
-const HeaderBtns = styled.div`
-  // button 사이 gap 추가
-  display: flex;
-  flex-direction: column;
-  width: 384px;
-  height: 100%;
-  justify-content: space-around;
-  align-items: flex-end;
-`;
-
-const Btn = styled.button`
-  border-radius: 20px;
-  background-color: skyblue;
-  text-align: center;
-  width: 355px;
-  font-size: large;
-`;
-
 const Title = styled.div`
   width: 971px;
   height: 100%;
@@ -73,6 +50,27 @@ const Balance = styled.div`
   text-align: center;
   width: 222px;
 `;
+
+const HeaderBtns = styled.div`
+  // button 사이 gap 추가
+  display: flex;
+  flex-direction: column;
+  width: 384px;
+  height: 100%;
+  justify-content: space-around;
+  align-items: flex-end;
+`;
+
+const Btn = styled.button`
+  border-radius: 40px;
+  background-color: ${MINSAPAY_BLUE};
+  color: white;
+  text-align: center;
+  width: 355px;
+  height: 60px;
+  font-size: 28px;
+`;
+
 const BodyDiv = styled.div`
   display: flex;
   margin-top: 39px;
@@ -100,9 +98,7 @@ export default function CPUHome() {
   };
   return (
     <Wrapper>
-      <Header>
-        <Image src={Logo} />
-      </Header>
+      <Header />
       <CPUHomeBox>
         <TopDiv>
           <Title>

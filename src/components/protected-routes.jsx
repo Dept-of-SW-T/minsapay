@@ -3,6 +3,7 @@ import { auth } from "../features/login-feature";
 
 export function ProtectedRoute({ children }) {
   const user = auth.currentUser;
+  if (user === null) return <Navigate to="/login" />;
   switch (user.userType) {
     case "CPU":
       return <Navigate to="/cpu-home" />;
@@ -15,6 +16,7 @@ export function ProtectedRoute({ children }) {
 
 export function ProtectedCPU({ children }) {
   const user = auth.currentUser;
+  if (user === null) return <Navigate to="/login" />;
   if (user.userType !== "CPU") {
     return <Navigate to="/" />;
   }
@@ -23,6 +25,7 @@ export function ProtectedCPU({ children }) {
 
 export function ProtectedKiosk({ children }) {
   const user = auth.currentUser;
+  if (user === null) return <Navigate to="/login" />;
   if (user.userType !== "kiosk") {
     return <Navigate to="/" />;
   }
