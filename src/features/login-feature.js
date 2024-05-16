@@ -36,30 +36,8 @@ const auth = {
   async signIn(userID, password) {
     // return true if successful login else false
     function isStudent(userID) {
-      switch (userID[0]) {
-        case "0":
-          return true;
-        case "1":
-          return true;
-        case "2":
-          return true;
-        case "3":
-          return true;
-        case "4":
-          return true;
-        case "5":
-          return true;
-        case "6":
-          return true;
-        case "7":
-          return true;
-        case "8":
-          return true;
-        case "9":
-          return true;
-        default:
-          return false;
-      }
+      const strArr = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
+      return strArr.includes(userID[0]);
     }
     this.signOut();
     if (isStudent(userID)) {

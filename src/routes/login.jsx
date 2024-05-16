@@ -112,7 +112,7 @@ export default function Login() {
     const successfulSignIn = await auth.signIn(userID, password);
     if (successfulSignIn) {
       navigate("/");
-      console.log(auth.currentUser);
+      // console.log(auth.currentUser);
     } else if (auth.error === "") setError("이유불명 로그인 에러");
     else setError(auth.error);
   };

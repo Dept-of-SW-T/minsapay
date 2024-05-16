@@ -32,6 +32,8 @@ const TopDiv = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
+  font-family: "BMDOHYEON";
+  font-size: 36px;
   // font size change needed
 `;
 const Title = styled.div`
@@ -52,7 +54,12 @@ const OpacityLayer = styled.div`
   flex-direction: row;
   display: flex;
   align-items: center;
+<<<<<<< HEAD
   background-color: rgb(0, 0, 0, 0.3);
+=======
+  border: 3px solid ${BORDER_GRAY};
+  border-radius: 20px;
+>>>>>>> 5df74dfdc5631d4750b4cc7a07064ade3eb3eed1
 `;
 
 const TeamName = styled.div`
@@ -83,14 +90,14 @@ const HeaderBtns = styled.div`
 
 const Btn = styled.button`
   border-radius: 40px;
-  border: 2px solid ${BORDER_GRAY};
+  border: 3px solid ${BORDER_GRAY};
   background-color: ${MINSAPAY_BLUE};
   box-shadow: 0px 4px 4px 0px ${BUTTON_SHADOW};
   color: white;
   text-align: center;
   width: 351px;
   height: 60px;
-  font-size: 28px;
+  font-size: 20px;
   &:hover {
     cursor: pointer;
     opacity: 0.8;
