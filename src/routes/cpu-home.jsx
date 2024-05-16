@@ -39,7 +39,7 @@ const TopDiv = styled.div`
 const Title = styled.div`
   width: 971px;
   height: 136px;
-  border: 2px solid ${BORDER_GRAY};
+  border: 3px solid ${BORDER_GRAY};
   border-radius: 20px;
   background-size: cover;
   background-size: center;
@@ -54,12 +54,7 @@ const OpacityLayer = styled.div`
   flex-direction: row;
   display: flex;
   align-items: center;
-<<<<<<< HEAD
   background-color: rgb(0, 0, 0, 0.3);
-=======
-  border: 3px solid ${BORDER_GRAY};
-  border-radius: 20px;
->>>>>>> 5df74dfdc5631d4750b4cc7a07064ade3eb3eed1
 `;
 
 const TeamName = styled.div`
