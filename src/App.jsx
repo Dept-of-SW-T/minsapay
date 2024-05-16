@@ -13,6 +13,7 @@ import RefundApproval from "./routes/refund-approval";
 import KioskHome from "./routes/kiosk-home";
 import KioskAuthentiaction from "./routes/kiosk-authentication";
 import { BACKGROUND_GRAY } from "./components/theme-definition";
+import OrderScreen from "./routes/order-screen";
 
 const router = createBrowserRouter([
   {
@@ -56,6 +57,14 @@ const router = createBrowserRouter([
     element: (
       <ProtectedKiosk>
         <KioskAuthentiaction />
+      </ProtectedKiosk>
+    ),
+  },
+  {
+    path: "/kiosk-home/order-screen",
+    element: (
+      <ProtectedKiosk>
+        <OrderScreen />
       </ProtectedKiosk>
     ),
   },
