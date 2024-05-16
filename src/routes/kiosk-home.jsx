@@ -1,21 +1,54 @@
 import styled from "styled-components";
 import { auth } from "../features/login-feature";
+import { BORDER_GRAY } from "../components/theme-definition";
+
+const Wrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+  width: 100vw;
+  justify-content: space-between;
+  font-family: "BMDOHYEON";
+  padding: 3vh;
+`;
 
 const MenuArea = styled.div`
   display: flex;
   flex-direction: column;
+  flex: 4;
+`;
+
+const FoodArea = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  flex-wrap: wrap;
 `;
 
 const ShoppingArea = styled.div`
   display: flex;
   flex-direction: column;
+  flex: 1;
 `;
 
-const Title = styled.div``;
+const Title = styled.div`
+  width: 70vw;
+  height: 15vh;
+  border: 3px solid ${BORDER_GRAY};
+  border-radius: 20px;
+  background-size: cover;
+  background-size: center;
+`;
+
+const SecondaryTitle = styled.div`
+  margin-bottom: 10px;
+`;
 
 const FoodWrapper = styled.div`
   display: flex;
   flex-direction: column;
+  margin: 10px;
+  border: 1px solid black;
+  border-radius: 20px;
 `;
 
 const SelectedWrapper = styled.div`
@@ -40,12 +73,23 @@ const PayBtn = styled.button`
   border-radius: 20px;
 `;
 
-function FoodElement({ menuName, price }) {
+const FoodImg = styled.img`
+  width: 20vw;
+  height: 15vh;
+`;
+
+const FoodTag = styled.div`
+  padding-left: 2vw;
+`;
+
+function FoodElement({ menuName, price, imageLink }) {
   return (
     <FoodWrapper>
-      <img />
-      <div>{menuName}</div>
-      <ColoredText>{price}원</ColoredText>
+      <FoodImg src={imageLink} />
+      <FoodTag>
+        <div>{menuName}</div>
+        <ColoredText>{price}원</ColoredText>
+      </FoodTag>
     </FoodWrapper>
   );
 }
@@ -65,13 +109,15 @@ function SelectedElement({ menuName, price }) {
 
 export default function KioskHome() {
   return (
-    <>
+    <Wrapper>
       <MenuArea>
-        Store - {auth.currentUser.userID}
+        <SecondaryTitle>Store - {auth.currentUser.userID}</SecondaryTitle>
         <Title>{auth.currentUser.username}</Title>
         메뉴
-        <FoodElement menuName={"수제 햄버거"} price={4000} />
-        <FoodElement menuName={"감자튀김"} price={4000} />
+        <FoodArea>
+          <FoodElement menuName={"수제 햄버거"} price={4000} />
+          <FoodElement menuName={"감자튀김"} price={4000} />
+        </FoodArea>
       </MenuArea>
       <ShoppingArea>
         내 카트
@@ -79,6 +125,6 @@ export default function KioskHome() {
         <Total />
         <PayBtn>Pay!</PayBtn>
       </ShoppingArea>
-    </>
+    </Wrapper>
   );
 }
