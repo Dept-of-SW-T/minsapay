@@ -3,11 +3,12 @@ import { auth } from "../features/login-feature";
 import { useState } from "react";
 import CoupleList from "../components/couple-list";
 import { Header } from "../components/cpu-header";
-import { doc, getDoc, updateDoc } from "firebase/firestore";
+import { doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
 import { database, storage } from "../firebase";
 import { useNavigate } from "react-router-dom";
 import ChangeKioskImage from "../images/ChangeKioskImage.svg";
 import {
+  BACKGROUND_GRAY,
   BORDER_GRAY,
   BUTTON_SHADOW,
   MINSAPAY_BLUE,
@@ -80,9 +81,15 @@ const Balance = styled.div`
   z-index: 100;
 `;
 
+const Label = styled.label`
+  height: 40px;
+`;
+
 const Image = styled.img`
+  background-color: ${BACKGROUND_GRAY}; // 색 바꿀 것
+  border-radius: 10px;
   width: 40px;
-  margin-left: 10px;
+  margin-left: 15px;
   &:hover {
     opacity: 0.6;
     cursor: pointer;
@@ -148,26 +155,20 @@ export default function CPUHome() {
     navigate("refund-approval");
   };
   const onFileChange = async (e) => {
-    // needs fixing
     if (!e.target.files) {
       return;
     }
-    //console.log(await deleteObject(ref(storage, userDocData.kiosk_image)))
+    await deleteObject(ref(storage, userDocData.kiosk_image));
     const file = e.target.files[0];
-    console.log(file);
     const locationRef = ref(
       storage,
       `${auth.currentUser.userID}/kiosk_image/${file.name}`,
     );
-    console.log(locationRef);
     const result = await uploadBytes(locationRef, file);
-    console.log(result.ref);
-    /*const url = await getDownloadURL(result.ref);
-    console.log(url)
-    await updateDoc(userDoc, {
-      kiosk_image: `${result.ref}`,
-    });
-    setKioskImage(url); */
+    const url = await getDownloadURL(result.ref);
+    userDocData.kiosk_image = result.ref._location.path_;
+    await setDoc(userDocRef, userDocData);
+    setKioskImage(url);
   };
   return (
     <Wrapper>
@@ -178,9 +179,9 @@ export default function CPUHome() {
             <OpacityLayer>
               <TeamName>{auth.currentUser.username}</TeamName>
               <Balance>{balance}원</Balance>
-              <label htmlFor="image-upload">
+              <Label htmlFor="image-upload">
                 <Image src={ChangeKioskImage} />
-              </label>
+              </Label>
               <ImageUpload
                 id="image-upload"
                 type="file"
