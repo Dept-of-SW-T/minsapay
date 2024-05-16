@@ -62,6 +62,18 @@ const Input = styled.input`
   &:focus {
     border-bottom: 3px solid #444;
   }
+  &.no-display {
+    display: none;
+  }
+  &.display {
+    display: block;
+  }
+  &[name="password"] {
+    font-family: sans-serif;
+    &::placeholder {
+      font-family: "BMDOHYEON";
+    }
+  }
   &[type="submit"] {
     margin-top: 70px;
     width: 130px;
@@ -74,6 +86,7 @@ const Input = styled.input`
     font-size: 20px;
     font-weight: normal;
     font-family: "BMDOHYEON";
+
     &:hover {
       cursor: pointer;
       opacity: 0.8;
