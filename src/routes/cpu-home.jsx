@@ -37,23 +37,37 @@ const TopDiv = styled.div`
 const Title = styled.div`
   width: 971px;
   height: 136px;
+  border: 2px solid ${BORDER_GRAY};
+  border-radius: 20px;
+  background-size: cover;
+  background-size: center;
+`;
+const OpacityLayer = styled.div`
+  width: 100%;
+  height: 100%;
+  border-radius: 20px;
+  font-family: "BMDOHYEON";
+  font-size: 48px;
+  color: white;
   flex-direction: row;
   display: flex;
   align-items: center;
-  border: 2px solid ${BORDER_GRAY};
-  border-radius: 20px;
+  background-color: rgb(0, 0, 0, 0.3);
 `;
+
 const TeamName = styled.div`
   // needs font change
   margin-left: 125px;
   text-align: center;
   width: 240px;
+  z-index: 100;
 `;
 const Balance = styled.div`
   // needs font change
-  margin-left: 233px;
+  margin-left: 240px;
   text-align: center;
   width: 222px;
+  z-index: 100;
 `;
 
 const HeaderBtns = styled.div`
@@ -93,11 +107,13 @@ const BodyDiv = styled.div`
 export default function CPUHome() {
   const userDocRef = doc(database, "Teams", auth.currentUser.userID);
   const [balance, setBalance] = useState(0);
+  const [kioskImage, setKioskImage] = useState("");
   const navigate = useNavigate();
   const init = async () => {
     const userDoc = await getDoc(userDocRef);
     const userDocData = userDoc.data();
     setBalance(userDocData.balance);
+    setKioskImage(userDocData.kiosk_image);
   };
   init();
   const onChangeMenuClick = (e) => {
@@ -113,9 +129,11 @@ export default function CPUHome() {
       <Header />
       <CPUHomeBox>
         <TopDiv>
-          <Title>
-            <TeamName>{auth.currentUser.username}</TeamName>
-            <Balance>{balance}원</Balance>
+          <Title style={{ backgroundImage: `url(${kioskImage})` }}>
+            <OpacityLayer>
+              <TeamName>{auth.currentUser.username}</TeamName>
+              <Balance>{balance}원</Balance>
+            </OpacityLayer>
           </Title>
           <HeaderBtns>
             <Btn onClick={onChangeMenuClick}>메뉴편집</Btn>
@@ -153,3 +171,10 @@ const fetchTweets = async () => {
             id: doc.id,
         }
     }); */
+/*     const locationRef = ref(storage, `tweets/${user.uid}/${doc.id}`);
+    const result = await uploadBytes(locationRef, file);
+    const url = await getDownloadURL(result.ref);
+    await updateDoc(doc, {
+      photo: url,
+    });
+ */

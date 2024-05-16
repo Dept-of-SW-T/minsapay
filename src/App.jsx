@@ -66,18 +66,15 @@ const router = createBrowserRouter([
 ]);
 const GlobalStyles = createGlobalStyle`
   ${reset};
-
   * { 
-  @font-face {
-    font-family: 'BMDOHYEON';
-    src: url('https://cdn.jsdelivr.net/gh/wizfile/font/BMDOHYEON.eot');
-    src:url('https://cdn.jsdelivr.net/gh/wizfile/font/BMDOHYEON.woff') format('woff');
-    font-style: normal;
-}
+    @font-face {
+      font-family: 'BMDOHYEON';
+      src: url('https://cdn.jsdelivr.net/gh/wizfile/font/BMDOHYEON.eot');
+      src:url('https://cdn.jsdelivr.net/gh/wizfile/font/BMDOHYEON.woff') format('woff');
+      font-style: normal;
+    }
 		font-family: "BMDOHYEON";
-}
-
-
+  }
 `;
 
 const Wrapper = styled.div`
