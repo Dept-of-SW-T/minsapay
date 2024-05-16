@@ -13,6 +13,7 @@ const HeaderDiv = styled.div`
   align-items: center;
 `;
 const Logo = styled.img`
+  // hover 시 도움말이 뜨게 수정
   width: 50px;
   margin-left: 11px;
   &:hover {

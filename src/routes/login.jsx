@@ -3,7 +3,7 @@ import { auth } from "../features/login-feature";
 import styled from "styled-components";
 import Logo from "../images/TempLogoMinsapay.svg";
 import { useNavigate } from "react-router-dom";
-import { MINSAPAY_BLUE } from "../components/theme-definition";
+import { BUTTON_SHADOW, MINSAPAY_BLUE } from "../components/theme-definition";
 
 // figma 제대로 된 치수 필요
 const WRAPPER_WIDTH = 360;
@@ -57,19 +57,21 @@ const Input = styled.input`
   border-bottom: 3px solid #ccc;
   margin-top: 25px;
   &:focus {
-    border-bottom: 3px solid #000;
+    border-bottom: 3px solid #444;
   }
   &[type="submit"] {
     margin-top: 70px;
-    cursor: pointer;
     width: 130px;
     height: 60px;
     border-radius: 50px;
+    border-bottom: 0px;
+    box-shadow: 0px 4px 4px 0px ${BUTTON_SHADOW};
     background-color: ${MINSAPAY_BLUE};
     color: white;
     font-size: 20px;
     font-weight: bold;
     &:hover {
+      cursor: pointer;
       opacity: 0.8;
     }
   }

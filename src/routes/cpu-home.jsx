@@ -6,7 +6,11 @@ import { Header } from "../components/cpu-header";
 import { doc, getDoc } from "firebase/firestore";
 import { database } from "../firebase";
 import { useNavigate } from "react-router-dom";
-import { MINSAPAY_BLUE } from "../components/theme-definition";
+import {
+  BORDER_GRAY,
+  BUTTON_SHADOW,
+  MINSAPAY_BLUE,
+} from "../components/theme-definition";
 
 // border 다 추가하기
 
@@ -32,11 +36,12 @@ const TopDiv = styled.div`
 `;
 const Title = styled.div`
   width: 971px;
-  height: 100%;
+  height: 136px;
   flex-direction: row;
   display: flex;
   align-items: center;
-  border: 1px solid #d8dae5;
+  border: 2px solid ${BORDER_GRAY};
+  border-radius: 20px;
 `;
 const TeamName = styled.div`
   // needs font change
@@ -59,16 +64,23 @@ const HeaderBtns = styled.div`
   height: 100%;
   justify-content: space-around;
   align-items: flex-end;
+  gap: 20px;
 `;
 
 const Btn = styled.button`
   border-radius: 40px;
+  border: 2px solid ${BORDER_GRAY};
   background-color: ${MINSAPAY_BLUE};
+  box-shadow: 0px 4px 4px 0px ${BUTTON_SHADOW};
   color: white;
   text-align: center;
-  width: 355px;
+  width: 351px;
   height: 60px;
   font-size: 28px;
+  &:hover {
+    cursor: pointer;
+    opacity: 0.8;
+  }
 `;
 
 const BodyDiv = styled.div`

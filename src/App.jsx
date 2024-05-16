@@ -12,6 +12,7 @@ import ChangeMenu from "./routes/change-menu";
 import RefundApproval from "./routes/refund-approval";
 import KioskHome from "./routes/kiosk-home";
 import KioskAuthentiaction from "./routes/kiosk-authentication";
+import { BACKGROUND_GRAY } from "./components/theme-definition";
 
 const router = createBrowserRouter([
   {
@@ -69,7 +70,7 @@ const GlobalStyles = createGlobalStyle`
   font-family: 'Spoqa Han Sans Neo', 'sans-serif';
 `;
 const Wrapper = styled.div`
-  background-color: #f5f5f5;
+  background-color: ${BACKGROUND_GRAY};
   height: 100vh;
   display: flex;
   justify-content: center;
