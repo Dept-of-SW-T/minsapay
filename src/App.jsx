@@ -88,7 +88,6 @@ const GlobalStyles = createGlobalStyle`
 
 const Wrapper = styled.div`
   background-color: ${BACKGROUND_GRAY};
-  height: 100vh;
   display: flex;
   justify-content: center;
 `;

@@ -56,7 +56,7 @@ const OpacityLayer = styled.div`
   // 글씨가 세로로 정중앙이 아님 고침이 필요
   width: 100%;
   height: 100%;
-  border-radius: 20px;
+  border-radius: 17px;
   font-family: "BMDOHYEON";
   font-size: 48px;
   color: white;
