@@ -3,14 +3,21 @@ import { auth } from "../features/login-feature";
 import { useState } from "react";
 import CoupleList from "../components/couple-list";
 import { Header } from "../components/cpu-header";
-import { doc, getDoc } from "firebase/firestore";
-import { database } from "../firebase";
+import { doc, getDoc, updateDoc } from "firebase/firestore";
+import { database, storage } from "../firebase";
 import { useNavigate } from "react-router-dom";
+import ChangeKioskImage from "../images/ChangeKioskImage.svg";
 import {
   BORDER_GRAY,
   BUTTON_SHADOW,
   MINSAPAY_BLUE,
 } from "../components/theme-definition";
+import {
+  deleteObject,
+  getDownloadURL,
+  ref,
+  uploadBytes,
+} from "firebase/storage";
 
 // border 다 추가하기
 
@@ -37,14 +44,15 @@ const TopDiv = styled.div`
   // font size change needed
 `;
 const Title = styled.div`
-  width: 971px;
-  height: 136px;
+  width: 969px;
+  height: 134px;
   border: 3px solid ${BORDER_GRAY};
   border-radius: 20px;
   background-size: cover;
   background-size: center;
 `;
 const OpacityLayer = styled.div`
+  // 글씨가 세로로 정중앙이 아님 고침이 필요
   width: 100%;
   height: 100%;
   border-radius: 20px;
@@ -66,10 +74,22 @@ const TeamName = styled.div`
 `;
 const Balance = styled.div`
   // needs font change
-  margin-left: 240px;
+  margin-left: 190px;
   text-align: center;
-  width: 222px;
+  width: 280px;
   z-index: 100;
+`;
+
+const Image = styled.img`
+  width: 40px;
+  margin-left: 10px;
+  &:hover {
+    opacity: 0.6;
+    cursor: pointer;
+  }
+`;
+const ImageUpload = styled.input`
+  display: none;
 `;
 
 const HeaderBtns = styled.div`
@@ -80,7 +100,7 @@ const HeaderBtns = styled.div`
   height: 100%;
   justify-content: space-around;
   align-items: flex-end;
-  gap: 20px;
+  gap: 14px;
 `;
 
 const Btn = styled.button`
@@ -90,8 +110,8 @@ const Btn = styled.button`
   box-shadow: 0px 4px 4px 0px ${BUTTON_SHADOW};
   color: white;
   text-align: center;
-  width: 351px;
-  height: 60px;
+  width: 349px;
+  height: 62px;
   font-size: 20px;
   &:hover {
     cursor: pointer;
@@ -111,20 +131,43 @@ export default function CPUHome() {
   const [balance, setBalance] = useState(0);
   const [kioskImage, setKioskImage] = useState("");
   const navigate = useNavigate();
+  let userDoc = undefined;
+  let userDocData = undefined;
   const init = async () => {
-    const userDoc = await getDoc(userDocRef);
-    const userDocData = userDoc.data();
+    userDoc = await getDoc(userDocRef);
+    userDocData = userDoc.data();
+    const url = await getDownloadURL(ref(storage, userDocData.kiosk_image));
     setBalance(userDocData.balance);
-    setKioskImage(userDocData.kiosk_image);
+    setKioskImage(url);
   };
   init();
   const onChangeMenuClick = (e) => {
-    e.preventDefault();
     navigate("change-menu");
   };
   const onRefundApprovalClick = (e) => {
-    e.preventDefault();
     navigate("refund-approval");
+  };
+  const onFileChange = async (e) => {
+    // needs fixing
+    if (!e.target.files) {
+      return;
+    }
+    //console.log(await deleteObject(ref(storage, userDocData.kiosk_image)))
+    const file = e.target.files[0];
+    console.log(file);
+    const locationRef = ref(
+      storage,
+      `${auth.currentUser.userID}/kiosk_image/${file.name}`,
+    );
+    console.log(locationRef);
+    const result = await uploadBytes(locationRef, file);
+    console.log(result.ref);
+    /*const url = await getDownloadURL(result.ref);
+    console.log(url)
+    await updateDoc(userDoc, {
+      kiosk_image: `${result.ref}`,
+    });
+    setKioskImage(url); */
   };
   return (
     <Wrapper>
@@ -135,6 +178,15 @@ export default function CPUHome() {
             <OpacityLayer>
               <TeamName>{auth.currentUser.username}</TeamName>
               <Balance>{balance}원</Balance>
+              <label htmlFor="image-upload">
+                <Image src={ChangeKioskImage} />
+              </label>
+              <ImageUpload
+                id="image-upload"
+                type="file"
+                accept="image/*"
+                onChange={onFileChange}
+              />
             </OpacityLayer>
           </Title>
           <HeaderBtns>

@@ -10,10 +10,10 @@ import {
 import CPUHome from "./routes/cpu-home";
 import ChangeMenu from "./routes/change-menu";
 import RefundApproval from "./routes/refund-approval";
-import KioskHome from "./routes/kiosk-home";
-import KioskAuthentiaction from "./routes/kiosk-authentication";
 import { BACKGROUND_GRAY } from "./components/theme-definition";
-import OrderScreen from "./routes/order-screen";
+import KioskCover from "./routes/kiosk-cover";
+import KioskAuthentiaction from "./routes/kiosk-authentication";
+import KioskHome from "./routes/kiosk-home";
 
 const router = createBrowserRouter([
   {
@@ -53,18 +53,18 @@ const router = createBrowserRouter([
     ),
   },
   {
-    path: "/kiosk-home/kiosk-authentication",
+    path: "/kiosk-home/kiosk-cover",
     element: (
       <ProtectedKiosk>
-        <KioskAuthentiaction />
+        <KioskCover />
       </ProtectedKiosk>
     ),
   },
   {
-    path: "/kiosk-home/order-screen",
+    path: "/kiosk-home/kiosk-authentication",
     element: (
       <ProtectedKiosk>
-        <OrderScreen />
+        <KioskAuthentiaction />
       </ProtectedKiosk>
     ),
   },

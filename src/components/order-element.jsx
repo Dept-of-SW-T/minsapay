@@ -1,22 +1,28 @@
 import styled from "styled-components";
+import { BORDER_GRAY } from "./theme-definition";
 
 const Wrapper = styled.span`
   // needs css fixing
+  width: 654px;
+  height: 84.89px;
+  border: 3px solid ${BORDER_GRAY};
+  border-radius: 20px;
   display: flex;
   flex-direction: row;
-  border: 1px solid black;
-  border-radius: 20px;
-  justify-content: space-around;
-  width: 30%;
-  background-color: red;
   padding-left: 0.5%;
   padding-right: 0.5%;
+  margin-top: 20px; // needs to delete
 `;
 
 const Text = styled.span`
-  text-align: center;
-  font-size: x-large;
-  flex: auto;
+  font-family: "BMDOHYEON";
+  font-size: 24px;
+  width: 157px;
+  border-right: 3px solid ${BORDER_GRAY};
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
   background-color: white;
 `;
 
