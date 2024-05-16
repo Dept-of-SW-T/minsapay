@@ -3,8 +3,7 @@ import { auth } from "../features/login-feature";
 import styled from "styled-components";
 import Logo from "../images/TempLogoMinsapay.svg";
 import { useNavigate } from "react-router-dom";
-
-const MINSAPAY_BLUE = "#66A3FF";
+import { MINSAPAY_BLUE } from "../components/theme-definition";
 
 // figma 제대로 된 치수 필요
 const WRAPPER_WIDTH = 360;
@@ -35,6 +34,7 @@ const TitleDiv = styled.div`
 `;
 const Title = styled.span`
   font-size: 65px;
+  font-family: "BMDOHYEON";
 `;
 const Image = styled.img`
   height: 65px;
@@ -48,6 +48,7 @@ const Form = styled.form`
   flex-direction: column;
   align-items: center;
   width: 100%;
+  font-family: "BMDOHYEON";
 `;
 const Input = styled.input`
   padding: 5px 0px;
@@ -57,6 +58,7 @@ const Input = styled.input`
   outline: none;
   border-bottom: 3px solid #ccc;
   margin-top: 25px;
+  font-family: "BMDOHYEON";
   &:focus {
     border-bottom: 3px solid #000;
   }
@@ -69,7 +71,8 @@ const Input = styled.input`
     background-color: ${MINSAPAY_BLUE};
     color: white;
     font-size: 20px;
-    font-weight: bold;
+    font-weight: normal;
+    font-family: "BMDOHYEON";
     &:hover {
       opacity: 0.8;
     }
@@ -78,6 +81,8 @@ const Input = styled.input`
 const Error = styled.span`
   font-weight: 600;
   color: tomato;
+  font-family: "BMDOHYEON";
+  font-weight: 300;
 `;
 
 export default function Login() {

@@ -1,4 +1,9 @@
+import { Header } from "../components/cpu-header";
+
 export default function ChangeMenu() {
-  // need return button
-  return <>Change Menu</>;
+  return (
+    <>
+      <Header />
+    </>
+  );
 }

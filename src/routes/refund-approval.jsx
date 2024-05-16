@@ -1,3 +1,9 @@
+import { Header } from "../components/cpu-header";
+
 export default function RefundApproval() {
-  return <>Refund Approval</>;
+  return (
+    <>
+      <Header />
+    </>
+  );
 }

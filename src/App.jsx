@@ -63,11 +63,22 @@ const router = createBrowserRouter([
     element: <Login />,
   },
 ]);
-
 const GlobalStyles = createGlobalStyle`
   ${reset};
-  font-family: 'Spoqa Han Sans Neo', 'sans-serif';
+
+  * { 
+  @font-face {
+    font-family: 'BMDOHYEON';
+    src: url('https://cdn.jsdelivr.net/gh/wizfile/font/BMDOHYEON.eot');
+    src:url('https://cdn.jsdelivr.net/gh/wizfile/font/BMDOHYEON.woff') format('woff');
+    font-style: normal;
+}
+		font-family: "BMDOHYEON";
+}
+
+
 `;
+
 const Wrapper = styled.div`
   background-color: #f5f5f5;
   height: 100vh;
