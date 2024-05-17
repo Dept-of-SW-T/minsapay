@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import LogoRef from "../../images/TempLogoMinsapay.svg";
-import LogOutRef from "../../Headerimages/LogOut.svg";
-import GoHomeRef from "../../Headerimages/CPUHome.svg";
+import LogOutRef from "../../images/LogOut.svg";
+import GoHomeRef from "../../images/CPUHome.svg";
 import { useNavigate } from "react-router-dom";
 import { auth } from "../../features/login-feature";
 

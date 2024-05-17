@@ -1,10 +1,8 @@
 import styled from "styled-components";
 import { auth } from "../features/login-feature";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import CoupleList from "../components/CPU/couple-list";
 import { Header } from "../components/CPU/cpu-header";
-import { doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
-import { database, storage } from "../firebase";
 import { useNavigate } from "react-router-dom";
 import ChangeKioskImage from "../images/ChangeKioskImage.svg";
 import {
@@ -13,12 +11,6 @@ import {
   BUTTON_SHADOW,
   MINSAPAY_BLUE,
 } from "../components/theme-definition";
-import {
-  deleteObject,
-  getDownloadURL,
-  ref,
-  uploadBytes,
-} from "firebase/storage";
 import { CPUFirebase } from "../features/CPU-firebase-interaction";
 
 // border 다 추가하기
@@ -121,10 +113,8 @@ const Btn = styled.button`
   }
 `;
 const BodyDiv = styled.div`
-  display: flex;
   margin-top: 39px;
   width: 100%;
-  flex-direction: column;
 `;
 
 export default function CPUHome() {

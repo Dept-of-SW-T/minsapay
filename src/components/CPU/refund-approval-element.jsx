@@ -36,12 +36,21 @@ const Text = styled.span`
     border-bottom-left-radius: 17px;
   }
   &#approve-refund {
+    &:hover {
+      background-color: #eee;
+      cursor: pointer;
+    }
   }
 `;
 
-export default function RefundApprovalElement({ menuName, userName, time }) {
+export default function RefundApprovalElement({
+  menuName,
+  userName,
+  time,
+  className,
+}) {
   return (
-    <Wrapper>
+    <Wrapper className={className === null ? "" : className}>
       <Text id="first-child">{menuName}</Text>
       <Text>{userName}</Text>
       <Text>{time}</Text>
