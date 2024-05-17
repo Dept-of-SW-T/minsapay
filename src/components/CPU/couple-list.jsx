@@ -1,6 +1,4 @@
 import styled from "styled-components";
-import OrderElement from "./order-element";
-import RefundApprovalElement from "./refund-approval-element";
 
 function splitIntoChunk(arr, chunk) {
   const result = [];
@@ -26,81 +24,9 @@ const TwoElementDiv = styled.div`
   justify-content: space-between;
   margin-bottom: 13px;
 `;
-const DummyElement = styled.div`
-  width: 660px;
-  height: 90.89px;
-`;
 
-export default function CoupleList({}) {
-  let datalist = [
-    <OrderElement
-      menuName={"닭발"}
-      userName={"김의영"}
-      time={"15:58:55"}
-      status={"주문요청"}
-    />,
-    <OrderElement
-      menuName={"해물라면"}
-      userName={"이감찬"}
-      time={"15:58:50"}
-      status={"주문요청"}
-    />,
-    <OrderElement
-      menuName={"닭발"}
-      userName={"김의영"}
-      time={"15:58:55"}
-      status={"주문요청"}
-    />,
-    <OrderElement
-      menuName={"해물라면"}
-      userName={"이감찬"}
-      time={"15:58:50"}
-      status={"주문요청"}
-    />,
-    <OrderElement
-      menuName={"닭발"}
-      userName={"김의영"}
-      time={"15:58:55"}
-      status={"주문요청"}
-    />,
-    <OrderElement
-      menuName={"해물라면"}
-      userName={"이감찬"}
-      time={"15:58:50"}
-      status={"주문요청"}
-    />,
-    <OrderElement
-      menuName={"닭갈비"}
-      userName={"조유찬"}
-      time={"15:45:45"}
-      status={"처리중"}
-    />,
-    <OrderElement
-      menuName={"해물라면"}
-      userName={"이감찬"}
-      time={"15:45:40"}
-      status={"처리완료"}
-    />,
-    <OrderElement
-      menuName={"해물라면"}
-      userName={"최정욱"}
-      time={"15:44:35"}
-      status={"환불요청"}
-    />,
-    <OrderElement
-      menuName={"해물라면"}
-      userName={"이감찬"}
-      time={"15:43:30"}
-      status={"수령완료"}
-    />,
-    <RefundApprovalElement
-      menuName={"해물라면"}
-      userName={"조유찬"}
-      time={"15:40:25"}
-    />,
-  ];
-  if (datalist.length % 2 !== 0) datalist.push(<DummyElement />);
-  const dataCoupled = splitIntoChunk(datalist, 2).map((value) => {
+export default function CoupleList({ dataList }) {
+  const dataCoupled = splitIntoChunk(dataList, 2).map((value) => {
     return (
       <TwoElementDiv>
         {value[0]}

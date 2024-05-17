@@ -18,12 +18,6 @@ const Wrapper = styled.span`
   flex-direction: row;
   padding-left: 0px;
   padding-right: 0.5%;
-  /* &.first-element {
-    margin-left: 0px;
-  };
-  &.secont-element {
-    margin-right: 0px;
-  }; */
 `;
 
 const Text = styled.span`
