@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import LogoRef from "../../images/TempLogoMinsapay.svg";
-import LogOutRef from "../../images/LogOut.svg";
+import LogOutRef from "../../Headerimages/LogOut.svg";
+import GoHomeRef from "../../Headerimages/CPUHome.svg";
 import { useNavigate } from "react-router-dom";
 import { auth } from "../../features/login-feature";
 
@@ -41,10 +42,23 @@ export const Header = () => {
     auth.signOut();
     navigate("../../");
   };
+  const onLogoHover = (e) => {
+    const logoImage = e.target;
+    logoImage.src = GoHomeRef;
+  };
+  const onLogoLeave = (e) => {
+    const logoImage = e.target;
+    logoImage.src = LogoRef;
+  };
 
   return (
     <HeaderDiv>
-      <Logo onClick={onLogoClick} src={LogoRef} />
+      <Logo
+        onClick={onLogoClick}
+        onMouseOver={onLogoHover}
+        onMouseLeave={onLogoLeave}
+        src={LogoRef}
+      />
       <LogOutIcon onClick={onLogOutIconClick} src={LogOutRef} />
     </HeaderDiv>
   );
