@@ -3,6 +3,8 @@ import { Header } from "../components/CPU/cpu-header";
 import CoupleList from "../components/CPU/couple-list";
 import MenuElement from "../components/CPU/menu-element";
 import MenuAddElement from "../components/CPU/menu-add-element";
+import RamenImage from "../temp-images/라면 사진.webp";
+import TangSooYookImage from "../temp-images/탕수육 사진.jpg";
 
 const Wrapper = styled.div`
   width: 100%;
@@ -17,22 +19,14 @@ const ChangeMenuBox = styled.div`
 
 export default function ChangeMenu() {
   const menuList = [
+    <MenuElement image_url={RamenImage} menu_name={"라면"} price={3000} />,
     <MenuElement
-      image_url={
-        "https://firebasestorage.googleapis.com/v0/b/minsapay.appspot.com/o/kwagibu%2Fmenu_image%2F%EB%9D%BC%EB%A9%B4%2F%EB%9D%BC%EB%A9%B4%20%EC%82%AC%EC%A7%84.webp?alt=media&token=2306f2fe-81d6-420c-b4d3-c0125be09bdf"
-      }
-      menu_name={"라면"}
-      price={3000}
-    />,
-    <MenuElement
-      image_url={
-        "https://firebasestorage.googleapis.com/v0/b/minsapay.appspot.com/o/kwagibu%2Fmenu_image%2F%EB%9D%BC%EB%A9%B4%2F%EB%9D%BC%EB%A9%B4%20%EC%82%AC%EC%A7%84.webp?alt=media&token=2306f2fe-81d6-420c-b4d3-c0125be09bdf"
-      }
-      menu_name={"라면"}
-      price={3000}
+      image_url={TangSooYookImage}
+      menu_name={"탕수육"}
+      price={5000}
     />,
     <MenuAddElement />,
-  ];
+  ]; // firebase and add usestate
   return (
     <Wrapper>
       <Header />
