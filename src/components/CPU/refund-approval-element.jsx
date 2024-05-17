@@ -18,6 +18,7 @@ const Wrapper = styled.span`
   flex-direction: row;
   padding-left: 0px;
   padding-right: 0.5%;
+  background-color: ${REFUND_REQUEST};
 `;
 
 const Text = styled.span`
@@ -34,29 +35,17 @@ const Text = styled.span`
     border-top-left-radius: 17px;
     border-bottom-left-radius: 17px;
   }
+  &#approve-refund {
+  }
 `;
 
-export default function OrderElement({ menuName, userName, time, status }) {
-  const backgroundColor = () => {
-    switch (status) {
-      case "주문요청":
-        return ORDER_REQUEST;
-      case "처리중":
-        return ORDER_ONPROCESS;
-      case "처리완료":
-        return ORDER_COMPLETE;
-      case "환불요청":
-        return REFUND_REQUEST;
-      default:
-        return REFUND_OR_RECEIPT_COMPLETE;
-    }
-  };
+export default function RefundApprovalElement({ menuName, userName, time }) {
   return (
-    <Wrapper style={{ backgroundColor: `${backgroundColor(status)}` }}>
+    <Wrapper>
       <Text id="first-child">{menuName}</Text>
       <Text>{userName}</Text>
       <Text>{time}</Text>
-      <Text>{status}</Text>
+      <Text id="approve-refund">승인하기</Text>
     </Wrapper>
   );
 }

@@ -1,6 +1,11 @@
 import { doc, getDoc, setDoc } from "firebase/firestore";
 import { auth } from "./login-feature";
-import { deleteObject, getDownloadURL, ref } from "firebase/storage";
+import {
+  deleteObject,
+  getDownloadURL,
+  ref,
+  uploadBytes,
+} from "firebase/storage";
 import { database, storage } from "../firebase";
 
 const CPUFirebase = {
