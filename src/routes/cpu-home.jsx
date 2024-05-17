@@ -12,7 +12,6 @@ import {
   MINSAPAY_BLUE,
 } from "../components/theme-definition";
 import { CPUFirebase } from "../features/CPU-firebase-interaction";
-import RefundApprovalElement from "../components/CPU/refund-approval-element";
 import OrderElement from "../components/CPU/order-element";
 
 // border 다 추가하기
@@ -25,6 +24,7 @@ const Wrapper = styled.div`
 `;
 const CPUHomeBox = styled.div`
   width: 1355px;
+  margin-bottom: 20px;
 `;
 const TopDiv = styled.div`
   margin-top: 21px;
@@ -142,12 +142,6 @@ export default function CPUHome() {
   };
   const orderList = [
     <OrderElement
-      menuName={"닭발"}
-      userName={"김의영"}
-      time={"15:58:55"}
-      status={"주문요청"}
-    />,
-    <OrderElement
       menuName={"해물라면"}
       userName={"이감찬"}
       time={"15:58:50"}
@@ -200,11 +194,6 @@ export default function CPUHome() {
       userName={"이감찬"}
       time={"15:43:30"}
       status={"수령완료"}
-    />,
-    <RefundApprovalElement
-      menuName={"해물라면"}
-      userName={"조유찬"}
-      time={"15:40:25"}
     />,
   ]; // 실제 로딩하고 usestate
   return (

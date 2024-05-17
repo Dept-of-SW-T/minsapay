@@ -11,7 +11,7 @@ import {
 const Wrapper = styled.span`
   // needs css fixing
   width: 654px;
-  height: 84.89px;
+  height: 94px;
   border: 3px solid ${BORDER_GRAY};
   border-radius: 20px;
   display: flex;
@@ -43,14 +43,9 @@ const Text = styled.span`
   }
 `;
 
-export default function RefundApprovalElement({
-  menuName,
-  userName,
-  time,
-  className,
-}) {
+export default function RefundApprovalElement({ menuName, userName, time }) {
   return (
-    <Wrapper className={className === null ? "" : className}>
+    <Wrapper>
       <Text id="first-child">{menuName}</Text>
       <Text>{userName}</Text>
       <Text>{time}</Text>

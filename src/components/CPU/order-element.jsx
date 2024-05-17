@@ -11,7 +11,7 @@ import {
 const Wrapper = styled.span`
   // needs css fixing
   width: 654px;
-  height: 84.89px;
+  height: 85px;
   border: 3px solid ${BORDER_GRAY};
   border-radius: 20px;
   display: flex;
