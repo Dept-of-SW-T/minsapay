@@ -39,7 +39,7 @@ const auth = {
       const strArr = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
       return strArr.includes(userID[0]);
     }
-    this.signOut();
+    await this.signOut();
     if (isStudent(userID)) {
       // 학생 로그인
       const studentsQuery = query(collection(database, "Students"));
