@@ -1,8 +1,8 @@
 import styled from "styled-components";
 import { auth } from "../features/login-feature";
 import { useState } from "react";
-import CoupleList from "../components/couple-list";
-import { Header } from "../components/cpu-header";
+import CoupleList from "../components/CPU/couple-list";
+import { Header } from "../components/CPU/cpu-header";
 import { doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
 import { database, storage } from "../firebase";
 import { useNavigate } from "react-router-dom";

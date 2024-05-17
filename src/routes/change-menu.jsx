@@ -1,4 +1,4 @@
-import { Header } from "../components/cpu-header";
+import { Header } from "../components/CPU/cpu-header";
 
 export default function ChangeMenu() {
   return (

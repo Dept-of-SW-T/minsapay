@@ -6,7 +6,7 @@ import {
   ORDER_REQUEST,
   REFUND_OR_RECEIPT_COMPLETE,
   REFUND_REQUEST,
-} from "./theme-definition";
+} from "../theme-definition";
 
 const Wrapper = styled.span`
   // needs css fixing

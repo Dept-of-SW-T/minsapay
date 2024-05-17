@@ -1,8 +1,8 @@
 import styled from "styled-components";
-import LogoRef from "../images/TempLogoMinsapay.svg";
-import LogOutRef from "../images/LogOut.svg";
+import LogoRef from "../../images/TempLogoMinsapay.svg";
+import LogOutRef from "../../images/LogOut.svg";
 import { useNavigate } from "react-router-dom";
-import { auth } from "../features/login-feature";
+import { auth } from "../../features/login-feature";
 
 const HeaderDiv = styled.div`
   width: 100%;
