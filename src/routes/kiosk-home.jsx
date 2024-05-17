@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import { auth } from "../features/login-feature";
-import { BORDER_GRAY } from "../components/theme-definition";
+/*import { auth } from "../features/login-feature";
+import { BORDER_GRAY } from "../components/theme-definition";*/
 
 const Wrapper = styled.div`
   display: flex;
@@ -16,7 +16,7 @@ const MenuArea = styled.div`
   flex-direction: column;
   flex: 4;
 `;
-
+/*
 const FoodArea = styled.div`
   display: flex;
   flex-direction: row;
@@ -125,6 +125,35 @@ export default function KioskHome() {
         <Total />
         <PayBtn>Pay!</PayBtn>
       </ShoppingArea>
+    </Wrapper>
+  );
+}
+*/
+
+import Banner from "../components/kiosk/kiosk-banner-element.jsx";
+import FoodElement from "../components/kiosk/kiosk-menu-element.jsx";
+import MyCart from "../components/kiosk/kiosk-mycart-element.jsx";
+
+export default function KioskHome() {
+  return (
+    <Wrapper>
+      <Banner />
+      <MenuArea>
+        메뉴
+        <FoodElement
+          menuName={"수제 햄버거"}
+          price={4000}
+          imageLink={"image1.jpg"}
+        />{" "}
+        {/* Add image link */}
+        <FoodElement
+          menuName={"감자튀김"}
+          price={2000}
+          imageLink={"image2.jpg"}
+        />{" "}
+        {/* Add image link */}
+      </MenuArea>
+      <MyCart />
     </Wrapper>
   );
 }
