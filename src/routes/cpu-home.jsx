@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { auth } from "../features/login-feature";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CoupleList from "../components/CPU/couple-list";
 import { Header } from "../components/CPU/cpu-header";
 import { doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
@@ -19,6 +19,7 @@ import {
   ref,
   uploadBytes,
 } from "firebase/storage";
+import { CPUFirebase } from "../features/CPU-firebase-interaction";
 
 // border 다 추가하기
 
@@ -32,7 +33,6 @@ const Wrapper = styled.div`
 const CPUHomeBox = styled.div`
   width: 1355px;
 `;
-
 const TopDiv = styled.div`
   margin-top: 21px;
   width: 100%;
@@ -65,7 +65,6 @@ const OpacityLayer = styled.div`
   align-items: center;
   background-color: rgb(0, 0, 0, 0.3);
 `;
-
 const TeamName = styled.div`
   // needs font change
   margin-left: 125px;
@@ -80,11 +79,9 @@ const Balance = styled.div`
   width: 280px;
   z-index: 100;
 `;
-
 const Label = styled.label`
   height: 40px;
 `;
-
 const Image = styled.img`
   background-color: ${BACKGROUND_GRAY}; // 색 바꿀 것
   border-radius: 10px;
@@ -98,7 +95,6 @@ const Image = styled.img`
 const ImageUpload = styled.input`
   display: none;
 `;
-
 const HeaderBtns = styled.div`
   // button 사이 gap 추가
   display: flex;
@@ -109,7 +105,6 @@ const HeaderBtns = styled.div`
   align-items: flex-end;
   gap: 14px;
 `;
-
 const Btn = styled.button`
   border-radius: 40px;
   border: 3px solid ${BORDER_GRAY};
@@ -125,7 +120,6 @@ const Btn = styled.button`
     opacity: 0.8;
   }
 `;
-
 const BodyDiv = styled.div`
   display: flex;
   margin-top: 39px;
@@ -134,20 +128,13 @@ const BodyDiv = styled.div`
 `;
 
 export default function CPUHome() {
-  const userDocRef = doc(database, "Teams", auth.currentUser.userID);
   const [balance, setBalance] = useState(0);
   const [kioskImage, setKioskImage] = useState("");
+  CPUFirebase.init().then(() => {
+    setBalance(CPUFirebase.userDocData.balance);
+    setKioskImage(CPUFirebase.kiosk_image_download_url);
+  });
   const navigate = useNavigate();
-  let userDoc = undefined;
-  let userDocData = undefined;
-  const init = async () => {
-    userDoc = await getDoc(userDocRef);
-    userDocData = userDoc.data();
-    const url = await getDownloadURL(ref(storage, userDocData.kiosk_image));
-    setBalance(userDocData.balance);
-    setKioskImage(url);
-  };
-  init();
   const onChangeMenuClick = (e) => {
     navigate("change-menu");
   };
@@ -158,17 +145,9 @@ export default function CPUHome() {
     if (!e.target.files) {
       return;
     }
-    await deleteObject(ref(storage, userDocData.kiosk_image));
     const file = e.target.files[0];
-    const locationRef = ref(
-      storage,
-      `${auth.currentUser.userID}/kiosk_image/${file.name}`,
-    );
-    const result = await uploadBytes(locationRef, file);
-    const url = await getDownloadURL(result.ref);
-    userDocData.kiosk_image = result.ref._location.path_;
-    await setDoc(userDocRef, userDocData);
-    setKioskImage(url);
+    await CPUFirebase.changeKioskImage(file);
+    setKioskImage(CPUFirebase.kiosk_image_download_url);
   };
   return (
     <Wrapper>
