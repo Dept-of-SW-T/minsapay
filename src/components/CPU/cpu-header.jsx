@@ -36,10 +36,10 @@ export const Header = () => {
     e.preventDefault();
     navigate("../cpu-home");
   };
-  const onLogOutIconClick = (e) => {
+  const onLogOutIconClick = async (e) => {
     e.preventDefault();
     if (!confirm("로그아웃 하시겠습니까?")) return;
-    auth.signOut();
+    await auth.signOut();
     navigate("../../");
   };
   const onLogoHover = (e) => {

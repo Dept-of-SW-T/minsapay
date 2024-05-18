@@ -1,7 +1,7 @@
 import { Navigate } from "react-router-dom";
 import { auth } from "../features/login-feature";
 
-export function ProtectedRoute({ children }) {
+export function ProtectedRoute() {
   const user = auth.currentUser;
   if (user === null) return <Navigate to="/login" />;
   switch (user.userType) {

@@ -9,11 +9,12 @@ import {
 import { database, storage } from "../firebase";
 
 const CPUFirebase = {
-  userDocRef: doc(database, "Teams", auth.currentUser.userID),
+  userDocRef: undefined,
   userDoc: undefined,
   userDocData: undefined,
   kiosk_image_download_url: undefined,
   async init() {
+    this.userDocRef = doc(database, "Teams", auth.currentUser.userID);
     this.userDoc = await getDoc(this.userDocRef);
     this.userDocData = this.userDoc.data();
     this.kiosk_image_download_url = await getDownloadURL(
