@@ -21,22 +21,14 @@ const ChangeMenuBox = styled.div`
 
 export default function ChangeMenu() {
   // need to add edit menu feature and use usestate
-  const [menuList, setMenuList] = useState([
-    /*    <MenuElement
-      imageUrl={RamenImage}
-      menuName={"라면"}
-      price={3000}
-      editMode={false}
-    />,
-    <MenuElement
-      imageUrl={TangSooYookImage}
-      menuName={"탕수육"}
-      price={5000}
-      editMode={false}
-      />,
-      <MenuAddElement/>, */
-  ]);
-  const onMenuAddClick = () => {};
+  const [menuList, setMenuList] = useState([]);
+  const onMenuAddClick = () => {
+    setMenuList((prev) => {
+      let prevCopy = Object.assign([], prev);
+      prevCopy.splice(prev.length - 1, 0, <MenuElement editMode={true} />);
+      return prevCopy;
+    });
+  };
   useEffect(() => {
     const init = async () => {
       await CPUFirebase.init();
