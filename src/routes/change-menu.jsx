@@ -3,10 +3,9 @@ import { Header } from "../components/CPU/cpu-header";
 import CoupleList from "../components/CPU/couple-list";
 import MenuElement from "../components/CPU/menu-element";
 import MenuAddElement from "../components/CPU/menu-add-element";
-import RamenImage from "../temp-images/라면 사진.webp";
-import TangSooYookImage from "../temp-images/탕수육 사진.jpg";
 import { useEffect, useState } from "react";
 import { CPUFirebase } from "../features/CPU-firebase-interaction";
+import { useNavigate } from "react-router-dom";
 
 const Wrapper = styled.div`
   width: 100%;
@@ -21,11 +20,45 @@ const ChangeMenuBox = styled.div`
 
 export default function ChangeMenu() {
   // need to add edit menu feature and use usestate
+  const navigate = useNavigate();
   const [menuList, setMenuList] = useState([]);
-  const onMenuAddClick = () => {
+  const onDeleteButtonClick = async (e) => {
+    if (!confirm("메뉴를 삭제하시겠습니까?")) return;
+    const id = parseInt(e.target.id.substring(0, e.target.id.length - 4));
+    for (let i = 0; i < CPUFirebase.menuList.length; i++) {
+      if (CPUFirebase.menuList[i].id === id) {
+        await CPUFirebase.deleteMenuImage(i);
+        CPUFirebase.menuList.splice(i, 1);
+        await CPUFirebase.updateFirebaseMenuList();
+        break;
+      }
+    }
+    window.location.reload();
+  };
+  const onMenuAddClick = async () => {
+    const newId = Date.now();
+    CPUFirebase.menuList.push({
+      menuName: "없음",
+      price: 0,
+      imageDownloadUrl: "",
+      imagePath: "",
+      id: newId,
+    });
+    await CPUFirebase.updateFirebaseMenuList();
     setMenuList((prev) => {
       let prevCopy = Object.assign([], prev);
-      prevCopy.splice(prev.length - 1, 0, <MenuElement editMode={true} />);
+      prevCopy.splice(
+        prev.length - 1,
+        0,
+        <MenuElement
+          menuName={"없음"}
+          price={0}
+          imageUrl={""}
+          editMode={false}
+          id={newId}
+          onDeleteButtonClick={onDeleteButtonClick}
+        />,
+      );
       return prevCopy;
     });
   };
@@ -33,14 +66,16 @@ export default function ChangeMenu() {
     const init = async () => {
       await CPUFirebase.init();
       setMenuList(
-        JSON.parse(CPUFirebase.userDocData.menu_list)
+        CPUFirebase.menuList
           .map((value) => {
             return (
               <MenuElement
-                imageUrl={value.image_url}
-                menuName={value.name}
+                imageUrl={value.imageDownloadUrl}
+                menuName={value.menuName}
                 price={value.price}
                 editMode={false}
+                id={value.id}
+                onDeleteButtonClick={onDeleteButtonClick}
               />
             );
           })

@@ -118,6 +118,7 @@ const BodyDiv = styled.div`
   width: 100%;
 `;
 
+// add isloading to total page and image upload
 export default function CPUHome() {
   const [balance, setBalance] = useState(0);
   const [kioskImage, setKioskImage] = useState("");
