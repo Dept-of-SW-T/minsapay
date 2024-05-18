@@ -12,20 +12,22 @@ const Wrapper = styled.span`
   border: 3px solid ${BORDER_GRAY};
   border-radius: 20px;
   background-color: white;
+  &:hover {
+    & img {
+      opacity: 0.8;
+    }
+    cursor: pointer;
+  }
 `;
 
 const Img = styled.img`
   width: 80px;
   opacity: 0.4;
-  &:hover {
-    opacity: 0.8;
-    cursor: pointer;
-  }
 `;
 
-export default function MenuAddElement() {
+export default function MenuAddElement({ onClick }) {
   return (
-    <Wrapper>
+    <Wrapper onClick={onClick}>
       <Img src={AddMenuIcon} />
     </Wrapper>
   );

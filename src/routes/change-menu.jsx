@@ -5,6 +5,8 @@ import MenuElement from "../components/CPU/menu-element";
 import MenuAddElement from "../components/CPU/menu-add-element";
 import RamenImage from "../temp-images/라면 사진.webp";
 import TangSooYookImage from "../temp-images/탕수육 사진.jpg";
+import { useEffect, useState } from "react";
+import { CPUFirebase } from "../features/CPU-firebase-interaction";
 
 const Wrapper = styled.div`
   width: 100%;
@@ -18,15 +20,43 @@ const ChangeMenuBox = styled.div`
 `;
 
 export default function ChangeMenu() {
-  const menuList = [
-    <MenuElement image_url={RamenImage} menu_name={"라면"} price={3000} />,
-    <MenuElement
-      image_url={TangSooYookImage}
-      menu_name={"탕수육"}
-      price={5000}
+  // need to add edit menu feature and use usestate
+  const [menuList, setMenuList] = useState([
+    /*    <MenuElement
+      imageUrl={RamenImage}
+      menuName={"라면"}
+      price={3000}
+      editMode={false}
     />,
-    <MenuAddElement />,
-  ]; // firebase and add usestate
+    <MenuElement
+      imageUrl={TangSooYookImage}
+      menuName={"탕수육"}
+      price={5000}
+      editMode={false}
+      />,
+      <MenuAddElement/>, */
+  ]);
+  const onMenuAddClick = () => {};
+  useEffect(() => {
+    const init = async () => {
+      await CPUFirebase.init();
+      setMenuList(
+        JSON.parse(CPUFirebase.userDocData.menu_list)
+          .map((value) => {
+            return (
+              <MenuElement
+                imageUrl={value.image_url}
+                menuName={value.name}
+                price={value.price}
+                editMode={false}
+              />
+            );
+          })
+          .concat([<MenuAddElement onClick={onMenuAddClick} />]),
+      );
+    };
+    init();
+  }, []);
   return (
     <Wrapper>
       <Header />

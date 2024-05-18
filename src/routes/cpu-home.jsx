@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { auth } from "../features/login-feature";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CoupleList from "../components/CPU/couple-list";
 import { Header } from "../components/CPU/cpu-header";
 import { useNavigate } from "react-router-dom";
@@ -121,10 +121,15 @@ const BodyDiv = styled.div`
 export default function CPUHome() {
   const [balance, setBalance] = useState(0);
   const [kioskImage, setKioskImage] = useState("");
-  CPUFirebase.init().then(() => {
-    setBalance(CPUFirebase.userDocData.balance);
-    setKioskImage(CPUFirebase.kiosk_image_download_url);
-  });
+  useEffect(() => {
+    const init = async () => {
+      await CPUFirebase.init();
+      await CPUFirebase.kioskImageInit();
+      setBalance(CPUFirebase.userDocData.balance);
+      setKioskImage(CPUFirebase.kioskImageDownloadUrl);
+    };
+    init();
+  }, []);
   const navigate = useNavigate();
   const onChangeMenuClick = (e) => {
     navigate("change-menu");
@@ -138,7 +143,7 @@ export default function CPUHome() {
     }
     const file = e.target.files[0];
     await CPUFirebase.changeKioskImage(file);
-    setKioskImage(CPUFirebase.kiosk_image_download_url);
+    setKioskImage(CPUFirebase.kioskImageDownloadUrl);
   };
   const orderList = [
     <OrderElement

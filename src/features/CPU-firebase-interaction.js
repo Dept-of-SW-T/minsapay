@@ -12,12 +12,14 @@ const CPUFirebase = {
   userDocRef: undefined,
   userDoc: undefined,
   userDocData: undefined,
-  kiosk_image_download_url: undefined,
+  kioskImageDownloadUrl: undefined,
   async init() {
     this.userDocRef = doc(database, "Teams", auth.currentUser.userID);
     this.userDoc = await getDoc(this.userDocRef);
-    this.userDocData = this.userDoc.data();
-    this.kiosk_image_download_url = await getDownloadURL(
+    this.userDocData = await this.userDoc.data();
+  },
+  async kioskImageInit() {
+    this.kioskImageDownloadUrl = await getDownloadURL(
       ref(storage, this.userDocData.kiosk_image),
     );
   },
@@ -28,10 +30,9 @@ const CPUFirebase = {
       `${auth.currentUser.userID}/kiosk_image/${file.name}`,
     );
     const result = await uploadBytes(locationRef, file);
-    this.kiosk_image_download_url = await getDownloadURL(result.ref);
+    this.kioskImageDownloadUrl = await getDownloadURL(result.ref);
     this.userDocData.kiosk_image = result.ref._location.path_;
     await setDoc(this.userDocRef, this.userDocData);
   },
 };
-
 export { CPUFirebase };

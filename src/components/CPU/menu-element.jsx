@@ -32,14 +32,25 @@ const Text = styled.span`
   text-align: center;
 `;
 
-export default function MenuElement({ image_url, menu_name, price }) {
+export default function MenuElement({
+  imageUrl,
+  menuName,
+  price,
+  editMode = true,
+}) {
   return (
     <Wrapper>
-      <Img src={image_url} />
-      <TextDiv>
-        <Text>메뉴명: {menu_name}</Text>
-        <Text>가격: {price}원</Text>
-      </TextDiv>
+      {editMode ? (
+        <>Edit Mode</>
+      ) : (
+        <>
+          <Img src={imageUrl} />
+          <TextDiv>
+            <Text>메뉴명: {menuName}</Text>
+            <Text>가격: {price}원</Text>
+          </TextDiv>
+        </>
+      )}
     </Wrapper>
   );
 }
