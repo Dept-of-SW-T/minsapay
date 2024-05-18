@@ -26,9 +26,9 @@ const TwoElementDiv = styled.div`
 `;
 
 export default function CoupleList({ dataList }) {
-  const dataCoupled = splitIntoChunk(dataList, 2).map((value) => {
+  const dataCoupled = splitIntoChunk(dataList, 2).map((value, index) => {
     return (
-      <TwoElementDiv>
+      <TwoElementDiv key={index}>
         {value[0]}
         {value[1]}
       </TwoElementDiv>
