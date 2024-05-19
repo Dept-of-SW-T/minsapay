@@ -98,7 +98,7 @@ const ShoppingCartImage = styled.img`
 export default function KioskHome() {
   const [kioskImage, setKioskImage] = useState("");
   const [menuList, setMenuList] = useState([]);
-  const [orders, setOrders] = useState([]);
+  // const [orders, setOrders] = useState([]);
   const onAddToOrderClick = (e) => {
     const id = parseInt(e.target.id.substring(0, e.target.id.length - 4));
     console.log(id);
@@ -112,6 +112,7 @@ export default function KioskHome() {
         CPUFirebase.menuList.map((value) => {
           return (
             <MenuDisplayElement
+              key={value.id} // Add key prop
               menuImageUrl={value.imageDownloadUrl}
               menuName={value.menuName}
               price={value.price}
@@ -158,6 +159,7 @@ export default function KioskHome() {
           <OrderList
             orders={[
               <OrderElementKiosk
+                key={1} // Add key prop
                 menuImageUrl={ShoppingCart}
                 menuName={"수제 햄버거"}
                 price={4000}

@@ -130,10 +130,10 @@ export default function CPUHome() {
     init();
   }, []);
   const navigate = useNavigate();
-  const onChangeMenuClick = (e) => {
+  const onChangeMenuClick = () => {
     navigate("change-menu");
   };
-  const onRefundApprovalClick = (e) => {
+  const onRefundApprovalClick = () => {
     navigate("refund-approval");
   };
   const onFileChange = async (e) => {
@@ -146,54 +146,63 @@ export default function CPUHome() {
   };
   const orderList = [
     <OrderElement
+      key={1}
       menuName={"해물라면"}
       userName={"이감찬"}
       time={"15:58:50"}
       status={"주문요청"}
     />,
     <OrderElement
+      key={2}
       menuName={"닭발"}
       userName={"김의영"}
       time={"15:58:55"}
       status={"주문요청"}
     />,
     <OrderElement
+      key={3}
       menuName={"해물라면"}
       userName={"이감찬"}
       time={"15:58:50"}
       status={"주문요청"}
     />,
     <OrderElement
+      key={4}
       menuName={"닭발"}
       userName={"김의영"}
       time={"15:58:55"}
       status={"주문요청"}
     />,
     <OrderElement
+      key={5}
       menuName={"해물라면"}
       userName={"이감찬"}
       time={"15:58:50"}
       status={"주문요청"}
     />,
     <OrderElement
+      key={6}
       menuName={"닭갈비"}
       userName={"조유찬"}
       time={"15:45:45"}
       status={"처리중"}
     />,
     <OrderElement
+      key={7}
       menuName={"해물라면"}
       userName={"이감찬"}
       time={"15:45:40"}
       status={"처리완료"}
     />,
     <OrderElement
+      key={8}
       menuName={"해물라면"}
       userName={"최정욱"}
       time={"15:44:35"}
       status={"환불요청"}
     />,
     <OrderElement
+      key={9}
       menuName={"해물라면"}
       userName={"이감찬"}
       time={"15:43:30"}
