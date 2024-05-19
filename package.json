@@ -36,6 +36,7 @@
   },
   "lint-staged": {
     "*.{js,jsx}": [
+      "eslint --fix --quiet",
       "prettier --write"
     ]
   }
