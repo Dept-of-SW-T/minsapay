@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import LogoRef from "../../images/TempLogoMinsapay.svg";
+import LogoRef from "../../images/LogoMinsapay.svg";
 import LogOutRef from "../../images/LogOut.svg";
 import GoHomeRef from "../../images/CPUHome.svg";
 import { useNavigate } from "react-router-dom";

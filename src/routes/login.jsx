@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { auth } from "../features/login-feature";
 import styled from "styled-components";
-import Logo from "../images/TempLogoMinsapay.svg";
+import Logo from "../images/LogoMinsapay.svg";
 import { useNavigate } from "react-router-dom";
 import {
   BORDER_GRAY,

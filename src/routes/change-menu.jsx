@@ -5,7 +5,6 @@ import MenuElement from "../components/CPU/menu-element";
 import MenuAddElement from "../components/CPU/menu-add-element";
 import { useEffect, useState } from "react";
 import { CPUFirebase } from "../features/CPU-firebase-interaction";
-import { useNavigate } from "react-router-dom";
 
 const Wrapper = styled.div`
   width: 100%;
@@ -20,7 +19,6 @@ const ChangeMenuBox = styled.div`
 
 export default function ChangeMenu() {
   // need to add edit menu feature and use usestate
-  const navigate = useNavigate();
   const [menuList, setMenuList] = useState([]);
   const onDeleteButtonClick = async (e) => {
     if (!confirm("메뉴를 삭제하시겠습니까?")) return;

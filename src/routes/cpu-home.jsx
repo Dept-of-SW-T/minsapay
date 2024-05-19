@@ -43,7 +43,7 @@ const Title = styled.div`
   border: 3px solid ${BORDER_GRAY};
   border-radius: 20px;
   background-size: cover;
-  background-size: center;
+  background-position: center;
 `;
 const OpacityLayer = styled.div`
   // 글씨가 세로로 정중앙이 아님 고침이 필요
@@ -59,11 +59,9 @@ const OpacityLayer = styled.div`
   background-color: rgb(0, 0, 0, 0.3);
 `;
 const TeamName = styled.div`
-  // needs font change
   margin-left: 125px;
   text-align: center;
   width: 240px;
-  z-index: 100;
 `;
 const Balance = styled.div`
   // needs font change
