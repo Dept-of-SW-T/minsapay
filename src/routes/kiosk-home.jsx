@@ -5,6 +5,7 @@ import { CPUFirebase } from "../features/CPU-firebase-interaction";
 import { useEffect, useState } from "react";
 import QuadList from "../components/kiosk/quad-list";
 import MenuDisplayElement from "../components/kiosk/menu-display-element";
+import ShoppingCart from "../images/ShoppingCart.svg";
 
 const Wrapper = styled.div`
   width: 100%;

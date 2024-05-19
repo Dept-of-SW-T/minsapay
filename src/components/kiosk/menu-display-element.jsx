@@ -6,7 +6,7 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: flex;
   flex-direction: column;
-  width: 230px;
+  width: calc(25% - 30px);
   height: 298px;
   border-radius: 30px;
   background-color: white;
@@ -14,13 +14,9 @@ const Wrapper = styled.div`
 `;
 const NoImage = styled.div`
   width: 100%;
-  height: calc(230px - 3px);
   border-bottom: 3px solid ${BORDER_GRAY};
   border-top-left-radius: 30px;
   border-top-right-radius: 30px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   font-family: "BMDOHYEON";
   font-size: 25px;
 `;
@@ -32,7 +28,7 @@ const MenuImage = styled.img`
 `;
 const BottomDiv = styled.div`
   width: 100%;
-  height: calc(298px - 230px);
+  height: 100%;
   display: flex;
 `;
 const AddOrderBox = styled.div`
@@ -68,7 +64,7 @@ const MenuName = styled.div`
 `;
 const MenuPrice = styled.div`
   height: 21px;
-  font-size: 18px;
+  font-size: 14px;
   display: flex;
   align-items: center;
   color: #2079ff;
@@ -85,7 +81,19 @@ export default function MenuDisplayElement({
   return (
     <Wrapper style={{ visibility: `${show ? "visible" : "hidden"}` }}>
       {menuImageUrl === "" ? (
-        <NoImage>이미지 없음</NoImage>
+        <NoImage>
+          <p
+            style={{
+              width: "100%",
+              aspectRatio: "1",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            이미지 없음
+          </p>
+        </NoImage>
       ) : (
         <MenuImage src={menuImageUrl} />
       )}
