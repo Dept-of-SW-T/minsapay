@@ -158,7 +158,7 @@ export default function KioskHome() {
           <OrderList
             orders={[
               <OrderElementKiosk
-                menuImageUrl={ShoppingCart}
+                menuImageUrl={""}
                 menuName={"수제 햄버거"}
                 price={4000}
               />,

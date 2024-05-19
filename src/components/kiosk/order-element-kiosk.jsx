@@ -20,6 +20,18 @@ const MenuImage = styled.img`
   border-top-left-radius: calc(30px - 3px);
   border-bottom-left-radius: calc(30px - 3px);
 `;
+const NoImage = styled.div`
+  height: 100%;
+  aspect-ratio: 1;
+  border-top-left-radius: calc(30px - 3px);
+  border-bottom-left-radius: calc(30px - 3px);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  font-family: "BMDOHYEON";
+  border-right: 3px solid ${BORDER_GRAY};
+`;
 
 const MenuInfo = styled.div`
   width: 139px;
@@ -51,7 +63,11 @@ export default function OrderElementKiosk({
 }) {
   return (
     <Wrapper>
-      <MenuImage src={menuImageUrl} />
+      {menuImageUrl === "" ? (
+        <NoImage>이미지 없음</NoImage>
+      ) : (
+        <MenuImage src={menuImageUrl} />
+      )}
       <MenuInfo>
         <MenuName>{menuName}</MenuName>
         <MenuPrice>{price}원</MenuPrice>
