@@ -26,6 +26,7 @@ const Img = styled.img`
 `;
 
 export default function MenuAddElement({ onClick }) {
+  // + 싸인만 있는 element, 누르는 경우 인자로 받은 onClick를 실행한다.
   return (
     <Wrapper onClick={onClick}>
       <Img src={AddMenuIcon} />

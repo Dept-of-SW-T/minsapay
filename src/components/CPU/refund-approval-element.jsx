@@ -1,12 +1,5 @@
 import styled from "styled-components";
-import {
-  BORDER_GRAY,
-  ORDER_COMPLETE,
-  ORDER_ONPROCESS,
-  ORDER_REQUEST,
-  REFUND_OR_RECEIPT_COMPLETE,
-  REFUND_REQUEST,
-} from "../theme-definition";
+import { BORDER_GRAY, REFUND_REQUEST } from "../theme-definition";
 
 const Wrapper = styled.span`
   // needs css fixing
@@ -44,6 +37,7 @@ const Text = styled.span`
 `;
 
 export default function RefundApprovalElement({ menuName, userName, time }) {
+  // 환불을 승인하는 element
   return (
     <Wrapper>
       <Text id="first-child">{menuName}</Text>

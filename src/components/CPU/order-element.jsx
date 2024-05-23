@@ -9,7 +9,6 @@ import {
 } from "../theme-definition";
 
 const Wrapper = styled.span`
-  // needs css fixing
   width: 654px;
   height: 85px;
   border: 3px solid ${BORDER_GRAY};
@@ -37,6 +36,7 @@ const Text = styled.span`
 `;
 
 export default function OrderElement({ menuName, userName, time, status }) {
+  // 주문 요청을 띄우는 element
   const backgroundColor = () => {
     switch (status) {
       case "주문요청":

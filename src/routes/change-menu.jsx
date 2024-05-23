@@ -51,7 +51,7 @@ export default function ChangeMenu() {
         <MenuElement
           menuName={"없음"}
           price={0}
-          imageUrl={""}
+          imageDownloadUrl={""}
           editMode={false}
           id={newId}
           onDeleteButtonClick={onDeleteButtonClick}
@@ -68,16 +68,17 @@ export default function ChangeMenu() {
           .map((value) => {
             return (
               <MenuElement
-                imageUrl={value.imageDownloadUrl}
+                imageDownloadUrl={value.imageDownloadUrl}
                 menuName={value.menuName}
                 price={value.price}
                 editMode={false}
                 id={value.id}
                 onDeleteButtonClick={onDeleteButtonClick}
+                key={value.id}
               />
             );
           })
-          .concat([<MenuAddElement onClick={onMenuAddClick} />]),
+          .concat([<MenuAddElement onClick={onMenuAddClick} key={-1} />]),
       );
     };
     init();
