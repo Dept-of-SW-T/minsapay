@@ -4,6 +4,8 @@ import { useState } from "react";
 import deleteImage from "../../images/DeleteMenu.svg";
 import { CPUFirebase } from "../../features/CPU-firebase-interaction";
 
+// 적용 시 로딩하기 화면 넣어야 함 // 감찬이처럼 성격 급한 애들 방지를 위하여
+
 const Wrapper = styled.span`
   display: flex;
   flex-direction: row;
