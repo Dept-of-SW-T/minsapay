@@ -76,7 +76,7 @@ export default function MenuDisplayElement({
   price,
   id,
   onAddToOrderClick,
-  show = true,
+  show = true, // false는 dummy element로 quad list에서 정렬을 맞추기 위해서 쓰임
 }) {
   return (
     <Wrapper style={{ visibility: `${show ? "visible" : "hidden"}` }}>

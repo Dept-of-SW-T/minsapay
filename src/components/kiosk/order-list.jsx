@@ -13,5 +13,6 @@ const Wrapper = styled.div`
 `;
 
 export default function OrderList({ orders }) {
+  // order-element-kiosk를 나열하는 리스트
   return <Wrapper>{orders}</Wrapper>;
 }

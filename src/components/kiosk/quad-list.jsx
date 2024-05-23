@@ -26,6 +26,7 @@ const FourElementDiv = styled.div`
 `;
 
 export default function QuadList({ dataList, redundancyElement }) {
+  // datalist를 4개씩 짝찢고 마지막에 보족한 만큼 dummy element를 추가해준다.
   const dataQuaded = splitIntoChunk(dataList, 4).map((value, index) => {
     while (value.length < 4) {
       value.push(redundancyElement);

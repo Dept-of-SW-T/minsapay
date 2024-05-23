@@ -1,7 +1,7 @@
 import styled from "styled-components";
-import AddQuantity from "../../images/AddQuantity.svg";
-import LowerQuantity from "../../images/LowerQuantity.svg";
-import { BORDER_GRAY, BUTTON_SHADOW } from "../theme-definition";
+/* import AddQuantity from "../../images/AddQuantity.svg";
+import LowerQuantity from "../../images/LowerQuantity.svg"; */ // 위아래 화살표
+import { BORDER_GRAY /* BUTTON_SHADOW */ } from "../theme-definition";
 
 const Wrapper = styled.div`
   width: calc(100% - 6px);
@@ -50,16 +50,17 @@ const MenuPrice = styled.div`
   color: #2079ff;
   margin-left: 10px;
 `;
-const QuantityChange = styled.div`
+/* const QuantityChange = styled.div`
   width: 60px;
-`;
+`; */
 
 export default function OrderElementKiosk({
+  // 아직 덜만듦 ui도 짜야 하고 여러가지 수량 기능? 등등 추가해야 함
   menuImageUrl,
   menuName,
   price,
-  quantity,
-  id,
+  /*   quantity,
+  id, */
 }) {
   return (
     <Wrapper>
