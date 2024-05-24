@@ -122,6 +122,7 @@ export default function CPUHome() {
   const [kioskImage, setKioskImage] = useState("");
   useEffect(() => {
     const init = async () => {
+      // 초기에 잔고, 이미지 로딩
       await CPUFirebase.init();
       await CPUFirebase.kioskImageInit();
       setBalance(CPUFirebase.userDocData.balance);
@@ -142,7 +143,7 @@ export default function CPUHome() {
     }
     const file = e.target.files[0];
     await CPUFirebase.changeKioskImage(file);
-    setKioskImage(CPUFirebase.kioskImageDownloadUrl);
+    setKioskImage(CPUFirebase.kioskImageDownloadUrl); // 이미지 업로드 시 사진 바꾸기
   };
   const orderList = [
     <OrderElement
@@ -208,7 +209,7 @@ export default function CPUHome() {
       time={"15:43:30"}
       status={"수령완료"}
     />,
-  ]; // 실제 로딩하고 usestate
+  ]; // 실제 로딩하고 usestate 사용해야 함
   return (
     <Wrapper>
       <Header />
@@ -241,34 +242,3 @@ export default function CPUHome() {
     </Wrapper>
   );
 }
-
-/* using database!!
-const doc = await addDoc(collection(db, "tweets"), {
-  tweet,
-  createdAt: Date.now(),
-  username: user.displayName || "Anonymous",
-  userId: user.uid,
-});
-await updateDoc(doc, {
-  photo: url,
-});
-const fetchTweets = async () => {
-    const tweetsQuery = query(
-        collection(db, "tweets"),
-        orderBy("createdAt", "desc")
-    );
-    const snapshot = await getDocs(tweetsQuery);
-    const tweets = snapshot.docs.map((doc) => {
-        const {tweet, createdAt, userId, username, photo} = doc.data();
-        return {
-            tweet, createdAt, userId, username, photo,
-            id: doc.id,
-        }
-    }); */
-/*     const locationRef = ref(storage, `tweets/${user.uid}/${doc.id}`);
-    const result = await uploadBytes(locationRef, file);
-    const url = await getDownloadURL(result.ref);
-    await updateDoc(doc, {
-      photo: url,
-    });
- */

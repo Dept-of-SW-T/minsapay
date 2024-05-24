@@ -66,19 +66,15 @@ const Input = styled.input`
   &:focus {
     border-bottom: 3px solid #444;
   }
-  &.no-display {
-    display: none;
-  }
-  &.display {
-    display: block;
-  }
   &[name="password"] {
+    // BMDOWYEON 폰트는 비밀번호를 지원하지 않기에 비밀번호 입력은 본래 글씨체 적용
     font-family: sans-serif;
     &::placeholder {
       font-family: "BMDOHYEON";
     }
   }
   &[type="submit"] {
+    // 로그인 버튼
     margin-top: 70px;
     width: 130px;
     height: 60px;
@@ -98,6 +94,7 @@ const Input = styled.input`
   }
 `;
 const Error = styled.span`
+  // 로그인 에러 모두 띄우는 거
   font-weight: 600;
   color: tomato;
   font-family: "BMDOHYEON";
@@ -115,9 +112,10 @@ export default function Login() {
     if (userID === "" || password === "") return;
     const successfulSignIn = await auth.signIn(userID, password);
     if (successfulSignIn) {
-      navigate("/");
-      // console.log(auth.currentUser);
-    } else if (auth.error === "") setError("이유불명 로그인 에러");
+      // 로그인에 성공하면
+      navigate("/"); // 홈으로
+    } else if (auth.error === "")
+      setError("이유불명 로그인 에러"); // signIn에서 잡지 못하는 에러
     else setError(auth.error);
   };
   return (

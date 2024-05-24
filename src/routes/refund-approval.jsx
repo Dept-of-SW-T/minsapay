@@ -19,22 +19,31 @@ export default function RefundApproval() {
       menuName="해물라면"
       userName="최정욱"
       time="15:44:35"
-    />,
-    <RefundApprovalElement menuName="조유찬" userName="닭발" time="15:44:30" />,
-    <RefundApprovalElement
-      menuName="컵라면"
-      userName="이예안"
-      time="15:44:25"
+      key={1}
     />,
     <RefundApprovalElement
-      menuName="컵라면"
-      userName="이예안"
-      time="15:44:25"
+      menuName="조유찬"
+      userName="닭발"
+      time="15:44:30"
+      key={2}
     />,
     <RefundApprovalElement
       menuName="컵라면"
       userName="이예안"
       time="15:44:25"
+      key={3}
+    />,
+    <RefundApprovalElement
+      menuName="컵라면"
+      userName="이예안"
+      time="15:44:25"
+      key={4}
+    />,
+    <RefundApprovalElement
+      menuName="컵라면"
+      userName="이예안"
+      time="15:44:25"
+      key={5}
     />,
   ];
   return (
