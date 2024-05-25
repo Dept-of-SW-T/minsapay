@@ -18,7 +18,7 @@ const CPUFirebase = {
   async init() {
     this.userDocRef = doc(database, "Teams", auth.currentUser.userID);
     this.userDoc = await getDoc(this.userDocRef);
-    this.userDocData = await this.userDoc.data();
+    this.userDocData = this.userDoc.data();
     this.menuList = JSON.parse(CPUFirebase.userDocData.menu_list); // firestore에는 stringify된 형태이므로 JSON.parse() 해줘야 함
   },
   async kioskImageInit() {
@@ -38,6 +38,7 @@ const CPUFirebase = {
     this.kioskImageDownloadUrl = await getDownloadURL(result.ref);
     this.userDocData.kiosk_image = result.ref._location.path_; // userDoc에 다시 저장 reference 저장
     await setDoc(this.userDocRef, this.userDocData); // document update
+    this.userDoc = await getDoc(this.userDocRef);
   },
   async deleteMenuImage(index) {
     // 해당 team의 index번째 menuimage가 있는 경우에 storage에서 삭제
@@ -62,6 +63,7 @@ const CPUFirebase = {
     // firestore에 현재 runtime의 메뉴리스트 stringify해서 저장
     this.userDocData.menu_list = JSON.stringify(this.menuList);
     await setDoc(this.userDocRef, this.userDocData);
+    this.userDoc = await getDoc(this.userDocRef);
   },
 };
 export { CPUFirebase };

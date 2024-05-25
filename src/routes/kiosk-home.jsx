@@ -8,6 +8,7 @@ import MenuDisplayElement from "../components/kiosk/menu-display-element";
 import ShoppingCart from "../images/ShoppingCart.svg";
 import OrderList from "../components/kiosk/order-list";
 import OrderElementKiosk from "../components/kiosk/order-element-kiosk";
+import { useNavigate } from "react-router-dom";
 
 const Wrapper = styled.div`
   width: 100%;
@@ -83,7 +84,7 @@ const PaymentBox = styled.div`
 `;
 const ShoppingCartDiv = styled.div`
   width: 100%;
-  height: 195px;
+  height: 165px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -95,13 +96,71 @@ const ShoppingCartDiv = styled.div`
 const ShoppingCartImage = styled.img`
   width: 50px;
 `;
+const Total = styled.div`
+  margin-top: 20px;
+
+  height: calc(59px - 6px);
+  width: calc(100% - 6px - 30px);
+  padding-left: 15px;
+  padding-right: 15px;
+  border: 3px solid #4478ff;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+
+  font-family: "BMDOHYEON";
+`;
+const Pay = styled.div`
+  margin-top: 20px;
+
+  width: 100%;
+  height: 75px;
+  border-radius: 20px;
+  background-color: #4478ff;
+  color: white;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 36px;
+  font-family: "BMDOHYEON";
+
+  &:hover {
+    opacity: 0.8;
+    cursor: pointer;
+  }
+`;
+
 export default function KioskHome() {
   const [kioskImage, setKioskImage] = useState("");
   const [menuList, setMenuList] = useState([]);
-  // const [orders, setOrders] = useState([]);
+  const [orders, setOrders] = useState([]);
+  const navigate = useNavigate();
   const onAddToOrderClick = (e) => {
     const id = parseInt(e.target.id.substring(0, e.target.id.length - 4));
-    console.log(id);
+    console.log(orders);
+    for (let i = 0; i < orders.length; i++) {
+      if (id === orders[i].id) {
+        return;
+      }
+    }
+    for (let i = 0; i < CPUFirebase.menuList.length; i++) {
+      if (id === CPUFirebase.menuList[i].id) {
+        orders.push({
+          id: id,
+          imageDownloadUrl: CPUFirebase.menuList[i].imageDownloadUrl,
+          quantity: 1,
+          price: CPUFirebase.menuList[i].price,
+          menuName: CPUFirebase.menuList[i].menuName,
+        });
+        setOrders(orders);
+        break;
+      }
+    }
   };
   useEffect(() => {
     const init = async () => {
@@ -125,6 +184,46 @@ export default function KioskHome() {
     };
     init();
   }, []);
+  const onAddQuantityButtonClick = (e) => {
+    const id = parseInt(e.target.id.substring(0, e.target.id.length - 3));
+    console.log(id);
+    for (let i = 0; i < orders.length; i++) {
+      if (id === orders[i].id) {
+        orders[i].quantity++;
+        break;
+      }
+    }
+  };
+  const onLowerQuantityButtonClick = (e) => {
+    const id = parseInt(e.target.id.substring(0, e.target.id.length - 3));
+    for (let i = 0; i < orders.length; i++) {
+      if (id === orders[i].id) {
+        orders[i].quantity--;
+        setOrders(orders);
+        break;
+      }
+    }
+  };
+  const onOrderElementKioskDelete = (e) => {
+    const id = parseInt(e.target.id.substring(0, e.target.id.length - 3));
+    for (let i = 0; i < orders.length; i++) {
+      if (id === orders[i].id) {
+        orders.splice(i, 1);
+        setOrders(orders);
+        break;
+      }
+    }
+  };
+  function getTotal() {
+    let sum = 0;
+    orders.forEach((val) => (sum += val.price * val.quantity));
+    return sum;
+  }
+  const onPayClick = () => {
+    if (orders.length === 0) return;
+    // some firebase stuff
+    navigate("./kiosk-thankyou"); // 이전 탭으로 돌아가지 못하게 해야 함?
+  };
   return (
     <Wrapper>
       <DisplayBox>
@@ -157,15 +256,25 @@ export default function KioskHome() {
             <p>내 카트</p>
           </ShoppingCartDiv>
           <OrderList
-            orders={[
+            orders={orders.map((value) => (
               <OrderElementKiosk
-                menuImageUrl={""}
-                menuName={"수제 햄버거"}
-                price={4000}
-                key={"1"}
-              />,
-            ]}
+                imageDownloadUrl={value.imageDownloadUrl}
+                menuName={value.menuName}
+                price={value.price}
+                quantity={value.quantity}
+                key={value.id}
+                id={value.id}
+                onAddQuantityButtonClick={onAddQuantityButtonClick}
+                onLowerQuantityButtonClick={onLowerQuantityButtonClick}
+                onOrderElementKioskDelete={onOrderElementKioskDelete}
+              />
+            ))}
           />
+          <Total>
+            <p>Total</p>
+            <p>{getTotal()}원</p>
+          </Total>
+          <Pay onClick={onPayClick}>Pay!</Pay>
         </div>
       </PaymentBox>
     </Wrapper>

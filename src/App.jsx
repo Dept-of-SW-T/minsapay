@@ -4,7 +4,9 @@ import reset from "styled-reset";
 import Login from "./routes/login";
 import {
   ProtectedCPU,
+  ProtectedDeveloper,
   ProtectedKiosk,
+  ProtectedKioskHome,
   ProtectedRoute,
 } from "./components/protected-routes";
 import CPUHome from "./routes/cpu-home";
@@ -14,12 +16,22 @@ import { BACKGROUND_GRAY } from "./components/theme-definition";
 import KioskCover from "./routes/kiosk-cover";
 import KioskAuthentiaction from "./routes/kiosk-authentication";
 import KioskHome from "./routes/kiosk-home";
+import KioskThankYou from "./routes/kiosk-thankyou";
+import DeveloperHome from "./routes/developer-home";
 
 const router = createBrowserRouter([
   // 루팅
   {
     path: "/",
     element: <ProtectedRoute />, // 기본 화면으로 실제로는 절대로 display 되지는 않고 사용자를 다른 페이지로 보내는데 사용됨
+  },
+  {
+    path: "developer-home",
+    element: (
+      <ProtectedDeveloper>
+        <DeveloperHome />
+      </ProtectedDeveloper>
+    ),
   },
   {
     path: "cpu-home", // CPU 홈화면이다.
@@ -48,9 +60,11 @@ const router = createBrowserRouter([
   {
     path: "/kiosk-home", // kiosk 홈화면
     element: (
-      <ProtectedKiosk>
-        <KioskHome />
-      </ProtectedKiosk>
+      <ProtectedKioskHome>
+        <ProtectedKiosk>
+          <KioskHome />
+        </ProtectedKiosk>
+      </ProtectedKioskHome>
     ),
   },
   {
@@ -66,6 +80,14 @@ const router = createBrowserRouter([
     element: (
       <ProtectedKiosk>
         <KioskAuthentiaction />
+      </ProtectedKiosk>
+    ),
+  },
+  {
+    path: "/kiosk-home/kiosk-thankyou", // 감사합니다!!
+    element: (
+      <ProtectedKiosk>
+        <KioskThankYou />
       </ProtectedKiosk>
     ),
   },

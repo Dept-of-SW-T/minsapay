@@ -6,13 +6,23 @@ export function ProtectedRoute() {
   const user = auth.currentUser;
   if (user === null) return <Navigate to="/login" />;
   switch (user.userType) {
+    case "developer":
+      return <Navigate to="/developer-home" />;
     case "CPU":
       return <Navigate to="/cpu-home" />;
     case "kiosk":
-      return <Navigate to="/kiosk-home" />;
+      return <Navigate to="/kiosk-home/kiosk-cover" />;
     default:
       return <Navigate to="/login" />;
   }
+}
+export function ProtectedDeveloper({ children }) {
+  const user = auth.currentUser;
+  if (user === null) return <Navigate to="/login" />;
+  if (user.userType !== "developer") {
+    return <Navigate to="/" />;
+  }
+  return children;
 }
 
 export function ProtectedCPU({ children }) {
@@ -32,6 +42,10 @@ export function ProtectedKiosk({ children }) {
   if (user.userType !== "kiosk") {
     return <Navigate to="/" />;
   }
+  return children;
+}
+export function ProtectedKioskHome({ children }) {
+  // if buyer is there.... --> firebase
   return children;
 }
 

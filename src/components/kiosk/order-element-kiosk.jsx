@@ -1,7 +1,8 @@
 import styled from "styled-components";
-/* import AddQuantity from "../../images/AddQuantity.svg";
-import LowerQuantity from "../../images/LowerQuantity.svg"; */ // 위아래 화살표
+import AddQuantity from "../../images/AddQuantity.svg";
+import LowerQuantity from "../../images/LowerQuantity.svg";
 import { BORDER_GRAY /* BUTTON_SHADOW */ } from "../theme-definition";
+import { useState } from "react";
 
 const Wrapper = styled.div`
   width: calc(100% - 6px);
@@ -21,7 +22,7 @@ const MenuImage = styled.img`
   border-bottom-left-radius: calc(30px - 3px);
 `;
 const NoImage = styled.div`
-  height: 100%;
+  height: calc(110px - 6px);
   aspect-ratio: 1;
   border-top-left-radius: calc(30px - 3px);
   border-bottom-left-radius: calc(30px - 3px);
@@ -50,29 +51,74 @@ const MenuPrice = styled.div`
   color: #2079ff;
   margin-left: 10px;
 `;
-/* const QuantityChange = styled.div`
+const QuantityChange = styled.div`
   width: 60px;
-`; */
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+`;
+const Quantity = styled.div`
+  font-size: 20px;
+  font-family: "BMDOHYEON";
+  display: flex;
+  flex-direction: column;
+  opacity: 0.6;
+`;
+
+const QuantityChangeImg = styled.img`
+  &:hover {
+    cursor: pointer;
+  }
+`;
 
 export default function OrderElementKiosk({
   // 아직 덜만듦 ui도 짜야 하고 여러가지 수량 기능? 등등 추가해야 함
-  menuImageUrl,
+  imageDownloadUrl,
   menuName,
   price,
-  /*   quantity,
-  id, */
+  quantity,
+  id,
+  onAddQuantityButtonClick,
+  onLowerQuantityButtonClick,
+  onOrderElementKioskDelete,
 }) {
+  const [quantityState, setQuantityState] = useState(quantity);
   return (
     <Wrapper>
-      {menuImageUrl === "" ? (
+      {imageDownloadUrl === "" ? (
         <NoImage>이미지 없음</NoImage>
       ) : (
-        <MenuImage src={menuImageUrl} />
+        <MenuImage src={imageDownloadUrl} />
       )}
       <MenuInfo>
         <MenuName>{menuName}</MenuName>
         <MenuPrice>{price}원</MenuPrice>
       </MenuInfo>
+      <QuantityChange>
+        <QuantityChangeImg
+          src={AddQuantity}
+          id={id + ".AQ"}
+          onClick={(e) => {
+            onAddQuantityButtonClick(e);
+            setQuantityState((curr) => curr + 1);
+          }}
+        />
+        <Quantity>{quantityState}</Quantity>
+        <QuantityChangeImg
+          src={LowerQuantity}
+          id={id + ".LQ"}
+          onClick={(e) => {
+            if (quantityState > 1) {
+              onLowerQuantityButtonClick(e);
+              setQuantityState((curr) => curr - 1);
+            } else if (quantityState === 1) {
+              onOrderElementKioskDelete(e);
+            }
+          }}
+        />
+      </QuantityChange>
     </Wrapper>
   );
 }
