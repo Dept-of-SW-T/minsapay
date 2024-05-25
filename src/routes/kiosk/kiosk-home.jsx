@@ -137,13 +137,12 @@ const Pay = styled.div`
 `;
 
 export default function KioskHome() {
+  const [isLoading, setIsLoading] = useState(true);
   const [kioskImage, setKioskImage] = useState("");
-  const [menuList, setMenuList] = useState([]);
   const [orders, setOrders] = useState([]);
   const navigate = useNavigate();
   const onAddToOrderClick = (e) => {
     const id = parseInt(e.target.id.substring(0, e.target.id.length - 4));
-    console.log(orders);
     for (let i = 0; i < orders.length; i++) {
       if (id === orders[i].id) {
         return;
@@ -159,6 +158,7 @@ export default function KioskHome() {
           menuName: CPUFirebase.menuList[i].menuName,
         });
         setOrders([...orders]);
+
         break;
       }
     }
@@ -169,26 +169,13 @@ export default function KioskHome() {
       await CPUFirebase.kioskImageInit();
       await kioskFirebase.init();
       setKioskImage(CPUFirebase.kioskImageDownloadUrl);
-      setMenuList(
-        CPUFirebase.menuList.map((value) => {
-          return (
-            <MenuDisplayElement
-              key={value.id} // Add key prop
-              menuImageUrl={value.imageDownloadUrl}
-              menuName={value.menuName}
-              price={value.price}
-              id={value.id}
-              onAddToOrderClick={onAddToOrderClick}
-            />
-          );
-        }),
-      );
+      setIsLoading(false);
     };
     init();
   }, []);
   const onAddQuantityButtonClick = (e) => {
     const id = parseInt(e.target.id.substring(0, e.target.id.length - 3));
-    console.log(id);
+    console.log(orders);
     for (let i = 0; i < orders.length; i++) {
       if (id === orders[i].id) {
         orders[i].quantity++;
@@ -211,8 +198,13 @@ export default function KioskHome() {
     const id = parseInt(e.target.id.substring(0, e.target.id.length - 3));
     for (let i = 0; i < orders.length; i++) {
       if (id === orders[i].id) {
-        orders.splice(i, 1);
-        setOrders([...orders]);
+        //orders.splice(i, 1);
+        //setOrders([...orders]);
+        //setOrders(prev => { return prev.filter((_, index) => index !== i);});
+        const updatedOrders = [...orders]; // Create a copy of orders
+        updatedOrders.splice(i, 1); // Remove the order at index
+        setOrders(updatedOrders); // Update state with the modified copy
+        console.log(updatedOrders);
         break;
       }
     }
@@ -240,7 +232,22 @@ export default function KioskHome() {
           </Title>
           <MenuTitle>메뉴</MenuTitle>
           <QuadList
-            dataList={menuList}
+            dataList={
+              isLoading
+                ? []
+                : CPUFirebase.menuList.map((value) => {
+                    return (
+                      <MenuDisplayElement
+                        key={value.id} // Add key prop
+                        menuImageUrl={value.imageDownloadUrl}
+                        menuName={value.menuName}
+                        price={value.price}
+                        id={value.id}
+                        onAddToOrderClick={onAddToOrderClick}
+                      />
+                    );
+                  })
+            }
             redundancyElement={<MenuDisplayElement show={false} />}
           />
         </DisplayBoxContents>
