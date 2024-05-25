@@ -137,6 +137,7 @@ const Pay = styled.div`
 `;
 
 export default function KioskHome() {
+  // need to add all sorts of is loadings
   const [isLoading, setIsLoading] = useState(true);
   const [kioskImage, setKioskImage] = useState("");
   const [orders, setOrders] = useState([]);
@@ -175,7 +176,6 @@ export default function KioskHome() {
   }, []);
   const onAddQuantityButtonClick = (e) => {
     const id = parseInt(e.target.id.substring(0, e.target.id.length - 3));
-    console.log(orders);
     for (let i = 0; i < orders.length; i++) {
       if (id === orders[i].id) {
         orders[i].quantity++;
@@ -198,13 +198,9 @@ export default function KioskHome() {
     const id = parseInt(e.target.id.substring(0, e.target.id.length - 3));
     for (let i = 0; i < orders.length; i++) {
       if (id === orders[i].id) {
-        //orders.splice(i, 1);
-        //setOrders([...orders]);
-        //setOrders(prev => { return prev.filter((_, index) => index !== i);});
         const updatedOrders = [...orders]; // Create a copy of orders
         updatedOrders.splice(i, 1); // Remove the order at index
         setOrders(updatedOrders); // Update state with the modified copy
-        console.log(updatedOrders);
         break;
       }
     }
@@ -216,7 +212,7 @@ export default function KioskHome() {
   }
   const onPayClick = async () => {
     if (orders.length === 0) return;
-
+    await kioskFirebase.submitOrders(orders, getTotal());
     await kioskFirebase.removeLinkedBuyer();
     navigate("./kiosk-thankyou"); // 이전 탭으로 돌아가지 못하게 해야 함?
   };
