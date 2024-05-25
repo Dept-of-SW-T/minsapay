@@ -1,10 +1,10 @@
 import styled from "styled-components";
-import { Header } from "../components/CPU/cpu-header";
-import CoupleList from "../components/CPU/couple-list";
-import MenuElement from "../components/CPU/menu-element";
-import MenuAddElement from "../components/CPU/menu-add-element";
+import { Header } from "../../components/CPU/cpu-header";
+import CoupleList from "../../components/CPU/couple-list";
+import MenuElement from "../../components/CPU/menu-element";
+import MenuAddElement from "../../components/CPU/menu-add-element";
 import { useEffect, useState } from "react";
-import { CPUFirebase } from "../features/CPU-firebase-interaction";
+import { CPUFirebase } from "../../features/CPU-firebase-interaction";
 
 const Wrapper = styled.div`
   width: 100%;

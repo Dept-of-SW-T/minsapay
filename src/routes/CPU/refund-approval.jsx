@@ -1,7 +1,7 @@
 import styled from "styled-components";
-import { Header } from "../components/CPU/cpu-header";
-import CoupleList from "../components/CPU/couple-list";
-import RefundApprovalElement from "../components/CPU/refund-approval-element";
+import { Header } from "../../components/CPU/cpu-header";
+import CoupleList from "../../components/CPU/couple-list";
+import RefundApprovalElement from "../../components/CPU/refund-approval-element";
 
 const Wrapper = styled.div`
   width: 100%;

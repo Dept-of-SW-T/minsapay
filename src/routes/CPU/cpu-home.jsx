@@ -1,18 +1,18 @@
 import styled from "styled-components";
-import { auth } from "../features/login-feature";
+import { auth } from "../../features/login-feature";
 import { useEffect, useState } from "react";
-import CoupleList from "../components/CPU/couple-list";
-import { Header } from "../components/CPU/cpu-header";
+import CoupleList from "../../components/CPU/couple-list";
+import { Header } from "../../components/CPU/cpu-header";
 import { useNavigate } from "react-router-dom";
-import ChangeKioskImage from "../images/ChangeKioskImage.svg";
+import ChangeKioskImage from "../../images/ChangeKioskImage.svg";
 import {
   BACKGROUND_GRAY,
   BORDER_GRAY,
   BUTTON_SHADOW,
   MINSAPAY_BLUE,
-} from "../components/theme-definition";
-import { CPUFirebase } from "../features/CPU-firebase-interaction";
-import OrderElement from "../components/CPU/order-element";
+} from "../../components/theme-definition";
+import { CPUFirebase } from "../../features/CPU-firebase-interaction";
+import OrderElement from "../../components/CPU/order-element";
 
 // border 다 추가하기
 

@@ -3,21 +3,24 @@ import styled, { createGlobalStyle } from "styled-components";
 import reset from "styled-reset";
 import Login from "./routes/login";
 import {
+  ProtectedBuyer,
   ProtectedCPU,
   ProtectedDeveloper,
   ProtectedKiosk,
   ProtectedKioskHome,
   ProtectedRoute,
 } from "./components/protected-routes";
-import CPUHome from "./routes/cpu-home";
-import ChangeMenu from "./routes/change-menu";
-import RefundApproval from "./routes/refund-approval";
 import { BACKGROUND_GRAY } from "./components/theme-definition";
-import KioskCover from "./routes/kiosk-cover";
-import KioskAuthentiaction from "./routes/kiosk-authentication";
-import KioskHome from "./routes/kiosk-home";
-import KioskThankYou from "./routes/kiosk-thankyou";
 import DeveloperHome from "./routes/developer-home";
+import BuyerHome from "./routes/buyer/buyer-home";
+import BuyerPayment from "./routes/buyer/buyer-payment";
+import CPUHome from "./routes/CPU/cpu-home";
+import ChangeMenu from "./routes/CPU/change-menu";
+import RefundApproval from "./routes/CPU/refund-approval";
+import KioskHome from "./routes/kiosk/kiosk-home";
+import KioskCover from "./routes/kiosk/kiosk-cover";
+import KioskAuthentiaction from "./routes/kiosk/kiosk-authentication";
+import KioskThankYou from "./routes/kiosk/kiosk-thankyou";
 
 const router = createBrowserRouter([
   // 루팅
@@ -26,11 +29,27 @@ const router = createBrowserRouter([
     element: <ProtectedRoute />, // 기본 화면으로 실제로는 절대로 display 되지는 않고 사용자를 다른 페이지로 보내는데 사용됨
   },
   {
-    path: "developer-home",
+    path: "developer-home", // 개발자용
     element: (
       <ProtectedDeveloper>
         <DeveloperHome />
       </ProtectedDeveloper>
+    ),
+  },
+  {
+    path: "buyer-home", // 개발자용
+    element: (
+      <ProtectedBuyer>
+        <BuyerHome />
+      </ProtectedBuyer>
+    ),
+  },
+  {
+    path: "buyer-home/buyer-payment", // 개발자용
+    element: (
+      <ProtectedBuyer>
+        <BuyerPayment />
+      </ProtectedBuyer>
     ),
   },
   {

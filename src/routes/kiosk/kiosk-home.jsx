@@ -1,14 +1,15 @@
 import styled from "styled-components";
-import { BORDER_GRAY, BUTTON_SHADOW } from "../components/theme-definition";
-import { auth } from "../features/login-feature";
-import { CPUFirebase } from "../features/CPU-firebase-interaction";
+import { BORDER_GRAY, BUTTON_SHADOW } from "../../components/theme-definition";
+import { auth } from "../../features/login-feature";
+import { CPUFirebase } from "../../features/CPU-firebase-interaction";
 import { useEffect, useState } from "react";
-import QuadList from "../components/kiosk/quad-list";
-import MenuDisplayElement from "../components/kiosk/menu-display-element";
-import ShoppingCart from "../images/ShoppingCart.svg";
-import OrderList from "../components/kiosk/order-list";
-import OrderElementKiosk from "../components/kiosk/order-element-kiosk";
+import QuadList from "../../components/kiosk/quad-list";
+import MenuDisplayElement from "../../components/kiosk/menu-display-element";
+import ShoppingCart from "../../images/ShoppingCart.svg";
+import OrderList from "../../components/kiosk/order-list";
+import OrderElementKiosk from "../../components/kiosk/order-element-kiosk";
 import { useNavigate } from "react-router-dom";
+import { kioskFirebase } from "../../features/kiosk-firebase-interaction";
 
 const Wrapper = styled.div`
   width: 100%;
@@ -157,7 +158,7 @@ export default function KioskHome() {
           price: CPUFirebase.menuList[i].price,
           menuName: CPUFirebase.menuList[i].menuName,
         });
-        setOrders(orders);
+        setOrders([...orders]);
         break;
       }
     }
@@ -166,6 +167,7 @@ export default function KioskHome() {
     const init = async () => {
       await CPUFirebase.init();
       await CPUFirebase.kioskImageInit();
+      await kioskFirebase.init();
       setKioskImage(CPUFirebase.kioskImageDownloadUrl);
       setMenuList(
         CPUFirebase.menuList.map((value) => {
@@ -190,6 +192,7 @@ export default function KioskHome() {
     for (let i = 0; i < orders.length; i++) {
       if (id === orders[i].id) {
         orders[i].quantity++;
+        setOrders([...orders]);
         break;
       }
     }
@@ -199,7 +202,7 @@ export default function KioskHome() {
     for (let i = 0; i < orders.length; i++) {
       if (id === orders[i].id) {
         orders[i].quantity--;
-        setOrders(orders);
+        setOrders([...orders]);
         break;
       }
     }
@@ -209,7 +212,7 @@ export default function KioskHome() {
     for (let i = 0; i < orders.length; i++) {
       if (id === orders[i].id) {
         orders.splice(i, 1);
-        setOrders(orders);
+        setOrders([...orders]);
         break;
       }
     }
@@ -219,9 +222,10 @@ export default function KioskHome() {
     orders.forEach((val) => (sum += val.price * val.quantity));
     return sum;
   }
-  const onPayClick = () => {
+  const onPayClick = async () => {
     if (orders.length === 0) return;
-    // some firebase stuff
+
+    await kioskFirebase.removeLinkedBuyer();
     navigate("./kiosk-thankyou"); // 이전 탭으로 돌아가지 못하게 해야 함?
   };
   return (

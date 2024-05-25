@@ -232,7 +232,7 @@ export default function MenuElement({
     let isNumber = true;
     for (let i = 0; i < e.target.value.length; i++) {
       // 모든 character가 digit이어야만 true 반환
-      isNumber === isNumber && isDigit(e.target.value[i]);
+      isNumber = isNumber && isDigit(e.target.value[i]);
     }
     if (!isNumber) return; // 0~9가 아닌 input은 기록되지 않는다
     const val = parseInt(e.target.value); // 기록된 price를 int로 바꾸어서

@@ -96,9 +96,9 @@ const auth = {
         // Buyer로 로그인
       } else {
         // 학생 비번과 불일치하면
+        const encryptedPassword = cryptoJS.SHA256(password).toString();
         const teamsQuery = query(collection(database, "Teams"));
         const teams = await getDocs(teamsQuery);
-        const encryptedPassword = cryptoJS.SHA256(password).toString();
         documentIndex = -1;
         for (let i = 0; i < teams.docs.length; i++) {
           // 부스 목록의 비번 해시 대조

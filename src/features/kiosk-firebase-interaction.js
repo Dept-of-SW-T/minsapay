@@ -38,6 +38,15 @@ const kioskFirebase = {
     await setDoc(this.userDocRef, this.userDocData);
     this.userDoc = await getDoc(this.userDocRef);
   },
+  async syncDoc() {
+    this.userDoc = await getDoc(this.userDocRef);
+    this.userDocData = this.userDoc.data();
+  },
+  async removeLinkedBuyer() {
+    // only used at end of kiosk home for destruction
+    this.userDocData.linked_buyer = "";
+    await setDoc(this.userDocRef, this.userDocData);
+  },
 };
 
 export { kioskFirebase };
