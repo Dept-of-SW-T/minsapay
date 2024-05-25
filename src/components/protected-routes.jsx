@@ -7,8 +7,6 @@ export function ProtectedRoute() {
   const user = auth.currentUser;
   if (user === null) return <Navigate to="/login" />;
   switch (user.userType) {
-    case "developer":
-      return <Navigate to="/developer-home" />;
     case "CPU":
       return <Navigate to="/cpu-home" />;
     case "kiosk":
@@ -18,14 +16,6 @@ export function ProtectedRoute() {
     default:
       return <Navigate to="/login" />;
   }
-}
-export function ProtectedDeveloper({ children }) {
-  const user = auth.currentUser;
-  if (user === null) return <Navigate to="/login" />;
-  if (user.userType !== "developer") {
-    return <Navigate to="/" />;
-  }
-  return children;
 }
 export function ProtectedBuyer({ children }) {
   const user = auth.currentUser;
