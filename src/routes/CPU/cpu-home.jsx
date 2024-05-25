@@ -120,6 +120,7 @@ const BodyDiv = styled.div`
 export default function CPUHome() {
   const [balance, setBalance] = useState(0);
   const [kioskImage, setKioskImage] = useState("");
+  const [orderList, setOrderList] = useState([]);
   useEffect(() => {
     const init = async () => {
       // 초기에 잔고, 이미지 로딩
@@ -127,6 +128,20 @@ export default function CPUHome() {
       await CPUFirebase.kioskImageInit();
       setBalance(CPUFirebase.userDocData.balance);
       setKioskImage(CPUFirebase.kioskImageDownloadUrl);
+      const orderHistory = JSON.parse(CPUFirebase.userDocData.order_history);
+      setOrderList(
+        orderHistory
+          .toReversed()
+          .map((val, index) => (
+            <OrderElement
+              menuName={val.menu_name}
+              userName={val.buyer_name}
+              time={val.reception_time}
+              status={val.current_state}
+              key={index}
+            />
+          )),
+      );
     };
     init();
   }, []);
@@ -145,71 +160,6 @@ export default function CPUHome() {
     await CPUFirebase.changeKioskImage(file);
     setKioskImage(CPUFirebase.kioskImageDownloadUrl); // 이미지 업로드 시 사진 바꾸기
   };
-  const orderList = [
-    <OrderElement
-      key={1}
-      menuName={"해물라면"}
-      userName={"이감찬"}
-      time={"15:58:50"}
-      status={"주문요청"}
-    />,
-    <OrderElement
-      key={2}
-      menuName={"닭발"}
-      userName={"김의영"}
-      time={"15:58:55"}
-      status={"주문요청"}
-    />,
-    <OrderElement
-      key={3}
-      menuName={"해물라면"}
-      userName={"이감찬"}
-      time={"15:58:50"}
-      status={"주문요청"}
-    />,
-    <OrderElement
-      key={4}
-      menuName={"닭발"}
-      userName={"김의영"}
-      time={"15:58:55"}
-      status={"주문요청"}
-    />,
-    <OrderElement
-      key={5}
-      menuName={"해물라면"}
-      userName={"이감찬"}
-      time={"15:58:50"}
-      status={"주문요청"}
-    />,
-    <OrderElement
-      key={6}
-      menuName={"닭갈비"}
-      userName={"조유찬"}
-      time={"15:45:45"}
-      status={"처리중"}
-    />,
-    <OrderElement
-      key={7}
-      menuName={"해물라면"}
-      userName={"이감찬"}
-      time={"15:45:40"}
-      status={"처리완료"}
-    />,
-    <OrderElement
-      key={8}
-      menuName={"해물라면"}
-      userName={"최정욱"}
-      time={"15:44:35"}
-      status={"환불요청"}
-    />,
-    <OrderElement
-      key={9}
-      menuName={"해물라면"}
-      userName={"이감찬"}
-      time={"15:43:30"}
-      status={"수령완료"}
-    />,
-  ]; // 실제 로딩하고 usestate 사용해야 함
   return (
     <Wrapper>
       <Header />
