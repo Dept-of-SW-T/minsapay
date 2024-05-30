@@ -14,8 +14,17 @@ export default function KioskThankYou() {
     return () => clearInterval(timer);
   }, []);
   return (
-    <>
-      감사합니다!! <br /> 남은 시간 : {remainingTime}초
-    </>
+    <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+      <div>
+        감사합니다!! <br /> 남은 시간 : {remainingTime}초
+      </div>
+      <button
+        onClick={() => {
+          navigate("../kiosk-home/kiosk-cover");
+        }}
+      >
+        돌아가기
+      </button>
+    </div>
   );
 }
