@@ -71,6 +71,7 @@ export default function ChangeMenu() {
         setMenuList(
           CPUFirebase.menuList
             .map((value) => {
+              console.log(value.imageDownloadUrl);
               return (
                 <MenuElement
                   imageDownloadUrl={value.imageDownloadUrl}
@@ -91,7 +92,7 @@ export default function ChangeMenu() {
     return () => {
       unsubscribe && unsubscribe();
     };
-  });
+  }, []);
   return (
     <Wrapper>
       <Header />
