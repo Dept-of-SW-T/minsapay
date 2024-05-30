@@ -42,7 +42,7 @@ const Text = styled.span`
   }
 `;
 
-export default function OrderElement({ menuName, userName, time, status }) {
+export default function OrderElementCPU({ menuName, userName, time, status }) {
   // 주문 요청을 띄우는 element
   const backgroundColor = () => {
     switch (status) {

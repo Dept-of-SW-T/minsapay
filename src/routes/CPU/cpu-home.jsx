@@ -12,7 +12,7 @@ import {
   MINSAPAY_BLUE,
 } from "../../components/theme-definition";
 import { CPUFirebase } from "../../features/CPU-firebase-interaction";
-import OrderElement from "../../components/CPU/order-element";
+import OrderElementCPU from "../../components/CPU/order-element-CPU";
 import { onSnapshot } from "firebase/firestore";
 
 // border 다 추가하기
@@ -161,7 +161,7 @@ export default function CPUHome() {
         orderHistory
           .toReversed()
           .map((val, index) => (
-            <OrderElement
+            <OrderElementCPU
               menuName={val.menu_name}
               userName={val.buyer_name}
               time={val.reception_time}
@@ -181,7 +181,7 @@ export default function CPUHome() {
           orderHistory
             .toReversed()
             .map((val, index) => (
-              <OrderElement
+              <OrderElementCPU
                 menuName={val.menu_name}
                 userName={val.buyer_name}
                 time={val.reception_time}
