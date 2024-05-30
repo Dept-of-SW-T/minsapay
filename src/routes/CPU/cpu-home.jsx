@@ -17,29 +17,37 @@ import OrderElement from "../../components/CPU/order-element";
 // border 다 추가하기
 
 const Wrapper = styled.div`
-  width: 100%;
+  width: 100vw;
+  height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
 `;
 const CPUHomeBox = styled.div`
-  width: 1355px;
-  margin-bottom: 20px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  /* margin-bottom: 20px; */
 `;
 const TopDiv = styled.div`
-  margin-top: 21px;
-  width: 100%;
-  height: 140px;
+  width: 95%;
+  height: 20vh;
   display: flex;
   flex-direction: row;
-  justify-content: flex-start;
+  @media only screen and (max-width: 768px) {
+    flex-direction: column;
+    height: 25vh;
+  }
+  justify-content: space-evenly;
   font-family: "BMDOHYEON";
-  font-size: 36px;
+  gap: 4%;
+  margin: 4vh auto 5vh;
   // font size change needed
 `;
 const Title = styled.div`
-  width: 969px;
-  height: 134px;
+  /* width: 969px; */
+  flex: 2 1 0;
+  height: 100%;
   border: 3px solid ${BORDER_GRAY};
   border-radius: 20px;
   background-size: cover;
@@ -51,33 +59,41 @@ const OpacityLayer = styled.div`
   height: 100%;
   border-radius: 17px;
   font-family: "BMDOHYEON";
-  font-size: 48px;
+  font-size: 2em;
   color: white;
   flex-direction: row;
   display: flex;
   align-items: center;
+  justify-content: space-evenly;
   background-color: rgb(0, 0, 0, 0.3);
 `;
 const TeamName = styled.div`
-  margin-left: 125px;
+  /* margin-left: 125px; */
   text-align: center;
-  width: 240px;
+  /* width: 240px; */
+  flex: 2 1 0;
 `;
 const Balance = styled.div`
   // needs font change
-  margin-left: 190px;
+  /* margin-left: 190px; */
   text-align: center;
-  width: 280px;
+  /* width: 280px; */
   z-index: 100;
+  flex: 2 1 0;
 `;
 const Label = styled.label`
-  height: 40px;
+  /* height: 40px; */
+  flex: 1 1 0;
+  display: flex;
+  justify-content: center;
 `;
 const Image = styled.img`
   background-color: ${BACKGROUND_GRAY}; // 색 바꿀 것
   border-radius: 10px;
-  width: 40px;
-  margin-left: 15px;
+  /* width: 40px; */
+  width: 1.1em;
+  /* margin-left: 15px; */
+  aspect-ratio: 1;
   &:hover {
     opacity: 0.6;
     cursor: pointer;
@@ -90,11 +106,14 @@ const HeaderBtns = styled.div`
   // button 사이 gap 추가
   display: flex;
   flex-direction: column;
-  width: 384px;
+  @media only screen and (max-width: 768px) {
+    flex-direction: row;
+  }
+  /* width: 384px; */
+  flex: 1 1 0;
   height: 100%;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: flex-end;
-  gap: 14px;
 `;
 const Btn = styled.button`
   border-radius: 40px;
@@ -103,17 +122,24 @@ const Btn = styled.button`
   box-shadow: 0px 4px 4px 0px ${BUTTON_SHADOW};
   color: white;
   text-align: center;
-  width: 349px;
-  height: 62px;
-  font-size: 20px;
+  width: 100%;
+  height: 45%;
+  @media only screen and (max-width: 768px) {
+    height: 100%;
+  }
+  font-size: 2em;
   &:hover {
     cursor: pointer;
     opacity: 0.8;
   }
 `;
 const BodyDiv = styled.div`
-  margin-top: 39px;
+  /* margin-top: 5vh; */
   width: 100%;
+  height: 63vh;
+  @media only screen and (max-width: 768px) {
+    height: 56vh;
+  }
 `;
 
 // add isloading to total page and image upload

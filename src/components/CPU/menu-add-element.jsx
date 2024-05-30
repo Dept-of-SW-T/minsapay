@@ -7,8 +7,8 @@ const Wrapper = styled.span`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 654px;
-  height: 234px;
+  width: 96%;
+  height: 21vw;
   border: 3px solid ${BORDER_GRAY};
   border-radius: 20px;
   background-color: white;
@@ -21,7 +21,7 @@ const Wrapper = styled.span`
 `;
 
 const Img = styled.img`
-  width: 80px;
+  height: 100%;
   opacity: 0.4;
 `;
 
