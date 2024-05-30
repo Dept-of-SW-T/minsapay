@@ -168,6 +168,6 @@ const auth = {
     return true;
   },
 };
-auth.syncWithStoredLoginInfo(); // 첫 로딩 때 sync하고 시작
+auth.syncWithStoredLoginInfo(); // 첫 로딩 때 sync하고 시작  // 이거 다른 데에 다 넣을까 생각중
 
 export { auth };

@@ -13,6 +13,7 @@ import {
 } from "../../components/theme-definition";
 import { CPUFirebase } from "../../features/CPU-firebase-interaction";
 import OrderElement from "../../components/CPU/order-element";
+import { onSnapshot } from "firebase/firestore";
 
 // border 다 추가하기
 
@@ -122,6 +123,7 @@ export default function CPUHome() {
   const [kioskImage, setKioskImage] = useState("");
   const [orderList, setOrderList] = useState([]);
   useEffect(() => {
+    let unsubscibe = null;
     const init = async () => {
       // 초기에 잔고, 이미지 로딩
       await CPUFirebase.init();
@@ -142,8 +144,32 @@ export default function CPUHome() {
             />
           )),
       );
+      unsubscibe = onSnapshot(CPUFirebase.userDocRef, (doc) => {
+        // 나중에 features로 이관할 방법을 찾을 것임
+        CPUFirebase.userDoc = doc;
+        CPUFirebase.userDocData = doc.data();
+        setBalance(CPUFirebase.userDocData.balance);
+        setKioskImage(CPUFirebase.kioskImageDownloadUrl);
+        const orderHistory = JSON.parse(CPUFirebase.userDocData.order_history);
+        setOrderList(
+          orderHistory
+            .toReversed()
+            .map((val, index) => (
+              <OrderElement
+                menuName={val.menu_name}
+                userName={val.buyer_name}
+                time={val.reception_time}
+                status={val.current_state}
+                key={index}
+              />
+            )),
+        );
+      });
     };
     init();
+    return () => {
+      unsubscibe && unsubscibe();
+    };
   }, []);
   const navigate = useNavigate();
   const onChangeMenuClick = () => {
