@@ -9,16 +9,15 @@ import { CPUFirebase } from "../../features/CPU-firebase-interaction";
 const Wrapper = styled.span`
   display: flex;
   flex-direction: row;
-  width: 654px;
-  height: 234px;
+  width: 96%;
+  height: 21vw;
   border: 3px solid ${BORDER_GRAY};
   border-radius: 20px;
   background-color: white;
 `;
 const ImageDiv = styled.span`
   height: 100%;
-  aspect-ratio: 1;
-  margin-right: 3px;
+  /* margin-right: 3px; */
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -26,7 +25,7 @@ const ImageDiv = styled.span`
   border-top-left-radius: 17px;
   border-bottom-left-radius: 17px;
   font-family: "BMDOHYEON";
-  font-size: 20px;
+  font-size: 1.2em;
   &.no-image {
     border-left: 0px;
     border-bottom: 0px;
@@ -34,16 +33,17 @@ const ImageDiv = styled.span`
     border-right: 3px solid ${BORDER_GRAY};
     margin-right: 0px;
   }
+  flex: 2 1 0;
 `;
 const Img = styled.img`
   width: 100%;
-  aspect-ratio: 1;
+  height: 100%;
   border-top-left-radius: 17px;
   border-bottom-left-radius: 17px;
 `;
 const ImageChangeDiv = styled.label`
   height: 100%;
-  aspect-ratio: 1;
+  /* aspect-ratio: 1; */
   margin-right: 0px;
 
   border-top-left-radius: 17px;
@@ -55,11 +55,12 @@ const ImageChangeDiv = styled.label`
 
   display: flex;
   flex-direction: column;
+  flex: 2 1 0;
   justify-content: center;
   align-items: center;
 
   font-family: "BMDOHYEON";
-  font-size: 20px;
+  font-size: 1.2em;
 
   &:hover {
     cursor: pointer;
@@ -72,48 +73,53 @@ const ImageUpload = styled.p`
   }
 `;
 const RightDiv = styled.span`
-  width: 428px;
+  /* width: 100%; */
+  flex: 3 1 0;
   height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 2%;
 `;
 const DeleteButtonDiv = styled.div`
-  height: 62.5px;
+  height: 15%;
   width: 100%;
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
 `;
 const DeleteButton = styled.img`
-  height: 25px;
-  width: 25px;
-  margin-top: 10px;
-  margin-right: 15px;
+  height: 100%;
+  aspect-ratio: 1;
+  margin-top: 2%;
+  margin-right: 2%;
   &:hover {
     opacity: 0.6;
     cursor: pointer;
   }
 `;
 const TextDiv = styled.div`
-  margin-top: 62.5px;
+  /* margin-top: 10%; */
   width: 100%;
+  height: 60%;
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
+  justify-content: space-around;
   align-items: center;
-  gap: 49px;
   &.editModeState-mode {
     margin-top: 0px;
-    gap: 27.6px;
+    /* gap: 27.6px; */
   }
 `;
 const Text = styled.div`
   width: 100%;
   font-family: "BMDOHYEON";
-  font-size: 30px;
+  font-size: 1.6em;
   text-align: center;
 `;
 const MenuChangeButtonDiv = styled.div`
   width: 100%;
-  height: 62.5px;
+  height: 20%;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -123,10 +129,10 @@ const MenuChangeButton = styled.div`
   border: 3px solid ${BORDER_GRAY};
   border-radius: 40px;
   background-color: ${BACKGROUND_GRAY};
-  width: 109px;
-  height: 34px;
+  width: 30%;
+  height: 78%;
   font-family: "BMDOHYEON";
-  margin-right: 20px;
+  margin-right: 10%;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -138,9 +144,9 @@ const MenuChangeButton = styled.div`
 `;
 const Input = styled.input`
   height: 100%;
-  width: 257px;
+  width: 50%;
   font-family: "BMDOHYEON";
-  font-size: 30px;
+  font-size: 1em;
   text-align: center;
   border: none;
   outline: none;

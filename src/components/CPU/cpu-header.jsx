@@ -8,24 +8,29 @@ import { auth } from "../../features/login-feature";
 // CPU의 모든 화면에 공통으로 들어가는 header으로, home으로 가는, logout하는 버튼을 가지고 있다.
 
 const HeaderDiv = styled.div`
-  width: 100%;
-  height: 64px;
+  width: 95%;
+  margin: 0 auto;
+  height: 8vh;
+  padding: 0 2.5%;
   background-color: white;
   display: flex;
   flex-direction: row;
   align-items: center;
+  justify-content: space-between;
 `;
 const Logo = styled.img`
-  width: 50px;
-  margin-left: 11px;
+  height: 100%;
+  /* margin-left: 11px; */
+  aspect-ratio: 1;
   &:hover {
     cursor: pointer;
   }
 `;
 const LogOutIcon = styled.img`
-  width: 50px;
-  margin-right: 11px;
-  margin-left: auto;
+  height: 100%;
+  /* margin-right: 11px; */
+  aspect-ratio: 1;
+  /* margin-left: auto; */
   &:hover {
     cursor: pointer;
   }

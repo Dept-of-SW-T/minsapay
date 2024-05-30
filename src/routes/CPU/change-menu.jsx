@@ -14,8 +14,9 @@ const Wrapper = styled.div`
   align-items: center;
 `;
 const ChangeMenuBox = styled.div`
-  width: 1355px;
-  margin-top: 20px;
+  width: 100%;
+  height: 88vh;
+  margin-top: 4vh;
 `;
 
 export default function ChangeMenu() {
