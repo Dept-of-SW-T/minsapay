@@ -123,7 +123,7 @@ export default function CPUHome() {
   const [kioskImage, setKioskImage] = useState("");
   const [orderList, setOrderList] = useState([]);
   useEffect(() => {
-    let unsubscibe = null;
+    let unsubscribe = null;
     const init = async () => {
       // 초기에 잔고, 이미지 로딩
       await CPUFirebase.init();
@@ -144,7 +144,7 @@ export default function CPUHome() {
             />
           )),
       );
-      unsubscibe = onSnapshot(CPUFirebase.userDocRef, (doc) => {
+      unsubscribe = onSnapshot(CPUFirebase.userDocRef, (doc) => {
         // 나중에 features로 이관할 방법을 찾을 것임
         CPUFirebase.userDoc = doc;
         CPUFirebase.userDocData = doc.data();
@@ -168,7 +168,7 @@ export default function CPUHome() {
     };
     init();
     return () => {
-      unsubscibe && unsubscibe();
+      unsubscribe && unsubscribe();
     };
   }, []);
   const navigate = useNavigate();
