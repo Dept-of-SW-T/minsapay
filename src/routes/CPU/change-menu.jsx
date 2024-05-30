@@ -5,6 +5,7 @@ import MenuElement from "../../components/CPU/menu-element";
 import MenuAddElement from "../../components/CPU/menu-add-element";
 import { useEffect, useState } from "react";
 import { CPUFirebase } from "../../features/CPU-firebase-interaction";
+import { onSnapshot } from "firebase/firestore";
 
 const Wrapper = styled.div`
   width: 100%;
@@ -24,14 +25,13 @@ export default function ChangeMenu() {
     const id = parseInt(e.target.id.substring(0, e.target.id.length - 4)); // 메뉴 아이디 가져오기
     for (let i = 0; i < CPUFirebase.menuList.length; i++) {
       if (CPUFirebase.menuList[i].id === id) {
-        // 해당하는 메뉴 지우고 업데이트
+        // 해당하는 메뉴 지우고 업데이트 --> onSnapshot가 호출됨
         await CPUFirebase.deleteMenuImage(i);
         CPUFirebase.menuList.splice(i, 1);
         await CPUFirebase.updateFirebaseMenuList();
         break;
       }
     }
-    window.location.reload(); // 새로고침
   };
   const onMenuAddClick = async () => {
     const newId = Date.now(); // 현재 시각을 아이디로
@@ -42,26 +42,11 @@ export default function ChangeMenu() {
       imagePath: "",
       id: newId,
     });
-    await CPUFirebase.updateFirebaseMenuList();
-    setMenuList((prev) => {
-      let prevCopy = Object.assign([], prev);
-      prevCopy.splice(
-        prev.length - 1,
-        0,
-        <MenuElement
-          menuName={"없음"}
-          price={0}
-          imageDownloadUrl={""}
-          editMode={false}
-          id={newId}
-          onDeleteButtonClick={onDeleteButtonClick}
-        />, // 메뉴 리스트에 추가
-      );
-      return prevCopy;
-    });
+    await CPUFirebase.updateFirebaseMenuList(); // onSnapshot가 호출됨
   };
   useEffect(() => {
     // 초반에 초기화
+    let unsubscribe = null;
     const init = async () => {
       await CPUFirebase.init();
       setMenuList(
@@ -81,9 +66,32 @@ export default function ChangeMenu() {
           })
           .concat([<MenuAddElement onClick={onMenuAddClick} key={-1} />]), // 메뉴 로드 한 후 추가 버튼 추가
       );
+      unsubscribe = onSnapshot(CPUFirebase.userDocRef, () => {
+        // 나중에 features로 이관할 방법을 찾을 것임 // 이미 위의 delete function이 called되었다는 전제 하에 update되어 있음
+        setMenuList(
+          CPUFirebase.menuList
+            .map((value) => {
+              return (
+                <MenuElement
+                  imageDownloadUrl={value.imageDownloadUrl}
+                  menuName={value.menuName}
+                  price={value.price}
+                  editMode={false}
+                  id={value.id}
+                  onDeleteButtonClick={onDeleteButtonClick}
+                  key={value.id}
+                />
+              );
+            })
+            .concat([<MenuAddElement onClick={onMenuAddClick} key={-1} />]), // 메뉴 로드 한 후 추가 버튼 추가
+        );
+      });
     };
     init();
-  });
+    return () => {
+      unsubscribe && unsubscribe();
+    };
+  }, []);
   return (
     <Wrapper>
       <Header />

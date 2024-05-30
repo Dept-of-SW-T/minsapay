@@ -1,12 +1,14 @@
 import { useEffect, useState } from "react";
 import { kioskFirebase } from "../../features/kiosk-firebase-interaction";
 import { useNavigate } from "react-router-dom";
+import { onSnapshot } from "firebase/firestore";
 
 export default function KioskAuthentiaction() {
   // only one kiosk per team allowed yet
   const navigate = useNavigate();
   const [kioskAuthenticationNumber, setKioskAuthenticationNumber] = useState();
   useEffect(() => {
+    let unsubscribe = null;
     const init = async () => {
       await kioskFirebase.init();
       await kioskFirebase.setKioskAuthenticationNumber();
@@ -15,12 +17,14 @@ export default function KioskAuthentiaction() {
       );
     };
     init();
-    const timer = setInterval(async () => {
-      await kioskFirebase.syncDoc();
+    unsubscribe = onSnapshot(kioskFirebase.userDocRef, (doc) => {
+      kioskFirebase.userDocData = doc.data();
       if (kioskFirebase.userDocData.linked_buyer !== "")
         navigate("../kiosk-home");
-    }, 1000);
-    return () => clearInterval(timer);
+    });
+    return () => {
+      unsubscribe && unsubscribe();
+    };
   }, []);
 
   return (
