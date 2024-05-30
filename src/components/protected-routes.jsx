@@ -46,7 +46,8 @@ export function ProtectedKiosk({ children }) {
 }
 export function ProtectedKioskHome({ children }) {
   if (kioskFirebase.userDocData === undefined) return <Navigate to="/" />;
-  if (kioskFirebase.userDocData.linked_buyer === "") return <Navigate to="/" />;
+  if (kioskFirebase.userDocData.linked_buyer === "")
+    return <Navigate to="../kiosk-home/kiosk-cover" />;
   return children;
 }
 

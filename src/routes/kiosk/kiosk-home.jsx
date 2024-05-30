@@ -10,6 +10,7 @@ import OrderList from "../../components/kiosk/order-list";
 import OrderElementKiosk from "../../components/kiosk/order-element-kiosk";
 import { useNavigate } from "react-router-dom";
 import { kioskFirebase } from "../../features/kiosk-firebase-interaction";
+import LogOutIcon from "../../images/LogOut.svg";
 
 const Wrapper = styled.div`
   width: 100%;
@@ -37,6 +38,13 @@ const Header = styled.div`
   align-items: center;
   font-family: "BMDOHYEON";
   font-size: 24px;
+  justify-content: space-between;
+`;
+const LogoutBtn = styled.img`
+  height: 45%;
+  &:hover {
+    cursor: pointer;
+  }
 `;
 const Title = styled.div`
   width: calc(100%);
@@ -211,16 +219,28 @@ export default function KioskHome() {
     return sum;
   }
   const onPayClick = async () => {
-    if (orders.length === 0) return;
+    if (orders.length === 0) {
+      alert("물품을 최소 1개 선택해주세요.");
+      return;
+    }
+    if (!confirm("결제하시겠습니까?")) return;
     await kioskFirebase.submitOrders(orders, getTotal());
     await kioskFirebase.removeLinkedBuyer();
     navigate("./kiosk-thankyou"); // 이전 탭으로 돌아가지 못하게 해야 함?
+  };
+  const onLogoutBtnClick = async () => {
+    if (!confirm("구매를 취소하시겠습니까?")) return;
+    await kioskFirebase.removeLinkedBuyer();
+    navigate("../../");
   };
   return (
     <Wrapper>
       <DisplayBox>
         <DisplayBoxContents>
-          <Header>Store/{auth.currentUser.username}</Header>
+          <Header>
+            <div>Store/{auth.currentUser.username}</div>
+            <LogoutBtn src={LogOutIcon} onClick={onLogoutBtnClick} />
+          </Header>
           <Title style={{ backgroundImage: `url(${kioskImage})` }}>
             <OpacityLayer>
               <TeamName>{auth.currentUser.username}</TeamName>

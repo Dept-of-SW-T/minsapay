@@ -71,7 +71,6 @@ export default function ChangeMenu() {
         setMenuList(
           CPUFirebase.menuList
             .map((value) => {
-              console.log(value.imageDownloadUrl);
               return (
                 <MenuElement
                   imageDownloadUrl={value.imageDownloadUrl}
