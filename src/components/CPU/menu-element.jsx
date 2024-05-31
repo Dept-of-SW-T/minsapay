@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { BACKGROUND_GRAY, BORDER_GRAY } from "../theme-definition";
+import { BORDER_GRAY, MINSAPAY_BLUE } from "../theme-definition";
 import { useState } from "react";
 import deleteImage from "../../images/DeleteMenu.svg";
 import { CPUFirebase } from "../../features/CPU-firebase-interaction";
@@ -10,7 +10,7 @@ const Wrapper = styled.span`
   display: flex;
   flex-direction: row;
   width: 96%;
-  height: 21vw;
+  height: 18vw;
   border: 3px solid ${BORDER_GRAY};
   border-radius: 20px;
   background-color: white;
@@ -24,8 +24,10 @@ const ImageDiv = styled.span`
   align-items: center;
   border-top-left-radius: 17px;
   border-bottom-left-radius: 17px;
-  font-family: "BMDOHYEON";
+  font-family: "Candara";
   font-size: 1.2em;
+  color: gray;
+
   &.no-image {
     border-left: 0px;
     border-bottom: 0px;
@@ -59,7 +61,7 @@ const ImageChangeDiv = styled.label`
   justify-content: center;
   align-items: center;
 
-  font-family: "BMDOHYEON";
+  font-family: "Candara";
   font-size: 1.2em;
 
   &:hover {
@@ -112,10 +114,10 @@ const TextDiv = styled.div`
   }
 `;
 const Text = styled.div`
-  width: 100%;
+  width: 80%;
   font-family: "BMDOHYEON";
-  font-size: 1.6em;
-  text-align: center;
+  font-size: 1.2em;
+  text-align: left;
 `;
 const MenuChangeButtonDiv = styled.div`
   width: 100%;
@@ -128,15 +130,16 @@ const MenuChangeButtonDiv = styled.div`
 const MenuChangeButton = styled.div`
   border: 3px solid ${BORDER_GRAY};
   border-radius: 40px;
-  background-color: ${BACKGROUND_GRAY};
+  background-color: ${MINSAPAY_BLUE};
   width: 30%;
   height: 78%;
-  font-family: "BMDOHYEON";
+  font-family: "Candara";
   margin-right: 10%;
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: center;
+  color: #fff;
   &:hover {
     background-color: #ddd;
     cursor: pointer;
@@ -239,9 +242,7 @@ export default function MenuElement({
         <>
           <ImageChangeDiv htmlFor={id}>
             <ImageUpload>
-              {imageDownloadUrlState === ""
-                ? "이미지 업로드"
-                : "이미지 업로드됨"}
+              {imageDownloadUrlState === "" ? "Upload Image" : "Image Uploaded"}
             </ImageUpload>
             <input
               style={{ display: "none" }}
@@ -261,7 +262,7 @@ export default function MenuElement({
             </DeleteButtonDiv>
             <TextDiv className="editModeState-mode">
               <Text>
-                메뉴명:{" "}
+                {" "}
                 <Input
                   onChange={onMenuNameStateChange}
                   value={menuNameState}
@@ -269,7 +270,7 @@ export default function MenuElement({
                 />
               </Text>
               <Text>
-                가격:{" "}
+                {" "}
                 <Input
                   onChange={onPriceStateChange}
                   value={priceState}
@@ -281,10 +282,10 @@ export default function MenuElement({
             </TextDiv>
             <MenuChangeButtonDiv>
               <MenuChangeButton onClick={onDisableEditModeStateButtonClick}>
-                돌아가기
+                Return
               </MenuChangeButton>
               <MenuChangeButton onClick={onApplyButtonClick}>
-                적용하기
+                Apply
               </MenuChangeButton>
             </MenuChangeButtonDiv>
           </RightDiv>
@@ -294,21 +295,19 @@ export default function MenuElement({
         <>
           <ImageDiv className={imageDownloadUrlState === "" ? "no-image" : ""}>
             {imageDownloadUrlState === "" ? (
-              <p>이미지 없음</p>
+              <p>No Image</p>
             ) : (
               <Img src={imageDownloadUrlState} />
             )}
           </ImageDiv>
           <RightDiv>
             <TextDiv>
-              <Text>
-                메뉴명: {menuNameState === "" ? "없음" : menuNameState}
-              </Text>
-              <Text>가격: {priceState}원</Text>
+              <Text>{menuNameState === "" ? "없음" : menuNameState}</Text>
+              <Text>{priceState}원</Text>
             </TextDiv>
             <MenuChangeButtonDiv>
               <MenuChangeButton onClick={onEnableEditModeStateButtonClick}>
-                편집하기
+                Edit
               </MenuChangeButton>
             </MenuChangeButtonDiv>
           </RightDiv>

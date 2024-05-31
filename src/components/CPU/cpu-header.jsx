@@ -10,7 +10,7 @@ import { auth } from "../../features/login-feature";
 const HeaderDiv = styled.div`
   width: 95%;
   margin: 0 auto;
-  height: 8vh;
+  height: 10vh;
   padding: 0 2.5%;
   background-color: white;
   display: flex;
@@ -19,7 +19,7 @@ const HeaderDiv = styled.div`
   justify-content: space-between;
 `;
 const Logo = styled.img`
-  height: 100%;
+  height: 80%;
   /* margin-left: 11px; */
   aspect-ratio: 1;
   &:hover {
@@ -27,7 +27,7 @@ const Logo = styled.img`
   }
 `;
 const LogOutIcon = styled.img`
-  height: 100%;
+  height: 80%;
   /* margin-right: 11px; */
   aspect-ratio: 1;
   /* margin-left: auto; */
