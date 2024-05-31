@@ -151,6 +151,12 @@ const auth = {
         return false;
       }
       const userData = teams.docs[documentIndex].data();
+      if (userType === "kiosk") {
+        if (userData.kiosk_is_logged_in) {
+          this.error = "다른 곳에서 이미 키오스크 로그인을 하였습니다.";
+          return false;
+        }
+      }
       if (cryptoJS.SHA256(password).toString() === userData.password) {
         this.currentUser = {
           userType: userType,
