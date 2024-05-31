@@ -42,8 +42,7 @@ const auth = {
   async signIn(userID, password) {
     // 성공적인 로그인 시 true를 그게 아닐 시 false를 return한다.
     function isStudent(userID) {
-      const strArr = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
-      return strArr.includes(userID[0]); // 숫자로 시작하는 아이디 = 학생 아이디 --> 학생이면 true return
+      return /\d/.test(userID[0]); // 숫자로 시작하는 아이디 = 학생 아이디 --> 학생이면 true return
     }
     await this.signOut();
     switch (
