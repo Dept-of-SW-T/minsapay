@@ -10,44 +10,49 @@ import {
 } from "../components/theme-definition";
 
 // figma 제대로 된 치수 필요
-const WRAPPER_WIDTH = 360;
 const Wrapper = styled.div`
-  width: ${WRAPPER_WIDTH}px;
+  width: 50vh;
+  @media only screen and (max-aspect-ratio: 5 / 8) {
+    width: 90vw;
+  }
   height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  border-radius: 40px;
 `;
 const LoginBox = styled.div`
-  height: 600px;
+  height: 80vh;
+  width: 100%;
   background-color: white;
-  border-radius: 40px;
+  border-radius: 5vh;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
 `;
 const TitleDiv = styled.div`
-  margin-top: 70px;
+  margin-top: 20%;
   width: 100%;
+  height: 10%;
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
+  align-items: center;
 `;
 const Title = styled.span`
-  font-size: 65px;
+  font-size: 230%;
   font-family: "BMDOHYEON";
 `;
 const Image = styled.img`
-  height: 65px;
+  height: 100%;
 `;
 const Form = styled.form`
-  margin-top: 170px;
-  margin-bottom: 10px;
-  margin-right: 40px;
-  margin-left: 40px;
+  height: 50%;
+  padding-top: 20%;
+  margin-bottom: 1.6%;
+  /*   margin-right: 40px;
+  margin-left: 40px; */
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -55,13 +60,13 @@ const Form = styled.form`
   font-family: "BMDOHYEON";
 `;
 const Input = styled.input`
-  padding: 5px 0px;
+  padding: 1.3% 0px;
   border: none;
-  width: ${WRAPPER_WIDTH - 60}px;
-  font-size: 16px;
+  width: 80%;
+  font-size: 60%;
   outline: none;
   border-bottom: 3px solid ${BORDER_GRAY};
-  margin-top: 25px;
+  margin-top: 7%;
   font-family: "BMDOHYEON";
   &:focus {
     border-bottom: 3px solid #444;
@@ -75,15 +80,15 @@ const Input = styled.input`
   }
   &[type="submit"] {
     // 로그인 버튼
-    margin-top: 70px;
-    width: 130px;
-    height: 60px;
+    margin-top: 20%;
+    width: 40%;
+    height: 20%;
     border-radius: 50px;
     border-bottom: 0px;
     box-shadow: 0px 4px 4px 0px ${BUTTON_SHADOW};
     background-color: ${MINSAPAY_BLUE};
     color: white;
-    font-size: 20px;
+    font-size: 70%;
     font-weight: normal;
     font-family: "BMDOHYEON";
 
@@ -95,10 +100,10 @@ const Input = styled.input`
 `;
 const Error = styled.span`
   // 로그인 에러 모두 띄우는 거
-  font-weight: 600;
+  font-size: 56%;
   color: tomato;
   font-family: "BMDOHYEON";
-  font-weight: 300;
+  margin-bottom: 4%;
 `;
 
 export default function Login() {

@@ -4,6 +4,7 @@ import AddToOrder from "../../images/AddToOrder.svg";
 //자세한 요소 반응형 필요함
 
 const Wrapper = styled.div`
+  // border radius 수정!!!
   display: flex;
   flex-direction: flex;
   flex-direction: column;
