@@ -71,7 +71,7 @@ const TeamName = styled.div`
   width: 100%;
   text-align: center;
   font-family: "BMDOHYEON";
-  font-size: 200%;
+  font-size: 330%;
 `;
 const MenuTitle = styled.div`
   height: 96px;
