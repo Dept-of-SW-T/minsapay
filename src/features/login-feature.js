@@ -154,7 +154,7 @@ const auth = {
         if (userData.kiosk_is_logged_in) {
           this.error = "다른 곳에서 이미 키오스크 로그인을 하였습니다.";
           return false;
-        }
+        } else userData.kiosk_is_logged_in = true;
       }
       if (cryptoJS.SHA256(password).toString() === userData.password) {
         this.currentUser = {
