@@ -10,23 +10,9 @@ export default function BuyerPayment() {
   const [kioskAuthenticationNumber, setKioskAuthenticationNumber] =
     useState("");
   const onKioskAuthenticationNumberChange = async (e) => {
-    function isDigit(char) {
-      // 주어진 character가 숫자인지 판단
-      if (
-        char === "0" ||
-        char === "1" ||
-        char === "2" ||
-        char === "3" ||
-        char === "4" ||
-        char === "5" ||
-        char === "6" ||
-        char === "7" ||
-        char === "8" ||
-        char === "9"
-      )
-        return true;
-      return false;
-    }
+    const isDigit = (char) => {
+      return /\d/.test(char);
+    };
     let isNumber = true;
     for (let i = 0; i < e.target.value.length; i++) {
       // 모든 character가 digit이어야만 true 반환
