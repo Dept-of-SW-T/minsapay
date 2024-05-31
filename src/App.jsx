@@ -123,7 +123,8 @@ const Wrapper = styled.div`
   min-height: 100vh;
   display: flex;
   justify-content: center;
-  font-size: calc(0.6vw + 0.6em);
+  //font-size: calc(0.6vw + 0.6em);
+  font-size: 2vw;
 `; // 정중앙에 세로로 div를 하나 세워준다,
 
 function App() {
