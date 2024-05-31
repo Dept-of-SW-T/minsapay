@@ -18,7 +18,7 @@ const Wrapper = styled.div`
 `;
 const DisplayBox = styled.div`
   height: 100vh;
-  width: calc(100% - 370px);
+  width: 75%;
   overflow: scroll;
   &::-webkit-scrollbar {
     display: none;
@@ -29,7 +29,7 @@ const DisplayBox = styled.div`
 `;
 const DisplayBoxContents = styled.div`
   height: 100%;
-  width: calc(100% - 112px);
+  width: 67.7vw;
 `;
 const Header = styled.div`
   width: 100%;
@@ -48,7 +48,7 @@ const LogoutBtn = styled.img`
 `;
 const Title = styled.div`
   width: calc(100%);
-  height: 134px;
+  aspect-ratio: 7.76;
   //border: 3px solid ${BORDER_GRAY}; Really no border???
   border-radius: 20px;
   background-size: cover;
@@ -71,7 +71,7 @@ const TeamName = styled.div`
   width: 100%;
   text-align: center;
   font-family: "BMDOHYEON";
-  font-size: 64px;
+  font-size: 200%;
 `;
 const MenuTitle = styled.div`
   height: 96px;
@@ -82,7 +82,7 @@ const MenuTitle = styled.div`
 `;
 const PaymentBox = styled.div`
   height: 100vh;
-  width: 370px;
+  width: 25%;
   background-color: white;
   border-top-left-radius: 40px;
   border-bottom-left-radius: 40px;
@@ -264,7 +264,6 @@ export default function KioskHome() {
                     );
                   })
             }
-            redundancyElement={<MenuDisplayElement show={false} />}
           />
         </DisplayBoxContents>
       </DisplayBox>

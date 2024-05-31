@@ -9,6 +9,8 @@ import {
 import { database } from "../firebase";
 import { auth } from "./login-feature";
 
+// 실시간으로 바꾸기!!!!!
+
 const buyerFirebase = {
   userDocRef: undefined, // 해당하는 document reference
   userDoc: undefined, // 해당하는 document **중요** 자동으로 업데이트되지 않음
