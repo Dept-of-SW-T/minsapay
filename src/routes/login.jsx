@@ -15,6 +15,9 @@ const Wrapper = styled.div`
   @media only screen and (max-aspect-ratio: 5 / 8) {
     width: 90vw;
   }
+  /*   @media only screen and (max-width: 1000px) {
+    font-size: calc(0.7vw + 1em);
+  } */
   height: 100vh;
   display: flex;
   flex-direction: column;
@@ -41,7 +44,7 @@ const TitleDiv = styled.div`
   align-items: center;
 `;
 const Title = styled.span`
-  font-size: 230%;
+  font-size: 330%;
   font-family: "BMDOHYEON";
 `;
 const Image = styled.img`
