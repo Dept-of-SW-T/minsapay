@@ -15,7 +15,7 @@ const Wrapper = styled.div`
   @media only screen and (max-aspect-ratio: 5 / 8) {
     width: 90vw;
   }
-  /*   @media only screen and (max-width: 1000px) {
+  /*@media only screen and (max-width: 1000px) {
     font-size: calc(0.7vw + 1em);
   } */
   height: 100vh;
@@ -45,10 +45,13 @@ const TitleDiv = styled.div`
 `;
 const Title = styled.span`
   font-size: 330%;
+  @media only screen and (max-width: 2000px) {
+    font-size: calc(0.3vw + 2.7em);
+  }
   font-family: "BMDOHYEON";
 `;
 const Image = styled.img`
-  height: 100%;
+  height: 80%;
 `;
 const Form = styled.form`
   height: 50%;
@@ -71,6 +74,9 @@ const Input = styled.input`
   border-bottom: 3px solid ${BORDER_GRAY};
   margin-top: 7%;
   font-family: "BMDOHYEON";
+  @media only screen and (max-width: 2000px) {
+    font-size: 0.7em;
+  }
   &:focus {
     border-bottom: 3px solid #444;
   }
@@ -84,14 +90,19 @@ const Input = styled.input`
   &[type="submit"] {
     // 로그인 버튼
     margin-top: 20%;
-    width: 40%;
-    height: 20%;
+    margin-bottom: 10%;
+
+    width: 35%;
+    height: 17%;
     border-radius: 50px;
     border-bottom: 0px;
     box-shadow: 0px 4px 4px 0px ${BUTTON_SHADOW};
     background-color: ${MINSAPAY_BLUE};
     color: white;
-    font-size: 70%;
+    font-size: 1em;
+    @media only screen and (max-width: 800px) {
+      font-size: calc(0.12vw + 1.08em);
+    }
     font-weight: normal;
     font-family: "BMDOHYEON";
 
