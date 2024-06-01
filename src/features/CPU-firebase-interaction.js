@@ -15,11 +15,13 @@ const CPUFirebase = {
   userDocData: undefined, // 위의 userDoc.data()를 실행한 결과
   kioskImageDownloadUrl: undefined, // kiosk cover, kiosk home, CPU home에 들어갈 사진을 다운 받을 수 있는 실제 링크 저장장
   menuList: undefined, // 팀의 메뉴 목록(객체)
+  orderHistory: undefined,
   async init() {
     this.userDocRef = doc(database, "Teams", auth.currentUser.userID);
     this.userDoc = await getDoc(this.userDocRef);
     this.userDocData = this.userDoc.data();
-    this.menuList = JSON.parse(CPUFirebase.userDocData.menu_list); // firestore에는 stringify된 형태이므로 JSON.parse() 해줘야 함
+    this.menuList = JSON.parse(this.userDocData.menu_list); // firestore에는 stringify된 형태이므로 JSON.parse() 해줘야 함
+    this.orderHistory = JSON.parse(this.userDocData.order_history);
   },
   async kioskImageInit() {
     this.kioskImageDownloadUrl = await getDownloadURL(

@@ -20,8 +20,10 @@ const DisplayBox = styled.div`
   height: 100vh;
   width: 75%;
   overflow: scroll;
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
   &::-webkit-scrollbar {
-    display: none;
+    display: none; /* Chrome, Safari, Opera*/
   }
   display: flex;
   flex-direction: column;

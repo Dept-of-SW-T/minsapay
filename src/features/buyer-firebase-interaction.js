@@ -20,6 +20,7 @@ const buyerFirebase = {
     this.userDocRef = doc(database, "Students", auth.currentUser.userID);
     this.userDoc = await getDoc(this.userDocRef);
     this.userDocData = this.userDoc.data();
+    this.orderHistory = JSON.parse(this.userDocData.order_history);
   },
   async submitKioskAuthenticationNumber(submitNumber) {
     const teams = await getDocs(query(collection(database, "Teams")));

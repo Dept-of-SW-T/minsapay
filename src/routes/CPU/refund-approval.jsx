@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Header } from "../../components/CPU/cpu-header";
+import { CPUHeader } from "../../components/CPU/cpu-header";
 import CoupleList from "../../components/CPU/couple-list";
 import OrderElementCPU from "../../components/CPU/order-element-CPU";
 
@@ -53,7 +53,7 @@ export default function RefundApproval() {
   ];
   return (
     <Wrapper>
-      <Header />
+      <CPUHeader />
       <RefundApprovalBox>
         <CoupleList dataList={refundRequestList} />
       </RefundApprovalBox>

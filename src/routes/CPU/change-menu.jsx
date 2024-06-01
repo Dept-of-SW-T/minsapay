@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Header } from "../../components/CPU/cpu-header";
+import { CPUHeader } from "../../components/CPU/cpu-header";
 import CoupleList from "../../components/CPU/couple-list";
 import MenuElement from "../../components/CPU/menu-element";
 import MenuAddElement from "../../components/CPU/menu-add-element";
@@ -95,7 +95,7 @@ export default function ChangeMenu() {
   }, []);
   return (
     <Wrapper>
-      <Header />
+      <CPUHeader />
       <ChangeMenuBox>
         <CoupleList dataList={menuList} />
       </ChangeMenuBox>

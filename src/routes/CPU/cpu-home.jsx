@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { auth } from "../../features/login-feature";
 import { useEffect, useState } from "react";
 import CoupleList from "../../components/CPU/couple-list";
-import { Header } from "../../components/CPU/cpu-header";
+import { CPUHeader } from "../../components/CPU/cpu-header";
 import { useNavigate } from "react-router-dom";
 import ChangeKioskImage from "../../images/ChangeKioskImage.svg";
 import {
@@ -156,9 +156,8 @@ export default function CPUHome() {
       await CPUFirebase.kioskImageInit();
       setBalance(CPUFirebase.userDocData.balance);
       setKioskImage(CPUFirebase.kioskImageDownloadUrl);
-      const orderHistory = JSON.parse(CPUFirebase.userDocData.order_history);
       setOrderList(
-        orderHistory
+        CPUFirebase.orderHistory
           .toReversed()
           .map((val, index) => (
             <OrderElementCPU
@@ -176,9 +175,8 @@ export default function CPUHome() {
         CPUFirebase.userDocData = doc.data();
         setBalance(CPUFirebase.userDocData.balance);
         setKioskImage(CPUFirebase.kioskImageDownloadUrl);
-        const orderHistory = JSON.parse(CPUFirebase.userDocData.order_history);
         setOrderList(
-          orderHistory
+          CPUFirebase.orderHistory
             .toReversed()
             .map((val, index) => (
               <OrderElementCPU
@@ -214,7 +212,7 @@ export default function CPUHome() {
   };
   return (
     <Wrapper>
-      <Header />
+      <CPUHeader />
       <CPUHomeBox>
         <TopDiv>
           <Title style={{ backgroundImage: `url(${kioskImage})` }}>

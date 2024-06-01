@@ -55,20 +55,20 @@ const kioskFirebase = {
     );
     const linkedBuyerDocData = linkedBuyerDoc.data();
     let studentOrderHistory = JSON.parse(linkedBuyerDocData.order_history);
-    orders.forEach((val) => {
+    orders.forEach((val, index) => {
       for (let i = 0; i < val.quantity; i++) {
         teamOrderHistory.push({
           order_processor: null,
           buyer_id: this.userDocData.linked_buyer,
           buyer_name: linkedBuyerDocData.username,
-          menu_id: val.id,
+          menu_id: val.id + "?" + this.userDoc.id + "/" + String(index),
           menu_name: val.menuName,
           reception_time: receptionTime,
           current_state: "주문요청",
         });
         studentOrderHistory.push({
           order_processor: null,
-          menu_id: val.id,
+          menu_id: val.id + "?" + this.userDoc.id + "/" + String(index),
           menu_name: val.menuName,
           price: val.price,
           current_state: "주문요청",

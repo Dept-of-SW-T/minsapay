@@ -12,7 +12,6 @@ const HeaderDiv = styled.div`
   margin: 0 auto;
   height: 10vh;
   padding: 0 2.5%;
-  background-color: white;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -26,6 +25,7 @@ const Logo = styled.img`
     cursor: pointer;
   }
 `;
+const Balance = styled.div``;
 const LogOutIcon = styled.img`
   height: 80%;
   /* margin-right: 11px; */
@@ -36,7 +36,7 @@ const LogOutIcon = styled.img`
   }
 `;
 
-export const CPUHeader = () => {
+export function BuyerHeader({ balance }) {
   const navigate = useNavigate();
   const onLogoClick = (e) => {
     // logo 누르면 홈으로 navigate
@@ -67,7 +67,8 @@ export const CPUHeader = () => {
         onMouseLeave={onLogoLeave}
         src={LogoRef}
       />
+      <Balance>{balance}원</Balance>
       <LogOutIcon onClick={onLogOutIconClick} src={LogOutRef} />
     </HeaderDiv>
   );
-};
+}
