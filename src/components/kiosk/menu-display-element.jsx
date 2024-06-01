@@ -4,6 +4,7 @@ import AddToOrder from "../../images/AddToOrder.svg";
 //자세한 요소 반응형 필요함
 
 const Wrapper = styled.div`
+  // border radius 수정!!!
   display: flex;
   flex-direction: flex;
   flex-direction: column;
@@ -15,6 +16,7 @@ const Wrapper = styled.div`
 const NoImage = styled.div`
   width: 100%;
   aspect-ratio: 1;
+
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -65,14 +67,14 @@ const TextArea = styled.div`
 const MenuName = styled.div`
   height: 40%;
   width: 100%;
-  font-size: 75%;
+  font-size: 100%;
   display: flex;
   align-items: center;
 `;
 const MenuPrice = styled.div`
   height: 30%;
   width: 100%;
-  font-size: 60%;
+  font-size: 80%;
   display: flex;
   align-items: center;
   color: #2079ff;
@@ -93,7 +95,7 @@ export default function MenuDisplayElement({
             style={{
               width: "100%",
               textAlign: "center",
-              fontSize: "100%",
+              fontSize: "150%",
             }}
           >
             이미지 없음
