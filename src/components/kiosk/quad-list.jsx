@@ -34,7 +34,7 @@ const Wrapper = styled.div`
   grid-template-columns: 1fr 1fr 1fr 1fr;
   margin: 0 auto;
   @media only screen and (max-width: 860px) {
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr;
   }
   grid-template-rows: repeat(auto-fill, 1fr);
   grid-auto-rows: max-content;

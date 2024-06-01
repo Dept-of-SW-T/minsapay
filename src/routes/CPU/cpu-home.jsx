@@ -137,7 +137,7 @@ const Btn = styled.button`
 const BodyDiv = styled.div`
   /* margin-top: 5vh; */
   width: 100%;
-  height: 63vh;
+  height: 59vh;
   @media only screen and (max-width: 768px) {
     height: 56vh;
   }
