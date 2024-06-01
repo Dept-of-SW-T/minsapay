@@ -4,7 +4,6 @@ import {
   getDoc,
   getDocs,
   /*orderBy,*/ query,
-  setDoc,
 } from "firebase/firestore";
 import { database } from "../firebase";
 import cryptoJS from "crypto-js";
@@ -151,18 +150,6 @@ const auth = {
         return false;
       }
       const userData = teams.docs[documentIndex].data();
-      if (userType === "kiosk") {
-        if (userData.kiosk_is_logged_in) {
-          this.error = "다른 곳에서 이미 키오스크 로그인을 하였습니다.";
-          return false;
-        } else {
-          userData.kiosk_is_logged_in = true;
-          await setDoc(
-            doc(database, "Teams", teams.docs[documentIndex].id),
-            userData,
-          );
-        }
-      }
       if (cryptoJS.SHA256(password).toString() === userData.password) {
         this.currentUser = {
           userType: userType,
