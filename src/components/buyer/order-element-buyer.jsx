@@ -76,11 +76,13 @@ export default function OrderElementBuyer({
       <Text id="first-child">{menuName}</Text>
       <Text>{teamName}</Text>
       <Text>{price}원</Text>
-      {status === "환불요청" ? (
-        <Text>환불요청됨</Text>
+      {status === "환불완료" ? (
+        <Text>환불 완료됨</Text>
+      ) : status === "환불요청" ? (
+        <Text>환불 요청됨</Text>
       ) : (
         <Text onClick={onClick} className="refund-request" id={id}>
-          환불요청하기
+          환불 요청하기
         </Text>
       )}
     </Wrapper>
