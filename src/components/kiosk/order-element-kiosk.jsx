@@ -3,7 +3,7 @@ import AddQuantity from "../../images/AddQuantity.svg";
 import LowerQuantity from "../../images/LowerQuantity.svg";
 import { BORDER_GRAY /* BUTTON_SHADOW */ } from "../theme-definition";
 import { useState } from "react";
-
+// 반응형으로!!
 const Wrapper = styled.div`
   width: calc(100% - 6px);
   height: calc(110px - 6px);
