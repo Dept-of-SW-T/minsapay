@@ -23,6 +23,8 @@ export default function KioskCover() {
       await CPUFirebase.init();
       await CPUFirebase.kioskImageInit();
       setKioskImageDownloadUrl(CPUFirebase.kioskImageDownloadUrl);
+      if (CPUFirebase.userDocData.linked_buyer !== "")
+        navigate("../kiosk-home");
     };
     init();
     unsubscribe = onSnapshot(CPUFirebase.userDocRef, async (doc) => {

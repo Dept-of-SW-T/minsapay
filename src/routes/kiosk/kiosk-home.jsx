@@ -183,6 +183,8 @@ export default function KioskHome() {
       await kioskFirebase.init();
       setKioskImage(CPUFirebase.kioskImageDownloadUrl);
       setIsLoading(false);
+      if (CPUFirebase.userDocData.linked_buyer === "")
+        navigate("../kiosk-home/kiosk-cover");
     };
     init();
   }, []);

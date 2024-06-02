@@ -6,7 +6,6 @@ import {
   ProtectedBuyer,
   ProtectedCPU,
   ProtectedKiosk,
-  ProtectedKioskHome,
   ProtectedRoute,
 } from "./components/protected-routes";
 import { BACKGROUND_GRAY } from "./components/theme-definition";
@@ -69,11 +68,9 @@ const router = createBrowserRouter([
   {
     path: "/kiosk-home", // kiosk 홈화면
     element: (
-      <ProtectedKioskHome>
-        <ProtectedKiosk>
-          <KioskHome />
-        </ProtectedKiosk>
-      </ProtectedKioskHome>
+      <ProtectedKiosk>
+        <KioskHome />
+      </ProtectedKiosk>
     ),
   },
   {

@@ -1,6 +1,5 @@
 import { Navigate } from "react-router-dom";
 import { auth } from "../features/login-feature";
-import { kioskFirebase } from "../features/kiosk-firebase-interaction";
 
 export function ProtectedRoute() {
   // home 화면에 적용되며 원하는 페이지로 user를 보내는 역할을 한다.
@@ -42,12 +41,6 @@ export function ProtectedKiosk({ children }) {
   if (user.userType !== "kiosk") {
     return <Navigate to="/" />;
   }
-  return children;
-}
-export function ProtectedKioskHome({ children }) {
-  if (kioskFirebase.userDocData === undefined) return <Navigate to="/" />;
-  if (kioskFirebase.userDocData.linked_buyer === "")
-    return <Navigate to="../kiosk-home/kiosk-cover" />;
   return children;
 }
 
