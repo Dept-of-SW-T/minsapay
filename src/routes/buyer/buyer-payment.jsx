@@ -54,6 +54,8 @@ export default function BuyerPayment() {
           type="text"
           id="priceState"
         />
+        <br />
+        <button type="submit">Submit</button>
       </form>
 
       <button onClick={() => navigate("../buyer-home")}>To Buyer Home</button>
