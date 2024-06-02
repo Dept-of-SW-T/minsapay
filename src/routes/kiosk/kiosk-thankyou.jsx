@@ -12,7 +12,7 @@ export default function KioskThankYou() {
       setRemainingTime((curr) => curr - 1);
     }, 1000);
     return () => clearInterval(timer);
-  }, []);
+  }, [navigate]);
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
       <div>
