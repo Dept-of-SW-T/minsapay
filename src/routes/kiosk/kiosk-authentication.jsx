@@ -25,7 +25,7 @@ export default function KioskAuthentication() {
     return () => {
       unsubscribe && unsubscribe();
     };
-  }, [navigate]);
+  }, []);
 
   return (
     <div
