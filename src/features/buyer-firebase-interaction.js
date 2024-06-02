@@ -37,5 +37,31 @@ const buyerFirebase = {
     }
     return foundMatch; // 대조 결과 존재할 시 true 반환 그 외 false 반환
   },
+  async refundRequest(menuID) {
+    const teamID = menuID.substring(
+      menuID.indexOf("?") + 1,
+      menuID.indexOf("/"),
+    );
+    const teamDocRef = doc(database, "Teams", teamID);
+    const teamDoc = await getDoc(teamDocRef);
+    const teamDocData = teamDoc.data();
+    const teamOrderHistory = JSON.parse(teamDocData.order_history);
+    for (let i = 0; i < teamOrderHistory.length; i++) {
+      if (teamOrderHistory[i].menu_id === menuID) {
+        teamOrderHistory[i].current_state = "환불요청";
+        teamDocData.order_history = JSON.stringify(teamOrderHistory);
+        for (let i = 0; i < this.orderHistory.length; i++) {
+          if (this.orderHistory[i].menu_id === menuID) {
+            this.orderHistory[i].current_state = "환불요청";
+            this.userDocData.order_history = JSON.stringify(this.orderHistory);
+            break;
+          }
+        }
+        break;
+      }
+    }
+    await setDoc(teamDocRef, teamDocData);
+    await setDoc(this.userDocRef, this.userDocData);
+  },
 };
 export { buyerFirebase };

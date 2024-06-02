@@ -19,7 +19,7 @@ const CPUFirebase = {
   async init() {
     this.userDocRef = doc(database, "Teams", auth.currentUser.userID);
     this.userDoc = await getDoc(this.userDocRef);
-    this.userDocData = this.userDoc.data();
+    this.userDocData = await this.userDoc.data();
     this.menuList = JSON.parse(this.userDocData.menu_list); // firestore에는 stringify된 형태이므로 JSON.parse() 해줘야 함
     this.orderHistory = JSON.parse(this.userDocData.order_history);
   },

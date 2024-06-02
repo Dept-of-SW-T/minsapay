@@ -174,8 +174,12 @@ export default function CPUHome() {
       );
       unsubscribe = onSnapshot(CPUFirebase.userDocRef, (doc) => {
         // 나중에 features로 이관할 방법을 찾을 것임
+        console.log("change in cpu");
         CPUFirebase.userDoc = doc;
         CPUFirebase.userDocData = doc.data();
+        CPUFirebase.orderHistory = JSON.parse(
+          CPUFirebase.userDocData.order_history,
+        );
         setBalance(CPUFirebase.userDocData.balance);
         setKioskImage(CPUFirebase.kioskImageDownloadUrl);
         setOrderList(
