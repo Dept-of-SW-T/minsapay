@@ -61,14 +61,28 @@ const kioskFirebase = {
           order_processor: null,
           buyer_id: this.userDocData.linked_buyer,
           buyer_name: linkedBuyerDocData.username,
-          menu_id: val.id + "?" + this.userDoc.id + "/" + String(index),
+          menu_id:
+            val.id +
+            "?" +
+            this.userDoc.id +
+            "/" +
+            String(index) +
+            "@" +
+            String(i),
           menu_name: val.menuName,
           reception_time: receptionTime,
           current_state: "주문요청",
         });
         studentOrderHistory.push({
           order_processor: null,
-          menu_id: val.id + "?" + this.userDoc.id + "/" + String(index),
+          menu_id:
+            val.id +
+            "?" +
+            this.userDoc.id +
+            "/" +
+            String(index) +
+            "@" +
+            String(i),
           menu_name: val.menuName,
           price: val.price,
           current_state: "주문요청",
