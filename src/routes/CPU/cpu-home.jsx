@@ -43,6 +43,9 @@ const TopDiv = styled.div`
   font-family: "BMDOHYEON";
   gap: 4%;
   margin: 4vh auto 5vh;
+  @media only screen and (max-width: 2000px) {
+    font-size: calc(0.05vw + 0.7em);
+  }
   // font size change needed
 `;
 const Title = styled.div`
@@ -60,7 +63,7 @@ const OpacityLayer = styled.div`
   height: 100%;
   border-radius: 17px;
   font-family: "BMDOHYEON";
-  font-size: 2em;
+  font-size: 2.5em;
   color: white;
   flex-direction: row;
   display: flex;
@@ -128,7 +131,7 @@ const Btn = styled.button`
   @media only screen and (max-width: 768px) {
     height: 100%;
   }
-  font-size: 2em;
+  font-size: 1.7em;
   &:hover {
     cursor: pointer;
     opacity: 0.8;

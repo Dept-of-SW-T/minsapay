@@ -115,6 +115,12 @@ const GlobalStyles = createGlobalStyle`
       font-style: normal;
     }
 		font-family: "BMDOHYEON"; // 폰트 정의
+    @font-face {
+    font-family: 'SOGANGUNIVERSITYTTF';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2312-1@1.1/SOGANGUNIVERSITYTTF.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+    }
   }
 `;
 
