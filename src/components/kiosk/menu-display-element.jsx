@@ -11,12 +11,12 @@ const Wrapper = styled.div`
   aspect-ratio: 3;
   border-radius: 10%;
   background-color: white;
+  width: 15vw;
   box-shadow: 0px 4px 6px 1px ${BUTTON_SHADOW};
 `;
 const NoImage = styled.div`
   width: 100%;
   aspect-ratio: 1;
-
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -67,14 +67,14 @@ const TextArea = styled.div`
 const MenuName = styled.div`
   height: 40%;
   width: 100%;
-  font-size: 100%;
+  font-size: 1.2vw;
   display: flex;
   align-items: center;
 `;
 const MenuPrice = styled.div`
   height: 30%;
   width: 100%;
-  font-size: 80%;
+  font-size: 1vw;
   display: flex;
   align-items: center;
   color: #2079ff;

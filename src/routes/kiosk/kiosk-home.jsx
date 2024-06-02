@@ -35,15 +35,17 @@ const DisplayBoxContents = styled.div`
 `;
 const Header = styled.div`
   width: 100%;
-  height: 118px;
+  height: 0.5vh;
   display: flex;
   align-items: center;
   font-family: "BMDOHYEON";
-  font-size: 24px;
+  margin-top: 5vh;
+  margin-bottom: 5vh;
+  font-size: 1.4vw;
   justify-content: space-between;
 `;
 const LogoutBtn = styled.img`
-  height: 45%;
+  height: 5vh;
   &:hover {
     cursor: pointer;
   }
@@ -73,14 +75,14 @@ const TeamName = styled.div`
   width: 100%;
   text-align: center;
   font-family: "BMDOHYEON";
-  font-size: 330%;
+  font-size: 4.2vw;
 `;
 const MenuTitle = styled.div`
-  height: 96px;
+  height: 9vh;
   display: flex;
   align-items: center;
   font-family: "BMDOHYEON";
-  font-size: 36px;
+  font-size: 4.5vh;
 `;
 const PaymentBox = styled.div`
   height: 100vh;
@@ -95,25 +97,25 @@ const PaymentBox = styled.div`
 `;
 const ShoppingCartDiv = styled.div`
   width: 100%;
-  height: 165px;
+  height: 23vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   font-family: "BMDOHYEON";
-  font-size: 40px;
+  font-size: 2.5vw;
   gap: 10px;
 `;
 const ShoppingCartImage = styled.img`
-  width: 50px;
+  width: 3vw;
 `;
 const Total = styled.div`
-  margin-top: 20px;
+  margin-top: 5vh;
 
-  height: calc(59px - 6px);
-  width: calc(100% - 6px - 30px);
-  padding-left: 15px;
-  padding-right: 15px;
+  height: calc(13% - 5vh);
+  width: calc(100% - 3vw);
+  padding-left: 1.4vw;
+  padding-right: 1.4vw;
   border: 3px solid #4478ff;
   border-radius: 20px;
   display: flex;
@@ -124,10 +126,10 @@ const Total = styled.div`
   font-family: "BMDOHYEON";
 `;
 const Pay = styled.div`
-  margin-top: 20px;
+  margin-top: 1.5vh;
 
   width: 100%;
-  height: 75px;
+  height: 8vh;
   border-radius: 20px;
   background-color: #4478ff;
   color: white;
@@ -137,7 +139,7 @@ const Pay = styled.div`
   align-items: center;
   justify-content: center;
 
-  font-size: 36px;
+  font-size: 4vh;
   font-family: "BMDOHYEON";
 
   &:hover {
