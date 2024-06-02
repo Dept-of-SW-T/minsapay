@@ -30,7 +30,7 @@ export default function BuyerHome() {
           .map((val, index) => (
             <OrderElementBuyer
               menuName={val.menu_name}
-              userName={val.team_name}
+              teamName={val.team_name}
               price={val.price}
               status={val.current_state}
               id={val.menu_id}
@@ -39,9 +39,11 @@ export default function BuyerHome() {
           )),
       );
       unsubscribe = onSnapshot(buyerFirebase.userDocRef, (doc) => {
-        // 나중에 features로 이관할 방법을 찾을 것임
         buyerFirebase.userDoc = doc;
         buyerFirebase.userDocData = doc.data();
+        buyerFirebase.orderHistory = JSON.parse(
+          buyerFirebase.userDocData.order_history,
+        );
         setBalance(buyerFirebase.userDocData.balance);
         setOrderList(
           buyerFirebase.orderHistory
@@ -49,7 +51,7 @@ export default function BuyerHome() {
             .map((val, index) => (
               <OrderElementBuyer
                 menuName={val.menu_name}
-                userName={val.team_name}
+                teamName={val.team_name}
                 price={val.price}
                 status={val.current_state}
                 id={val.menu_id}

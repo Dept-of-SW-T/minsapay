@@ -7,6 +7,7 @@ import {
   REFUND_OR_RECEIPT_COMPLETE,
   REFUND_REQUEST,
 } from "../theme-definition";
+import { buyerFirebase } from "../../features/buyer-firebase-interaction";
 
 const Wrapper = styled.span`
   width: 96%;
@@ -34,7 +35,7 @@ const Text = styled.span`
     border-top-left-radius: 17px;
     border-bottom-left-radius: 17px;
   }
-  &#refund-request {
+  &.refund-request {
     &:hover {
       background-color: #eee;
       cursor: pointer;
@@ -44,7 +45,7 @@ const Text = styled.span`
 
 export default function OrderElementBuyer({
   menuName,
-  userName,
+  teamName,
   price,
   status,
   id,
@@ -64,21 +65,25 @@ export default function OrderElementBuyer({
         return REFUND_OR_RECEIPT_COMPLETE;
     }
   };
-  function onClick() {
+  async function onClick(e) {
     if (!confirm("환불을 요청하시겠습니까?")) return;
     else {
+      await buyerFirebase.refundRequest(e.target.id);
       // 환불 요청 관련 무언가
-      console.log(id);
     }
   }
   return (
     <Wrapper style={{ backgroundColor: `${backgroundColor(status)}` }}>
       <Text id="first-child">{menuName}</Text>
-      <Text>{userName}</Text>
+      <Text>{teamName}</Text>
       <Text>{price}원</Text>
-      <Text onClick={onClick} id="refund-request">
-        환불요청하기
-      </Text>
+      {status === "환불요청" ? (
+        <Text>환불요청됨</Text>
+      ) : (
+        <Text onClick={onClick} className="refund-request" id={id}>
+          환불요청하기
+        </Text>
+      )}
     </Wrapper>
   );
 }

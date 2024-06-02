@@ -1,7 +1,7 @@
 import {
   collection,
-  doc,
-  getDoc,
+  /*   doc,
+  getDoc, */
   getDocs,
   /*orderBy,*/ query,
 } from "firebase/firestore";
@@ -45,27 +45,6 @@ const auth = {
       return /\d/.test(userID[0]); // 숫자로 시작하는 아이디 = 학생 아이디 --> 학생이면 true return
     }
     await this.signOut();
-    switch (
-      userID // 관리자용 아무런 꾸밈 없음
-    ) {
-      case "Admin@developer":
-        {
-          const encryptedPassword = cryptoJS.SHA256(password).toString();
-          const adminDoc = await getDoc(doc(database, "Admin", "developer"));
-          const adminData = adminDoc.data();
-          if (encryptedPassword === adminData.password) {
-            this.currentUser = {
-              userType: "developer",
-              userID: "developer",
-            };
-            setCookie("login_info", this.currentUser); // cookie 설정
-            return true;
-          }
-        }
-        break;
-      case "Admin@currency_manager":
-        break;
-    }
     if (isStudent(userID)) {
       // 학생 아이디가 맞다면
       const studentsQuery = query(collection(database, "Students"));
