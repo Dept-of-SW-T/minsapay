@@ -44,7 +44,7 @@ const TopDiv = styled.div`
   gap: 4%;
   margin: 4vh auto 5vh;
   @media only screen and (max-width: 2000px) {
-    font-size: calc(0.05vw + 0.7em);
+    font-size: calc(0.05vw + 1.1em);
   }
   // font size change needed
 `;
