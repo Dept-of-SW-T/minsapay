@@ -33,7 +33,7 @@ export default function BuyerHome() {
               teamName={val.team_name}
               price={val.price}
               status={val.current_state}
-              id={val.menu_id}
+              id={val.order_id}
               key={index}
             />
           )),
@@ -54,7 +54,7 @@ export default function BuyerHome() {
                 teamName={val.team_name}
                 price={val.price}
                 status={val.current_state}
-                id={val.menu_id}
+                id={val.order_id}
                 key={index}
               />
             )),

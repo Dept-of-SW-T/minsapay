@@ -7,6 +7,7 @@ import {
   REFUND_OR_RECEIPT_COMPLETE,
   REFUND_REQUEST,
 } from "../theme-definition";
+import { CPUFirebase } from "../../features/CPU-firebase-interaction";
 
 const Wrapper = styled.span`
   width: 96%;
@@ -34,7 +35,7 @@ const Text = styled.span`
     border-top-left-radius: 17px;
     border-bottom-left-radius: 17px;
   }
-  &#approve-refund {
+  &.approve-refund {
     &:hover {
       background-color: #eee;
       cursor: pointer;
@@ -42,7 +43,13 @@ const Text = styled.span`
   }
 `;
 
-export default function OrderElementCPU({ menuName, userName, time, status }) {
+export default function OrderElementCPU({
+  menuName,
+  userName,
+  time,
+  status,
+  id,
+}) {
   // 주문 요청을 띄우는 element
   const backgroundColor = () => {
     switch (status) {
@@ -60,9 +67,11 @@ export default function OrderElementCPU({ menuName, userName, time, status }) {
         return REFUND_OR_RECEIPT_COMPLETE;
     }
   };
-  function onClick() {
+  async function onClick(e) {
     if (status === "승인하기") {
-      alert("환불 승인 완료");
+      if (!confirm("환불을 승인하시겠습니까?")) return;
+      await CPUFirebase.refundOrder(e.target.id);
+      //alert("환불 승인 완료");
     }
   }
   return (
@@ -71,7 +80,8 @@ export default function OrderElementCPU({ menuName, userName, time, status }) {
       <Text>{userName}</Text>
       <Text>{time}</Text>
       <Text
-        id={status === "승인하기" ? "approve-refund" : ""}
+        className={status === "승인하기" ? "approve-refund" : ""}
+        id={id}
         onClick={onClick}
       >
         {status}

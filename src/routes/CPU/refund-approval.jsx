@@ -40,6 +40,7 @@ export default function RefundApproval() {
               time={val.reception_time}
               status={"승인하기"}
               key={index}
+              id={val.order_id}
             />
           )),
       );
@@ -66,6 +67,7 @@ export default function RefundApproval() {
                 time={val.reception_time}
                 status={"승인하기"}
                 key={index}
+                id={val.order_id}
               />
             )),
         );

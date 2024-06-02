@@ -61,7 +61,7 @@ const kioskFirebase = {
           order_processor: null,
           buyer_id: this.userDocData.linked_buyer,
           buyer_name: linkedBuyerDocData.username,
-          menu_id:
+          order_id:
             val.id +
             "?" +
             this.userDoc.id +
@@ -72,10 +72,11 @@ const kioskFirebase = {
           menu_name: val.menuName,
           reception_time: receptionTime,
           current_state: "주문요청",
+          price: val.price,
         });
         studentOrderHistory.push({
           order_processor: null,
-          menu_id:
+          order_id:
             val.id +
             "?" +
             this.userDoc.id +

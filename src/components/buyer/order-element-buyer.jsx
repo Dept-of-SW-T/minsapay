@@ -69,7 +69,6 @@ export default function OrderElementBuyer({
     if (!confirm("환불을 요청하시겠습니까?")) return;
     else {
       await buyerFirebase.refundRequest(e.target.id);
-      // 환불 요청 관련 무언가
     }
   }
   return (

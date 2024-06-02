@@ -67,5 +67,31 @@ const CPUFirebase = {
     await setDoc(this.userDocRef, this.userDocData);
     this.userDoc = await getDoc(this.userDocRef);
   },
+  async refundOrder(orderID) {
+    let buyerID = undefined;
+    for (let i = 0; i < this.orderHistory.length; i++) {
+      if (this.orderHistory[i].order_id === orderID) {
+        this.orderHistory[i].current_state = "환불완료";
+        this.userDocData.order_history = JSON.stringify(this.orderHistory);
+        this.userDocData.balance -= this.orderHistory[i].price;
+        buyerID = this.orderHistory[i].buyer_id;
+        const buyerDocRef = doc(database, "Students", buyerID);
+        const buyerDoc = await getDoc(buyerDocRef);
+        const buyerDocData = buyerDoc.data();
+        const buyerOrderHistory = JSON.parse(buyerDocData.order_history);
+        for (let i = 0; i < buyerOrderHistory.length; i++) {
+          if (buyerOrderHistory[i].order_id === orderID) {
+            buyerOrderHistory[i].current_state = "환불완료";
+            buyerDocData.order_history = JSON.stringify(buyerOrderHistory);
+            buyerDocData.balance += this.orderHistory[i].price;
+            break;
+          }
+        }
+        await setDoc(buyerDocRef, buyerDocData);
+        await setDoc(this.userDocRef, this.userDocData);
+        break;
+      }
+    }
+  },
 };
 export { CPUFirebase };
