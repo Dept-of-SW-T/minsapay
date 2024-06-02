@@ -35,7 +35,7 @@ export default function KioskCover() {
     return () => {
       unsubscribe && unsubscribe();
     };
-  }, [navigate]);
+  }, []);
   const handleClick = () => {
     navigate("../kiosk-home/kiosk-authentication");
   };
