@@ -41,22 +41,32 @@ const auth = {
   },
   async signIn(userID, password) {
     // 성공적인 로그인 시 true를 그게 아닐 시 false를 return한다.
-    function isStudent(userID) {
-      return /\d/.test(userID[0]); // 숫자로 시작하는 아이디 = 학생 아이디 --> 학생이면 true return
+    function onlyDigits(userID) {
+      let result = true;
+      for (let i = 0; i < userID.length; i++) {
+        result = result && 0 <= userID[i] && userID[i] <= 9; //check if every character is a digit
+      }
+      return result;
     }
-    await this.signOut();
-    if (isStudent(userID)) {
-      // 학생 아이디가 맞다면
-      const studentsQuery = query(collection(database, "Students"));
-      const students = await getDocs(studentsQuery);
+    async function queryIDfromUsersDatabase(id, students) {
       let documentIndex = -1;
       for (let i = 0; i < students.docs.length; i++) {
         // 학생 firestore의 학생 아이디 목록과 대조
-        if (userID === students.docs[i].id) {
+        if (id === students.docs[i].id) {
           documentIndex = i;
           break;
         }
       }
+      return documentIndex;
+    }
+    await this.signOut();
+    if (onlyDigits(userID)) {
+      //If true, Buyer
+      // 학생 아이디가 맞다면
+      const studentsQuery = query(collection(database, "Students"));
+      const students = await getDocs(studentsQuery);
+      const documentIndex = await queryIDfromUsersDatabase(userID, students);
+      console.log(studentsQuery, students, documentIndex);
       if (documentIndex === -1) {
         // 맞는 결과가 없으면 error 설정 후 false return
         this.error = "존재한지 않는 사용자 아이디입니다.";
@@ -73,7 +83,9 @@ const auth = {
         };
         // Buyer로 로그인
       } else {
+        //기존 로그인 코드
         // 학생 비번과 불일치하면
+        /*
         const encryptedPassword = cryptoJS.SHA256(password).toString();
         const teamsQuery = query(collection(database, "Teams"));
         const teams = await getDocs(teamsQuery);
@@ -99,47 +111,73 @@ const auth = {
           this.error = "잘못된 비밀번호입니다.";
           return false;
         }
+        */
+        this.error = "잘못된 비밀번호입니다.";
+        return false;
       }
     } else {
       // 부스 로그인
       if (!userID.includes("@")) {
         // 아이디 입력에 @가 없으면 error return
-        this.error = "부적절한 부스 아이디입니다.";
+        this.error = "부적절한 아이디입니다.";
         return false;
       }
       const userType = userID.substring(userID.indexOf("@") + 1, userID.length); // @ 뒤의 usertype를 그대로 잘라내기
-      if (userType !== "CPU" && userType !== "kiosk") {
-        this.error = "부적절한 부스 아이디입니다.";
+      if (userType !== "CPU" && userType !== "kiosk" && userType !== "seller") {
+        this.error = "부적절한 아이디입니다.";
         return false;
       }
       userID = userID.substring(0, userID.indexOf("@")); // @ 이전의 id를 저장
-      const teamsQuery = query(collection(database, "Teams"));
-      const teams = await getDocs(teamsQuery);
-      let documentIndex = -1;
-      for (let i = 0; i < teams.docs.length; i++) {
-        // 팀 아이디 목록과 대조
-        if (userID === teams.docs[i].id) {
-          documentIndex = i;
-          break;
+      if (userType === "seller") {
+        //Seller
+        const studentsQuery = query(collection(database, "Students"));
+        const students = await getDocs(studentsQuery);
+        const documentIndex = await queryIDfromUsersDatabase(userID, students);
+        if (documentIndex === -1) {
+          // 맞는 결과가 없으면 error 설정 후 false return
+          this.error = "존재한지 않는 사용자 아이디입니다.";
+          return false;
         }
-      }
-      if (documentIndex === -1) {
-        // 대조 결과가 없으면 error return
-        this.error = "존재하지 않는 부스 아이디입니다.";
-        return false;
-      }
-      const userData = teams.docs[documentIndex].data();
-      if (cryptoJS.SHA256(password).toString() === userData.password) {
-        this.currentUser = {
-          userType: userType,
-          userID: userID,
-          username: userData.username,
-          // 전에 저장한 userType로 로그인
-        };
+        const userData = students.docs[documentIndex].data();
+        const encryptedPassword = cryptoJS.SHA256(password).toString();
+        if (encryptedPassword === userData.password) {
+          // 입력 비밀번호와 저장된 비밀번호 해시 비교
+          this.currentUser = {
+            userType: "seller",
+            userID: userID,
+            username: userData.username,
+          };
+          console.log("login sucess");
+        }
       } else {
-        // 비밀번호 대조결과가 없는 경우
-        this.error = "잘못된 비밀번호 입니다.";
-        return false;
+        const teamsQuery = query(collection(database, "Teams"));
+        const teams = await getDocs(teamsQuery);
+        let documentIndex = -1;
+        for (let i = 0; i < teams.docs.length; i++) {
+          // 팀 아이디 목록과 대조
+          if (userID === teams.docs[i].id) {
+            documentIndex = i;
+            break;
+          }
+        }
+        if (documentIndex === -1) {
+          // 대조 결과가 없으면 error return
+          this.error = "존재하지 않는 부스 아이디입니다.";
+          return false;
+        }
+        const userData = teams.docs[documentIndex].data();
+        if (cryptoJS.SHA256(password).toString() === userData.password) {
+          this.currentUser = {
+            userType: userType,
+            userID: userID,
+            username: userData.username,
+            // 전에 저장한 userType로 로그인
+          };
+        } else {
+          // 비밀번호 대조결과가 없는 경우
+          this.error = "잘못된 비밀번호 입니다.";
+          return false;
+        }
       }
     }
     setCookie("login_info", this.currentUser); // cookie 설정

@@ -7,6 +7,7 @@ import {
   ProtectedCPU,
   ProtectedKiosk,
   ProtectedRoute,
+  ProtectedSeller,
 } from "./components/protected-routes";
 import { BACKGROUND_GRAY } from "./components/theme-definition";
 import BuyerHome from "./routes/buyer/buyer-home";
@@ -18,6 +19,7 @@ import KioskHome from "./routes/kiosk/kiosk-home";
 import KioskCover from "./routes/kiosk/kiosk-cover";
 import KioskAuthentiaction from "./routes/kiosk/kiosk-authentication";
 import KioskThankYou from "./routes/kiosk/kiosk-thankyou";
+import SellerSelect from "./routes/seller/seller-select";
 
 const router = createBrowserRouter([
   // 루팅
@@ -39,6 +41,14 @@ const router = createBrowserRouter([
       <ProtectedBuyer>
         <BuyerPayment />
       </ProtectedBuyer>
+    ),
+  },
+  {
+    path: "seller-select",
+    element: (
+      <ProtectedSeller>
+        <SellerSelect />
+      </ProtectedSeller>
     ),
   },
   {
