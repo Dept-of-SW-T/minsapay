@@ -2,6 +2,7 @@ import { sellerFirebase } from "../../features/seller-firebase-interaction";
 import { useEffect, useState } from "react";
 import TeamList from "../../components/seller/team-list";
 import styled from "styled-components";
+import { SellerHeader } from "../../components/seller/seller-header";
 
 const Wrapper = styled.div`
   display: flex;
@@ -33,6 +34,7 @@ export default function SellerSelect() {
   }, []);
   return (
     <Wrapper>
+      <SellerHeader />
       <TeamList datalist={teamList} />
     </Wrapper>
   );
