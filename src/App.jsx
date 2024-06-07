@@ -5,6 +5,7 @@ import Login from "./routes/login";
 import {
   ProtectedBuyer,
   ProtectedCPU,
+  ProtectedDeveloper,
   ProtectedKiosk,
   ProtectedRoute,
 } from "./components/protected-routes";
@@ -24,7 +25,11 @@ const router = createBrowserRouter([
   // 루팅
   {
     path: "developer-home",
-    element: <DeveloperHome />, // 보안 추가해야 함
+    element: (
+      <ProtectedDeveloper>
+        <DeveloperHome />
+      </ProtectedDeveloper>
+    ), // 보안 추가해야 함
   },
   {
     path: "/",

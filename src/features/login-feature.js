@@ -49,6 +49,7 @@ const auth = {
     this.currentUser = {
       userType: "developer",
     };
+    setCookie("login_info", this.currentUser); // cookie 설정
     return true;
   },
   async signIn(userID, password) {
