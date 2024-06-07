@@ -137,12 +137,22 @@ export default function Login() {
       setError("이유불명 로그인 에러"); // signIn에서 잡지 못하는 에러
     else setError(auth.error);
   };
+  const onLogoImageDoubleClick = async (e) => {
+    console.log("hello", e);
+    const userID = prompt("아이디 입력");
+    if (userID !== "Admin@developer") return;
+    const password = prompt("비밀번호 입력");
+    const successfulSignIn = await auth.developerSignIn(password);
+    if (successfulSignIn) {
+      navigate("/");
+    }
+  };
   return (
     <Wrapper>
       <LoginBox>
         <TitleDiv>
           <Title>Login </Title>
-          <Image src={Logo} />
+          <Image src={Logo} onDoubleClick={onLogoImageDoubleClick} />
         </TitleDiv>
         <Form onSubmit={onSubmit}>
           <Input

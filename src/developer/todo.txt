@@ -1,6 +1,6 @@
 we need to add transaction --> mutex
 we need to add security
-kiosk multi user
+//kiosk multi user --> multi login 방지
 
 
 load 화면

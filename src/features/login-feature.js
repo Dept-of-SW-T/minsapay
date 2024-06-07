@@ -1,5 +1,7 @@
 import {
   collection,
+  doc,
+  getDoc,
   /*   doc,
   getDoc, */
   getDocs,
@@ -38,6 +40,16 @@ const auth = {
     this.currentUser = null;
     this.error = ""; // auth 객체 초기화
     removeCookie("login_info"); // 로그아웃 시 cookie 삭제
+  },
+  async developerSignIn(password) {
+    const developerDoc = await getDoc(doc(database, "Admin", "Developer"));
+    if (developerDoc.password !== cryptoJS.SHA256(password).toString()) {
+      return false;
+    }
+    this.currentUser = {
+      userType: "developer",
+    };
+    return true;
   },
   async signIn(userID, password) {
     // 성공적인 로그인 시 true를 그게 아닐 시 false를 return한다.
