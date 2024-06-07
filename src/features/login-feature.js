@@ -42,6 +42,7 @@ const auth = {
     removeCookie("login_info"); // 로그아웃 시 cookie 삭제
   },
   async developerSignIn(password) {
+    await this.signOut();
     const developerDoc = await getDoc(doc(database, "Admin", "Developer"));
     if (developerDoc.password !== cryptoJS.SHA256(password).toString()) {
       return false;
