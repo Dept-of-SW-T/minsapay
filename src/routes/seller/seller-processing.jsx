@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { sellerFirebase } from "../../features/seller-firebase-interaction";
 import OrderElementSeller from "../../components/seller/order-element-seller";
 import CoupleList from "../../components/CPU/couple-list";
@@ -14,7 +14,6 @@ const Wrapper = styled.div`
   align-items: center;
 `;
 export default function SellerProcessing() {
-  const navigate = useNavigate();
   const [orderList, setOrderList] = useState([]);
   const currentTeam = useParams().id;
   useEffect(() => {
@@ -42,9 +41,6 @@ export default function SellerProcessing() {
     <Wrapper>
       <SellerHeader />
       <CoupleList dataList={orderList} />
-      <button onClick={() => navigate("./buyer-payment")}>
-        To Buyer Payment
-      </button>
     </Wrapper>
   );
 }
