@@ -44,7 +44,8 @@ const auth = {
   async developerSignIn(password) {
     await this.signOut();
     const developerDoc = await getDoc(doc(database, "Admin", "Developer"));
-    if (developerDoc.password !== cryptoJS.SHA256(password).toString()) {
+    const developerDocData = developerDoc.data();
+    if (developerDocData.password !== cryptoJS.SHA256(password).toString()) {
       return false;
     }
     this.currentUser = {
