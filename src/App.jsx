@@ -20,6 +20,7 @@ import KioskCover from "./routes/kiosk/kiosk-cover";
 import KioskAuthentiaction from "./routes/kiosk/kiosk-authentication";
 import KioskThankYou from "./routes/kiosk/kiosk-thankyou";
 import SellerSelect from "./routes/seller/seller-select";
+import SellerProcessing from "./routes/seller/seller-processing";
 
 const router = createBrowserRouter([
   // 루팅
@@ -48,6 +49,14 @@ const router = createBrowserRouter([
     element: (
       <ProtectedSeller>
         <SellerSelect />
+      </ProtectedSeller>
+    ),
+  },
+  {
+    path: "seller-home/:id",
+    element: (
+      <ProtectedSeller>
+        <SellerProcessing />
       </ProtectedSeller>
     ),
   },
