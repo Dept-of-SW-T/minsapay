@@ -14,6 +14,8 @@ export function ProtectedRoute() {
       return <Navigate to="/kiosk-home/kiosk-cover" />;
     case "buyer":
       return <Navigate to="/buyer-home" />;
+    case "seller":
+      return <Navigate to="/seller-select" />;
     default:
       return <Navigate to="/login" />;
   }
@@ -55,8 +57,6 @@ export function ProtectedKiosk({ children }) {
   return children;
 }
 
-// 앞으로 ProtectedSeller를 만들어야 함.
-/*
 export function ProtectedSeller({ children }) {
   const user = auth.currentUser;
   if (user === null) return <Navigate to="/login" />;
@@ -65,4 +65,3 @@ export function ProtectedSeller({ children }) {
   }
   return children;
 }
-*/
