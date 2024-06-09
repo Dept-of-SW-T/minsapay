@@ -25,6 +25,7 @@ const sellerFirebase = {
     this.teamDoc = await getDoc(this.teamDocRef);
     this.teamDocData = this.teamDoc.data();
     this.orderHistory = JSON.parse(this.teamDocData.order_history);
+    console.log(this.orderHistory);
   },
 };
 

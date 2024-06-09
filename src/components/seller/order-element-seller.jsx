@@ -51,12 +51,10 @@ export default function OrderElementBuyer({
   menuName,
   status,
   // id,
-  // key,
   processor,
   buyer,
   receptionTime,
 }) {
-  // 주문 요청을 띄우는 element
   const backgroundColor = () => {
     switch (status) {
       case "주문요청":
@@ -82,11 +80,11 @@ export default function OrderElementBuyer({
       <Text id="first-child">{buyer}</Text>
       <Text>{menuName}</Text>
       <VerticalWrapper>
-        <Text>{menuName}원</Text>
-        <Text>{receptionTime}원</Text>
+        <Text>{menuName}</Text>
+        <Text>{receptionTime}</Text>
       </VerticalWrapper>
       <Text>{status}</Text>
-      <Text>{processor}</Text>
+      <Text>{processor === null ? "없음" : processor}</Text>
     </Wrapper>
   );
 }

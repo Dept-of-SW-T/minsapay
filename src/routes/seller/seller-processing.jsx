@@ -28,10 +28,10 @@ export default function SellerProcessing() {
               menuName={val.menu_name}
               status={val.current_state}
               id={val.order_id}
-              key={index}
               processor={val.order_processor}
               buyer={val.buyer_name}
               receptionTime={val.reception_time}
+              key={index}
             />
           )),
       );
