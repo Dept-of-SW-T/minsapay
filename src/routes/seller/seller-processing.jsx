@@ -26,11 +26,12 @@ export default function SellerProcessing() {
           .map((val, index) => (
             <OrderElementSeller
               menuName={val.menu_name}
-              teamName={val.team_name}
-              price={val.price}
               status={val.current_state}
               id={val.order_id}
               key={index}
+              processor={val.order_processor}
+              buyer={val.buyer_name}
+              receptionTime={val.reception_time}
             />
           )),
       );

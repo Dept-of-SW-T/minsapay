@@ -7,7 +7,7 @@ import {
   REFUND_OR_RECEIPT_COMPLETE,
   REFUND_REQUEST,
 } from "../theme-definition";
-import { buyerFirebase } from "../../features/buyer-firebase-interaction";
+// import { sellerFirebase } from "../../features/seller-firebase-interaction";
 
 const Wrapper = styled.span`
   width: 96%;
@@ -21,19 +21,15 @@ const Wrapper = styled.span`
 `;
 const Text = styled.span`
   font-family: "BMDOHYEON";
-  font-size: 1.2em;
-  width: 23.5%;
-  border-right: 3px solid ${BORDER_GRAY};
+  font-size: 1em;
+  /* width: 23.5%; */
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: center;
   text-align: center;
   background-color: white;
-  &#first-child {
-    border-top-left-radius: 17px;
-    border-bottom-left-radius: 17px;
-  }
+  padding: 0 2%;
   &.refund-request {
     &:hover {
       background-color: #eee;
@@ -42,12 +38,23 @@ const Text = styled.span`
   }
 `;
 
+const VerticalWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 23.5%;
+  background-color: white;
+`;
+
 export default function OrderElementBuyer({
   menuName,
-  teamName,
-  price,
   status,
-  id,
+  // id,
+  // key,
+  processor,
+  buyer,
+  receptionTime,
 }) {
   // 주문 요청을 띄우는 element
   const backgroundColor = () => {
@@ -64,26 +71,22 @@ export default function OrderElementBuyer({
         return REFUND_OR_RECEIPT_COMPLETE;
     }
   };
-  async function onClick(e) {
-    if (!confirm("환불을 요청하시겠습니까?")) return;
-    else {
-      await buyerFirebase.refundRequest(e.target.id);
-    }
-  }
+  // async function onClick(e) {
+  //   if (!confirm("환불을 요청하시겠습니까?")) return;
+  //   else {
+  //     await buyerFirebase.refundRequest(e.target.id);
+  //   }
+  // }
   return (
     <Wrapper style={{ backgroundColor: `${backgroundColor(status)}` }}>
-      <Text id="first-child">{menuName}</Text>
-      <Text>{teamName}</Text>
-      <Text>{price}원</Text>
-      {status === "환불완료" ? (
-        <Text>환불 완료됨</Text>
-      ) : status === "환불요청" ? (
-        <Text>환불 요청됨</Text>
-      ) : (
-        <Text onClick={onClick} className="refund-request" id={id}>
-          환불 요청하기
-        </Text>
-      )}
+      <Text id="first-child">{buyer}</Text>
+      <Text>{menuName}</Text>
+      <VerticalWrapper>
+        <Text>{menuName}원</Text>
+        <Text>{receptionTime}원</Text>
+      </VerticalWrapper>
+      <Text>{status}</Text>
+      <Text>{processor}</Text>
     </Wrapper>
   );
 }
