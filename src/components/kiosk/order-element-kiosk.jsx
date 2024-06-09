@@ -5,10 +5,10 @@ import { BORDER_GRAY /* BUTTON_SHADOW */ } from "../theme-definition";
 import { useState } from "react";
 // 반응형으로!!
 const Wrapper = styled.div`
-  width: calc(100% - 6px);
-  height: calc(110px - 6px);
+  width: calc(100% - 0.5vw);
+  height: 6vw;
   border: 3px solid ${BORDER_GRAY};
-  border-radius: 30px;
+  border-radius: 1.5vw;
 
   display: flex;
   flex-direction: row;
@@ -18,14 +18,14 @@ const Wrapper = styled.div`
 const MenuImage = styled.img`
   height: 100%;
   aspect-ratio: 1;
-  border-top-left-radius: calc(30px - 3px);
-  border-bottom-left-radius: calc(30px - 3px);
+  border-top-left-radius: calc(1.5vw - 3px);
+  border-bottom-left-radius: calc(1.5vw - 3px);
 `;
 const NoImage = styled.div`
-  height: calc(110px - 6px);
+  height: 13vh;
   aspect-ratio: 1;
-  border-top-left-radius: calc(30px - 3px);
-  border-bottom-left-radius: calc(30px - 3px);
+  border-top-left-radius: calc(1.5vw - 3px);
+  border-bottom-left-radius: calc(1.5vw - 3px);
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -35,24 +35,24 @@ const NoImage = styled.div`
 `;
 
 const MenuInfo = styled.div`
-  width: 139px;
+  width: 14vw;
   font-family: "BMDOHYEON";
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 10px;
+  gap: 1.3vh;
 `;
 const MenuName = styled.div`
-  font-size: 20px;
-  margin-left: 10px;
+  font-size: 1.2vw;
+  margin-left: 0.7vw;
 `;
 const MenuPrice = styled.div`
-  font-size: 15px;
+  font-size: 1vw;
   color: #2079ff;
-  margin-left: 10px;
+  margin-left: 0.7vw;
 `;
 const QuantityChange = styled.div`
-  width: 60px;
+  width: 3vw;
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -60,7 +60,7 @@ const QuantityChange = styled.div`
   justify-content: space-evenly;
 `;
 const Quantity = styled.div`
-  font-size: 20px;
+  font-size: calc(0.8vw+0.4vh);
   font-family: "BMDOHYEON";
   display: flex;
   flex-direction: column;

@@ -1,5 +1,8 @@
 <svg width="31" height="31" viewBox="0 0 31 31" fill="none" xmlns="http://www.w3.org/2000/svg">
 <circle cx="15.5" cy="15.5" r="15.5" fill="#0B7BFE"/>
-<rect x="14" y="6.5" width="3" height="18" fill="white"/>
-<path d="M6.5 17V14H24.5V17H6.5Z" fill="white"/>
+<rect x="14" y="6.5" width="3" height="18" rx="1.5" fill="white"/>
+<path d="M8 17C7.17157 17 6.5 16.3284 6.5 15.5C6.5 14.6716 7.17157 14 8 14H23C23.8284 14 24.5 14.6716 24.5 15.5C24.5 16.3284 23.8284 17 23 17H8Z" fill="white"/>
 </svg>
+
+
+

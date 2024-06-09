@@ -28,7 +28,7 @@ const NoImage = styled.div`
 `;
 const MenuImage = styled.img`
   width: 100%;
-  aspect-ratio: 1;
+  aspect-ratio: 1.2;
   border-top-left-radius: 10%;
   border-top-right-radius: 10%;
 `;
