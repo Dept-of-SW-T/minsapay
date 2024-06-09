@@ -75,7 +75,7 @@ const Input = styled.input`
   margin-top: 7%;
   font-family: "BMDOHYEON";
   @media only screen and (max-width: 2000px) {
-    font-size: 0.7em;
+    font-size: 0.9em;
   }
   &:focus {
     border-bottom: 3px solid #444;
