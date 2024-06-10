@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { useEffect } from "react";
+import { useState } from "react";
 import {
   BORDER_GRAY,
   ORDER_COMPLETE,
@@ -68,7 +68,7 @@ export default function OrderElementBuyer({
   buyer,
   receptionTime,
 }) {
-  const [state, setstate] = useEffect(status);
+  const [state, setstate] = useState(status);
   const backgroundColor = () => {
     switch (state) {
       case "주문요청":
