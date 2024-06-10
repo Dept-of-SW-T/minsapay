@@ -61,6 +61,7 @@ export function ProtectedSeller({ children }) {
   const user = auth.currentUser;
   if (user === null) return <Navigate to="/login" />;
   if (user.userType !== "seller") {
+    //console.log("dd");
     return <Navigate to="/" />;
   }
   return children;

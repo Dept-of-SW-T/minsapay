@@ -28,7 +28,7 @@ import { getCookie, removeCookie, setCookie } from "./cookies";
 const auth = {
   currentUser: null, // 로그인 되어 있을 때에는 객체이고 로그아웃되어 있을 때에는 null이다.
   error: "", // auth 함수 처리 과정중의 모든 error들을 다 가져온다 --> if(auth.함수) { 에러 처리 코드 } // error를 초기화하고 함수를 돌리거나 함수 자체로 true false를 return하도록
-  syncWithStoredLoginInfo() {
+  async syncWithStoredLoginInfo() {
     // cookie에 저장된 loginInfo와 동기화 --> 새로고침되었을 때의 상황에서도 cookie를 이용하여 다시 로컬 객체를 동기화시키는 역할
     const loginInfo = getCookie("login_info");
     if (loginInfo !== undefined) {
@@ -36,10 +36,10 @@ const auth = {
       this.currentUser = loginInfo;
     }
   },
-  signOut() {
+  async signOut() {
     this.currentUser = null;
     this.error = ""; // auth 객체 초기화
-    removeCookie("login_info"); // 로그아웃 시 cookie 삭제
+    await removeCookie("login_info"); // 로그아웃 시 cookie 삭제
   },
   async developerSignIn(password) {
     await this.signOut();
@@ -56,6 +56,7 @@ const auth = {
   },
   async signIn(userID, password) {
     // 성공적인 로그인 시 true를 그게 아닐 시 false를 return한다.
+    await this.signOut();
     function onlyDigits(userID) {
       let result = true;
       for (let i = 0; i < userID.length; i++) {
@@ -74,14 +75,12 @@ const auth = {
       }
       return documentIndex;
     }
-    await this.signOut();
     if (onlyDigits(userID)) {
       //If true, Buyer
       // 학생 아이디가 맞다면
       const studentsQuery = query(collection(database, "Students"));
       const students = await getDocs(studentsQuery);
       const documentIndex = await queryIDfromUsersDatabase(userID, students);
-      console.log(studentsQuery, students, documentIndex);
       if (documentIndex === -1) {
         // 맞는 결과가 없으면 error 설정 후 false return
         this.error = "존재한지 않는 사용자 아이디입니다.";
@@ -98,35 +97,6 @@ const auth = {
         };
         // Buyer로 로그인
       } else {
-        //기존 로그인 코드
-        // 학생 비번과 불일치하면
-        /*
-        const encryptedPassword = cryptoJS.SHA256(password).toString();
-        const teamsQuery = query(collection(database, "Teams"));
-        const teams = await getDocs(teamsQuery);
-        documentIndex = -1;
-        for (let i = 0; i < teams.docs.length; i++) {
-          // 부스 목록의 비번 해시 대조
-          const doc = teams.docs[i].data();
-          if (encryptedPassword === doc.password) {
-            documentIndex = i;
-            this.currentUser = {
-              userType: "seller",
-              userID: userID,
-              username: userData.username,
-              linkedTeamID: teams.docs[i].id,
-              linkedTeamName: doc.username,
-            };
-            // Seller로 로그인
-            break;
-          }
-        }
-        if (documentIndex === -1) {
-          // 팀 비밀번호와의 대조도 했는데 결과가 없으면 잘못된 비밀번호 입력이므로 error return
-          this.error = "잘못된 비밀번호입니다.";
-          return false;
-        }
-        */
         this.error = "잘못된 비밀번호입니다.";
         return false;
       }

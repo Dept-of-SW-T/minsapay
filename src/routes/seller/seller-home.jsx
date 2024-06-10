@@ -13,12 +13,12 @@ const Wrapper = styled.div`
   flex-direction: column;
   align-items: center;
 `;
-export default function SellerProcessing() {
+export default function SellerHome() {
   const [orderList, setOrderList] = useState([]);
   const currentTeam = useParams().id;
   useEffect(() => {
-    // let unsubscribe = null;
     const init = async () => {
+      await sellerFirebase.init();
       await sellerFirebase.getTeamData(currentTeam);
       setOrderList(
         sellerFirebase.orderHistory
