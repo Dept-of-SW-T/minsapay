@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { useEffect } from "react";
 import {
   BORDER_GRAY,
   ORDER_COMPLETE,
@@ -9,15 +10,17 @@ import {
 } from "../theme-definition";
 // import { sellerFirebase } from "../../features/seller-firebase-interaction";
 
-const Wrapper = styled.span`
+const Wrapper = styled.div`
   width: 96%;
   height: 7vw;
   border: 3px solid ${BORDER_GRAY};
   border-radius: 20px;
-  display: flex;
-  flex-direction: row;
   padding-left: 0px;
   padding-right: 0.5%;
+`;
+const FlexWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
 `;
 const Text = styled.span`
   font-family: "BMDOHYEON";
@@ -29,7 +32,6 @@ const Text = styled.span`
   justify-content: center;
   text-align: center;
   background-color: white;
-  padding: 0 2%;
   &.refund-request {
     &:hover {
       background-color: #eee;
@@ -47,6 +49,17 @@ const VerticalWrapper = styled.div`
   background-color: white;
 `;
 
+const StateButton = styled.div`
+  width: 10%;
+  background-color: white;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  &:hover {
+    cursor: pointer;
+  }
+`;
+
 export default function OrderElementBuyer({
   menuName,
   status,
@@ -55,8 +68,9 @@ export default function OrderElementBuyer({
   buyer,
   receptionTime,
 }) {
+  const [state, setstate] = useEffect(status);
   const backgroundColor = () => {
-    switch (status) {
+    switch (state) {
       case "주문요청":
         return ORDER_REQUEST;
       case "처리중":
@@ -75,16 +89,56 @@ export default function OrderElementBuyer({
   //     await buyerFirebase.refundRequest(e.target.id);
   //   }
   // }
+  function stateToIndex(stateString) {
+    switch (stateString) {
+      case "주문요청":
+        return 0;
+      case "처리중":
+        return 1;
+      case "처리완료":
+        return 2;
+      // case "환불요청":
+      //   return 3;
+    }
+  }
+  function indexTostate(stateIndex) {
+    switch (stateIndex) {
+      case 0:
+        return "주문요청";
+      case 1:
+        return "처리중";
+      case 2:
+        return "처리완료";
+      // case 3:
+      //   return "환불요청";
+    }
+  }
+
+  function onBackwardClick() {
+    setstate(indexTostate(stateToIndex(state) - 1));
+    console.log(state);
+  }
+
+  function onForwardClick() {
+    setstate(indexTostate(stateToIndex(state) + 1));
+    console.log(state);
+  }
+
   return (
-    <Wrapper style={{ backgroundColor: `${backgroundColor(status)}` }}>
-      <Text id="first-child">{buyer}</Text>
-      <Text>{menuName}</Text>
-      <VerticalWrapper>
-        <Text>{menuName}</Text>
-        <Text>{receptionTime}</Text>
-      </VerticalWrapper>
-      <Text>{status}</Text>
-      <Text>{processor === null ? "없음" : processor}</Text>
+    <Wrapper style={{ backgroundColor: `${backgroundColor(state)}` }}>
+      <FlexWrapper>
+        <Text id="first-child">{buyer}</Text>
+        <VerticalWrapper>
+          <Text>{menuName}</Text>
+          <Text>{receptionTime}</Text>
+        </VerticalWrapper>
+        <Text>{state}</Text>
+        <Text>{processor === null ? "없음" : processor}</Text>
+        {state === "주문요청" ? null : (
+          <StateButton onClick={onBackwardClick}>{"<"}</StateButton>
+        )}
+        <StateButton onClick={onForwardClick}>{">"}</StateButton>
+      </FlexWrapper>
     </Wrapper>
   );
 }
