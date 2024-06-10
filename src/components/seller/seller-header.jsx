@@ -42,9 +42,8 @@ export function SellerHeader() {
     e.preventDefault();
     navigate("../seller-select");
   };
-  const onLogOutIconClick = async (e) => {
+  const onLogOutIconClick = async () => {
     // logout 누르면 confirm 띄우고 로그아웃 후 home으로 navigate --> 저절로 logout화면으로 protected routes를 통해 연결
-    e.preventDefault();
     if (!confirm("로그아웃 하시겠습니까?")) return;
     await auth.signOut();
     navigate("../../");
