@@ -12,7 +12,7 @@ export const getCookie = (name) => {
   return cookies.get(name);
 };
 
-export const removeCookie = (name) => {
+export const removeCookie = async (name) => {
   // cookie를 제거하는 함수
-  cookies.remove(name);
+  await cookies.remove(name);
 };
