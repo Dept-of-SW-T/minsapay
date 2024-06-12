@@ -2,14 +2,14 @@ import { Cookies } from "react-cookie";
 
 const cookies = new Cookies();
 
-export const setCookie = (name, value, options) => {
+export const setCookie = async (name, value, options) => {
   // cookie를 set하는 함수 --> options는 아직 안 사용함
-  return cookies.set(name, value, { ...options });
+  return await cookies.set(name, value, { ...options });
 };
 
-export const getCookie = (name) => {
+export const getCookie = async (name) => {
   // cookie를 가져오는 함수
-  return cookies.get(name);
+  return await cookies.get(name);
 };
 
 export const removeCookie = async (name) => {

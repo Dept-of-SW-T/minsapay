@@ -30,7 +30,7 @@ const auth = {
   error: "", // auth 함수 처리 과정중의 모든 error들을 다 가져온다 --> if(auth.함수) { 에러 처리 코드 } // error를 초기화하고 함수를 돌리거나 함수 자체로 true false를 return하도록
   async syncWithStoredLoginInfo() {
     // cookie에 저장된 loginInfo와 동기화 --> 새로고침되었을 때의 상황에서도 cookie를 이용하여 다시 로컬 객체를 동기화시키는 역할
-    const loginInfo = getCookie("login_info");
+    const loginInfo = await getCookie("login_info");
     if (loginInfo !== undefined) {
       // 이미 로그인된 경우
       this.currentUser = loginInfo;
@@ -51,7 +51,7 @@ const auth = {
     this.currentUser = {
       userType: "developer",
     };
-    setCookie("login_info", this.currentUser); // cookie 설정
+    await setCookie("login_info", this.currentUser); // cookie 설정
     return true;
   },
   async signIn(userID, password) {
@@ -165,7 +165,7 @@ const auth = {
         }
       }
     }
-    setCookie("login_info", this.currentUser); // cookie 설정
+    await setCookie("login_info", this.currentUser); // cookie 설정
     return true;
   },
 };
