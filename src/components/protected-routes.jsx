@@ -15,7 +15,7 @@ export function ProtectedRoute() {
     case "buyer":
       return <Navigate to="/buyer-home" />;
     case "seller":
-      return <Navigate to="/seller-select" />;
+      return <Navigate to="/seller-home/seller-select" />;
     default:
       return <Navigate to="/login" />;
   }

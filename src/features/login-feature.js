@@ -132,7 +132,9 @@ const auth = {
             userID: userID,
             username: userData.username,
           };
-          console.log("login sucess");
+        } else {
+          this.error = "잘못된 비밀번호 입니다.";
+          return false;
         }
       } else {
         const teamsQuery = query(collection(database, "Teams"));
