@@ -13,12 +13,12 @@ const Wrapper = styled.div`
   flex-direction: column;
   align-items: center;
 `;
-export default function SellerProcessing() {
+export default function SellerHome() {
   const [orderList, setOrderList] = useState([]);
   const currentTeam = useParams().id;
   useEffect(() => {
-    // let unsubscribe = null;
     const init = async () => {
+      await sellerFirebase.init();
       await sellerFirebase.getTeamData(currentTeam);
       setOrderList(
         sellerFirebase.orderHistory
@@ -26,10 +26,11 @@ export default function SellerProcessing() {
           .map((val, index) => (
             <OrderElementSeller
               menuName={val.menu_name}
-              teamName={val.team_name}
-              price={val.price}
               status={val.current_state}
               id={val.order_id}
+              processor={val.order_processor}
+              buyer={val.buyer_name}
+              receptionTime={val.reception_time}
               key={index}
             />
           )),

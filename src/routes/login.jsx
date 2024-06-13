@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { auth } from "../features/login-feature";
 import styled from "styled-components";
 import Logo from "../images/LogoMinsapay.svg";
@@ -137,8 +137,7 @@ export default function Login() {
       setError("이유불명 로그인 에러"); // signIn에서 잡지 못하는 에러
     else setError(auth.error);
   };
-  const onLogoImageDoubleClick = async (e) => {
-    console.log("hello", e);
+  const onLogoImageDoubleClick = async () => {
     const userID = prompt("아이디 입력");
     if (userID !== "Admin@developer") return;
     const password = prompt("비밀번호 입력");
@@ -147,6 +146,12 @@ export default function Login() {
       navigate("/");
     }
   };
+  useEffect(() => {
+    async function init() {
+      await auth.signOut();
+    }
+    init();
+  }, []);
   return (
     <Wrapper>
       <LoginBox>

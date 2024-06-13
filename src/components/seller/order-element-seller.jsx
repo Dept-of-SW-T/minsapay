@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { useState } from "react";
 import {
   BORDER_GRAY,
   ORDER_COMPLETE,
@@ -7,33 +8,30 @@ import {
   REFUND_OR_RECEIPT_COMPLETE,
   REFUND_REQUEST,
 } from "../theme-definition";
-import { buyerFirebase } from "../../features/buyer-firebase-interaction";
+// import { sellerFirebase } from "../../features/seller-firebase-interaction";
 
-const Wrapper = styled.span`
+const Wrapper = styled.div`
   width: 96%;
   height: 7vw;
   border: 3px solid ${BORDER_GRAY};
   border-radius: 20px;
-  display: flex;
-  flex-direction: row;
   padding-left: 0px;
   padding-right: 0.5%;
 `;
+const FlexWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+`;
 const Text = styled.span`
   font-family: "BMDOHYEON";
-  font-size: 1.2em;
-  width: 23.5%;
-  border-right: 3px solid ${BORDER_GRAY};
+  font-size: 1em;
+  /* width: 23.5%; */
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: center;
   text-align: center;
   background-color: white;
-  &#first-child {
-    border-top-left-radius: 17px;
-    border-bottom-left-radius: 17px;
-  }
   &.refund-request {
     &:hover {
       background-color: #eee;
@@ -42,16 +40,37 @@ const Text = styled.span`
   }
 `;
 
+const VerticalWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 23.5%;
+  background-color: white;
+`;
+
+const StateButton = styled.div`
+  width: 10%;
+  background-color: white;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  &:hover {
+    cursor: pointer;
+  }
+`;
+
 export default function OrderElementBuyer({
   menuName,
-  teamName,
-  price,
   status,
-  id,
+  // id,
+  processor,
+  buyer,
+  receptionTime,
 }) {
-  // 주문 요청을 띄우는 element
+  const [state, setstate] = useState(status);
   const backgroundColor = () => {
-    switch (status) {
+    switch (state) {
       case "주문요청":
         return ORDER_REQUEST;
       case "처리중":
@@ -64,26 +83,62 @@ export default function OrderElementBuyer({
         return REFUND_OR_RECEIPT_COMPLETE;
     }
   };
-  async function onClick(e) {
-    if (!confirm("환불을 요청하시겠습니까?")) return;
-    else {
-      await buyerFirebase.refundRequest(e.target.id);
+  // async function onClick(e) {
+  //   if (!confirm("환불을 요청하시겠습니까?")) return;
+  //   else {
+  //     await buyerFirebase.refundRequest(e.target.id);
+  //   }
+  // }
+  function stateToIndex(stateString) {
+    switch (stateString) {
+      case "주문요청":
+        return 0;
+      case "처리중":
+        return 1;
+      case "처리완료":
+        return 2;
+      // case "환불요청":
+      //   return 3;
     }
   }
+  function indexTostate(stateIndex) {
+    switch (stateIndex) {
+      case 0:
+        return "주문요청";
+      case 1:
+        return "처리중";
+      case 2:
+        return "처리완료";
+      // case 3:
+      //   return "환불요청";
+    }
+  }
+
+  function onBackwardClick() {
+    setstate(indexTostate(stateToIndex(state) - 1));
+    console.log(state);
+  }
+
+  function onForwardClick() {
+    setstate(indexTostate(stateToIndex(state) + 1));
+    console.log(state);
+  }
+
   return (
-    <Wrapper style={{ backgroundColor: `${backgroundColor(status)}` }}>
-      <Text id="first-child">{menuName}</Text>
-      <Text>{teamName}</Text>
-      <Text>{price}원</Text>
-      {status === "환불완료" ? (
-        <Text>환불 완료됨</Text>
-      ) : status === "환불요청" ? (
-        <Text>환불 요청됨</Text>
-      ) : (
-        <Text onClick={onClick} className="refund-request" id={id}>
-          환불 요청하기
-        </Text>
-      )}
+    <Wrapper style={{ backgroundColor: `${backgroundColor(state)}` }}>
+      <FlexWrapper>
+        <Text id="first-child">{buyer}</Text>
+        <VerticalWrapper>
+          <Text>{menuName}</Text>
+          <Text>{receptionTime}</Text>
+        </VerticalWrapper>
+        <Text>{state}</Text>
+        <Text>{processor === null ? "없음" : processor}</Text>
+        {state === "주문요청" ? null : (
+          <StateButton onClick={onBackwardClick}>{"<"}</StateButton>
+        )}
+        <StateButton onClick={onForwardClick}>{">"}</StateButton>
+      </FlexWrapper>
     </Wrapper>
   );
 }

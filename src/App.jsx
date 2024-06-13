@@ -22,12 +22,12 @@ import KioskAuthentiaction from "./routes/kiosk/kiosk-authentication";
 import KioskThankYou from "./routes/kiosk/kiosk-thankyou";
 import DeveloperHome from "./developer/developer-home";
 import SellerSelect from "./routes/seller/seller-select";
-import SellerProcessing from "./routes/seller/seller-processing";
+import SellerHome from "./routes/seller/seller-home";
 
 const router = createBrowserRouter([
   // 루팅
   {
-    path: "developer-home",
+    path: "/developer-home",
     element: (
       <ProtectedDeveloper>
         <DeveloperHome />
@@ -39,7 +39,7 @@ const router = createBrowserRouter([
     element: <ProtectedRoute />, // 기본 화면으로 실제로는 절대로 display 되지는 않고 사용자를 다른 페이지로 보내는데 사용됨
   },
   {
-    path: "buyer-home", // 개발자용
+    path: "/buyer-home", // 개발자용
     element: (
       <ProtectedBuyer>
         <BuyerHome />
@@ -47,7 +47,7 @@ const router = createBrowserRouter([
     ),
   },
   {
-    path: "buyer-home/buyer-payment", // 개발자용
+    path: "/buyer-home/buyer-payment", // 개발자용
     element: (
       <ProtectedBuyer>
         <BuyerPayment />
@@ -55,23 +55,7 @@ const router = createBrowserRouter([
     ),
   },
   {
-    path: "seller-select",
-    element: (
-      <ProtectedSeller>
-        <SellerSelect />
-      </ProtectedSeller>
-    ),
-  },
-  {
-    path: "seller-home/:id",
-    element: (
-      <ProtectedSeller>
-        <SellerProcessing />
-      </ProtectedSeller>
-    ),
-  },
-  {
-    path: "cpu-home", // CPU 홈화면이다.
+    path: "/cpu-home", // CPU 홈화면이다.
     element: (
       <ProtectedCPU>
         <CPUHome />
@@ -79,7 +63,7 @@ const router = createBrowserRouter([
     ),
   },
   {
-    path: "cpu-home/change-menu", // 메뉴 변경 화면
+    path: "/cpu-home/change-menu", // 메뉴 변경 화면
     element: (
       <ProtectedCPU>
         <ChangeMenu />
@@ -87,7 +71,7 @@ const router = createBrowserRouter([
     ),
   },
   {
-    path: "cpu-home/refund-approval", // 환불 승인 화면
+    path: "/cpu-home/refund-approval", // 환불 승인 화면
     element: (
       <ProtectedCPU>
         <RefundApproval />
@@ -124,6 +108,22 @@ const router = createBrowserRouter([
       <ProtectedKiosk>
         <KioskThankYou />
       </ProtectedKiosk>
+    ),
+  },
+  {
+    path: "/seller-home/seller-select",
+    element: (
+      <ProtectedSeller>
+        <SellerSelect />
+      </ProtectedSeller>
+    ),
+  },
+  {
+    path: "/seller-home/:id",
+    element: (
+      <ProtectedSeller>
+        <SellerHome />
+      </ProtectedSeller>
     ),
   },
   {

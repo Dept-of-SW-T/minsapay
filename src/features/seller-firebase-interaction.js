@@ -8,8 +8,6 @@ const sellerFirebase = {
   userDocData: undefined, // 위의 userDoc.data()를 실행한 결과
   teamList: undefined,
 
-  teamSession: undefined,
-
   teamDocRef: undefined,
   teamDoc: undefined,
   teamDocData: undefined,
