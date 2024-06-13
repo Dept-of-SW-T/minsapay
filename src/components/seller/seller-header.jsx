@@ -40,7 +40,7 @@ export function SellerHeader() {
   const onLogoClick = (e) => {
     // logo 누르면 홈으로 navigate
     e.preventDefault();
-    navigate("../seller-select");
+    navigate("../seller-home/seller-select");
   };
   const onLogOutIconClick = async () => {
     // logout 누르면 confirm 띄우고 로그아웃 후 home으로 navigate --> 저절로 logout화면으로 protected routes를 통해 연결
