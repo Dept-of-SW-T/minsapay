@@ -5,6 +5,7 @@ import styled from "styled-components";
 import { SellerHeader } from "../../components/seller/seller-header";
 import { BORDER_GRAY, MINSAPAY_BLUE } from "../../components/theme-definition";
 import { useNavigate } from "react-router-dom";
+import { onSnapshot } from "firebase/firestore";
 
 const Wrapper = styled.div`
   display: flex;
@@ -51,6 +52,7 @@ export default function SellerSelect() {
   };
 
   useEffect(() => {
+    let unsubscribe = null;
     const init = async () => {
       await sellerFirebase.init();
       setTeamList(
@@ -62,6 +64,20 @@ export default function SellerSelect() {
       );
     };
     init();
+    unsubscribe = onSnapshot(sellerFirebase.userDocRef, (doc) => {
+      sellerFirebase.userDoc = doc;
+      sellerFirebase.userDocData = doc.data();
+      setTeamList(
+        sellerFirebase.userDocData.team_list.map((val, index) => (
+          <TeamElement key={index} onClick={onTeamSelect} id={val}>
+            {val}
+          </TeamElement>
+        )),
+      );
+    });
+    return () => {
+      unsubscribe && unsubscribe();
+    };
   }, []);
   return (
     <Wrapper>
