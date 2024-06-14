@@ -2,12 +2,11 @@ import styled from "styled-components";
 import { MINSAPAY_BLUE } from "../components/theme-definition";
 import { readXlOfEachSheet, writeXlFromData } from "./xlsx-conversion";
 import { developerFirebase } from "./developer-firebase";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import cryptoJS from "crypto-js";
 
 const Wrapper = styled.div`
   width: 100%;
-
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -68,57 +67,79 @@ const SubmitDatabaseInfoButton = styled.div`
 `;
 export default function DeveloperHome() {
   const [hashedPassword, setHashedPassword] = useState("");
-  const [data, setData] = useState([]);
+  const [data, setData] = useState({});
+  const [remainingTime, setRemainingTime] = useState(0);
+  const [clickable, setClickable] = useState(true);
+  const [uploadable, setUploadable] = useState(true);
   const onXlSubmit = async (e) => {
+    setUploadable(false);
     const file = e.target.files[0];
-    const studentKeys = [
-      "user_id",
-      "username",
-      "password",
-      "logged_device",
-      "balance",
-    ];
-    const teamKeys = [
-      "user_id",
-      "username",
-      "password",
-      "logged_device",
-      "logged_kiosk_device",
-      "balance",
-      "kiosk_authentication_number",
-      "kiosk_image",
-      "linked_buyer",
-      "menu_list",
-      "student_list",
-      "order_history",
-    ];
-    let tmpdata = await readXlOfEachSheet(file); // needs fix
+    let xldata = await readXlOfEachSheet(file); // needs fix
     /*  Empty cells of Excel files are converted to ""  */
-    studentKeys.forEach((key) => {
-      tmpdata.Students.forEach((users, index) => {
-        if (!(key in users)) {
-          tmpdata.Students[index][key] = "";
+    let resultdata = {};
+    await developerFirebase.init();
+    developerFirebase.collectionNameList.forEach((collectionName) => {
+      resultdata[collectionName] = {};
+      xldata[collectionName].forEach((val, index) => {
+        if (val.user_id in developerFirebase.data[collectionName]) {
+          // original user
+          resultdata[collectionName][val.user_id] =
+            developerFirebase.data[collectionName][val.user_id];
+          for (const key of Object.keys(xldata[collectionName][index])) {
+            if (key === "user_id") continue;
+            if (key === "balance")
+              resultdata[collectionName][val.user_id][key] = parseInt(
+                xldata[collectionName][index][key],
+              );
+            else
+              resultdata[collectionName][val.user_id][key] = String(
+                xldata[collectionName][index][key],
+              );
+          }
+        } else {
+          resultdata[collectionName][val.user_id] =
+            developerFirebase.emptyUser(collectionName);
+          for (const key of Object.keys(xldata[collectionName][index])) {
+            if (key === "user_id") continue;
+            if (key === "balance")
+              resultdata[collectionName][val.user_id][key] = parseInt(
+                xldata[collectionName][index][key],
+              );
+            else
+              resultdata[collectionName][val.user_id][key] = String(
+                xldata[collectionName][index][key],
+              );
+          }
         }
+        resultdata[collectionName][val.user_id]["password"] = cryptoJS
+          .SHA256(resultdata[collectionName][val.user_id]["password_unhashed"])
+          .toString();
       });
     });
-    teamKeys.forEach((key) => {
-      tmpdata.Teams.forEach((users, index) => {
-        if (!(key in users)) {
-          tmpdata.Teams[index][key] = "";
-        }
-      });
-    });
-    /*********************************************************/
-    setData(tmpdata);
-    console.log(data); // need removal
-    console.log(tmpdata);
+    setData(resultdata);
+    console.log(resultdata);
     e.target.value = ""; // 같은 파일 입력해도 반복 실행
-    // some change stuff
+    setUploadable(true);
   };
   const onGetDataClick = async () => {
-    const fileName = "database_info.xlsx";
-    await developerFirebase.init();
-    await writeXlFromData(fileName, developerFirebase.data);
+    setClickable(false);
+    setRemainingTime(5);
+    let rm = 5;
+    const intervalId = setInterval(async () => {
+      if (rm < 0) {
+        setClickable(true);
+        clearInterval(intervalId);
+      } else if (rm === 0) {
+        rm--;
+        const fileName = "database_info.xlsx";
+        await developerFirebase.init();
+        await writeXlFromData(fileName, developerFirebase.subData);
+        console.log(rm);
+      } else {
+        rm--;
+        setRemainingTime(rm);
+      }
+    }, 1000);
   };
   const onPasswordChange = (e) => {
     if (e.target.value === "") setHashedPassword("");
@@ -126,34 +147,34 @@ export default function DeveloperHome() {
   };
   const onSubmitDataClick = async () => {
     if (!confirm("firebase에 변경사항을 저장하시겠습니까?")) return;
-  };
-  useEffect(() => {
-    async function init() {
-      await developerFirebase.init();
-      setData(developerFirebase.data);
+    if (Object.keys(data).length === 0) {
+      alert("업로드된 데이터가 없습니다");
+      return;
     }
-    init();
-  }, []);
-
+    console.log(data);
+    await developerFirebase.writeDataToFirebase(data);
+  };
   return (
     <Wrapper>
       <p>Developer Home</p>
-      <GetDatabaseInfoButton onClick={onGetDataClick}>
-        Get Database Info
+      <GetDatabaseInfoButton onClick={clickable ? onGetDataClick : null}>
+        {remainingTime === 0
+          ? "Get Database Info"
+          : "Download starting in " + String(remainingTime) + " seconds"}
       </GetDatabaseInfoButton>
       <DatabaseInfoButton htmlFor="xl-submit">
-        Upload Database Info
+        {uploadable ? "Upload Database Info" : "Uploading"}
       </DatabaseInfoButton>
       <input
-        onChange={onXlSubmit}
+        onChange={uploadable ? onXlSubmit : null}
         type="file"
         accept=".xls, .xlsx"
         required
         id="xl-submit"
         style={{ display: "none" }}
       />
-      <SubmitDatabaseInfoButton onClick={onSubmitDataClick}>
-        Submit Database Info
+      <SubmitDatabaseInfoButton onClick={uploadable ? onSubmitDataClick : null}>
+        {uploadable ? "Submit Database Info" : "Uploading"}
       </SubmitDatabaseInfoButton>
       <PasswordAndHashed
         onChange={onPasswordChange}
