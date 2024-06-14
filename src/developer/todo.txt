@@ -1,5 +1,6 @@
 1. login security required
 2. developer screen needed with function packages
+3. fix all the async maluse
 
 
 we need to add transaction --> mutex
