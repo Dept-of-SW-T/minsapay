@@ -36,10 +36,13 @@ const auth = {
       this.currentUser = loginInfo;
     }
   },
-  async signOut() {
-    this.currentUser = null;
-    this.error = ""; // auth 객체 초기화
-    await removeCookie("login_info"); // 로그아웃 시 cookie 삭제
+  signOut() {
+    return new Promise((resolve) => {
+      this.currentUser = null;
+      this.error = ""; // auth 객체 초기화
+      removeCookie("login_info"); // 로그아웃 시 cookie 삭제
+      resolve();
+    });
   },
   async developerSignIn(password) {
     await this.signOut();
