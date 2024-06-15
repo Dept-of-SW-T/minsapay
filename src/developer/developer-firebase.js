@@ -5,8 +5,9 @@ import {
   getDocs,
   setDoc,
 } from "firebase/firestore";
-import { database } from "../firebase";
+import { database, storage } from "../firebase";
 import cryptoJS from "crypto-js";
+import { deleteObject, ref, uploadBytes } from "firebase/storage";
 
 const developerFirebase = {
   collectionNameList: undefined,
@@ -76,6 +77,33 @@ const developerFirebase = {
     this.subData = result;
   },
   async writeDataToFirebase(data) {
+    /*Teams Storage Change*/
+    for (const teamUser of Object.keys(this.data["Teams"])) {
+      if (!(teamUser in data["Teams"])) {
+        // remove all files
+        await deleteObject(ref(storage, this.data.Teams[teamUser].kiosk_image));
+        const menuList = JSON.parse(this.data.Teams[teamUser].menu_list);
+        menuList.forEach(async (menu) => {
+          await deleteObject(ref(storage, menu.imagePath));
+        });
+      }
+    }
+    for (const teamUser of Object.keys(data["Teams"])) {
+      // adding or updating storage
+      if (!(teamUser in this.data["Teams"])) {
+        // if this team does not exist yet
+        const locationRef = ref(
+          storage,
+          `${teamUser}/kiosk_image/default_kiosk.jpg`,
+        );
+        const result = await uploadBytes(
+          locationRef,
+          new File([""], "filename"),
+        );
+        data.Teams[teamUser].kiosk_image = result.ref._location.path_;
+      }
+    }
+    /**********************/
     this.collectionNameList.forEach(async (collectionName) => {
       const collectionRef = collection(database, collectionName);
       const snapshot = await getDocs(collectionRef);

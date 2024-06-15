@@ -155,7 +155,6 @@ export default function DeveloperHome() {
         const fileName = "database_info.xlsx";
         await developerFirebase.init();
         await writeXlFromData(fileName, developerFirebase.subData);
-        console.log(rm);
       } else {
         rm--;
         setRemainingTime(rm);
@@ -173,6 +172,7 @@ export default function DeveloperHome() {
       return;
     }
     console.log(data);
+    await developerFirebase.init();
     await developerFirebase.writeDataToFirebase(data);
   };
   const onLogoutClick = async () => {
