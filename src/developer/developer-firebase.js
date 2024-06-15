@@ -16,15 +16,15 @@ const developerFirebase = {
   subData: {},
   subDataKeys: [],
   randomPassword() {
-    return cryptoJS.SHA256(String(Math.random)).toString().substring(0, 6);
+    return cryptoJS.SHA256(String(Math.random())).toString().substring(0, 6);
   },
   emptyUser(collectionName) {
     const rpw = this.randomPassword();
     if (collectionName === "Students")
       return {
         username: "",
-        password: rpw,
-        password_unhashed: cryptoJS.SHA256(rpw).toString(),
+        password: cryptoJS.SHA256(rpw).toString(),
+        password_unhashed: rpw,
         logged_device: "",
         balance: 0,
         order_history: "[]",
@@ -33,8 +33,8 @@ const developerFirebase = {
     else
       return {
         username: "",
-        password: rpw,
-        password_unhashed: cryptoJS.SHA256(rpw).toString(),
+        password: cryptoJS.SHA256(rpw).toString(),
+        password_unhashed: rpw,
         logged_device: "",
         logged_kiosk_device: "",
         balance: 0,
