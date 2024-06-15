@@ -8,6 +8,23 @@ import {
   BUTTON_SHADOW,
   MINSAPAY_BLUE,
 } from "../components/theme-definition";
+import backgroundImagePhoneScreen from "../images/bg-candidate-phone-screen.png";
+import backgroundImageWideScreen from "../images/bg-candidate-wide-screen.jpg";
+
+const OuterWrapper = styled.div`
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-size: 100%;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-image: url(${backgroundImageWideScreen});
+  @media only screen and (max-width: 768px) {
+    background-image: url(${backgroundImagePhoneScreen});
+    background-size: auto 100%;
+  }
+`;
 
 // figma 제대로 된 치수 필요
 const Wrapper = styled.div`
@@ -25,7 +42,7 @@ const Wrapper = styled.div`
   justify-content: center;
 `;
 const LoginBox = styled.div`
-  height: 80vh;
+  height: 60vh;
   width: 100%;
   background-color: white;
   border-radius: 5vh;
@@ -153,33 +170,35 @@ export default function Login() {
     init();
   }, []);
   return (
-    <Wrapper>
-      <LoginBox>
-        <TitleDiv>
-          <Title>Login </Title>
-          <Image src={Logo} onDoubleClick={onLogoImageDoubleClick} />
-        </TitleDiv>
-        <Form onSubmit={onSubmit}>
-          <Input
-            onChange={(e) => setUserID(e.target.value)}
-            value={userID}
-            name="UserID"
-            placeholder="Student ID"
-            type="text"
-            required
-          />
-          <Input
-            onChange={(e) => setPassword(e.target.value)}
-            value={password}
-            name="password"
-            placeholder="Password"
-            type="password"
-            required
-          />
-          <Input type="submit" value={"로그인"} />
-        </Form>
-        {error !== "" ? <Error>{error}</Error> : null}
-      </LoginBox>
-    </Wrapper>
+    <OuterWrapper>
+      <Wrapper>
+        <LoginBox>
+          <TitleDiv>
+            <Title>Login </Title>
+            <Image src={Logo} onDoubleClick={onLogoImageDoubleClick} />
+          </TitleDiv>
+          <Form onSubmit={onSubmit}>
+            <Input
+              onChange={(e) => setUserID(e.target.value)}
+              value={userID}
+              name="UserID"
+              placeholder="Student ID"
+              type="text"
+              required
+            />
+            <Input
+              onChange={(e) => setPassword(e.target.value)}
+              value={password}
+              name="password"
+              placeholder="Password"
+              type="password"
+              required
+            />
+            <Input type="submit" value={"로그인"} />
+          </Form>
+          {error !== "" ? <Error>{error}</Error> : null}
+        </LoginBox>
+      </Wrapper>
+    </OuterWrapper>
   );
 }
