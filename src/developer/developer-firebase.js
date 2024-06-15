@@ -89,6 +89,8 @@ const developerFirebase = {
         );
       }
     });
+    // need storage management
+    await this.init();
   },
 };
 

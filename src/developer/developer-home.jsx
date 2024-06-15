@@ -4,6 +4,8 @@ import { readXlOfEachSheet, writeXlFromData } from "./xlsx-conversion";
 import { developerFirebase } from "./developer-firebase";
 import { useState } from "react";
 import cryptoJS from "crypto-js";
+import { auth } from "../features/login-feature";
+import { useNavigate } from "react-router-dom";
 
 const Wrapper = styled.div`
   width: 100%;
@@ -11,6 +13,7 @@ const Wrapper = styled.div`
   flex-direction: column;
   align-items: center;
   gap: 20px;
+  padding-top: 40px;
 `;
 
 const DatabaseInfoButton = styled.label`
@@ -65,13 +68,31 @@ const SubmitDatabaseInfoButton = styled.div`
     opacity: 0.8;
   }
 `;
+const Logout = styled.div`
+  width: 40%;
+  height: 5vh;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background-color: ${MINSAPAY_BLUE};
+  color: white;
+
+  &:hover {
+    cursor: pointer;
+    opacity: 0.8;
+  }
+`;
+
 export default function DeveloperHome() {
   const [hashedPassword, setHashedPassword] = useState("");
   const [data, setData] = useState({});
   const [remainingTime, setRemainingTime] = useState(0);
   const [clickable, setClickable] = useState(true);
   const [uploadable, setUploadable] = useState(true);
-  const onXlSubmit = async (e) => {
+  const navigate = useNavigate();
+  const onXlUpload = async (e) => {
     setUploadable(false);
     const file = e.target.files[0];
     let xldata = await readXlOfEachSheet(file); // needs fix
@@ -154,6 +175,11 @@ export default function DeveloperHome() {
     console.log(data);
     await developerFirebase.writeDataToFirebase(data);
   };
+  const onLogoutClick = async () => {
+    if (!confirm("로그아웃 하시겠습니까?")) return;
+    await auth.signOut();
+    navigate("../");
+  };
   return (
     <Wrapper>
       <p>Developer Home</p>
@@ -166,7 +192,7 @@ export default function DeveloperHome() {
         {uploadable ? "Upload Database Info" : "Uploading"}
       </DatabaseInfoButton>
       <input
-        onChange={uploadable ? onXlSubmit : null}
+        onChange={uploadable ? onXlUpload : null}
         type="file"
         accept=".xls, .xlsx"
         required
@@ -182,6 +208,7 @@ export default function DeveloperHome() {
         placeholder="Enter Password"
       />
       <PasswordAndHashed type="text" value={hashedPassword} readOnly />
+      <Logout onClick={onLogoutClick}>Log Out</Logout>
     </Wrapper>
   );
 }

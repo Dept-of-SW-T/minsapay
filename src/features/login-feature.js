@@ -37,9 +37,12 @@ const auth = {
     }
   },
   signOut() {
-    this.currentUser = null;
-    this.error = ""; // auth 객체 초기화
-    removeCookie("login_info"); // 로그아웃 시 cookie 삭제
+    return new Promise((resolve) => {
+      this.currentUser = null;
+      this.error = ""; // auth 객체 초기화
+      removeCookie("login_info"); // 로그아웃 시 cookie 삭제
+      resolve();
+    });
   },
   async developerSignIn(password) {
     await this.signOut();
