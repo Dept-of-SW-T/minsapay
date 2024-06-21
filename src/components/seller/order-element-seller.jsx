@@ -97,8 +97,6 @@ export default function OrderElementBuyer({
         return 1;
       case "처리완료":
         return 2;
-      // case "환불요청":
-      //   return 3;
     }
   }
   function indexTostate(stateIndex) {
@@ -109,18 +107,22 @@ export default function OrderElementBuyer({
         return "처리중";
       case 2:
         return "처리완료";
-      // case 3:
-      //   return "환불요청";
+      default:
+        return "NOSTATE";
     }
   }
 
   function onBackwardClick() {
-    setstate(indexTostate(stateToIndex(state) - 1));
+    const nextState = indexTostate(stateToIndex(state) - 1);
+    if (nextState === "NOSTATE") return;
+    setstate(nextState);
     console.log(state);
   }
 
   function onForwardClick() {
-    setstate(indexTostate(stateToIndex(state) + 1));
+    const nextState = indexTostate(stateToIndex(state) + 1);
+    if (nextState === "NOSTATE") return;
+    setstate(nextState);
     console.log(state);
   }
 
