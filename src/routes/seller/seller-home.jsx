@@ -39,11 +39,11 @@ export default function SellerHome() {
       );
     };
     init();
-    unsubscribe = onSnapshot(sellerFirebase.userDocRef, (doc) => {
-      sellerFirebase.userDoc = doc;
-      sellerFirebase.userDocData = doc.data();
+    unsubscribe = onSnapshot(sellerFirebase.teamDocRef, (doc) => {
+      sellerFirebase.teamDoc = doc;
+      sellerFirebase.teamDocData = doc.data();
       sellerFirebase.orderHistory = JSON.parse(
-        sellerFirebase.userDocData.order_history,
+        sellerFirebase.teamDocData.order_history,
       );
       setOrderList(
         sellerFirebase.orderHistory

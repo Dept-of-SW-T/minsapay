@@ -8,7 +8,7 @@ import {
   REFUND_OR_RECEIPT_COMPLETE,
   REFUND_REQUEST,
 } from "../theme-definition";
-// import { sellerFirebase } from "../../features/seller-firebase-interaction";
+import { sellerFirebase } from "../../features/seller-firebase-interaction";
 
 const Wrapper = styled.div`
   width: 96%;
@@ -63,7 +63,7 @@ const StateButton = styled.div`
 export default function OrderElementBuyer({
   menuName,
   status,
-  // id,
+  id,
   processor,
   buyer,
   receptionTime,
@@ -112,18 +112,22 @@ export default function OrderElementBuyer({
     }
   }
 
+  async function statusChangeSync(nextState) {
+    await sellerFirebase.setStatus(id, nextState);
+  }
+
   function onBackwardClick() {
     const nextState = indexTostate(stateToIndex(state) - 1);
     if (nextState === "NOSTATE") return;
     setstate(nextState);
-    console.log(state);
+    statusChangeSync(nextState);
   }
 
   function onForwardClick() {
     const nextState = indexTostate(stateToIndex(state) + 1);
     if (nextState === "NOSTATE") return;
     setstate(nextState);
-    console.log(state);
+    statusChangeSync(nextState);
   }
 
   return (
