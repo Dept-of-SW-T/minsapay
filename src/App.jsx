@@ -24,7 +24,7 @@ import KioskThankYou from "./routes/kiosk/kiosk-thankyou";
 import DeveloperHome from "./developer/developer-home";
 import SellerSelect from "./routes/seller/seller-select";
 import SellerHome from "./routes/seller/seller-home";
-import { ModeratorHome } from "./routes/Moderator/moderator-home";
+import ModeratorHome from "./routes/Moderator/moderator-home";
 
 const router = createBrowserRouter([
   // 루팅
