@@ -16,6 +16,8 @@ export function ProtectedRoute() {
       return <Navigate to="/buyer-home" />;
     case "seller":
       return <Navigate to="/seller-home/seller-select" />;
+    case "moderator":
+      return <Navigate to="/moderator-home" />;
     default:
       return <Navigate to="/login" />;
   }
@@ -61,7 +63,15 @@ export function ProtectedSeller({ children }) {
   const user = auth.currentUser;
   if (user === null) return <Navigate to="/login" />;
   if (user.userType !== "seller") {
-    //console.log("dd");
+    return <Navigate to="/" />;
+  }
+  return children;
+}
+
+export function ProtectedModerator({ children }) {
+  const user = auth.currentUser;
+  if (user === null) return <Navigate to="/login" />;
+  if (user.userType !== "moderator") {
     return <Navigate to="/" />;
   }
   return children;

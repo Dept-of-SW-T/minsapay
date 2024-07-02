@@ -154,10 +154,21 @@ export default function KioskHome() {
   const [kioskImage, setKioskImage] = useState("");
   const [orders, setOrders] = useState([]);
   const navigate = useNavigate();
+  const changeOrderQuantity = (id, quantity) => {
+    for (let i = 0; i < orders.length; i++) {
+      if (id === orders[i].id) {
+        let tempOrders = [...orders];
+        tempOrders[i].quantity += quantity;
+        setOrders([...tempOrders]);
+        break;
+      }
+    }
+  };
   const onAddToOrderClick = (e) => {
     const id = parseInt(e.target.id.substring(0, e.target.id.length - 4));
     for (let i = 0; i < orders.length; i++) {
       if (id === orders[i].id) {
+        changeOrderQuantity(id, 1);
         return;
       }
     }
@@ -190,23 +201,11 @@ export default function KioskHome() {
   }, []);
   const onAddQuantityButtonClick = (e) => {
     const id = parseInt(e.target.id.substring(0, e.target.id.length - 3));
-    for (let i = 0; i < orders.length; i++) {
-      if (id === orders[i].id) {
-        orders[i].quantity++;
-        setOrders([...orders]);
-        break;
-      }
-    }
+    changeOrderQuantity(id, 1);
   };
   const onLowerQuantityButtonClick = (e) => {
     const id = parseInt(e.target.id.substring(0, e.target.id.length - 3));
-    for (let i = 0; i < orders.length; i++) {
-      if (id === orders[i].id) {
-        orders[i].quantity--;
-        setOrders([...orders]);
-        break;
-      }
-    }
+    changeOrderQuantity(id, -1);
   };
   const onOrderElementKioskDelete = (e) => {
     const id = parseInt(e.target.id.substring(0, e.target.id.length - 3));

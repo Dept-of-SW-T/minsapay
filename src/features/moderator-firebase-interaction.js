@@ -1,0 +1,3 @@
+const moderatorFirebase = {};
+
+export { moderatorFirebase };
