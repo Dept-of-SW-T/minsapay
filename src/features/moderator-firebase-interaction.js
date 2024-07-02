@@ -1,5 +1,5 @@
 import { database } from "../firebase";
-import { query, collection, getDocs, orderBy } from "firebase/firestore";
+import { query, collection, orderBy, onSnapshot } from "firebase/firestore";
 
 const moderatorFirebase = {
   usersList: [],
@@ -10,15 +10,20 @@ const moderatorFirebase = {
       collection(database, "Students"),
       orderBy("__name__", "asc"),
     );
-    const usersSnapshot = await getDocs(usersQuery);
-    usersSnapshot.docs.forEach((doc) => this.usersList.push(doc.data()));
+    await onSnapshot(usersQuery, (snapshot) => {
+      this.usersList = [];
+      snapshot.docs.forEach((doc) => this.usersList.push(doc.data()));
+      console.log(this.usersList);
+    });
 
     const teamsQuery = query(
       collection(database, "Teams"),
       orderBy("__name__", "asc"),
     );
-    const teamsSnapshot = await getDocs(teamsQuery);
-    teamsSnapshot.docs.forEach((doc) => this.teamsList.push(doc.data()));
+    await onSnapshot(teamsQuery, (snapshot) => {
+      this.teamsList = [];
+      snapshot.docs.forEach((doc) => this.teamsList.push(doc.data()));
+    });
   },
 };
 
