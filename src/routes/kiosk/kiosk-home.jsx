@@ -54,7 +54,7 @@ const Title = styled.div`
   width: calc(100%);
   aspect-ratio: 7.76;
   //border: 3px solid ${BORDER_GRAY}; Really no border???
-  border-radius: 20px;
+  border-radius: 1.5vw;
   background-size: cover;
   background-position: center;
 `;
@@ -127,10 +127,10 @@ const Total = styled.div`
 `;
 const Pay = styled.div`
   margin-top: 1.5vh;
-
+  margin-bottom: 2vh;
   width: 100%;
   height: 8vh;
-  border-radius: 20px;
+  border-radius: 1.5vw;
   background-color: #4478ff;
   color: white;
 
