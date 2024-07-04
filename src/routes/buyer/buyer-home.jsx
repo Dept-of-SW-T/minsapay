@@ -6,6 +6,7 @@ import OrderElementBuyer from "../../components/buyer/order-element-buyer";
 import { onSnapshot } from "firebase/firestore";
 import CoupleList from "../../components/CPU/couple-list";
 import { BuyerHeader } from "../../components/buyer/buyer-header";
+import PayIconRef from "../../images/go-to-buyer-payment.svg";
 
 const Wrapper = styled.div`
   width: 100vw;
@@ -13,6 +14,22 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+`;
+
+const PayIconWrapper = styled.div`
+  width: 100%;
+  height: 9vh;
+  display: flex;
+  //background-color: aliceblue;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const PayIcon = styled.img`
+  height: 7vh;
+  margin-bottom: 1vh;
+  margin-top: 1vh;
 `;
 export default function BuyerHome() {
   const navigate = useNavigate();
@@ -70,9 +87,9 @@ export default function BuyerHome() {
     <Wrapper>
       <BuyerHeader balance={balance} />
       <CoupleList dataList={orderList} />
-      <button onClick={() => navigate("./buyer-payment")}>
-        To Buyer Payment
-      </button>
+      <PayIconWrapper>
+        <PayIcon onClick={() => navigate("./buyer-payment")} src={PayIconRef} />
+      </PayIconWrapper>
     </Wrapper>
   );
 }

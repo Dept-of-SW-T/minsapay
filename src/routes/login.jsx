@@ -22,20 +22,16 @@ const OuterWrapper = styled.div`
   background-image: url(${backgroundImageWideScreen});
   @media only screen and (max-width: 768px) {
     background-image: url(${backgroundImagePhoneScreen});
-    background-size: auto 100%;
+    background-size: cover;
   }
 `;
 
 // figma 제대로 된 치수 필요
 const Wrapper = styled.div`
   width: 50vh;
-  @media only screen and (max-aspect-ratio: 5 / 8) {
-    width: 90vw;
-  }
-  /*@media only screen and (max-width: 1000px) {
-    font-size: calc(0.7vw + 1em);
-  } */
+
   height: 100vh;
+
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -43,7 +39,13 @@ const Wrapper = styled.div`
 `;
 const LoginBox = styled.div`
   height: 60vh;
+  @media only screen and (max-width: 1000px) {
+    height: calc(40vh);
+  }
   width: 100%;
+  @media only screen and (max-width: 1000px) {
+    width: calc(35vh);
+  }
   background-color: white;
   border-radius: 5vh;
   display: flex;
@@ -61,8 +63,8 @@ const TitleDiv = styled.div`
   align-items: center;
 `;
 const Title = styled.span`
-  font-size: 330%;
-  @media only screen and (max-width: 2000px) {
+  font-size: 3.5vw;
+  @media only screen and (max-width: 1400px) {
     font-size: calc(0.3vw + 2.7em);
   }
   font-family: "BMDOHYEON";
@@ -86,7 +88,10 @@ const Input = styled.input`
   padding: 1.3% 0px;
   border: none;
   width: 80%;
-  font-size: 60%;
+  font-size: 1vh;
+  @media only screen and (max-width: 700px) {
+    font-size: 1.5vh;
+  }
   outline: none;
   border-bottom: 3px solid ${BORDER_GRAY};
   margin-top: 7%;
@@ -106,19 +111,19 @@ const Input = styled.input`
   }
   &[type="submit"] {
     // 로그인 버튼
-    margin-top: 20%;
-    margin-bottom: 10%;
+    margin-top: 7%;
+    //margin-bottom: 10%;
 
-    width: 35%;
+    width: 30%;
     height: 17%;
     border-radius: 50px;
     border-bottom: 0px;
-    box-shadow: 0px 4px 4px 0px ${BUTTON_SHADOW};
+
     background-color: ${MINSAPAY_BLUE};
     color: white;
-    font-size: 1em;
-    @media only screen and (max-width: 800px) {
-      font-size: calc(0.12vw + 1.08em);
+    font-size: 0.7em;
+    @media only screen and (max-width: 700px) {
+      font-size: calc(0.07vw + 0.78em);
     }
     font-weight: normal;
     font-family: "BMDOHYEON";
@@ -126,15 +131,27 @@ const Input = styled.input`
     &:hover {
       cursor: pointer;
       opacity: 0.8;
+      box-shadow: 0px 2px 2px 0px ${BUTTON_SHADOW};
     }
   }
 `;
 const Error = styled.span`
   // 로그인 에러 모두 띄우는 거
-  font-size: 56%;
+  font-size: 1.3vh;
+  @media only screen and (max-width: 700px) {
+    font-size: calc(0.58em);
+  }
   color: tomato;
   font-family: "BMDOHYEON";
   margin-bottom: 4%;
+`;
+const PicSource = styled.span`
+  font-size: 2.5vh;
+  color: aliceblue;
+  font-family: "BMDOHYEON";
+  position: fixed;
+  bottom: 1%;
+  right: 1%;
 `;
 
 export default function Login() {
@@ -199,6 +216,7 @@ export default function Login() {
           {error !== "" ? <Error>{error}</Error> : null}
         </LoginBox>
       </Wrapper>
+      <PicSource>사진 제공 TTL</PicSource>
     </OuterWrapper>
   );
 }
