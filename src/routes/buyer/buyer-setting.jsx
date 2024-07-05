@@ -6,8 +6,10 @@ import {
   BORDER_GRAY,
   BUTTON_SHADOW,
   MINSAPAY_BLUE,
+  MINSAPAY_FONT,
 } from "../../components/theme-definition";
 import LogOutRef from "../../images/LogOut.svg";
+import HomeIconRef from "../../images/CPUHome.svg";
 
 const OuterWrapper = styled.div`
   width: 100vw;
@@ -36,11 +38,11 @@ const TitleDiv = styled.div`
 `;
 
 const Title = styled.span`
-  font-size: 2vw;
-  @media only screen and (max-width: 1400px) {
-    font-size: calc(0.3vw + 2.7em);
+  font-size: 7vw;
+  @media only screen and (max-width: 1000px) {
+    font-size: calc(0.3vw + 2em);
   }
-  font-family: "BMDOHYEON";
+  font-family: ${MINSAPAY_FONT};
 `;
 
 const Form = styled.form`
@@ -51,24 +53,22 @@ const Form = styled.form`
   flex-direction: column;
   align-items: center;
   width: 100%;
-  font-family: "BMDOHYEON";
+  font-family: ${MINSAPAY_FONT};
 `;
 
 const Input = styled.input`
   padding: 1.3% 0px;
   border: none;
   width: 80%;
-  font-size: 1vh;
+  font-size: 3vh;
   @media only screen and (max-width: 700px) {
-    font-size: 1.5vh;
+    font-size: 2vh;
   }
   outline: none;
   border-bottom: 3px solid ${BORDER_GRAY};
   margin-top: 7%;
-  font-family: "BMDOHYEON";
-  @media only screen and (max-width: 2000px) {
-    font-size: 0.9em;
-  }
+  font-family: ${MINSAPAY_FONT};
+
   &:focus {
     border-bottom: 3px solid #444;
   }
@@ -76,23 +76,29 @@ const Input = styled.input`
   &[name="newPassword"] {
     font-family: sans-serif;
     &::placeholder {
-      font-family: "BMDOHYEON";
+      font-family: ${MINSAPAY_FONT};
     }
   }
   &[type="submit"] {
     margin-top: 7%;
-    width: 30%;
-    height: 17%;
+    width: 20%;
+    @media only screen and (max-width: 700px) {
+      width: 25%;
+    }
+    height: 10%;
+    @media only screen and (max-width: 700px) {
+      height: 12%;
+    }
     border-radius: 50px;
     border-bottom: 0px;
     background-color: ${MINSAPAY_BLUE};
     color: white;
-    font-size: 0.7em;
+    font-size: 3vh;
     @media only screen and (max-width: 700px) {
       font-size: calc(0.07vw + 0.78em);
     }
     font-weight: normal;
-    font-family: "BMDOHYEON";
+    font-family: ${MINSAPAY_FONT};
     &:hover {
       cursor: pointer;
       opacity: 0.8;
@@ -101,13 +107,22 @@ const Input = styled.input`
   }
 `;
 
+const ReturnHomeIcon = styled.img`
+  height: 80%;
+  /* margin-right: 11px; */
+  aspect-ratio: 1;
+  /* margin-left: auto; */
+  &:hover {
+    cursor: pointer;
+  }
+`;
 const Error = styled.span`
   font-size: 1.3vh;
   @media only screen and (max-width: 700px) {
     font-size: calc(0.58em);
   }
   color: tomato;
-  font-family: "BMDOHYEON";
+  font-family: ${MINSAPAY_FONT};
   margin-bottom: 4%;
 `;
 
@@ -121,6 +136,10 @@ export default function ChangePassword() {
     if (!confirm("로그아웃 하시겠습니까?")) return;
     //await auth.signOut();
     navigate("../login");
+  };
+  const onHomeIconClick = async (e) => {
+    e.preventDefault();
+    navigate("../buyer-home");
   };
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -147,6 +166,7 @@ export default function ChangePassword() {
   return (
     <OuterWrapper>
       <TitleDiv>
+        <ReturnHomeIcon onClick={onHomeIconClick} src={HomeIconRef} />
         <Title>비밀번호 변경</Title>
         <LogOutIcon onClick={onLogOutIconClick} src={LogOutRef} />
       </TitleDiv>
