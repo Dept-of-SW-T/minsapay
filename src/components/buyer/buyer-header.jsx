@@ -1,7 +1,6 @@
 import styled from "styled-components";
 import LogoRef from "../../images/LogoMinsapay.svg";
 import SettingRef from "../../images/Setting.svg";
-import GoHomeRef from "../../images/CPUHome.svg";
 import { useNavigate } from "react-router-dom";
 import { MINSAPAY_TITLE } from "../../components/theme-definition";
 
@@ -23,9 +22,9 @@ const Logo = styled.img`
   height: 60%;
   /* margin-left: 11px; */
   aspect-ratio: 1;
-  &:hover {
+  /*   &:hover {
     cursor: pointer;
-  }
+  } */
 `;
 const Balance = styled.div``;
 const SettingIcon = styled.img`
@@ -40,17 +39,17 @@ const SettingIcon = styled.img`
 
 export function BuyerHeader({ balance }) {
   const navigate = useNavigate();
-  const onLogoClick = (e) => {
+  /*   const onLogoClick = (e) => {
     // logo 누르면 홈으로 navigate
     e.preventDefault();
     navigate("../buyer-home");
-  };
+  }; */
   const onSettingClick = async (e) => {
     // logo 누르면 설정으로 navigate
     e.preventDefault();
     navigate("../buyer-home/buyer-setting");
   };
-  const onLogoHover = (e) => {
+  /*   const onLogoHover = (e) => {
     const logoImage = e.target;
     logoImage.src = GoHomeRef;
   };
@@ -58,15 +57,10 @@ export function BuyerHeader({ balance }) {
     const logoImage = e.target;
     logoImage.src = LogoRef;
   }; // logo에 hover하면 이미지가 바뀌도록
-
+ */
   return (
     <HeaderDiv>
-      <Logo
-        onClick={onLogoClick}
-        onMouseOver={onLogoHover}
-        onMouseLeave={onLogoLeave}
-        src={LogoRef}
-      />
+      <Logo src={LogoRef} />
       <Balance>{balance} 원</Balance>
       <SettingIcon onClick={onSettingClick} src={SettingRef} />
     </HeaderDiv>
