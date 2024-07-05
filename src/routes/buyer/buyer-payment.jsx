@@ -2,7 +2,11 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { buyerFirebase } from "../../features/buyer-firebase-interaction";
-import LogOutRef from "../../images/LogOut.svg";
+import LogOutRef from "../../images/CPUHome.svg";
+import {
+  MINSAPAY_FONT,
+  MINSAPAY_TITLE,
+} from "../../components/theme-definition";
 
 const Wrapper = styled.div`
   width: 50vh;
@@ -40,6 +44,7 @@ const TitleDiv = styled.div`
   margin: 0 5%;
   justify-content: center;
   align-items: center;
+  font-family: ${MINSAPAY_TITLE};
 `;
 
 const Title = styled.span`
@@ -74,6 +79,7 @@ const KioskAuthenticationNumberInput = styled.input`
   border: none;
   padding: 0;
   width: ${inputWidth};
+  font-family: ${MINSAPAY_FONT};
   background: repeating-linear-gradient(
       90deg,
       dimgrey 0,
@@ -106,10 +112,7 @@ const GridBox = styled.div`
 `;
 
 const KeypadButton = styled.button`
-  font:
-    5vh "Droid Sans Mono",
-    "Consolas",
-    monospace;
+  font: 5vh monospace;
   border: none;
   background-color: white;
   padding: auto;
@@ -213,7 +216,7 @@ export default function BuyerPayment() {
               onClick={onKeypadButtonClick}
               id="bottom-left"
             >
-              C
+              Clear
             </KeypadButton>
             <KeypadButton type="button" onClick={onKeypadButtonClick}>
               0

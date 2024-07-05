@@ -3,6 +3,7 @@ import LogoRef from "../../images/LogoMinsapay.svg";
 import SettingRef from "../../images/Setting.svg";
 import GoHomeRef from "../../images/CPUHome.svg";
 import { useNavigate } from "react-router-dom";
+import { MINSAPAY_TITLE } from "../../components/theme-definition";
 
 // CPU의 모든 화면에 공통으로 들어가는 header으로, home으로 가는, logout하는 버튼을 가지고 있다.
 
@@ -11,13 +12,15 @@ const HeaderDiv = styled.div`
   margin: 0 auto;
   height: 10vh;
   padding: 0 2.5%;
+  font-size: 4vh;
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
+  font-family: ${MINSAPAY_TITLE};
 `;
 const Logo = styled.img`
-  height: 80%;
+  height: 60%;
   /* margin-left: 11px; */
   aspect-ratio: 1;
   &:hover {
@@ -26,7 +29,7 @@ const Logo = styled.img`
 `;
 const Balance = styled.div``;
 const SettingIcon = styled.img`
-  height: 80%;
+  height: 60%;
   /* margin-right: 11px; */
   aspect-ratio: 1;
   /* margin-left: auto; */
@@ -64,7 +67,7 @@ export function BuyerHeader({ balance }) {
         onMouseLeave={onLogoLeave}
         src={LogoRef}
       />
-      <Balance>{balance}원</Balance>
+      <Balance>{balance} 원</Balance>
       <SettingIcon onClick={onSettingClick} src={SettingRef} />
     </HeaderDiv>
   );
