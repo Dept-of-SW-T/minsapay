@@ -24,14 +24,6 @@ const LogOutIcon = styled.img`
     cursor: pointer;
   }
 `;
-const Wrapper = styled.div`
-  width: 50vh;
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-`;
 
 const TitleDiv = styled.div`
   margin-top: 20%;
@@ -120,24 +112,21 @@ const Error = styled.span`
 `;
 
 export default function ChangePassword() {
-  const [userID, setUserID] = useState("");
   const [oldPassword, setOldPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
   const onLogOutIconClick = async (e) => {
-    // logout 누르면 confirm 띄우고 로그아웃 후 home으로 navigate --> 저절로 logout화면으로 protected routes를 통해 연결
     e.preventDefault();
     if (!confirm("로그아웃 하시겠습니까?")) return;
     await auth.signOut();
-    navigate("../../login");
+    navigate("");
   };
   const onSubmit = async (e) => {
     e.preventDefault();
     setError("");
-    if (userID === "" || oldPassword === "" || newPassword === "") return;
+    if (oldPassword === "" || newPassword === "") return;
     const successfulChange = await auth.changePassword(
-      userID,
       oldPassword,
       newPassword,
     );
@@ -157,39 +146,30 @@ export default function ChangePassword() {
 
   return (
     <OuterWrapper>
-      <Wrapper>
-        <TitleDiv>
-          <Title>비밀번호 변경</Title>
-        </TitleDiv>
-        <Form onSubmit={onSubmit}>
-          <Input
-            onChange={(e) => setUserID(e.target.value)}
-            value={userID}
-            name="UserID"
-            placeholder="User ID"
-            type="text"
-            required
-          />
-          <Input
-            onChange={(e) => setOldPassword(e.target.value)}
-            value={oldPassword}
-            name="password"
-            placeholder="Current Password"
-            type="password"
-            required
-          />
-          <Input
-            onChange={(e) => setNewPassword(e.target.value)}
-            value={newPassword}
-            name="newPassword"
-            placeholder="New Password"
-            type="password"
-            required
-          />
-          <Input type="submit" value={"비밀번호 변경"} />
-        </Form>
-        {error !== "" ? <Error>{error}</Error> : null}
-      </Wrapper>
+      <TitleDiv>
+        <Title>비밀번호 변경</Title>
+      </TitleDiv>
+      <Form onSubmit={onSubmit}>
+        <Input
+          onChange={(e) => setOldPassword(e.target.value)}
+          value={oldPassword}
+          name="password"
+          placeholder="Current Password"
+          type="password"
+          required
+        />
+        <Input
+          onChange={(e) => setNewPassword(e.target.value)}
+          value={newPassword}
+          name="newPassword"
+          placeholder="New Password"
+          type="password"
+          required
+        />
+        <Input type="submit" value={"비밀번호 변경"} />
+      </Form>
+      {error !== "" ? <Error>{error}</Error> : null}
+
       <LogOutIcon onClick={onLogOutIconClick} src={LogOutRef} />
     </OuterWrapper>
   );
