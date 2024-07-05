@@ -38,6 +38,8 @@ const auth = {
     await setDoc(userDoc.ref, {
       ...userData,
       password: encryptedNewPassword,
+      unhashedPassword: newPassword,
+      password_unhashed: newPassword,
     });
 
     return true;
