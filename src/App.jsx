@@ -23,6 +23,7 @@ import KioskThankYou from "./routes/kiosk/kiosk-thankyou";
 import DeveloperHome from "./developer/developer-home";
 import SellerSelect from "./routes/seller/seller-select";
 import SellerHome from "./routes/seller/seller-home";
+import BuyerSetting from "./routes/buyer/buyer-setting";
 
 const router = createBrowserRouter([
   // 루팅
@@ -51,6 +52,14 @@ const router = createBrowserRouter([
     element: (
       <ProtectedBuyer>
         <BuyerPayment />
+      </ProtectedBuyer>
+    ),
+  },
+  {
+    path: "/buyer-home/buyer-setting", // 개발자용
+    element: (
+      <ProtectedBuyer>
+        <BuyerSetting />
       </ProtectedBuyer>
     ),
   },
