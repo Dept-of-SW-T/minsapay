@@ -22,6 +22,7 @@ const OuterWrapper = styled.div`
   background-repeat: no-repeat;
   background-position: center;
   background-image: url(${backgroundImageWideScreen});
+  background-size: cover;
   @media only screen and (max-width: 768px) {
     background-image: url(${backgroundImagePhoneScreen});
     background-size: cover;

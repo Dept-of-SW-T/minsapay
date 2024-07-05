@@ -3,6 +3,7 @@ import { BORDER_GRAY, MINSAPAY_BLUE } from "../theme-definition";
 import { useState } from "react";
 import deleteImage from "../../images/DeleteMenu.svg";
 import { CPUFirebase } from "../../features/CPU-firebase-interaction";
+import { MINSAPAY_FONT } from "../theme-definition";
 
 // 적용 시 로딩하기 화면 넣어야 함 // 감찬이처럼 성격 급한 애들 방지를 위하여
 
@@ -24,7 +25,7 @@ const ImageDiv = styled.span`
   align-items: center;
   border-top-left-radius: 17px;
   border-bottom-left-radius: 17px;
-  font-family: "Candara";
+  font-family: ${MINSAPAY_FONT};
   font-size: 1.2em;
   color: gray;
 
@@ -61,7 +62,7 @@ const ImageChangeDiv = styled.label`
   justify-content: center;
   align-items: center;
 
-  font-family: "Candara";
+  font-family: ${MINSAPAY_FONT};
   font-size: 1.2em;
 
   &:hover {
@@ -115,7 +116,7 @@ const TextDiv = styled.div`
 `;
 const Text = styled.div`
   width: 80%;
-  font-family: "BMDOHYEON";
+  font-family: ${MINSAPAY_FONT};
   font-size: 1.2em;
   text-align: left;
 `;
@@ -133,7 +134,7 @@ const MenuChangeButton = styled.div`
   background-color: ${MINSAPAY_BLUE};
   width: 30%;
   height: 78%;
-  font-family: "Candara";
+  font-family: ${MINSAPAY_FONT};
   margin-right: 10%;
   display: flex;
   flex-direction: row;
@@ -148,7 +149,7 @@ const MenuChangeButton = styled.div`
 const Input = styled.input`
   height: 100%;
   width: 50%;
-  font-family: "BMDOHYEON";
+  font-family: ${MINSAPAY_FONT};
   font-size: 1em;
   text-align: center;
   border: none;
