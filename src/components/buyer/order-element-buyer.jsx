@@ -11,7 +11,7 @@ import { buyerFirebase } from "../../features/buyer-firebase-interaction";
 
 const Wrapper = styled.span`
   width: 96%;
-  height: 10vw;
+  height: 7vh;
   border: 2px solid ${BORDER_GRAY};
   border-radius: 8px;
   display: flex;
