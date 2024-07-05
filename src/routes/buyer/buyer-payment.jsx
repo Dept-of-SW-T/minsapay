@@ -2,16 +2,17 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { buyerFirebase } from "../../features/buyer-firebase-interaction";
-import LogOutRef from "../../images/LogOut.svg";
+import LogOutRef from "../../images/CPUHome.svg";
+import {
+  MINSAPAY_FONT,
+  MINSAPAY_TITLE,
+} from "../../components/theme-definition";
 
 const Wrapper = styled.div`
   width: 50vh;
   @media only screen and (max-aspect-ratio: 5 / 8) {
     width: 100vw;
   }
-  /*@media only screen and (max-width: 1000px) {
-    font-size: calc(0.7vw + 1em);
-  } */
   height: 100vh;
   display: flex;
   flex-direction: column;
@@ -40,6 +41,7 @@ const TitleDiv = styled.div`
   margin: 0 5%;
   justify-content: center;
   align-items: center;
+  font-family: ${MINSAPAY_TITLE};
 `;
 
 const Title = styled.span`
@@ -47,18 +49,31 @@ const Title = styled.span`
   @media only screen and (max-width: 2000px) {
     font-size: calc(0.3vw + 1.8em);
   }
-  font-family: "BMDOHYEON";
+  font-family: ${MINSAPAY_TITLE};
   text-align: center;
   margin: 10% auto;
+`;
+
+const FixedFooter = styled.div`
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 5vh;
+  background-color: white;
 `;
 
 const HomeButton = styled.img`
   aspect-ratio: 1;
   height: 5vh;
-  margin: 10% auto;
   &:hover {
     cursor: pointer;
   }
+  margin-bottom: 6vh;
 `;
 
 const charWidth = "1ch";
@@ -68,12 +83,13 @@ const inputWidth = `calc(${nChar} * (${charWidth} + ${gap}))`;
 
 const KioskAuthenticationNumberInput = styled.input`
   display: block;
-  margin-bottom: 10%;
+  margin-bottom: 25%;
   margin-left: auto;
   margin-right: auto;
   border: none;
   padding: 0;
   width: ${inputWidth};
+  font-family: ${MINSAPAY_FONT};
   background: repeating-linear-gradient(
       90deg,
       dimgrey 0,
@@ -95,7 +111,8 @@ const KioskAuthenticationNumberInput = styled.input`
 `;
 
 const Form = styled.form`
-  width: 100%;
+  width: 85%;
+  margin-bottom: 15%;
 `;
 
 const GridBox = styled.div`
@@ -103,13 +120,12 @@ const GridBox = styled.div`
   grid-template-columns: repeat(3, 1fr);
   width: 100%;
   height: 70%;
+  font-family: ${MINSAPAY_FONT};
+  margin-bottom: 3vh;
 `;
 
 const KeypadButton = styled.button`
-  font:
-    5vh "Droid Sans Mono",
-    "Consolas",
-    monospace;
+  font: 4vh monospace;
   border: none;
   background-color: white;
   padding: auto;
@@ -148,6 +164,11 @@ export default function BuyerPayment() {
       else return prev + e.target.textContent;
     });
   };
+
+  const onKeypadOKButtonClick = async (e) => {
+    e.preventDefault();
+    navigate("../buyer-home");
+  };
   const blockArrowKey = (e) => {
     if (e.key.includes("Arrow")) e.preventDefault();
   };
@@ -161,11 +182,7 @@ export default function BuyerPayment() {
     <Wrapper>
       <PaymentBox>
         <TitleDiv>
-          <Title>Buyer Payment</Title>
-          <HomeButton
-            onClick={() => navigate("../buyer-home")}
-            src={LogOutRef}
-          />
+          <Title>키오스크 결제 인증번호</Title>
         </TitleDiv>
         <Form onSubmit={onKioskAuthenticationNumberSumbit}>
           <KioskAuthenticationNumberInput
@@ -208,22 +225,21 @@ export default function BuyerPayment() {
             <KeypadButton type="button" onClick={onKeypadButtonClick}>
               9
             </KeypadButton>
-            <KeypadButton
-              type="button"
-              onClick={onKeypadButtonClick}
-              id="bottom-left"
-            >
+            <KeypadButton type="button" onClick={onKeypadButtonClick}>
               C
             </KeypadButton>
             <KeypadButton type="button" onClick={onKeypadButtonClick}>
               0
             </KeypadButton>
-            <KeypadButton type="submit" id="bottom-right">
+            <KeypadButton type="submit" onClick={onKeypadOKButtonClick}>
               OK
             </KeypadButton>
           </GridBox>
         </Form>
       </PaymentBox>
+      <FixedFooter>
+        <HomeButton onClick={() => navigate("../buyer-home")} src={LogOutRef} />
+      </FixedFooter>
     </Wrapper>
   );
 }

@@ -7,6 +7,8 @@ import {
   BORDER_GRAY,
   BUTTON_SHADOW,
   MINSAPAY_BLUE,
+  MINSAPAY_FONT,
+  MINSAPAY_TITLE,
 } from "../components/theme-definition";
 import backgroundImagePhoneScreen from "../images/bg-candidate-phone-screen.png";
 import backgroundImageWideScreen from "../images/bg-candidate-wide-screen.jpg";
@@ -20,6 +22,7 @@ const OuterWrapper = styled.div`
   background-repeat: no-repeat;
   background-position: center;
   background-image: url(${backgroundImageWideScreen});
+  background-size: cover;
   @media only screen and (max-width: 768px) {
     background-image: url(${backgroundImagePhoneScreen});
     background-size: cover;
@@ -54,23 +57,32 @@ const LoginBox = styled.div`
   align-items: center;
 `;
 const TitleDiv = styled.div`
-  margin-top: 20%;
+  margin-top: 10%;
   width: 100%;
   height: 10%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  margin-bottom: 10%;
+`;
+const Title = styled.span`
+  font-size: 2vw;
+  @media only screen and (max-width: 1100px) {
+    font-size: calc(0.3vw + 1.5em);
+  }
+  font-family: ${MINSAPAY_TITLE};
+`;
+const ImgDiv = styled.div`
+  height: 140%;
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
   align-items: center;
-`;
-const Title = styled.span`
-  font-size: 3.5vw;
-  @media only screen and (max-width: 1400px) {
-    font-size: calc(0.3vw + 2.7em);
-  }
-  font-family: "BMDOHYEON";
+  margin-bottom: 12%;
 `;
 const Image = styled.img`
-  height: 80%;
+  height: 140%;
 `;
 const Form = styled.form`
   height: 50%;
@@ -82,7 +94,7 @@ const Form = styled.form`
   flex-direction: column;
   align-items: center;
   width: 100%;
-  font-family: "BMDOHYEON";
+  font-family: ${MINSAPAY_FONT};
 `;
 const Input = styled.input`
   padding: 1.3% 0px;
@@ -95,7 +107,7 @@ const Input = styled.input`
   outline: none;
   border-bottom: 3px solid ${BORDER_GRAY};
   margin-top: 7%;
-  font-family: "BMDOHYEON";
+  font-family: ${MINSAPAY_FONT};
   @media only screen and (max-width: 2000px) {
     font-size: 0.9em;
   }
@@ -106,7 +118,7 @@ const Input = styled.input`
     // BMDOWYEON 폰트는 비밀번호를 지원하지 않기에 비밀번호 입력은 본래 글씨체 적용
     font-family: sans-serif;
     &::placeholder {
-      font-family: "BMDOHYEON";
+      font-family: ${MINSAPAY_FONT};
     }
   }
   &[type="submit"] {
@@ -126,7 +138,7 @@ const Input = styled.input`
       font-size: calc(0.07vw + 0.78em);
     }
     font-weight: normal;
-    font-family: "BMDOHYEON";
+    font-family: ${MINSAPAY_FONT};
 
     &:hover {
       cursor: pointer;
@@ -138,17 +150,20 @@ const Input = styled.input`
 const Error = styled.span`
   // 로그인 에러 모두 띄우는 거
   font-size: 1.3vh;
-  @media only screen and (max-width: 700px) {
+  @media only screen and (max-width: 1000px) {
     font-size: calc(0.58em);
   }
   color: tomato;
-  font-family: "BMDOHYEON";
-  margin-bottom: 4%;
+  font-family: ${MINSAPAY_FONT};
+  margin-bottom: 7%;
+  @media only screen and (max-width: 1000px) {
+    margin-bottom: 5%;
+  }
 `;
 const PicSource = styled.span`
   font-size: 2.5vh;
   color: aliceblue;
-  font-family: "BMDOHYEON";
+  font-family: ${MINSAPAY_FONT};
   position: fixed;
   bottom: 1%;
   right: 1%;
@@ -191,8 +206,11 @@ export default function Login() {
       <Wrapper>
         <LoginBox>
           <TitleDiv>
+            <ImgDiv>
+              <Image src={Logo} onDoubleClick={onLogoImageDoubleClick} />
+            </ImgDiv>
+
             <Title>Login </Title>
-            <Image src={Logo} onDoubleClick={onLogoImageDoubleClick} />
           </TitleDiv>
           <Form onSubmit={onSubmit}>
             <Input

@@ -1,5 +1,9 @@
 import styled from "styled-components";
-import { BORDER_GRAY, BUTTON_SHADOW } from "../../components/theme-definition";
+import {
+  BORDER_GRAY,
+  BUTTON_SHADOW,
+  MINSAPAY_TITLE,
+} from "../../components/theme-definition";
 import { auth } from "../../features/login-feature";
 import { CPUFirebase } from "../../features/CPU-firebase-interaction";
 import { useEffect, useState } from "react";
@@ -38,7 +42,7 @@ const Header = styled.div`
   height: 0.5vh;
   display: flex;
   align-items: center;
-  font-family: "BMDOHYEON";
+  font-family: ${MINSAPAY_TITLE};
   margin-top: 5vh;
   margin-bottom: 5vh;
   font-size: 1.4vw;

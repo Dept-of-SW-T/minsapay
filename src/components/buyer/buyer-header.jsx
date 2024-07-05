@@ -1,9 +1,9 @@
 import styled from "styled-components";
 import LogoRef from "../../images/LogoMinsapay.svg";
-import LogOutRef from "../../images/LogOut.svg";
+import SettingRef from "../../images/Setting.svg";
 import GoHomeRef from "../../images/CPUHome.svg";
 import { useNavigate } from "react-router-dom";
-import { auth } from "../../features/login-feature";
+import { MINSAPAY_TITLE } from "../../components/theme-definition";
 
 // CPU의 모든 화면에 공통으로 들어가는 header으로, home으로 가는, logout하는 버튼을 가지고 있다.
 
@@ -12,13 +12,15 @@ const HeaderDiv = styled.div`
   margin: 0 auto;
   height: 10vh;
   padding: 0 2.5%;
+  font-size: 4vh;
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
+  font-family: ${MINSAPAY_TITLE};
 `;
 const Logo = styled.img`
-  height: 80%;
+  height: 60%;
   /* margin-left: 11px; */
   aspect-ratio: 1;
   &:hover {
@@ -26,8 +28,8 @@ const Logo = styled.img`
   }
 `;
 const Balance = styled.div``;
-const LogOutIcon = styled.img`
-  height: 80%;
+const SettingIcon = styled.img`
+  height: 60%;
   /* margin-right: 11px; */
   aspect-ratio: 1;
   /* margin-left: auto; */
@@ -43,12 +45,10 @@ export function BuyerHeader({ balance }) {
     e.preventDefault();
     navigate("../buyer-home");
   };
-  const onLogOutIconClick = async (e) => {
-    // logout 누르면 confirm 띄우고 로그아웃 후 home으로 navigate --> 저절로 logout화면으로 protected routes를 통해 연결
+  const onSettingClick = async (e) => {
+    // logo 누르면 설정으로 navigate
     e.preventDefault();
-    if (!confirm("로그아웃 하시겠습니까?")) return;
-    await auth.signOut();
-    navigate("../../");
+    navigate("../buyer-home/buyer-setting");
   };
   const onLogoHover = (e) => {
     const logoImage = e.target;
@@ -67,8 +67,8 @@ export function BuyerHeader({ balance }) {
         onMouseLeave={onLogoLeave}
         src={LogoRef}
       />
-      <Balance>{balance}원</Balance>
-      <LogOutIcon onClick={onLogOutIconClick} src={LogOutRef} />
+      <Balance>{balance} 원</Balance>
+      <SettingIcon onClick={onSettingClick} src={SettingRef} />
     </HeaderDiv>
   );
 }

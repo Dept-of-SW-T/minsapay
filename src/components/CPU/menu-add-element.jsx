@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { BORDER_GRAY } from "../theme-definition";
+import { BORDER_GRAY, MINSAPAY_FONT } from "../theme-definition";
 import AddMenuIcon from "../../images/AddMenu.svg";
 
 const Wrapper = styled.span`
@@ -11,6 +11,7 @@ const Wrapper = styled.span`
   height: 18vw;
   border: 3px solid ${BORDER_GRAY};
   border-radius: 20px;
+  font-family: ${MINSAPAY_FONT};
   background-color: white;
   &:hover {
     & img {

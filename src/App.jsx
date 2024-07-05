@@ -23,6 +23,7 @@ import KioskThankYou from "./routes/kiosk/kiosk-thankyou";
 import DeveloperHome from "./developer/developer-home";
 import SellerSelect from "./routes/seller/seller-select";
 import SellerHome from "./routes/seller/seller-home";
+import BuyerSetting from "./routes/buyer/buyer-setting";
 
 const router = createBrowserRouter([
   // 루팅
@@ -51,6 +52,14 @@ const router = createBrowserRouter([
     element: (
       <ProtectedBuyer>
         <BuyerPayment />
+      </ProtectedBuyer>
+    ),
+  },
+  {
+    path: "/buyer-home/buyer-setting", // 개발자용
+    element: (
+      <ProtectedBuyer>
+        <BuyerSetting />
       </ProtectedBuyer>
     ),
   },
@@ -134,19 +143,27 @@ const router = createBrowserRouter([
 const GlobalStyles = createGlobalStyle`
   ${reset};
   * { 
+  @font-face {
+    font-family: 'MaruBuriSemiBold';
+    src: url(https://hangeul.pstatic.net/hangeul_static/webfont/MaruBuri/MaruBuri-SemiBold.eot);
+    src: url(https://hangeul.pstatic.net/hangeul_static/webfont/MaruBuri/MaruBuri-SemiBold.eot?#iefix) format("embedded-opentype"), url(https://hangeul.pstatic.net/hangeul_static/webfont/MaruBuri/MaruBuri-SemiBold.woff2) format("woff2"), url(https://hangeul.pstatic.net/hangeul_static/webfont/MaruBuri/MaruBuri-SemiBold.woff) format("woff"), url(https://hangeul.pstatic.net/hangeul_static/webfont/MaruBuri/MaruBuri-SemiBold.ttf) format("truetype");
+  }
+		font-family: "MaruBuriSemiBold"; // 폰트 정의
+
+  
     @font-face {
-      font-family: 'BMDOHYEON';
-      src: url('https://cdn.jsdelivr.net/gh/wizfile/font/BMDOHYEON.eot');
-      src:url('https://cdn.jsdelivr.net/gh/wizfile/font/BMDOHYEON.woff') format('woff');
-      font-style: normal;
-    }
-		font-family: "BMDOHYEON"; // 폰트 정의
-    @font-face {
-    font-family: 'SOGANGUNIVERSITYTTF';
-    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2312-1@1.1/SOGANGUNIVERSITYTTF.woff2') format('woff2');
-    font-weight: normal;
+    font-family: 'TheJamsil';
+    font-weight: 300;
     font-style: normal;
-    }
+    src: url('https://cdn.jsdelivr.net/gh/webfontworld/TheJamsil/TheJamsil-Light.eot');
+    src: url('https://cdn.jsdelivr.net/gh/webfontworld/TheJamsil/TheJamsil-Light.eot?#iefix') format('embedded-opentype'),
+        url('https://cdn.jsdelivr.net/gh/webfontworld/TheJamsil/TheJamsil-Light.woff2') format('woff2'),
+        url('https://cdn.jsdelivr.net/gh/webfontworld/TheJamsil/TheJamsil-Light.woff') format('woff'),
+        url('https://cdn.jsdelivr.net/gh/webfontworld/TheJamsil/TheJamsil-Light.ttf') format("truetype");
+    font-display: swap;
+}
+  font-family: "TheJamsil";
+
   }
 `;
 
