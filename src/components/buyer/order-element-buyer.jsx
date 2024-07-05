@@ -11,9 +11,9 @@ import { buyerFirebase } from "../../features/buyer-firebase-interaction";
 
 const Wrapper = styled.span`
   width: 96%;
-  height: 7vw;
-  border: 3px solid ${BORDER_GRAY};
-  border-radius: 20px;
+  height: 10vw;
+  border: 2px solid ${BORDER_GRAY};
+  border-radius: 8px;
   display: flex;
   flex-direction: row;
   padding-left: 0px;
@@ -22,9 +22,9 @@ const Wrapper = styled.span`
 
 const Text = styled.span`
   font-family: "BMDOHYEON";
-  font-size: 1.2em;
+  font-size: 0.9em;
   width: 23.5%;
-  border-right: 3px solid ${BORDER_GRAY};
+  border-right: 2px solid ${BORDER_GRAY};
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -32,8 +32,8 @@ const Text = styled.span`
   text-align: center;
   background-color: white;
   &#first-child {
-    border-top-left-radius: 17px;
-    border-bottom-left-radius: 17px;
+    border-top-left-radius: 6px;
+    border-bottom-left-radius: 6px;
   }
   &.refund-request {
     &:hover {
