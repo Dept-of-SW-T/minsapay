@@ -119,8 +119,8 @@ export default function ChangePassword() {
   const onLogOutIconClick = async (e) => {
     e.preventDefault();
     if (!confirm("로그아웃 하시겠습니까?")) return;
-    await auth.signOut();
-    navigate("");
+    //await auth.signOut();
+    navigate("../login");
   };
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -148,6 +148,7 @@ export default function ChangePassword() {
     <OuterWrapper>
       <TitleDiv>
         <Title>비밀번호 변경</Title>
+        <LogOutIcon onClick={onLogOutIconClick} src={LogOutRef} />
       </TitleDiv>
       <Form onSubmit={onSubmit}>
         <Input
@@ -169,8 +170,6 @@ export default function ChangePassword() {
         <Input type="submit" value={"비밀번호 변경"} />
       </Form>
       {error !== "" ? <Error>{error}</Error> : null}
-
-      <LogOutIcon onClick={onLogOutIconClick} src={LogOutRef} />
     </OuterWrapper>
   );
 }
