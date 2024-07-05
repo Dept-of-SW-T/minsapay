@@ -63,7 +63,7 @@ const TitleDiv = styled.div`
   flex-direction: column;
   justify-content: space-evenly;
   align-items: center;
-  margin-bottom: 3%;
+  margin-bottom: 10%;
 `;
 const Title = styled.span`
   font-size: 2vw;
@@ -148,15 +148,15 @@ const Input = styled.input`
 `;
 const Error = styled.span`
   // 로그인 에러 모두 띄우는 거
-  font-size: 1.7vh;
+  font-size: 1.3vh;
   @media only screen and (max-width: 1000px) {
     font-size: calc(0.58em);
   }
   color: tomato;
   font-family: ${MINSAPAY_FONT};
-  margin-bottom: 8%;
+  margin-bottom: 7%;
   @media only screen and (max-width: 1000px) {
-    margin-bottom: 6%;
+    margin-bottom: 5%;
   }
 `;
 const PicSource = styled.span`
