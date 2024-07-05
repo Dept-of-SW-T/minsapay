@@ -41,7 +41,7 @@ const Wrapper = styled.div`
 //   margin-bottom: 13px;
 // `;
 
-export default function CoupleList({ dataList }) {
+export default function SingleList({ dataList }) {
   // dataList를 두 개찍 짝지어서 화면에 나열하는 list
   // const dataCoupled = splitIntoChunk(dataList, 2).map((value, index) => {
   //   return (
