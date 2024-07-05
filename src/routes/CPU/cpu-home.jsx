@@ -10,6 +10,7 @@ import {
   BORDER_GRAY,
   BUTTON_SHADOW,
   MINSAPAY_BLUE,
+  MINSAPAY_TITLE,
 } from "../../components/theme-definition";
 import { CPUFirebase } from "../../features/CPU-firebase-interaction";
 import OrderElementCPU from "../../components/CPU/order-element-CPU";
@@ -40,7 +41,7 @@ const TopDiv = styled.div`
     height: 25vh;
   }
   justify-content: space-evenly;
-  font-family: "BMDOHYEON";
+  font-family: ${MINSAPAY_TITLE};
   gap: 4%;
   margin: 4vh auto 5vh;
   @media only screen and (max-width: 2000px) {
@@ -62,7 +63,7 @@ const OpacityLayer = styled.div`
   width: 100%;
   height: 100%;
   border-radius: 17px;
-  font-family: "BMDOHYEON";
+  font-family: ${MINSAPAY_TITLE};
   font-size: 2.5em;
   color: white;
   flex-direction: row;

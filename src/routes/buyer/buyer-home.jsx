@@ -30,6 +30,9 @@ const PayIcon = styled.img`
   height: 7vh;
   margin-bottom: 1vh;
   margin-top: 1vh;
+  &:hover {
+    cursor: pointer;
+  }
 `;
 export default function BuyerHome() {
   const navigate = useNavigate();

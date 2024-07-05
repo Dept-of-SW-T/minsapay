@@ -6,6 +6,7 @@ import {
   ORDER_REQUEST,
   REFUND_OR_RECEIPT_COMPLETE,
   REFUND_REQUEST,
+  MINSAPAY_FONT,
 } from "../theme-definition";
 import { CPUFirebase } from "../../features/CPU-firebase-interaction";
 
@@ -21,7 +22,7 @@ const Wrapper = styled.span`
 `;
 
 const Text = styled.span`
-  font-family: "BMDOHYEON";
+  font-family: ${MINSAPAY_FONT};
   font-size: 1.2em;
   width: 23.5%;
   border-right: 3px solid ${BORDER_GRAY};
