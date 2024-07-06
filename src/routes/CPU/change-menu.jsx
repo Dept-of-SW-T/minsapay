@@ -14,8 +14,8 @@ const Wrapper = styled.div`
 `;
 
 const StyledCPUHeader = styled(CPUHeader)`
-  width: 100%; // 너비를 100%로 설정
-  margin: 0; // 여백 제거
+  width: 100%;
+  margin: 0;
 `;
 
 const Title = styled.h1`
@@ -77,12 +77,12 @@ const Th = styled.th`
   background-color: #f0f0f0;
   font-size: 14px;
 `;
-
 const Td = styled.td`
   padding: 10px;
   border: 1px solid #ccc;
   font-size: 14px;
-  text-align: center;
+  text-align: center; /* 텍스트 가운데 정렬 */
+  vertical-align: middle; /* 세로 가운데 정렬 */
 `;
 
 const ActionButton = styled.button`
@@ -94,6 +94,7 @@ const ActionButton = styled.button`
   border-radius: 4px;
   cursor: pointer;
   margin: 0 5px;
+  text-align: center; /* 버튼 가운데 정렬 */
 
   &:hover {
     background-color: ${(props) => (props.edit ? "#45a049" : "#e53935")};
@@ -118,6 +119,7 @@ export default function ChangeMenu() {
     }
     window.location.reload();
   };
+
   const onPriceChange = (e) => {
     if (e.target.value === "") {
       setPrice(0);
@@ -130,13 +132,12 @@ export default function ChangeMenu() {
 
     let isNumber = true;
     for (let i = 0; i < e.target.value.length; i++) {
-      // 모든 character가 digit이어야만 true 반환
       isNumber = isNumber && isDigit(e.target.value[i]);
     }
-    if (!isNumber) return; // 0~9가 아닌 input은 기록되지 않는다
-    const val = parseInt(e.target.value); // 기록된 price를 int로 바꾸어서
-    if (val < 0 || val > 100000) return; // 주어진 범위를 벗어나면 return
-    setPrice(val); // price는 number type를 가진다.
+    if (!isNumber) return;
+    const val = parseInt(e.target.value);
+    if (val < 0 || val > 100000) return;
+    setPrice(val);
   };
 
   const onMenuAddClick = async (e) => {
@@ -161,7 +162,7 @@ export default function ChangeMenu() {
 
     await CPUFirebase.updateFirebaseMenuList();
     setName("");
-    setPrice("");
+    setPrice(0);
     setImage(null);
   };
 

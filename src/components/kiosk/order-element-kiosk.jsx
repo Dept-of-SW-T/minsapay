@@ -1,7 +1,10 @@
 import styled from "styled-components";
 import AddQuantity from "../../images/AddQuantity.svg";
 import LowerQuantity from "../../images/LowerQuantity.svg";
-import { BORDER_GRAY /* BUTTON_SHADOW */ } from "../theme-definition";
+import {
+  BORDER_GRAY,
+  MINSAPAY_FONT /* BUTTON_SHADOW */,
+} from "../theme-definition";
 import { useState } from "react";
 // 반응형으로!!
 const Wrapper = styled.div`
@@ -30,13 +33,13 @@ const NoImage = styled.div`
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  font-family: "BMDOHYEON";
+  font-family: ${MINSAPAY_FONT};
   border-right: 3px solid ${BORDER_GRAY};
 `;
 
 const MenuInfo = styled.div`
   width: 14vw;
-  font-family: "BMDOHYEON";
+  font-family: ${MINSAPAY_FONT};
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -61,7 +64,7 @@ const QuantityChange = styled.div`
 `;
 const Quantity = styled.div`
   font-size: calc(0.8vw+0.4vh);
-  font-family: "BMDOHYEON";
+  font-family: ${MINSAPAY_FONT};
   display: flex;
   flex-direction: column;
   opacity: 0.6;
