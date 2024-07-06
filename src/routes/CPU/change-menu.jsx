@@ -105,6 +105,7 @@ export default function ChangeMenu() {
   const [menuList, setMenuList] = useState([]);
   const [name, setName] = useState("");
   const [price, setPrice] = useState(0);
+  const [editPrice, setEditPrice] = useState(0);
   const [image, setImage] = useState(null);
   const [editId, setEditId] = useState(null);
   const [editImage, setEditImage] = useState(null);
@@ -166,8 +167,9 @@ export default function ChangeMenu() {
     setImage(null);
   };
 
-  const handleEdit = (id) => {
+  const handleEdit = (id, price) => {
     setEditId(id);
+    setEditPrice(price);
   };
 
   const handleSave = async (id, updatedData) => {
@@ -279,11 +281,28 @@ export default function ChangeMenu() {
               <Td>
                 {editId === menu.id ? (
                   <Input
-                    type="number"
-                    defaultValue={menu.price}
-                    onChange={(e) =>
-                      (menu.price = parseInt(e.target.value, 10))
-                    }
+                    type="text"
+                    value={editPrice}
+                    onChange={(e) => {
+                      if (e.target.value === "") {
+                        setEditPrice(0);
+                        return;
+                      }
+
+                      const isDigit = (char) => {
+                        return /\d/.test(char);
+                      };
+
+                      let isNumber = true;
+                      for (let i = 0; i < e.target.value.length; i++) {
+                        isNumber = isNumber && isDigit(e.target.value[i]);
+                      }
+                      if (!isNumber) return;
+                      const val = parseInt(e.target.value);
+                      if (val < 0 || val > 100000) return;
+                      setEditPrice(val);
+                      menu.price = val;
+                    }}
                   />
                 ) : (
                   `${menu.price}원`
@@ -295,7 +314,10 @@ export default function ChangeMenu() {
                     Save
                   </ActionButton>
                 ) : (
-                  <ActionButton edit onClick={() => handleEdit(menu.id)}>
+                  <ActionButton
+                    edit
+                    onClick={() => handleEdit(menu.id, menu.price)}
+                  >
                     Edit
                   </ActionButton>
                 )}
