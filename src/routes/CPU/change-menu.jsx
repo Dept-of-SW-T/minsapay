@@ -1,8 +1,5 @@
 import styled from "styled-components";
 import { CPUHeader } from "../../components/CPU/cpu-header";
-import CoupleList from "../../components/CPU/couple-list";
-import MenuElement from "../../components/CPU/menu-element";
-import MenuAddElement from "../../components/CPU/menu-add-element";
 import { useEffect, useState } from "react";
 import { CPUFirebase } from "../../features/CPU-firebase-interaction";
 import { onSnapshot } from "firebase/firestore";
@@ -12,80 +9,176 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+
+  background-color: #f9f9f9;
 `;
-const ChangeMenuBox = styled.div`
-  width: 100%;
-  height: 88vh;
-  margin-top: 4vh;
+
+const StyledCPUHeader = styled(CPUHeader)`
+  width: 100%; // 너비를 100%로 설정
+  margin: 0; // 여백 제거
+`;
+
+const Title = styled.h1`
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 30px;
+  margin-top: 35px;
+`;
+
+const Form = styled.form`
+  width: 80%;
+  max-width: 600px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+`;
+
+const Input = styled.input`
+  padding: 10px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+`;
+
+const FileInput = styled.input`
+  padding: 10px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+`;
+
+const Button = styled.button`
+  padding: 10px 20px;
+  font-size: 14px;
+  color: white;
+  background-color: #000;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #333;
+  }
+`;
+
+const Table = styled.table`
+  width: 90%;
+  max-width: 800px;
+  margin-top: 50px;
+  margin-bottom: 50px;
+  border-collapse: collapse;
+  background-color: #fff;
+  border: 1px solid #ccc;
+`;
+
+const Th = styled.th`
+  padding: 10px;
+  border: 1px solid #ccc;
+  background-color: #f0f0f0;
+  font-size: 14px;
+`;
+
+const Td = styled.td`
+  padding: 10px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+  text-align: center;
+`;
+
+const ActionButton = styled.button`
+  padding: 5px 10px;
+  font-size: 12px;
+  color: white;
+  background-color: ${(props) => (props.edit ? "#4CAF50" : "#f44336")};
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin: 0 5px;
+
+  &:hover {
+    background-color: ${(props) => (props.edit ? "#45a049" : "#e53935")};
+  }
 `;
 
 export default function ChangeMenu() {
-  const [menuList, setMenuList] = useState([]); // couple list에 넣은 요소 리스트
-  const onDeleteButtonClick = async (e) => {
+  const [menuList, setMenuList] = useState([]);
+  const [name, setName] = useState("");
+  const [price, setPrice] = useState("");
+  const [image, setImage] = useState(null);
+  const [editId, setEditId] = useState(null);
+  const [editImage, setEditImage] = useState(null);
+
+  const onDeleteButtonClick = async (id) => {
     if (!confirm("메뉴를 삭제하시겠습니까?")) return;
-    const id = parseInt(e.target.id.substring(0, e.target.id.length - 4)); // 메뉴 아이디 가져오기
-    for (let i = 0; i < CPUFirebase.menuList.length; i++) {
-      if (CPUFirebase.menuList[i].id === id) {
-        // 해당하는 메뉴 지우고 업데이트 --> onSnapshot가 호출됨
-        await CPUFirebase.deleteMenuImage(i);
-        CPUFirebase.menuList.splice(i, 1);
-        await CPUFirebase.updateFirebaseMenuList();
-        break;
-      }
+    const index = CPUFirebase.menuList.findIndex((item) => item.id === id);
+    if (index !== -1) {
+      await CPUFirebase.deleteMenuImage(index);
+      CPUFirebase.menuList.splice(index, 1);
+      await CPUFirebase.updateFirebaseMenuList();
     }
+    window.location.reload();
   };
-  const onMenuAddClick = async () => {
-    const newId = Date.now(); // 현재 시각을 아이디로
+
+  const onMenuAddClick = async (e) => {
+    e.preventDefault();
+    const newId = Date.now();
+    let imageDownloadUrl = "";
+    let imagePath = "";
+
+    if (image) {
+      const uploadResult = await CPUFirebase.uploadMenuImage(newId, image);
+      imageDownloadUrl = uploadResult.imageDownloadUrl;
+      imagePath = uploadResult.imagePath;
+    }
+
     CPUFirebase.menuList.push({
-      menuName: "없음",
-      price: 0,
-      imageDownloadUrl: "",
-      imagePath: "",
+      menuName: name,
+      price: parseInt(price, 10),
+      imageDownloadUrl,
+      imagePath,
       id: newId,
     });
-    await CPUFirebase.updateFirebaseMenuList(); // onSnapshot가 호출됨
+
+    await CPUFirebase.updateFirebaseMenuList();
+    setName("");
+    setPrice("");
+    setImage(null);
   };
+
+  const handleEdit = (id) => {
+    setEditId(id);
+  };
+
+  const handleSave = async (id, updatedData) => {
+    const index = CPUFirebase.menuList.findIndex((item) => item.id === id);
+    if (index !== -1) {
+      if (editImage) {
+        const uploadResult = await CPUFirebase.uploadMenuImage(
+          index,
+          editImage,
+        );
+        updatedData.imageDownloadUrl = uploadResult.imageDownloadUrl;
+        updatedData.imagePath = uploadResult.imagePath;
+      }
+
+      CPUFirebase.menuList[index] = {
+        ...CPUFirebase.menuList[index],
+        ...updatedData,
+      };
+
+      await CPUFirebase.updateFirebaseMenuList();
+      setEditId(null);
+      setEditImage(null);
+    }
+  };
+
   useEffect(() => {
-    // 초반에 초기화
     let unsubscribe = null;
     const init = async () => {
       await CPUFirebase.init();
-      setMenuList(
-        CPUFirebase.menuList
-          .map((value) => {
-            return (
-              <MenuElement
-                imageDownloadUrl={value.imageDownloadUrl}
-                menuName={value.menuName}
-                price={value.price}
-                editMode={false}
-                id={value.id}
-                onDeleteButtonClick={onDeleteButtonClick}
-                key={value.id}
-              />
-            );
-          })
-          .concat([<MenuAddElement onClick={onMenuAddClick} key={-1} />]), // 메뉴 로드 한 후 추가 버튼 추가
-      );
+      setMenuList(CPUFirebase.menuList);
       unsubscribe = onSnapshot(CPUFirebase.userDocRef, () => {
-        // 나중에 features로 이관할 방법을 찾을 것임 // 이미 위의 delete function이 called되었다는 전제 하에 update되어 있음
-        setMenuList(
-          CPUFirebase.menuList
-            .map((value) => {
-              return (
-                <MenuElement
-                  imageDownloadUrl={value.imageDownloadUrl}
-                  menuName={value.menuName}
-                  price={value.price}
-                  editMode={false}
-                  id={value.id}
-                  onDeleteButtonClick={onDeleteButtonClick}
-                  key={value.id}
-                />
-              );
-            })
-            .concat([<MenuAddElement onClick={onMenuAddClick} key={-1} />]), // 메뉴 로드 한 후 추가 버튼 추가
-        );
+        setMenuList(CPUFirebase.menuList);
       });
     };
     init();
@@ -93,12 +186,106 @@ export default function ChangeMenu() {
       unsubscribe && unsubscribe();
     };
   }, []);
+
   return (
     <Wrapper>
-      <CPUHeader />
-      <ChangeMenuBox>
-        <CoupleList dataList={menuList} />
-      </ChangeMenuBox>
+      <StyledCPUHeader />
+      <Title>메뉴 추가 & 수정</Title>
+      <Form onSubmit={onMenuAddClick}>
+        <Input
+          type="text"
+          placeholder="메뉴명"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          required
+        />
+        <Input
+          type="number"
+          placeholder="가격"
+          value={price}
+          onChange={(e) => setPrice(e.target.value)}
+          required
+        />
+        <FileInput
+          type="file"
+          accept="image/*"
+          onChange={(e) => setImage(e.target.files[0])}
+        />
+        <Button type="submit">메뉴 추가</Button>
+      </Form>
+      <Table>
+        <thead>
+          <tr>
+            <Th>Photo</Th>
+            <Th>메뉴명</Th>
+            <Th>가격</Th>
+            <Th>편집</Th>
+          </tr>
+        </thead>
+        <tbody>
+          {menuList.map((menu, index) => (
+            <tr key={index}>
+              <Td>
+                {menu.imageDownloadUrl ? (
+                  <img
+                    src={menu.imageDownloadUrl}
+                    alt="Menu"
+                    width="50"
+                    height="50"
+                  />
+                ) : (
+                  "No Image"
+                )}
+                {editId === menu.id && (
+                  <FileInput
+                    type="file"
+                    accept="image/*"
+                    onChange={(e) => setEditImage(e.target.files[0])}
+                  />
+                )}
+              </Td>
+              <Td>
+                {editId === menu.id ? (
+                  <Input
+                    type="text"
+                    defaultValue={menu.menuName}
+                    onChange={(e) => (menu.menuName = e.target.value)}
+                  />
+                ) : (
+                  menu.menuName
+                )}
+              </Td>
+              <Td>
+                {editId === menu.id ? (
+                  <Input
+                    type="number"
+                    defaultValue={menu.price}
+                    onChange={(e) =>
+                      (menu.price = parseInt(e.target.value, 10))
+                    }
+                  />
+                ) : (
+                  `${menu.price}원`
+                )}
+              </Td>
+              <Td>
+                {editId === menu.id ? (
+                  <ActionButton edit onClick={() => handleSave(menu.id, menu)}>
+                    Save
+                  </ActionButton>
+                ) : (
+                  <ActionButton edit onClick={() => handleEdit(menu.id)}>
+                    Edit
+                  </ActionButton>
+                )}
+                <ActionButton onClick={() => onDeleteButtonClick(menu.id)}>
+                  Delete
+                </ActionButton>
+              </Td>
+            </tr>
+          ))}
+        </tbody>
+      </Table>
     </Wrapper>
   );
 }
