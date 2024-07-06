@@ -103,7 +103,7 @@ const ActionButton = styled.button`
 export default function ChangeMenu() {
   const [menuList, setMenuList] = useState([]);
   const [name, setName] = useState("");
-  const [price, setPrice] = useState("");
+  const [price, setPrice] = useState(0);
   const [image, setImage] = useState(null);
   const [editId, setEditId] = useState(null);
   const [editImage, setEditImage] = useState(null);
@@ -117,6 +117,26 @@ export default function ChangeMenu() {
       await CPUFirebase.updateFirebaseMenuList();
     }
     window.location.reload();
+  };
+  const onPriceChange = (e) => {
+    if (e.target.value === "") {
+      setPrice(0);
+      return;
+    }
+
+    const isDigit = (char) => {
+      return /\d/.test(char);
+    };
+
+    let isNumber = true;
+    for (let i = 0; i < e.target.value.length; i++) {
+      // 모든 character가 digit이어야만 true 반환
+      isNumber = isNumber && isDigit(e.target.value[i]);
+    }
+    if (!isNumber) return; // 0~9가 아닌 input은 기록되지 않는다
+    const val = parseInt(e.target.value); // 기록된 price를 int로 바꾸어서
+    if (val < 0 || val > 100000) return; // 주어진 범위를 벗어나면 return
+    setPrice(val); // price는 number type를 가진다.
   };
 
   const onMenuAddClick = async (e) => {
@@ -133,7 +153,7 @@ export default function ChangeMenu() {
 
     CPUFirebase.menuList.push({
       menuName: name,
-      price: parseInt(price, 10),
+      price: price,
       imageDownloadUrl,
       imagePath,
       id: newId,
@@ -200,10 +220,10 @@ export default function ChangeMenu() {
           required
         />
         <Input
-          type="number"
+          type="text"
           placeholder="가격"
           value={price}
-          onChange={(e) => setPrice(e.target.value)}
+          onChange={onPriceChange}
           required
         />
         <FileInput
