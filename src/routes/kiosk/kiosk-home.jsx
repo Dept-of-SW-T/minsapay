@@ -78,14 +78,14 @@ const TeamName = styled.div`
   //margin-left: 45px;
   width: 100%;
   text-align: center;
-  font-family: "BMDOHYEON";
+  font-family: ${MINSAPAY_TITLE};
   font-size: 4.2vw;
 `;
 const MenuTitle = styled.div`
   height: 9vh;
   display: flex;
   align-items: center;
-  font-family: "BMDOHYEON";
+  font-family: ${MINSAPAY_TITLE};
   font-size: 4.5vh;
 `;
 const PaymentBox = styled.div`
@@ -106,7 +106,7 @@ const ShoppingCartDiv = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-family: "BMDOHYEON";
+  font-family: ${MINSAPAY_TITLE};
   font-size: 2.5vw;
   gap: 10px;
 `;
@@ -127,7 +127,7 @@ const Total = styled.div`
   align-items: center;
   justify-content: space-between;
 
-  font-family: "BMDOHYEON";
+  font-family: ${MINSAPAY_TITLE};
 `;
 const Pay = styled.div`
   margin-top: 1.5vh;
@@ -144,7 +144,7 @@ const Pay = styled.div`
   justify-content: center;
 
   font-size: 4vh;
-  font-family: "BMDOHYEON";
+  font-family: ${MINSAPAY_TITLE};
 
   &:hover {
     opacity: 0.8;

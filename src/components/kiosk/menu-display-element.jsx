@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { BORDER_GRAY, BUTTON_SHADOW } from "../theme-definition";
+import { BORDER_GRAY, BUTTON_SHADOW, MINSAPAY_FONT } from "../theme-definition";
 import AddToOrder from "../../images/AddToOrder.svg";
 //자세한 요소 반응형 필요함
 
@@ -24,7 +24,7 @@ const NoImage = styled.div`
   border-bottom: 3px solid ${BORDER_GRAY};
   border-top-left-radius: 10%;
   border-top-right-radius: 10%;
-  font-family: "BMDOHYEON";
+  font-family: ${MINSAPAY_FONT};
 `;
 const MenuImage = styled.img`
   width: 100%;
@@ -62,7 +62,7 @@ const TextArea = styled.div`
   align-items: flex-start;
   justify-content: center;
   padding-left: 7%;
-  font-family: "BMDOHYEON";
+  font-family: ${MINSAPAY_FONT};
 `;
 const MenuName = styled.div`
   height: 40%;

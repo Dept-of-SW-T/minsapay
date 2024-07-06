@@ -8,7 +8,6 @@ import ChangeKioskImage from "../../images/ChangeKioskImage.svg";
 import {
   BACKGROUND_GRAY,
   BORDER_GRAY,
-  BUTTON_SHADOW,
   MINSAPAY_BLUE,
   MINSAPAY_TITLE,
 } from "../../components/theme-definition";
@@ -124,7 +123,7 @@ const Btn = styled.button`
   border-radius: 40px;
   border: 3px solid ${BORDER_GRAY};
   background-color: ${MINSAPAY_BLUE};
-  box-shadow: 0px 4px 4px 0px ${BUTTON_SHADOW};
+
   color: white;
   text-align: center;
   width: 100%;

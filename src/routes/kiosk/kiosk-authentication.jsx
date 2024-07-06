@@ -63,7 +63,7 @@ export default function KioskAuthentication() {
           style={{
             fontSize: "6.0vw",
             color: "white", // 글씨 색상
-            fontFamily: "Century Gothic",
+            fontFamily: "TheJamsil",
           }}
         >
           {kioskAuthenticationNumber}

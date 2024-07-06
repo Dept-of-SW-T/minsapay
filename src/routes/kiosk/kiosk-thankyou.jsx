@@ -51,7 +51,7 @@ export default function KioskThankYou() {
             textAlign: "center",
             fontSize: "6.0vw",
             color: "white",
-            fontFamily: "Century Gothic",
+            fontFamily: "TheJamsil",
           }}
         >
           감사합니다!! <br /> 남은 시간 : {remainingTime}초
@@ -61,6 +61,7 @@ export default function KioskThankYou() {
           style={{
             height: "6vh",
             width: "8vw",
+            borderRadius: "10px",
           }}
           onClick={() => {
             navigate("../kiosk-home/kiosk-cover");
