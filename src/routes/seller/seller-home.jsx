@@ -20,7 +20,7 @@ export default function SellerHome() {
   useEffect(() => {
     let unsubscribe = null;
     const init = async () => {
-      await sellerFirebase.init();
+      //await sellerFirebase.init();
       await sellerFirebase.getTeamData(currentTeam);
       setOrderList(
         sellerFirebase.orderHistory
