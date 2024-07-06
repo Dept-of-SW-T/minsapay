@@ -165,10 +165,6 @@ export default function BuyerPayment() {
     });
   };
 
-  const onKeypadOKButtonClick = async (e) => {
-    e.preventDefault();
-    navigate("../buyer-home");
-  };
   const blockArrowKey = (e) => {
     if (e.key.includes("Arrow")) e.preventDefault();
   };
@@ -231,9 +227,7 @@ export default function BuyerPayment() {
             <KeypadButton type="button" onClick={onKeypadButtonClick}>
               0
             </KeypadButton>
-            <KeypadButton type="submit" onClick={onKeypadOKButtonClick}>
-              OK
-            </KeypadButton>
+            <KeypadButton type="submit">OK</KeypadButton>
           </GridBox>
         </Form>
       </PaymentBox>
