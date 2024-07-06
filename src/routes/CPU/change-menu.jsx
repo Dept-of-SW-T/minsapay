@@ -118,7 +118,6 @@ export default function ChangeMenu() {
       CPUFirebase.menuList.splice(index, 1);
       await CPUFirebase.updateFirebaseMenuList();
     }
-    window.location.reload();
   };
 
   const onPriceChange = (e) => {
@@ -200,7 +199,8 @@ export default function ChangeMenu() {
     const init = async () => {
       await CPUFirebase.init();
       setMenuList(CPUFirebase.menuList);
-      unsubscribe = onSnapshot(CPUFirebase.userDocRef, () => {
+      unsubscribe = onSnapshot(CPUFirebase.userDocRef, async () => {
+        await CPUFirebase.init();
         setMenuList(CPUFirebase.menuList);
       });
     };
