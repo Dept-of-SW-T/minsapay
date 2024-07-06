@@ -61,6 +61,7 @@ export default function KioskThankYou() {
           style={{
             height: "6vh",
             width: "8vw",
+            borderRadius: "10px",
           }}
           onClick={() => {
             navigate("../kiosk-home/kiosk-cover");
