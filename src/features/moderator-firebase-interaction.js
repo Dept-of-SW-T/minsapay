@@ -1,5 +1,6 @@
 import { database } from "../firebase";
 import { collection, getDocs, getDoc, setDoc, doc } from "firebase/firestore";
+import { logger } from "./log-feature";
 
 const moderatorFirebase = {
   // usersQuery: undefined,
@@ -29,6 +30,13 @@ const moderatorFirebase = {
     const ref = this.usersRef[userId];
     const curUserData = (await getDoc(ref)).data();
     curUserData.balance += amount;
+
+    await logger.log({
+      type: "transaction",
+      sender: "moderator",
+      reciever: userId,
+      amount: amount,
+    });
     await setDoc(ref, curUserData);
   },
 };
