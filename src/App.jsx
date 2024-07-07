@@ -7,6 +7,7 @@ import {
   ProtectedCPU,
   ProtectedDeveloper,
   ProtectedKiosk,
+  ProtectedModerator,
   ProtectedRoute,
   ProtectedSeller,
 } from "./components/protected-routes";
@@ -24,6 +25,8 @@ import DeveloperHome from "./developer/developer-home";
 import SellerSelect from "./routes/seller/seller-select";
 import SellerHome from "./routes/seller/seller-home";
 import BuyerSetting from "./routes/buyer/buyer-setting";
+import ModeratorHome from "./routes/Moderator/moderator-home";
+import LogHome from "./routes/log/log-home";
 
 const router = createBrowserRouter([
   // 루팅
@@ -134,6 +137,18 @@ const router = createBrowserRouter([
         <SellerHome />
       </ProtectedSeller>
     ),
+  },
+  {
+    path: "/moderator-home", //금정부 관리 페이지
+    element: (
+      <ProtectedModerator>
+        <ModeratorHome />
+      </ProtectedModerator>
+    ),
+  },
+  {
+    path: "/log",
+    element: <LogHome />,
   },
   {
     path: "/login", // 로그인 화면으로 아무런 보호 조치가 없다.

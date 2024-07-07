@@ -161,7 +161,7 @@ const Error = styled.span`
   }
 `;
 const PicSource = styled.span`
-  font-size: 2.5vh;
+  font-size: 1vh;
   color: aliceblue;
   font-family: ${MINSAPAY_FONT};
   position: fixed;

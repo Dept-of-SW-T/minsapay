@@ -46,8 +46,11 @@ const CPUFirebase = {
       await deleteObject(imageRef);
     }
   },
-  async uploadMenuImage(id, file) {
-    const storageRef = ref(storage, `menuImages/${id}_${file.name}`);
+  async uploadMenuImage(boothId, id, file) {
+    const storageRef = ref(
+      storage,
+      `booths/${boothId}/menuImages/${id}_${file.name}`,
+    );
     const snapshot = await uploadBytes(storageRef, file);
     const imageDownloadUrl = await getDownloadURL(snapshot.ref);
 
@@ -56,6 +59,7 @@ const CPUFirebase = {
       imagePath: storageRef.fullPath,
     };
   },
+
   async updateFirebaseMenuList() {
     this.userDocData.menu_list = JSON.stringify(this.menuList);
     await setDoc(this.userDocRef, this.userDocData);
@@ -65,7 +69,7 @@ const CPUFirebase = {
     let buyerID = undefined;
     for (let i = 0; i < this.orderHistory.length; i++) {
       if (this.orderHistory[i].order_id === orderID) {
-        this.orderHistory[i].current_state = "환불완료";
+        this.orderHistory[i].refund_request = 2;
         this.userDocData.order_history = JSON.stringify(this.orderHistory);
         this.userDocData.balance -= this.orderHistory[i].price;
         buyerID = this.orderHistory[i].buyer_id;
@@ -75,7 +79,7 @@ const CPUFirebase = {
         const buyerOrderHistory = JSON.parse(buyerDocData.order_history);
         for (let j = 0; j < buyerOrderHistory.length; j++) {
           if (buyerOrderHistory[j].order_id === orderID) {
-            buyerOrderHistory[j].current_state = "환불완료";
+            buyerOrderHistory[j].refund_request = 2;
             buyerDocData.order_history = JSON.stringify(buyerOrderHistory);
             buyerDocData.balance += this.orderHistory[i].price;
             break;

@@ -16,6 +16,8 @@ export function ProtectedRoute() {
       return <Navigate to="/buyer-home" />;
     case "seller":
       return <Navigate to="/seller-home/seller-select" />;
+    case "moderator":
+      return <Navigate to="/moderator-home" />;
     default:
       return <Navigate to="/login" />;
   }
@@ -59,6 +61,15 @@ export function ProtectedSeller({ children }) {
   if (!loginUtils.isLoggedIn()) return <Navigate to="/login" />;
   const userClass = loginUtils.getUserClass();
   if (userClass !== "student") {
+    return <Navigate to="/" />;
+  }
+  return children;
+}
+
+export function ProtectedModerator({ children }) {
+  if (!loginUtils.isLoggedIn()) return <Navigate to="/login" />;
+  const userClass = loginUtils.getUserClass();
+  if (userClass !== "moderator") {
     return <Navigate to="/" />;
   }
   return children;

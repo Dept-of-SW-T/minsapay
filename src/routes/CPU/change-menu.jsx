@@ -1,15 +1,16 @@
 import styled from "styled-components";
 import { CPUHeader } from "../../components/CPU/cpu-header";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { CPUFirebase } from "../../features/CPU-firebase-interaction";
 import { onSnapshot } from "firebase/firestore";
+import Loading from "../../components/loading";
+import { auth } from "../../features/login-feature";
 
 const Wrapper = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
-
   background-color: #f9f9f9;
 `;
 
@@ -109,6 +110,11 @@ export default function ChangeMenu() {
   const [image, setImage] = useState(null);
   const [editId, setEditId] = useState(null);
   const [editImage, setEditImage] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const fileInputRef = useRef(null); // Reference to the file input element
+
+  // Assuming boothId is determined somehow, for example, from the user's team or some other context.
+  const boothId = auth.currentUser.boothId || "defaultBooth"; // Replace with actual logic to get boothId
 
   const onDeleteButtonClick = async (id) => {
     if (!confirm("메뉴를 삭제하시겠습니까?")) return;
@@ -147,7 +153,11 @@ export default function ChangeMenu() {
     let imagePath = "";
 
     if (image) {
-      const uploadResult = await CPUFirebase.uploadMenuImage(newId, image);
+      const uploadResult = await CPUFirebase.uploadMenuImage(
+        boothId,
+        newId,
+        image,
+      );
       imageDownloadUrl = uploadResult.imageDownloadUrl;
       imagePath = uploadResult.imagePath;
     }
@@ -164,6 +174,9 @@ export default function ChangeMenu() {
     setName("");
     setPrice(0);
     setImage(null);
+    if (fileInputRef.current) {
+      fileInputRef.current.value = ""; // Clear the file input field
+    }
   };
 
   const handleEdit = (id, price) => {
@@ -176,6 +189,7 @@ export default function ChangeMenu() {
     if (index !== -1) {
       if (editImage) {
         const uploadResult = await CPUFirebase.uploadMenuImage(
+          boothId,
           index,
           editImage,
         );
@@ -203,6 +217,7 @@ export default function ChangeMenu() {
         await CPUFirebase.init();
         setMenuList(CPUFirebase.menuList);
       });
+      setIsLoading(false);
     };
     init();
     return () => {
@@ -212,6 +227,7 @@ export default function ChangeMenu() {
 
   return (
     <Wrapper>
+      {isLoading && <Loading />}
       <StyledCPUHeader />
       <Title>메뉴 추가 & 수정</Title>
       <Form onSubmit={onMenuAddClick}>
@@ -233,6 +249,7 @@ export default function ChangeMenu() {
           type="file"
           accept="image/*"
           onChange={(e) => setImage(e.target.files[0])}
+          ref={fileInputRef} // Add the ref to the file input
         />
         <Button type="submit">메뉴 추가</Button>
       </Form>

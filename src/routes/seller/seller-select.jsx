@@ -3,9 +3,13 @@ import { useEffect, useState } from "react";
 import TeamList from "../../components/seller/team-list";
 import styled from "styled-components";
 import { SellerHeader } from "../../components/seller/seller-header";
-import { BORDER_GRAY, MINSAPAY_BLUE } from "../../components/theme-definition";
+import {
+  MINSAPAY_BLUE,
+  MINSAPAY_TITLE,
+} from "../../components/theme-definition";
 import { useNavigate } from "react-router-dom";
 import { onSnapshot } from "firebase/firestore";
+import Loading from "../../components/loading";
 
 const Wrapper = styled.div`
   display: flex;
@@ -16,28 +20,19 @@ const Wrapper = styled.div`
   min-height: 100%;
 `;
 
-// const TeamElement = styled.div`
-//   width: 90%;
-//   height: 10%;
-//   text-align: center;
-//   border-radius: 30px;
-//   background-color: #66A3FF;
-// `;
-
 const TeamElement = styled.div`
-  border: 3px solid ${BORDER_GRAY};
   border-radius: 40px;
   background-color: ${MINSAPAY_BLUE};
   width: 90%;
   height: 10%;
-  font-family: "Candara";
+  font-family: ${MINSAPAY_TITLE};
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: center;
   color: #fff;
   &:hover {
-    background-color: #ddd;
+    background-color: #66a3ffa1;
     cursor: pointer;
   }
 `;
@@ -45,6 +40,7 @@ const TeamElement = styled.div`
 export default function SellerSelect() {
   const navigate = useNavigate();
   const [teamList, setTeamList] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   const onTeamSelect = (e) => {
     console.log(e.target.id);
@@ -62,6 +58,7 @@ export default function SellerSelect() {
           </TeamElement>
         )),
       );
+      setIsLoading(false);
     };
     init();
     unsubscribe = onSnapshot(sellerFirebase.userDocRef, (doc) => {
@@ -82,7 +79,7 @@ export default function SellerSelect() {
   return (
     <Wrapper>
       <SellerHeader />
-      <TeamList datalist={teamList} />
+      {isLoading ? <Loading /> : <TeamList datalist={teamList} />}
     </Wrapper>
   );
 }

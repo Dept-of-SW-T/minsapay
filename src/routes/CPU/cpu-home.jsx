@@ -13,6 +13,7 @@ import {
 import { CPUFirebase } from "../../features/CPU-firebase-interaction";
 import OrderElementCPU from "../../components/CPU/order-element-CPU";
 import { onSnapshot } from "firebase/firestore";
+import Loading from "../../components/loading";
 
 // border 다 추가하기
 
@@ -169,7 +170,9 @@ export default function CPUHome() {
               userName={val.buyer_name}
               time={val.reception_time}
               status={val.current_state}
+              refundRequest={val.refund_request}
               key={index}
+              mode={"display"}
             />
           )),
       );
@@ -191,10 +194,13 @@ export default function CPUHome() {
                 userName={val.buyer_name}
                 time={val.reception_time}
                 status={val.current_state}
+                refundRequest={val.refund_request}
                 key={index}
+                mode={"display"}
               />
             )),
         );
+        setIsLoading(false);
       });
     };
     init();
@@ -221,29 +227,33 @@ export default function CPUHome() {
     <Wrapper>
       <CPUHeader />
       <CPUHomeBox>
-        <TopDiv>
-          <Title style={{ backgroundImage: `url(${kioskImage})` }}>
-            <OpacityLayer>
-              <TeamName>
-                {isLoading ? "" : CPUFirebase.userDocData.username}
-              </TeamName>
-              <Balance>{balance}원</Balance>
-              <Label htmlFor="image-upload">
-                <Image src={ChangeKioskImage} />
-              </Label>
-              <ImageUpload
-                id="image-upload"
-                type="file"
-                accept="image/*"
-                onChange={onFileChange}
-              />
-            </OpacityLayer>
-          </Title>
-          <HeaderBtns>
-            <Btn onClick={onChangeMenuClick}>메뉴편집</Btn>
-            <Btn onClick={onRefundApprovalClick}>환불승인</Btn>
-          </HeaderBtns>
-        </TopDiv>
+        {isLoading ? (
+          <Loading />
+        ) : (
+          <TopDiv>
+            <Title style={{ backgroundImage: `url(${kioskImage})` }}>
+              <OpacityLayer>
+                <TeamName>
+                  {isLoading ? "" : CPUFirebase.userDocData.username}
+                </TeamName>
+                <Balance>{balance}원</Balance>
+                <Label htmlFor="image-upload">
+                  <Image src={ChangeKioskImage} />
+                </Label>
+                <ImageUpload
+                  id="image-upload"
+                  type="file"
+                  accept="image/*"
+                  onChange={onFileChange}
+                />
+              </OpacityLayer>
+            </Title>
+            <HeaderBtns>
+              <Btn onClick={onChangeMenuClick}>메뉴편집</Btn>
+              <Btn onClick={onRefundApprovalClick}>환불승인</Btn>
+            </HeaderBtns>
+          </TopDiv>
+        )}
         <BodyDiv>
           <CoupleList dataList={orderList} />
         </BodyDiv>

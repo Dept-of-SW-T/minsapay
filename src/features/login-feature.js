@@ -124,8 +124,6 @@ const loginUtils = {
           return false;
         }
       }
-
-      // buyer
     } else {
       // 부스 로그인
       if (!userID.includes("@")) {
@@ -134,7 +132,12 @@ const loginUtils = {
         return false;
       }
       const userType = userID.substring(userID.indexOf("@") + 1, userID.length); // @ 뒤의 usertype를 그대로 잘라내기
-      if (userType !== "CPU" && userType !== "kiosk" && userType !== "seller") {
+      if (
+        userType !== "CPU" &&
+        userType !== "kiosk" &&
+        userType !== "seller" &&
+        userType !== "moderator"
+      ) {
         this.error = "부적절한 아이디입니다.";
         return false;
       }
@@ -147,6 +150,20 @@ const loginUtils = {
             password,
           );
           setCookie("user_type", "seller");
+        } catch (e) {
+          if (e instanceof FirebaseError) {
+            this.error = e.message;
+            return false;
+          }
+        }
+      } else if (userType === "moderator") {
+        try {
+          await signInWithEmailAndPassword(
+            authentication,
+            "admin@moderator.com",
+            password,
+          );
+          setCookie("user_type", "moderator");
         } catch (e) {
           if (e instanceof FirebaseError) {
             this.error = e.message;

@@ -8,23 +8,27 @@ const Wrapper = styled.div`
   justify-content: center;
   gap: 1% 0;
   height: 80%;
-  width: 50%;
+  width: 80%;
   background-color: white;
   border-radius: 40px;
-  font-family: "BMDOHYEON";
+  font-family: "TheJamsil";
+  margin-bottom: 2vh;
 `;
 
 const Title = styled.span`
-  font-size: 2em;
-  font-family: "BMDOHYEON";
-  margin-bottom: 1%;
+  font-size: 1.5em;
+
+  font-family: "MaruBuriSemiBold";
+  margin-bottom: 3%;
 `;
 
 export default function TeamList({ datalist }) {
   return (
     <>
-      <Title>팀 목록</Title>
-      <Wrapper>{datalist}</Wrapper>
+      <Wrapper>
+        <Title>부스를 선택하세요</Title>
+        {datalist}
+      </Wrapper>
     </>
   );
 }

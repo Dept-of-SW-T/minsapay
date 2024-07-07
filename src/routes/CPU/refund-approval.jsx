@@ -5,6 +5,7 @@ import OrderElementCPU from "../../components/CPU/order-element-CPU";
 import { useEffect, useState } from "react";
 import { CPUFirebase } from "../../features/CPU-firebase-interaction";
 import { onSnapshot } from "firebase/firestore";
+import Loading from "../../components/loading";
 
 const Wrapper = styled.div`
   width: 100%;
@@ -18,6 +19,7 @@ const RefundApprovalBox = styled.div`
 `;
 export default function RefundApproval() {
   const [refundRequestList, setRefundRequestList] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
     let unsubscribe = null;
     const init = async () => {
@@ -38,7 +40,9 @@ export default function RefundApproval() {
               menuName={val.menu_name}
               userName={val.buyer_name}
               time={val.reception_time}
-              status={"승인하기"}
+              status={val.current_state}
+              refundRequest={val.refund_request}
+              mode={"refund"}
               key={index}
               id={val.order_id}
             />
@@ -53,7 +57,7 @@ export default function RefundApproval() {
         );
         refundRequestHistory = [];
         for (let i = 0; i < CPUFirebase.orderHistory.length; i++) {
-          if (CPUFirebase.orderHistory[i].current_state === "환불요청") {
+          if (CPUFirebase.orderHistory[i].refund_request !== 0) {
             refundRequestHistory.push(CPUFirebase.orderHistory[i]);
           }
         }
@@ -65,13 +69,16 @@ export default function RefundApproval() {
                 menuName={val.menu_name}
                 userName={val.buyer_name}
                 time={val.reception_time}
-                status={"승인하기"}
+                status={val.current_state}
+                refundRequest={val.refund_request}
+                mode={"refund"}
                 key={index}
                 id={val.order_id}
               />
             )),
         );
       });
+      setIsLoading(false);
     };
     init();
     return () => {
@@ -81,9 +88,13 @@ export default function RefundApproval() {
   return (
     <Wrapper>
       <CPUHeader />
-      <RefundApprovalBox>
-        <CoupleList dataList={refundRequestList} />
-      </RefundApprovalBox>
+      {isLoading ? (
+        <Loading />
+      ) : (
+        <RefundApprovalBox>
+          <CoupleList dataList={refundRequestList} />
+        </RefundApprovalBox>
+      )}
     </Wrapper>
   );
 }
