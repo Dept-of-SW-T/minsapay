@@ -2,34 +2,43 @@ import styled from "styled-components";
 import { BORDER_GRAY } from "../theme-definition";
 
 const Wrapper = styled.span`
-  width: 96%;
-  height: 7vw;
-  border: 3px solid ${BORDER_GRAY};
-  border-radius: 20px;
+  width: 80%;
+  height: 5vw;
+  border: 2px solid ${BORDER_GRAY};
+  border-radius: 10px;
   display: flex;
   flex-direction: row;
-  padding-left: 0px;
-  padding-right: 0.5%;
+  margin-top: 0.3rem; // 아래쪽에 간격 추가
   &:hover {
     cursor: pointer;
   }
 `;
 
-const Text = styled.span`
+const TextLeft = styled.span`
   font-family: "BMDOHYEON";
   font-size: 1.2em;
-  width: 23.5%;
+  flex: 1; // flex 속성을 사용하여 균등 분배
   border-right: 3px solid ${BORDER_GRAY};
   display: flex;
-  flex-direction: row;
   align-items: center;
   justify-content: center;
   text-align: center;
   background-color: white;
-  &#first-child {
-    border-top-left-radius: 17px;
-    border-bottom-left-radius: 17px;
-  }
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+`;
+
+const TextRight = styled.span`
+  font-family: "BMDOHYEON";
+  font-size: 1.2em;
+  flex: 1; // flex 속성을 사용하여 균등 분배
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  background-color: white;
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
 `;
 
 export function UserElement({ userName, balance, onUserSelect, id }) {
@@ -40,8 +49,8 @@ export function UserElement({ userName, balance, onUserSelect, id }) {
         onUserSelect(id);
       }}
     >
-      <Text>{userName}</Text>
-      <Text>{balance}</Text>
+      <TextLeft>{userName}</TextLeft>
+      <TextRight>{balance}</TextRight>
     </Wrapper>
   );
 }
