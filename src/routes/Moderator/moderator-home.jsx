@@ -6,6 +6,7 @@ import { UserElement } from "../../components/moderator/user-element";
 import { SingleList } from "../../components/moderator/single-list";
 import { onSnapshot, doc } from "firebase/firestore";
 import { UserInfo } from "../../components/moderator/user-info";
+import { SearchElement } from "../../components/moderator/search-element";
 
 const Wrapper = styled.div`
   width: 100vw;
@@ -18,7 +19,7 @@ const Wrapper = styled.div`
 const BodyDiv = styled.div`
   display: flex;
   flex-direction: row;
-  align-items: center;
+  align-items: start;
   width: 100vw;
 `;
 
@@ -45,6 +46,34 @@ export default function ModeratorHome() {
     return true;
   };
 
+  const changeUserElementList = () => {
+    const tempList = [];
+    for (let i = 0; i < moderatorFirebase.usersList.length; i++) {
+      if (
+        idFilter !== null &&
+        !contains(moderatorFirebase.usersList[i].id, idFilter.toString())
+      )
+        continue;
+      tempList.push(moderatorFirebase.usersList[i]);
+    }
+
+    setUserElementList(
+      tempList.map((user) => {
+        return (
+          <UserElement
+            userName={user.data().username}
+            balance={user.data().balance}
+            key={user.id}
+            id={user.id}
+            onUserSelect={onUserSelect}
+          />
+        );
+      }),
+    );
+  };
+
+  useEffect(changeUserElementList, [idFilter]);
+
   useEffect(() => {
     let unsubscribe = null;
     const init = async () => {
@@ -59,7 +88,6 @@ export default function ModeratorHome() {
           );
         }),
       );
-      setIdFilter(null);
     };
     init();
     unsubscribe = onSnapshot(
@@ -77,28 +105,7 @@ export default function ModeratorHome() {
             moderatorFirebase.usersList[i].id,
           );
         }
-        const filteredUsersList = [];
-        for (let i = 0; i < moderatorFirebase.usersList.length; i++) {
-          if (
-            idFilter !== null &&
-            !contains(moderatorFirebase.usersList[i].id, idFilter.toString())
-          )
-            continue;
-          filteredUsersList.push(moderatorFirebase.usersList[i]);
-        }
-        setUserElementList(
-          filteredUsersList.map((user) => {
-            return (
-              <UserElement
-                userName={user.data().username}
-                balance={user.data().balance}
-                key={user.id}
-                id={user.id}
-                onUserSelect={onUserSelect}
-              />
-            );
-          }),
-        );
+        changeUserElementList();
       },
     );
 
@@ -110,6 +117,7 @@ export default function ModeratorHome() {
   return (
     <Wrapper>
       <ModeratorHeader />
+      <SearchElement searchFunc={setIdFilter} />
       <BodyDiv>
         <SingleList dataList={userElementList} />
         {selectedUser === null ? null : <UserInfo userId={selectedUser.id} />}
