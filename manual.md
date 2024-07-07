@@ -82,7 +82,7 @@ kiosk -부서/동아리 지정화면(=home) -> authentication(번호생성) -> m
 
 ## 3. 페이지 ui/ux 설명
 ### 1. 로그인
-![로그인화면](./src/images/manual/login.png)
+![login](./src/images/manual/login.png)
 #### 로그인 방법
 민사페이의 사용자 종류는 크게 두 가지이다. 첫번째는 개인 사용자로 이들은 모두 자신의 학번으로 로그인을 하게 된다. 두번째 종류는 부스 사용자로 부스 통합 계정과 키오스크 계정이 있다. 이 계정들은 각각 ‘(부스이름)@CPU’와 ‘(부스이름)@kiosk’를 ID로 사용한다. 
 
@@ -90,20 +90,16 @@ kiosk -부서/동아리 지정화면(=home) -> authentication(번호생성) -> m
 <!-- Admin@developer -->
 <!-- happykwagi2024 -->
 
-![어드민](./src/images/manual/admin.png)
+![admin](./src/images/manual/admin.png)
 
 관리자 계정이다. 
-#### 기능
-1. get database info
-2. upload database
-3. submit database(비밀번호 입력 필요)
 
 ### 3. cpu
 > **kwagi cpu id & password**<br/>
 kwagibu@CPU<br/>
 kwagibu<br/>
 
-![cpu home](./src/images/manual/cpu1.png)
+![cpu home](./src/images/manual/cpu_home.png)
 <!-- 캡처수정: 이미지에 숫자 넣기 -->
 #### 구성요소
 1. 민사페이 로고
@@ -127,7 +123,7 @@ kwagibu<br/>
   
 <br/>
 
-![메뉴변경](./src/images/manual/cpu2.png)
+![menu change](./src/images/manual/cpu_menu_change.png)
 #### 구성요소
 1. 로고(로고를 클릭하면 홈화면으로 돌아감)
 2. 로그아웃
@@ -139,10 +135,11 @@ kwagibu<br/>
 <!-- 캡처수정: 이미지에 숫자 넣기 -->
 <br/>
 
-![환불승인](./src/images/manual/cpu3.png)
+![refund approval](./src/images/manual/cpu_refund_approval.png)
+#### 환불 목록 형식
 | 제품/서비스 명 | 주문자명 | 주문 당시 시간(시:분:초) | 승인하기(버튼) | 색(환불요청) |
 |----------|----------|----------|----------|----------|
-|자고일어났다|조유찬|20:33:28| 승인하기|(색)|
+
 
 
 ### 4. seller mobile <span style="color:red"> 수정필요 </span>
@@ -150,13 +147,13 @@ kwagibu<br/>
 231133@seller<br/>
 231133<br/>
 
-![seller home](./src/images/manual/seller1.png)
+![sellerM home](./src/images/manual/sellerM_home.png)
 
 
 
-![seller](./src/images/manual/seller2.png)
+![sellerM desk](./src/images/manual/sellerM_desk.png)
 
-#### 주문목록
+#### 주문 목록 형식
 | 주문자명 | 물품/서비스명 & 주문 당시 시간(시:분:초)| | 처리 단계 | 담당자 |처리 단계 변경 버튼 |
 |----------|----------|----------|----------|----------|----------|
 
@@ -168,7 +165,7 @@ kwagibu<br/>
 231133<br/>
 231133<br/>
 
-![buyer](./src/images/manual/seller.png)
+![buyer home](./src/images/manual/buyer_home.png)
 
 #### 구성요소
 1. 로고
@@ -179,7 +176,7 @@ kwagibu<br/>
 <!-- 캡처수정: 이미지에 숫자 넣기 -->
 <br/>
 
-![buyer_결제화면](./src/images/manual/buyer_buy.png)
+![buyer payment](./src/images/manual/buyer_payment.png)
 #### 구성요소
 1. 키패드
 2. C
@@ -187,7 +184,7 @@ kwagibu<br/>
 4. 홈
 <br/>
 
-![buyer_비밀번호 변경](./src/images/manual/seller_setting.png)
+![buyer setting](./src/images/manual/seller_setting.png)
 #### 설정페이지
 1. 홈화면
 2. 로그아웃
@@ -215,7 +212,7 @@ kwagibu<br/>
 
 #### 구성요소
 1. 주문 취소
-2. 메뉴
+2. **메뉴**
 3. 내 카트
 4. total
 5. pay
