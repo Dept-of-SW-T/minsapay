@@ -29,22 +29,20 @@ const BodyDiv = styled.div`
 export default function ModeratorHome() {
   const [userElementList, setUserElementList] = useState([]);
   const [selectedUser, setSelectedUser] = useState(null);
+  const [idFilter, setIdFilter] = useState(null);
 
   const onUserSelect = (id) => {
-    // for (let i = 0; i < moderatorFirebase.usersList.length; i++) {
-    //   if (moderatorFirebase.usersList[i].id == id) {
-    //     setSelectedUser(moderatorFirebase.usersList[i]);
-    //     console.log(i);
-    //     console.log(selectedUser.id);
-    //     for(let j = 0; j < moderatorFirebase.usersList.length; j++) {
-    //       console.log(moderatorFirebase.usersList[j].id);
-    //     }
-    //     break;
-    //   }
-    // }
     setSelectedUser(
       moderatorFirebase.usersList[moderatorFirebase.usersIndex[id]],
     );
+  };
+
+  const contains = (str1, str2) => {
+    for (let i = 0; i < str1.length; i++) {
+      if (i >= str2.length) return true;
+      if (str1.charAt(i) != str2.charAt(i)) return false;
+    }
+    return true;
   };
 
   useEffect(() => {
@@ -61,6 +59,7 @@ export default function ModeratorHome() {
           );
         }),
       );
+      setIdFilter(null);
     };
     init();
     unsubscribe = onSnapshot(
@@ -78,8 +77,17 @@ export default function ModeratorHome() {
             moderatorFirebase.usersList[i].id,
           );
         }
+        const filteredUsersList = [];
+        for (let i = 0; i < moderatorFirebase.usersList.length; i++) {
+          if (
+            idFilter !== null &&
+            !contains(moderatorFirebase.usersList[i].id, idFilter.toString())
+          )
+            continue;
+          filteredUsersList.push(moderatorFirebase.usersList[i]);
+        }
         setUserElementList(
-          moderatorFirebase.usersList.map((user) => {
+          filteredUsersList.map((user) => {
             return (
               <UserElement
                 userName={user.data().username}
