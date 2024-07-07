@@ -6,6 +6,7 @@ import OrderElementSeller from "../../components/seller/order-element-seller";
 import CoupleList from "../../components/CPU/couple-list";
 import { SellerHeader } from "../../components/seller/seller-header";
 import { onSnapshot } from "firebase/firestore";
+import { MINSAPAY_FONT } from "../../components/theme-definition";
 
 const Wrapper = styled.div`
   width: 100vw;
@@ -13,6 +14,7 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  font-family: ${MINSAPAY_FONT};
 `;
 export default function SellerHome() {
   const [orderList, setOrderList] = useState([]);
