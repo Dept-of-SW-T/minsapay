@@ -6,6 +6,7 @@ import {
   BUTTON_SHADOW,
 } from "../../components/theme-definition";
 import { moderatorFirebase } from "../../features/moderator-firebase-interaction";
+import { onSnapshot } from "firebase/firestore";
 
 const Wrapper = styled.div`
   width: 50%;
@@ -85,6 +86,12 @@ export function UserInfo({ userId }) {
     );
   }, [userId]);
 
+  onSnapshot(moderatorFirebase.usersRef[userId], () => {
+    setSelectedUser(
+      moderatorFirebase.usersList[moderatorFirebase.usersIndex[userId]],
+    );
+  });
+
   const onChange = (event) => {
     setBalanceChangeVal(event.target.value);
   };
@@ -92,10 +99,12 @@ export function UserInfo({ userId }) {
   const onSubmit = (event) => {
     event.preventDefault();
     moderatorFirebase.changeBalance(userId, balanceChangeVal);
+    setBalanceChangeVal(0);
   };
 
   const onClick = () => {
     moderatorFirebase.changeBalance(userId, balanceChangeVal);
+    setBalanceChangeVal(0);
   };
 
   const buttonValues = [10000, 5000, 1000, 500];

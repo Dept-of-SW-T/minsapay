@@ -29,7 +29,6 @@ const moderatorFirebase = {
     const ref = this.usersRef[userId];
     const curUserData = (await getDoc(ref)).data();
     curUserData.balance += amount;
-    console.log(curUserData);
     await setDoc(ref, curUserData);
   },
 };
