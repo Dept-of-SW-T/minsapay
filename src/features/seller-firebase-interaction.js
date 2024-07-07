@@ -25,14 +25,11 @@ const sellerFirebase = {
     this.orderHistory = JSON.parse(this.teamDocData.order_history);
   },
   async setStatus(id, status) {
-    console.log(id, status);
     for (let i = 0; i < this.orderHistory.length; i++) {
       if (this.orderHistory[i].order_id === id) {
         this.orderHistory[i].current_state = status;
         this.teamDocData.order_history = JSON.stringify(this.orderHistory);
         await setDoc(this.teamDocRef, this.teamDocData);
-
-        console.log(this.orderHistory[i]);
         const buyerDocRef = doc(
           database,
           "Students",
@@ -49,11 +46,9 @@ const sellerFirebase = {
             break;
           }
         }
-        console.log("uploaded changed status to firebase");
         break;
       }
     }
-    console.log("end of function");
   },
 };
 

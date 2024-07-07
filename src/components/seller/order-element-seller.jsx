@@ -6,7 +6,6 @@ import {
   ORDER_ONPROCESS,
   ORDER_REQUEST,
   REFUND_OR_RECEIPT_COMPLETE,
-  REFUND_REQUEST,
   MINSAPAY_TITLE,
 } from "../theme-definition";
 import { sellerFirebase } from "../../features/seller-firebase-interaction";
@@ -108,8 +107,6 @@ export default function OrderElementBuyer({
         return ORDER_ONPROCESS;
       case "처리완료":
         return ORDER_COMPLETE;
-      case "환불요청":
-        return REFUND_REQUEST;
       default:
         return REFUND_OR_RECEIPT_COMPLETE;
     }
@@ -174,7 +171,9 @@ export default function OrderElementBuyer({
         {state !== "주문요청" && (
           <StateButton onClick={onBackwardClick}>{"<"}</StateButton>
         )}
-        <StateButton onClick={onForwardClick}>{">"}</StateButton>
+        {state !== "처리완료" && (
+          <StateButton onClick={onForwardClick}>{">"}</StateButton>
+        )}
       </ButtonWrapper>
     </Wrapper>
   );
