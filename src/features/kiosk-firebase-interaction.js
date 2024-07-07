@@ -73,6 +73,7 @@ const kioskFirebase = {
           menu_name: val.menuName,
           reception_time: receptionTime,
           current_state: "주문요청",
+          refund_request: 0,
           price: val.price,
         });
         studentOrderHistory.push({
@@ -88,6 +89,7 @@ const kioskFirebase = {
           menu_name: val.menuName,
           price: val.price,
           current_state: "주문요청",
+          refund_request: 0,
           team_name: this.userDocData.username,
           team_id: this.userDoc.id,
         });

@@ -49,11 +49,13 @@ const buyerFirebase = {
     const teamOrderHistory = JSON.parse(teamDocData.order_history);
     for (let i = 0; i < teamOrderHistory.length; i++) {
       if (teamOrderHistory[i].order_id === orderID) {
-        teamOrderHistory[i].current_state = "환불요청";
+        // teamOrderHistory[i].current_state = "환불요청";
+        teamOrderHistory[i].refund_request = 1;
         teamDocData.order_history = JSON.stringify(teamOrderHistory);
         for (let i = 0; i < this.orderHistory.length; i++) {
           if (this.orderHistory[i].order_id === orderID) {
-            this.orderHistory[i].current_state = "환불요청";
+            // this.orderHistory[i].current_state = "환불요청";
+            this.orderHistory[i].refund_request = 1;
             this.userDocData.order_history = JSON.stringify(this.orderHistory);
             break;
           }

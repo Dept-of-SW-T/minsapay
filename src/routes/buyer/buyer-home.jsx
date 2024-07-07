@@ -56,6 +56,7 @@ export default function BuyerHome() {
               teamName={val.team_name}
               price={val.price}
               status={val.current_state}
+              refundRequest={val.refund_request}
               id={val.order_id}
               key={index}
             />
@@ -77,6 +78,7 @@ export default function BuyerHome() {
                 teamName={val.team_name}
                 price={val.price}
                 status={val.current_state}
+                refundRequest={val.refund_request}
                 id={val.order_id}
                 key={index}
               />
