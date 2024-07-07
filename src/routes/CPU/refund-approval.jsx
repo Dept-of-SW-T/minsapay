@@ -40,7 +40,9 @@ export default function RefundApproval() {
               menuName={val.menu_name}
               userName={val.buyer_name}
               time={val.reception_time}
-              status={"승인하기"}
+              status={val.current_state}
+              refundRequest={val.refund_request}
+              mode={"refund"}
               key={index}
               id={val.order_id}
             />
@@ -55,7 +57,7 @@ export default function RefundApproval() {
         );
         refundRequestHistory = [];
         for (let i = 0; i < CPUFirebase.orderHistory.length; i++) {
-          if (CPUFirebase.orderHistory[i].current_state === "환불요청") {
+          if (CPUFirebase.orderHistory[i].refund_request !== 0) {
             refundRequestHistory.push(CPUFirebase.orderHistory[i]);
           }
         }
@@ -67,7 +69,9 @@ export default function RefundApproval() {
                 menuName={val.menu_name}
                 userName={val.buyer_name}
                 time={val.reception_time}
-                status={"승인하기"}
+                status={val.current_state}
+                refundRequest={val.refund_request}
+                mode={"refund"}
                 key={index}
                 id={val.order_id}
               />

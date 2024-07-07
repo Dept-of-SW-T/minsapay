@@ -170,7 +170,9 @@ export default function CPUHome() {
               userName={val.buyer_name}
               time={val.reception_time}
               status={val.current_state}
+              refundRequest={val.refund_request}
               key={index}
+              mode={"display"}
             />
           )),
       );
@@ -192,7 +194,9 @@ export default function CPUHome() {
                 userName={val.buyer_name}
                 time={val.reception_time}
                 status={val.current_state}
+                refundRequest={val.refund_request}
                 key={index}
+                mode={"display"}
               />
             )),
         );
