@@ -12,9 +12,9 @@ import {
 import { sellerFirebase } from "../../features/seller-firebase-interaction";
 
 const Wrapper = styled.div`
-  width: 96%;
-  height: auto;
-  border: 3px solid ${BORDER_GRAY};
+  width: 90%;
+  height: 60%;
+
   border-radius: 20px;
   padding: 10px;
   margin-bottom: 10px;
@@ -32,7 +32,10 @@ const FlexWrapper = styled.div`
 
 const Text = styled.span`
   font-family: ${MINSAPAY_TITLE};
-  font-size: 1em;
+  font-size: 2.3vh;
+  @media only screen and (max-width: 768px) {
+    font-size: 1.85vh;
+  }
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -42,6 +45,7 @@ const Text = styled.span`
   padding: 10px;
   border-right: 1px solid ${BORDER_GRAY};
   flex: 1;
+  height: 8vh;
   &:first-child {
     border-top-left-radius: 15px;
     border-bottom-left-radius: 15px;
@@ -70,11 +74,18 @@ const ButtonWrapper = styled.div`
 `;
 
 const StateButton = styled.div`
-  width: 40px;
-  height: 40px;
+  width: 25px;
+  @media only screen and (max-width: 768px) {
+    width: 15px;
+  }
+  height: 25px;
+  @media only screen and (max-width: 768px) {
+    height: 15px;
+  }
   background-color: ${(props) => props.backgroundColor || "white"};
   align-items: center;
   display: flex;
+  border: 1px solid ${BORDER_GRAY};
   justify-content: center;
   cursor: pointer;
   border-radius: 50%;
@@ -87,7 +98,6 @@ export default function OrderElementBuyer({
   id,
   processor,
   buyer,
-  receptionTime,
 }) {
   const [state, setState] = useState(status);
 
@@ -154,7 +164,7 @@ export default function OrderElementBuyer({
     <Wrapper style={{ backgroundColor: backgroundColor(state) }}>
       <FlexWrapper>
         <Text style={{ flexBasis: "20%" }}>{menuName}</Text>
-        <Text style={{ flexBasis: "20%" }}>{receptionTime}</Text>
+
         <Text style={{ flexBasis: "20%" }}>{buyer}</Text>
         <Text style={{ flexBasis: "20%" }}>
           {processor === null ? " 처리자 없음" : processor}
