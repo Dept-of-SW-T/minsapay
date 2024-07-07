@@ -7,31 +7,56 @@ import {
   ORDER_REQUEST,
   REFUND_OR_RECEIPT_COMPLETE,
   REFUND_REQUEST,
+  MINSAPAY_TITLE,
 } from "../theme-definition";
 import { sellerFirebase } from "../../features/seller-firebase-interaction";
 
 const Wrapper = styled.div`
-  width: 96%;
-  height: 7vw;
-  border: 3px solid ${BORDER_GRAY};
+  width: 90%;
+  height: 60%;
+
   border-radius: 20px;
-  padding-left: 0px;
-  padding-right: 0.5%;
+  padding: 10px;
+  margin-bottom: 10px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
 `;
+
 const FlexWrapper = styled.div`
   display: flex;
   flex-direction: row;
+  flex: 1;
 `;
+
 const Text = styled.span`
-  font-family: "BMDOHYEON";
-  font-size: 1em;
-  /* width: 23.5%; */
+  font-family: ${MINSAPAY_TITLE};
+  font-size: 2.3vh;
+  @media only screen and (max-width: 768px) {
+    font-size: 1.85vh;
+  }
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: center;
   text-align: center;
   background-color: white;
+  padding: 10px;
+  border-right: 1px solid ${BORDER_GRAY};
+  flex: 1;
+  height: 8vh;
+  &:first-child {
+    border-top-left-radius: 15px;
+    border-bottom-left-radius: 15px;
+  }
+
+  &:last-child {
+    border-top-right-radius: 15px;
+    border-bottom-right-radius: 15px;
+    border-right: none;
+  }
+
   &.refund-request {
     &:hover {
       background-color: #eee;
@@ -40,24 +65,31 @@ const Text = styled.span`
   }
 `;
 
-const VerticalWrapper = styled.div`
+const ButtonWrapper = styled.div`
   display: flex;
-  flex-direction: column;
-  justify-content: center;
+  flex-direction: row;
   align-items: center;
-  width: 23.5%;
-  background-color: white;
+  justify-content: space-around;
+  width: 15%;
 `;
 
 const StateButton = styled.div`
-  width: 10%;
-  background-color: white;
+  width: 25px;
+  @media only screen and (max-width: 768px) {
+    width: 15px;
+  }
+  height: 25px;
+  @media only screen and (max-width: 768px) {
+    height: 15px;
+  }
+  background-color: ${(props) => props.backgroundColor || "white"};
   align-items: center;
   display: flex;
+  border: 1px solid ${BORDER_GRAY};
   justify-content: center;
-  &:hover {
-    cursor: pointer;
-  }
+  cursor: pointer;
+  border-radius: 50%;
+  margin: 0 5%;
 `;
 
 export default function OrderElementBuyer({
@@ -66,9 +98,9 @@ export default function OrderElementBuyer({
   id,
   processor,
   buyer,
-  receptionTime,
 }) {
-  const [state, setstate] = useState(status);
+  const [state, setState] = useState(status);
+
   const backgroundColor = () => {
     switch (state) {
       case "주문요청":
@@ -83,12 +115,7 @@ export default function OrderElementBuyer({
         return REFUND_OR_RECEIPT_COMPLETE;
     }
   };
-  // async function onClick(e) {
-  //   if (!confirm("환불을 요청하시겠습니까?")) return;
-  //   else {
-  //     await buyerFirebase.refundRequest(e.target.id);
-  //   }
-  // }
+
   function stateToIndex(stateString) {
     switch (stateString) {
       case "주문요청":
@@ -97,9 +124,12 @@ export default function OrderElementBuyer({
         return 1;
       case "처리완료":
         return 2;
+      default:
+        return -1;
     }
   }
-  function indexTostate(stateIndex) {
+
+  function indexToState(stateIndex) {
     switch (stateIndex) {
       case 0:
         return "주문요청";
@@ -117,34 +147,36 @@ export default function OrderElementBuyer({
   }
 
   function onBackwardClick() {
-    const nextState = indexTostate(stateToIndex(state) - 1);
+    const nextState = indexToState(stateToIndex(state) - 1);
     if (nextState === "NOSTATE") return;
-    setstate(nextState);
+    setState(nextState);
     statusChangeSync(nextState);
   }
 
   function onForwardClick() {
-    const nextState = indexTostate(stateToIndex(state) + 1);
+    const nextState = indexToState(stateToIndex(state) + 1);
     if (nextState === "NOSTATE") return;
-    setstate(nextState);
+    setState(nextState);
     statusChangeSync(nextState);
   }
 
   return (
-    <Wrapper style={{ backgroundColor: `${backgroundColor(state)}` }}>
+    <Wrapper style={{ backgroundColor: backgroundColor(state) }}>
       <FlexWrapper>
-        <Text id="first-child">{buyer}</Text>
-        <VerticalWrapper>
-          <Text>{menuName}</Text>
-          <Text>{receptionTime}</Text>
-        </VerticalWrapper>
-        <Text>{state}</Text>
-        <Text>{processor === null ? "없음" : processor}</Text>
-        {state === "주문요청" ? null : (
+        <Text style={{ flexBasis: "20%" }}>{menuName}</Text>
+
+        <Text style={{ flexBasis: "20%" }}>{buyer}</Text>
+        <Text style={{ flexBasis: "20%" }}>
+          {processor === null ? " 처리자 없음" : processor}
+        </Text>
+        <Text style={{ flexBasis: "20%" }}>{state}</Text>
+      </FlexWrapper>
+      <ButtonWrapper>
+        {state !== "주문요청" && (
           <StateButton onClick={onBackwardClick}>{"<"}</StateButton>
         )}
         <StateButton onClick={onForwardClick}>{">"}</StateButton>
-      </FlexWrapper>
+      </ButtonWrapper>
     </Wrapper>
   );
 }

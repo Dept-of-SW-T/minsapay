@@ -8,6 +8,7 @@ import {
 } from "firebase/firestore";
 import { database } from "../firebase";
 import { auth } from "./login-feature";
+import { logger } from "./log-feature";
 
 const kioskFirebase = {
   userDocRef: undefined, // 해당하는 document reference
@@ -96,6 +97,12 @@ const kioskFirebase = {
     this.userDocData.balance += total;
     linkedBuyerDocData.order_history = JSON.stringify(studentOrderHistory);
     linkedBuyerDocData.balance -= total;
+    await logger.log({
+      type: "transaction",
+      sender: linkedBuyerDoc.id,
+      reciever: this.userDoc.id,
+      amount: total,
+    });
     await setDoc(this.userDocRef, this.userDocData);
     await setDoc(
       doc(database, "Students", this.userDocData.linked_buyer),
