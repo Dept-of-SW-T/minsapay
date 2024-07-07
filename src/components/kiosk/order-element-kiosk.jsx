@@ -105,7 +105,7 @@ export default function OrderElementKiosk({
           id={id + ".AQ"}
           onClick={(e) => {
             onAddQuantityButtonClick(e);
-            setQuantityState((curr) => curr + 1);
+            setQuantityState(quantity);
           }}
         />
         <Quantity>{quantityState}</Quantity>
@@ -115,7 +115,7 @@ export default function OrderElementKiosk({
           onClick={(e) => {
             if (quantityState > 1) {
               onLowerQuantityButtonClick(e);
-              setQuantityState((curr) => curr - 1);
+              setQuantityState(quantity);
             } else if (quantityState === 1) {
               onOrderElementKioskDelete(e);
             }

@@ -78,7 +78,12 @@ const auth = {
       }
       return documentIndex;
     }
-    if (onlyDigits(userID)) {
+    if (userID === "moderator") {
+      this.currentUser = {
+        userType: "moderator",
+      };
+      console.log("mod login");
+    } else if (onlyDigits(userID)) {
       //If true, Buyer
       // 학생 아이디가 맞다면
       const studentsQuery = query(collection(database, "Students"));

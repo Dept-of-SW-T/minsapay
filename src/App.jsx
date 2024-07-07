@@ -7,6 +7,7 @@ import {
   ProtectedCPU,
   ProtectedDeveloper,
   ProtectedKiosk,
+  ProtectedModerator,
   ProtectedRoute,
   ProtectedSeller,
 } from "./components/protected-routes";
@@ -24,6 +25,7 @@ import DeveloperHome from "./developer/developer-home";
 import SellerSelect from "./routes/seller/seller-select";
 import SellerHome from "./routes/seller/seller-home";
 import BuyerSetting from "./routes/buyer/buyer-setting";
+import ModeratorHome from "./routes/Moderator/moderator-home";
 
 const router = createBrowserRouter([
   // 루팅
@@ -133,6 +135,14 @@ const router = createBrowserRouter([
       <ProtectedSeller>
         <SellerHome />
       </ProtectedSeller>
+    ),
+  },
+  {
+    path: "/moderator-home", //금정부 관리 페이지
+    element: (
+      <ProtectedModerator>
+        <ModeratorHome />
+      </ProtectedModerator>
     ),
   },
   {
