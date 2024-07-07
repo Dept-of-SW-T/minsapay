@@ -9,6 +9,7 @@ import {
 } from "../../components/theme-definition";
 import { useNavigate } from "react-router-dom";
 import { onSnapshot } from "firebase/firestore";
+import Loading from "../../components/loading";
 
 const Wrapper = styled.div`
   display: flex;
@@ -39,6 +40,7 @@ const TeamElement = styled.div`
 export default function SellerSelect() {
   const navigate = useNavigate();
   const [teamList, setTeamList] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   const onTeamSelect = (e) => {
     console.log(e.target.id);
@@ -56,6 +58,7 @@ export default function SellerSelect() {
           </TeamElement>
         )),
       );
+      setIsLoading(false);
     };
     init();
     unsubscribe = onSnapshot(sellerFirebase.userDocRef, (doc) => {
@@ -76,7 +79,7 @@ export default function SellerSelect() {
   return (
     <Wrapper>
       <SellerHeader />
-      <TeamList datalist={teamList} />
+      {isLoading ? <Loading /> : <TeamList datalist={teamList} />}
     </Wrapper>
   );
 }

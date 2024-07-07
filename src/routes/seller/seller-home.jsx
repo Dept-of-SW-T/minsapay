@@ -7,6 +7,7 @@ import CoupleList from "../../components/CPU/couple-list";
 import { SellerHeader } from "../../components/seller/seller-header";
 import { onSnapshot } from "firebase/firestore";
 import { MINSAPAY_FONT } from "../../components/theme-definition";
+import Loading from "../../components/loading";
 
 const Wrapper = styled.div`
   width: 100vw;
@@ -19,6 +20,7 @@ const Wrapper = styled.div`
 export default function SellerHome() {
   const [orderList, setOrderList] = useState([]);
   const currentTeam = useParams().id;
+  const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
     let unsubscribe = null;
     const init = async () => {
@@ -39,6 +41,7 @@ export default function SellerHome() {
             />
           )),
       );
+      setIsLoading(false);
     };
     init();
     unsubscribe = onSnapshot(sellerFirebase.teamDocRef, (doc) => {
@@ -70,7 +73,7 @@ export default function SellerHome() {
   return (
     <Wrapper>
       <SellerHeader />
-      <CoupleList dataList={orderList} />
+      {isLoading ? <Loading /> : <CoupleList dataList={orderList} />}
     </Wrapper>
   );
 }

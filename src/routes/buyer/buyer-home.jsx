@@ -7,6 +7,7 @@ import { onSnapshot } from "firebase/firestore";
 import CoupleList from "../../components/CPU/couple-list";
 import { BuyerHeader } from "../../components/buyer/buyer-header";
 import PayIconRef from "../../images/go-to-buyer-payment.svg";
+import Loading from "../../components/loading";
 
 const Wrapper = styled.div`
   width: 100vw;
@@ -38,6 +39,8 @@ export default function BuyerHome() {
   const navigate = useNavigate();
   const [balance, setBalance] = useState(0);
   const [orderList, setOrderList] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+
   useEffect(() => {
     let unsubscribe = null;
     const init = async () => {
@@ -79,6 +82,7 @@ export default function BuyerHome() {
               />
             )),
         );
+        setIsLoading(false);
       });
     };
     init();
@@ -89,10 +93,19 @@ export default function BuyerHome() {
   return (
     <Wrapper>
       <BuyerHeader balance={balance} />
-      <CoupleList dataList={orderList} />
-      <PayIconWrapper>
-        <PayIcon onClick={() => navigate("./buyer-payment")} src={PayIconRef} />
-      </PayIconWrapper>
+      {isLoading ? (
+        <Loading />
+      ) : (
+        <>
+          <CoupleList dataList={orderList} />
+          <PayIconWrapper>
+            <PayIcon
+              onClick={() => navigate("./buyer-payment")}
+              src={PayIconRef}
+            />
+          </PayIconWrapper>
+        </>
+      )}
     </Wrapper>
   );
 }
