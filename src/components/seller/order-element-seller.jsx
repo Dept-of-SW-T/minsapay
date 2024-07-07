@@ -9,6 +9,7 @@ import {
   MINSAPAY_TITLE,
 } from "../theme-definition";
 import { sellerFirebase } from "../../features/seller-firebase-interaction";
+import { auth } from "../../features/login-feature";
 
 const Wrapper = styled.div`
   width: 90%;
@@ -98,6 +99,7 @@ export default function OrderElementBuyer({
   buyer,
 }) {
   const [state, setState] = useState(status);
+  const [processorState, setProcessorState] = useState(processor);
 
   const backgroundColor = () => {
     switch (state) {
@@ -151,6 +153,10 @@ export default function OrderElementBuyer({
 
   function onForwardClick() {
     const nextState = indexToState(stateToIndex(state) + 1);
+    if (state === "주문요청") {
+      setProcessorState(auth.currentUser.username);
+      sellerFirebase.setProcessor(id, auth.currentUser.username);
+    }
     if (nextState === "NOSTATE") return;
     setState(nextState);
     statusChangeSync(nextState);
@@ -163,7 +169,7 @@ export default function OrderElementBuyer({
 
         <Text style={{ flexBasis: "20%" }}>{buyer}</Text>
         <Text style={{ flexBasis: "20%" }}>
-          {processor === null ? " 처리자 없음" : processor}
+          {processorState === null ? " 처리자 없음" : processorState}
         </Text>
         <Text style={{ flexBasis: "20%" }}>{state}</Text>
       </FlexWrapper>
