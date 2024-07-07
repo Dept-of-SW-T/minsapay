@@ -5,8 +5,6 @@ import GoHomeRef from "../../images/CPUHome.svg";
 import { useNavigate } from "react-router-dom";
 import { auth } from "../../features/login-feature";
 
-// CPU의 모든 화면에 공통으로 들어가는 header으로, home으로 가는, logout하는 버튼을 가지고 있다.
-
 const HeaderDiv = styled.div`
   width: 95%;
   margin: 0 auto;
