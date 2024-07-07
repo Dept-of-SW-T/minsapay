@@ -134,6 +134,7 @@ export function UserInfo({ userId }) {
           );
         })}
       </ButtonWrapper>
+      <Btn onClick={() => setBalanceChangeVal(0)}>Clear</Btn>
       <ButtonWrapper>
         {buttonValues.map((value) => {
           return (
