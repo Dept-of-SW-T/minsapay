@@ -31,8 +31,8 @@ const moderatorFirebase = {
     const curUserData = (await getDoc(ref)).data();
     curUserData.balance += amount;
 
-    await logger.log("exchange", {
-      type: "exchange",
+    await logger.log({
+      type: "transaction",
       sender: "moderator",
       reciever: userId,
       amount: amount,
