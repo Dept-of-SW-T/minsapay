@@ -49,24 +49,21 @@ adimin
 
 ### 3. cpu
 ```
-cpu -menu 편집  -> menu 편집
-                [kiosk menu에 즉시 반영됨]
+cpu -menu 편집  -> menu 편집 [kiosk menu에 즉시 반영됨]
     -주문내역   
-    -환불 승인  -> 환불 목록
-                [buyer 구매 목록에 즉시 반영됨]
+    -환불 승인  -> 환불 목록 [buyer 구매 목록에 즉시 반영됨]
 ```
 
-### 4. seller mobile <span style="color:red"> 수정필요(처리과정) </span>
+### 4. seller mobile 
 ```
 seller mobile -> 부스1  ...=> -주문자
                               -제품명
-                              -처리 과정 
-                              [처리과정에 따라 텍스트가 바뀜]
-                              -처리 과정 변경 버튼
-                              [처리과정이 바뀜에 따라 buyer 구매 목록에 즉시 반영됨]
+                              -처리 단계 [처리단계에 따라 텍스트가 바뀜]
+                              -담당자 [처리단계 변경 버튼을 누른 사람의 이름으로 바뀜]
+                              -처리단계 변경 버튼 [처리단계이 바뀜에 따라 buyer 구매 목록에 즉시 반영됨]
               -> 부스2
 ```
-<!-- 처리과정에 text를 확인해야됨 -->
+
 ### 5. buyer
 ```
 buyer -주문내역   -물품/서비스 이름
@@ -89,9 +86,9 @@ kiosk -부서/동아리 지정화면(=home) -> authentication(번호생성) -> m
 #### 로그인 방법
 민사페이의 사용자 종류는 크게 두 가지이다. 첫번째는 개인 사용자로 이들은 모두 자신의 학번으로 로그인을 하게 된다. 두번째 종류는 부스 사용자로 부스 통합 계정과 키오스크 계정이 있다. 이 계정들은 각각 ‘(부스이름)@CPU’와 ‘(부스이름)@kiosk’를 ID로 사용한다. 
 
-### 2. adimin
-<!-- Admin@developer<br/> -->
-<!-- happykwagi2024<br/> -->
+### 2. admin
+<!-- Admin@developer -->
+<!-- happykwagi2024 -->
 
 ![어드민](./src/images/manual/admin.png)
 
@@ -100,7 +97,6 @@ kiosk -부서/동아리 지정화면(=home) -> authentication(번호생성) -> m
 1. get database info
 2. upload database
 3. submit database(비밀번호 입력 필요)
-<!-- 기능에 대해 좀 더 물어보기 -->
 
 ### 3. cpu
 > **kwagi cpu id & password**<br/>
@@ -108,6 +104,7 @@ kwagibu@CPU<br/>
 kwagibu<br/>
 
 ![cpu home](./src/images/manual/cpu1.png)
+<!-- 캡처수정: 이미지에 숫자 넣기 -->
 #### 구성요소
 1. 민사페이 로고
 2. 로그아웃
@@ -117,14 +114,22 @@ kwagibu<br/>
 6. 메뉴 편집
 7. 환불 승인
 8. 주문내역
-<!-- 캡처수정: 이미지에 숫자 넣기 -->
+
+| 제품/서비스 명 | 주문자명 | 주문 당시 시간(시:분:초) | 처리단계 | 색 |
+|----------|----------|----------|----------|----------|
+|자고일어났다|조유찬|20:33:28| 승인하기|(색)|
+
+- 색
+  - <span style="color:#99CCFF;"> 연한파란색 <span>: 처리 중
+  - <span style="color:#2079FF;"> 진한파란색 <span>: 요청
+  - <span style="color:#FE554A;"> 빨간색 <span>: 환불 요청
 <br/>
 
 ![메뉴변경](./src/images/manual/cpu2.png)
 #### 구성요소
 1. 로고(로고를 클릭하면 홈화면으로 돌아감)
 2. 로그아웃
-3. 메뉴명
+3. 메뉴명 : 7글자로 이하로 제한
 4. 금액
 5. 이미지 선택
 6. 메뉴 목록
@@ -144,7 +149,16 @@ kwagibu<br/>
 231133<br/>
 
 ![seller home](./src/images/manual/seller1.png)
+
+
+
 ![seller](./src/images/manual/seller2.png)
+
+#### 주문목록
+| 주문자명 | 물품/서비스명 & 주문 당시 시간(시:분:초)| | 처리 단계 | 담당자 |처리 단계 변경 버튼 |
+|----------|----------|----------|----------|----------|----------|
+
+
 
 
 ### 5. buyer
@@ -163,6 +177,14 @@ kwagibu<br/>
 <!-- 캡처수정: 이미지에 숫자 넣기 -->
 <br/>
 
+![buyer_결제화면](./src/images/manual/buyer_buy.png)
+#### 구성요소
+1. 키패드
+2. C
+3. OK
+4. 홈
+<br/>
+
 ![buyer_비밀번호 변경](./src/images/manual/seller_setting.png)
 #### 설정페이지
 1. 홈화면
@@ -170,6 +192,7 @@ kwagibu<br/>
 3. 현재 비밀번호 입력창
 4. 새로운 비밀번호 입력창
 5. 변경 완료 버튼
+<br/>
 <!-- 캡처수정: 이미지에 숫자 넣기 -->
 
 ### 6. kiosk
@@ -183,11 +206,24 @@ kwagibu<br/>
 
 ![kiosk authentication](./src/images/manual/kiosk_authentication.png)<br/>
 
-
+홈 화면에서 화면터치를 하면 kiosk authentication화면으로 넘어오게 된다. 이때 5자리 숫자는 무작위의 수로 buyer의 계정을 인식하는 역할을 한다. 이후 buyer의 결제 화면에서 숫자를 입력하고 그 숫자가 kiosk authentication 화면에 뜬 숫자와 같을 때 buyer를 인식하고 결제화면으로 이동한다
 
 
 ![kiosk cover](./src/images/manual/kiosk_cover.png)<br/>
-![kiosk thankyou](./src/images/manual/kiosk_thankyou.png)<br/>
 
-# 더 서술해야될 내용들(주석처리해놓음)
-<!-- 막대 색에 대한 정보도 서술해야됨 -->
+#### 구성요소
+1. 주문 취소
+2. 메뉴
+3. 내 카트
+4. total
+5. pay
+
+#### 메뉴
+1. 이미지
+2. 물품/서비스 제목
+3. 가격
+4. 카트에 추가
+
+
+![kiosk thankyou](./src/images/manual/kiosk_thankyou.png)<br/>
+10초 다시 키오스크 홈화면으로 
