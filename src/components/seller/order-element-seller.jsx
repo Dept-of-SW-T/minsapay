@@ -14,7 +14,6 @@ import { sellerFirebase } from "../../features/seller-firebase-interaction";
 const Wrapper = styled.div`
   width: 90%;
   height: 60%;
-
   border-radius: 20px;
   padding: 10px;
   margin-bottom: 10px;
@@ -32,7 +31,7 @@ const FlexWrapper = styled.div`
 
 const Text = styled.span`
   font-family: ${MINSAPAY_TITLE};
-  font-size: 2.3vh;
+  font-size: 20px;
   @media only screen and (max-width: 768px) {
     font-size: 1.85vh;
   }
