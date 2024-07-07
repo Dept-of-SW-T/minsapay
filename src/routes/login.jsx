@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { auth } from "../features/login-feature";
+import { useState } from "react";
+import { loginUtils } from "../features/login-feature";
 import styled from "styled-components";
 import Logo from "../images/LogoMinsapay.svg";
 import { useNavigate } from "react-router-dom";
@@ -178,29 +178,23 @@ export default function Login() {
     e.preventDefault();
     setError("");
     if (userID === "" || password === "") return;
-    const successfulSignIn = await auth.signIn(userID, password);
+    const successfulSignIn = await loginUtils.signIn(userID, password);
     if (successfulSignIn) {
       // 로그인에 성공하면
       navigate("/"); // 홈으로
-    } else if (auth.error === "")
+    } else if (loginUtils.error === "")
       setError("이유불명 로그인 에러"); // signIn에서 잡지 못하는 에러
-    else setError(auth.error);
+    else setError(loginUtils.error);
   };
   const onLogoImageDoubleClick = async () => {
     const userID = prompt("아이디 입력");
     if (userID !== "Admin@developer") return;
     const password = prompt("비밀번호 입력");
-    const successfulSignIn = await auth.developerSignIn(password);
+    const successfulSignIn = await loginUtils.developerSignIn(password);
     if (successfulSignIn) {
       navigate("/");
     }
   };
-  useEffect(() => {
-    async function init() {
-      await auth.signOut();
-    }
-    init();
-  }, []);
   return (
     <OuterWrapper>
       <Wrapper>

@@ -4,8 +4,8 @@ import { readXlOfEachSheet, writeXlFromData } from "./xlsx-conversion";
 import { developerFirebase } from "./developer-firebase";
 import { useState } from "react";
 import cryptoJS from "crypto-js";
-import { auth } from "../features/login-feature";
 import { useNavigate } from "react-router-dom";
+import { loginUtils } from "../features/login-feature";
 
 const Wrapper = styled.div`
   width: 100%;
@@ -177,7 +177,7 @@ export default function DeveloperHome() {
   };
   const onLogoutClick = async () => {
     if (!confirm("로그아웃 하시겠습니까?")) return;
-    await auth.signOut();
+    await loginUtils.signOut();
     navigate("../");
   };
   return (

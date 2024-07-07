@@ -1,6 +1,11 @@
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
 import { getStorage } from "firebase/storage";
+import {
+  browserSessionPersistence,
+  getAuth,
+  setPersistence,
+} from "firebase/auth";
 
 const firebaseConfig = {
   apiKey: "AIzaSyCVstIqjEOq3xYlom7sMy4QQo157mjwvb4",
@@ -15,5 +20,6 @@ const app = initializeApp(firebaseConfig);
 
 export const database = getFirestore(app);
 export const storage = getStorage(app);
+export const authentication = getAuth(app);
 
-// firebase 가져오기
+setPersistence(authentication, browserSessionPersistence).then(() => {});

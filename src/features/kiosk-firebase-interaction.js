@@ -7,16 +7,17 @@ import {
   setDoc,
 } from "firebase/firestore";
 import { database } from "../firebase";
-import { auth } from "./login-feature";
+import { loginUtils } from "./login-feature";
 
 const kioskFirebase = {
   userDocRef: undefined, // 해당하는 document reference
   userDoc: undefined, // 해당하는 document **중요** 자동으로 업데이트되지 않음
   userDocData: undefined, // 위의 userDoc.data()를 실행한 결과
   async init() {
-    this.userDocRef = doc(database, "Teams", auth.currentUser.userID);
+    this.userDocRef = doc(database, "Teams", loginUtils.getUserID());
     this.userDoc = await getDoc(this.userDocRef);
     this.userDocData = this.userDoc.data();
+    console.log(this.userDocData);
   },
   async setKioskAuthenticationNumber() {
     const teamDocs = await getDocs(query(collection(database, "Teams")));

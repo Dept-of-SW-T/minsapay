@@ -4,7 +4,6 @@ import {
   BUTTON_SHADOW,
   MINSAPAY_TITLE,
 } from "../../components/theme-definition";
-import { auth } from "../../features/login-feature";
 import { CPUFirebase } from "../../features/CPU-firebase-interaction";
 import { useEffect, useState } from "react";
 import QuadList from "../../components/kiosk/quad-list";
@@ -248,12 +247,16 @@ export default function KioskHome() {
       <DisplayBox>
         <DisplayBoxContents>
           <Header>
-            <div>Store/{auth.currentUser.username}</div>
+            <div>
+              Store/{isLoading ? "" : kioskFirebase.userDocData.username}
+            </div>
             <LogoutBtn src={LogOutIcon} onClick={onLogoutBtnClick} />
           </Header>
           <Title style={{ backgroundImage: `url(${kioskImage})` }}>
             <OpacityLayer>
-              <TeamName>{auth.currentUser.username}</TeamName>
+              <TeamName>
+                {isLoading ? "" : kioskFirebase.userDocData.username}
+              </TeamName>
             </OpacityLayer>
           </Title>
           <MenuTitle>메뉴</MenuTitle>

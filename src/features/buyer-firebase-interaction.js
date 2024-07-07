@@ -7,7 +7,7 @@ import {
   setDoc,
 } from "firebase/firestore";
 import { database } from "../firebase";
-import { auth } from "./login-feature";
+import { loginUtils } from "./login-feature";
 
 // 실시간으로 바꾸기!!!!!
 
@@ -17,7 +17,7 @@ const buyerFirebase = {
   userDocData: undefined, // 위의 userDoc.data()를 실행한 결과
   orderHistory: undefined,
   async init() {
-    this.userDocRef = doc(database, "Students", auth.currentUser.userID);
+    this.userDocRef = doc(database, "Students", loginUtils.getUserID());
     this.userDoc = await getDoc(this.userDocRef);
     this.userDocData = this.userDoc.data();
     this.orderHistory = JSON.parse(this.userDocData.order_history);

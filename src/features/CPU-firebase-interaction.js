@@ -1,5 +1,4 @@
 import { doc, getDoc, setDoc } from "firebase/firestore";
-import { auth } from "./login-feature";
 import {
   deleteObject,
   getDownloadURL,
@@ -7,6 +6,7 @@ import {
   uploadBytes,
 } from "firebase/storage";
 import { database, storage } from "../firebase";
+import { loginUtils } from "./login-feature";
 
 const CPUFirebase = {
   userDocRef: undefined,
@@ -16,7 +16,7 @@ const CPUFirebase = {
   menuList: undefined,
   orderHistory: undefined,
   async init() {
-    this.userDocRef = doc(database, "Teams", auth.currentUser.userID);
+    this.userDocRef = doc(database, "Teams", loginUtils.getUserID());
     this.userDoc = await getDoc(this.userDocRef);
     this.userDocData = this.userDoc.data();
     this.menuList = JSON.parse(this.userDocData.menu_list);
@@ -31,7 +31,7 @@ const CPUFirebase = {
     await deleteObject(ref(storage, this.userDocData.kiosk_image));
     const locationRef = ref(
       storage,
-      `${auth.currentUser.userID}/kiosk_image/${file.name}`,
+      `${loginUtils.getUserID()}/kiosk_image/${file.name}`,
     );
     const result = await uploadBytes(locationRef, file);
     this.kioskImageDownloadUrl = await getDownloadURL(result.ref);

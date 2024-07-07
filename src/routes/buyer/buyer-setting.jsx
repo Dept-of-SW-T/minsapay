@@ -1,5 +1,4 @@
-import { useEffect, useState } from "react";
-import { auth } from "../../features/change-password-feature.js"; // 비밀번호 변경 기능을 추가한 auth 모듈이 필요함
+import { useState } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import {
@@ -10,6 +9,7 @@ import {
 } from "../../components/theme-definition";
 import LogOutRef from "../../images/LogOut.svg";
 import HomeIconRef from "../../images/CPUHome.svg";
+import { loginUtils } from "../../features/login-feature";
 
 const OuterWrapper = styled.div`
   width: 100vw;
@@ -127,14 +127,15 @@ const Error = styled.span`
 `;
 
 export default function ChangePassword() {
-  const [oldPassword, setOldPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
+  const [currentPassword, setCurrentPassword] = useState("");
+  const [newPasswordCheck, setNewPasswordCheck] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
   const onLogOutIconClick = async (e) => {
     e.preventDefault();
     if (!confirm("로그아웃 하시겠습니까?")) return;
-    //await auth.signOut();
+    await loginUtils.signOut();
     navigate("../login");
   };
   const onHomeIconClick = async (e) => {
@@ -144,24 +145,19 @@ export default function ChangePassword() {
   const onSubmit = async (e) => {
     e.preventDefault();
     setError("");
-    if (oldPassword === "" || newPassword === "") return;
-    const successfulChange = await auth.changePassword(
-      oldPassword,
-      newPassword,
-    );
-    if (successfulChange) {
-      navigate("/"); // 비밀번호 변경 성공 시 홈으로 이동
-    } else if (auth.error === "")
-      setError("이유불명 비밀번호 변경 에러"); // changePassword에서 잡지 못하는 에러
-    else setError(auth.error);
-  };
-
-  useEffect(() => {
-    async function init() {
-      await auth.signOut();
+    if (newPassword === "" || newPasswordCheck === "" || currentPassword === "")
+      return;
+    if (newPassword !== newPasswordCheck) {
+      setError("비밀번호와 비밀번호 확인이 일치하지 않습니다");
+      return;
     }
-    init();
-  }, []);
+    try {
+      await loginUtils.changePassword(currentPassword, newPassword);
+      navigate("/"); // 비밀번호 변경 성공 시 홈으로 이동
+    } catch {
+      setError(loginUtils.error);
+    }
+  };
 
   return (
     <OuterWrapper>
@@ -172,18 +168,26 @@ export default function ChangePassword() {
       </TitleDiv>
       <Form onSubmit={onSubmit}>
         <Input
-          onChange={(e) => setOldPassword(e.target.value)}
-          value={oldPassword}
+          onChange={(e) => setCurrentPassword(e.target.value)}
+          value={currentPassword}
           name="password"
-          placeholder="Current Password"
+          placeholder="New Password"
           type="password"
           required
         />
         <Input
           onChange={(e) => setNewPassword(e.target.value)}
           value={newPassword}
-          name="newPassword"
+          name="password"
           placeholder="New Password"
+          type="password"
+          required
+        />
+        <Input
+          onChange={(e) => setNewPasswordCheck(e.target.value)}
+          value={newPasswordCheck}
+          name="newPassword"
+          placeholder="New Password Check"
           type="password"
           required
         />
