@@ -26,6 +26,7 @@ import SellerSelect from "./routes/seller/seller-select";
 import SellerHome from "./routes/seller/seller-home";
 import BuyerSetting from "./routes/buyer/buyer-setting";
 import ModeratorHome from "./routes/Moderator/moderator-home";
+import LogHome from "./routes/log/log-home";
 
 const router = createBrowserRouter([
   // 루팅
@@ -144,6 +145,10 @@ const router = createBrowserRouter([
         <ModeratorHome />
       </ProtectedModerator>
     ),
+  },
+  {
+    path: "/log",
+    element: <LogHome />,
   },
   {
     path: "/login", // 로그인 화면으로 아무런 보호 조치가 없다.
