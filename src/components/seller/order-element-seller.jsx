@@ -146,6 +146,10 @@ export default function OrderElementBuyer({
 
   function onBackwardClick() {
     const nextState = indexToState(stateToIndex(state) - 1);
+    if (nextState === "주문요청") {
+      setProcessorState(null);
+      sellerFirebase.setProcessor(id, null);
+    }
     if (nextState === "NOSTATE") return;
     setState(nextState);
     statusChangeSync(nextState);
@@ -156,10 +160,6 @@ export default function OrderElementBuyer({
     if (state === "주문요청") {
       setProcessorState(auth.currentUser.username);
       sellerFirebase.setProcessor(id, auth.currentUser.username);
-    }
-    if (nextState === "주문요청") {
-      setProcessorState(null);
-      sellerFirebase.setProcessor(id, null);
     }
     if (nextState === "NOSTATE") return;
     setState(nextState);
