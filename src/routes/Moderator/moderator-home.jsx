@@ -31,6 +31,7 @@ export default function ModeratorHome() {
   const [userElementList, setUserElementList] = useState([]);
   const [selectedUser, setSelectedUser] = useState(null);
   const [idFilter, setIdFilter] = useState(null);
+  const [nameFilter, setNameFilter] = useState(null);
 
   const onUserSelect = (id) => {
     setSelectedUser(
@@ -54,6 +55,14 @@ export default function ModeratorHome() {
         !contains(moderatorFirebase.usersList[i].id, idFilter.toString())
       )
         continue;
+      if (
+        nameFilter !== null &&
+        !contains(
+          moderatorFirebase.usersList[i].data().username,
+          nameFilter.toString(),
+        )
+      )
+        continue;
       tempList.push(moderatorFirebase.usersList[i]);
     }
 
@@ -73,6 +82,7 @@ export default function ModeratorHome() {
   };
 
   useEffect(changeUserElementList, [idFilter]);
+  useEffect(changeUserElementList, [nameFilter]);
 
   useEffect(() => {
     let unsubscribe = null;
@@ -117,7 +127,8 @@ export default function ModeratorHome() {
   return (
     <Wrapper>
       <ModeratorHeader />
-      <SearchElement searchFunc={setIdFilter} />
+      <SearchElement searchFunc={setIdFilter} inputLabel={"학번으로 검색"} />
+      <SearchElement searchFunc={setNameFilter} inputLabel={"이름으로 검색"} />
       <BodyDiv>
         <SingleList dataList={userElementList} />
         {selectedUser === null ? null : <UserInfo userId={selectedUser.id} />}
