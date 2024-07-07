@@ -36,7 +36,6 @@ export function UserElement({ userName, balance, onUserSelect, id }) {
   return (
     <Wrapper
       onClick={() => {
-        console.log(id);
         onUserSelect(id);
       }}
     >
