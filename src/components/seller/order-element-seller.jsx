@@ -9,7 +9,6 @@ import {
   MINSAPAY_TITLE,
 } from "../theme-definition";
 import { sellerFirebase } from "../../features/seller-firebase-interaction";
-import { auth } from "../../features/login-feature";
 
 const Wrapper = styled.div`
   width: 90%;
@@ -158,8 +157,8 @@ export default function OrderElementBuyer({
   function onForwardClick() {
     const nextState = indexToState(stateToIndex(state) + 1);
     if (state === "주문요청") {
-      setProcessorState(auth.currentUser.username);
-      sellerFirebase.setProcessor(id, auth.currentUser.username);
+      setProcessorState(sellerFirebase.userDocData.username);
+      sellerFirebase.setProcessor(id, sellerFirebase.userDocData.username);
     }
     if (nextState === "NOSTATE") return;
     setState(nextState);

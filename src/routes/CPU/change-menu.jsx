@@ -4,7 +4,7 @@ import { useEffect, useState, useRef } from "react";
 import { CPUFirebase } from "../../features/CPU-firebase-interaction";
 import { onSnapshot } from "firebase/firestore";
 import Loading from "../../components/loading";
-import { auth } from "../../features/login-feature";
+import { loginUtils } from "../../features/login-feature";
 
 const Wrapper = styled.div`
   width: 100%;
@@ -114,7 +114,7 @@ export default function ChangeMenu() {
   const fileInputRef = useRef(null); // Reference to the file input element
 
   // Assuming boothId is determined somehow, for example, from the user's team or some other context.
-  const boothId = auth.currentUser.boothId || "defaultBooth"; // Replace with actual logic to get boothId
+  const boothId = loginUtils.getUserID() || "defaultBooth"; // Replace with actual logic to get boothId
 
   const onDeleteButtonClick = async (id) => {
     if (!confirm("메뉴를 삭제하시겠습니까?")) return;
