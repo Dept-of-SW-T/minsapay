@@ -123,13 +123,15 @@ kwagibu<br/>
   - <span style="color:#99CCFF;"> 연한파란색 <span>: 처리 중
   - <span style="color:#2079FF;"> 진한파란색 <span>: 요청
   - <span style="color:#FE554A;"> 빨간색 <span>: 환불 요청
+  - <span style="color:#D9D9D9;"> 회색 <span>: 환불 완료
+  
 <br/>
 
 ![메뉴변경](./src/images/manual/cpu2.png)
 #### 구성요소
 1. 로고(로고를 클릭하면 홈화면으로 돌아감)
 2. 로그아웃
-3. 메뉴명 : 7글자로 이하로 제한
+3. 메뉴명 : 7글자로 이하로 제한함
 4. 금액
 5. 이미지 선택
 6. 메뉴 목록
