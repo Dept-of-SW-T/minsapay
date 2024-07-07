@@ -176,7 +176,7 @@ export default function KioskHome() {
   const changeOrderQuantity = (id, quantity) => {
     for (let i = 0; i < orders.length; i++) {
       if (id === orders[i].id) {
-        let tempOrders = [...orders];
+        const tempOrders = [...orders];
         tempOrders[i].quantity += quantity;
         setOrders([...tempOrders]);
         break;
@@ -188,7 +188,6 @@ export default function KioskHome() {
     const id = parseInt(e.target.id.substring(0, e.target.id.length - 4));
     for (let i = 0; i < orders.length; i++) {
       if (id === orders[i].id) {
-        changeOrderQuantity(id, 1);
         return;
       }
     }
