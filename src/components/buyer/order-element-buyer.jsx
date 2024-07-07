@@ -21,7 +21,7 @@ const Wrapper = styled.span`
 `;
 
 const Text = styled.span`
-  font-family: "BMDOHYEON";
+  font-family: "TheJamsil";
   font-size: 0.9em;
   width: 23.5%;
   border-right: 2px solid ${BORDER_GRAY};
@@ -73,8 +73,8 @@ export default function OrderElementBuyer({
   }
   return (
     <Wrapper style={{ backgroundColor: `${backgroundColor(status)}` }}>
-      <Text id="first-child">{menuName}</Text>
-      <Text>{teamName}</Text>
+      <Text id="first-child">{teamName}</Text>
+      <Text>{menuName}</Text>
       <Text>{price}원</Text>
       {status === "환불완료" ? (
         <Text>환불 완료됨</Text>
@@ -82,7 +82,7 @@ export default function OrderElementBuyer({
         <Text>환불 요청됨</Text>
       ) : (
         <Text onClick={onClick} className="refund-request" id={id}>
-          환불 요청하기
+          환불 요청
         </Text>
       )}
     </Wrapper>

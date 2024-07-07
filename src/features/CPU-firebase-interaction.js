@@ -46,8 +46,11 @@ const CPUFirebase = {
       await deleteObject(imageRef);
     }
   },
-  async uploadMenuImage(id, file) {
-    const storageRef = ref(storage, `menuImages/${id}_${file.name}`);
+  async uploadMenuImage(boothId, id, file) {
+    const storageRef = ref(
+      storage,
+      `booths/${boothId}/menuImages/${id}_${file.name}`,
+    );
     const snapshot = await uploadBytes(storageRef, file);
     const imageDownloadUrl = await getDownloadURL(snapshot.ref);
 
@@ -56,6 +59,7 @@ const CPUFirebase = {
       imagePath: storageRef.fullPath,
     };
   },
+
   async updateFirebaseMenuList() {
     this.userDocData.menu_list = JSON.stringify(this.menuList);
     await setDoc(this.userDocRef, this.userDocData);
