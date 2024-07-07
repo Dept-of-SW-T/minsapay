@@ -7,6 +7,7 @@ import {
 } from "firebase/storage";
 import { database, storage } from "../firebase";
 import { loginUtils } from "./login-feature";
+import { logger } from "./log-feature";
 
 const CPUFirebase = {
   userDocRef: undefined,
@@ -85,6 +86,12 @@ const CPUFirebase = {
             break;
           }
         }
+        await logger.log({
+          type: "transaction",
+          sender: this.userDoc.id,
+          reciever: buyerID,
+          amount: this.orderHistory[i].price,
+        });
         await setDoc(buyerDocRef, buyerDocData);
         await setDoc(this.userDocRef, this.userDocData);
         break;
