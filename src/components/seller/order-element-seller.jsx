@@ -157,6 +157,10 @@ export default function OrderElementBuyer({
       setProcessorState(auth.currentUser.username);
       sellerFirebase.setProcessor(id, auth.currentUser.username);
     }
+    if (nextState === "주문요청") {
+      setProcessorState(null);
+      sellerFirebase.setProcessor(id, null);
+    }
     if (nextState === "NOSTATE") return;
     setState(nextState);
     statusChangeSync(nextState);

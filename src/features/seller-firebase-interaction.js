@@ -53,7 +53,7 @@ const sellerFirebase = {
   async setProcessor(id, processor) {
     for (let i = 0; i < this.orderHistory.length; i++) {
       if (this.orderHistory[i].order_id === id) {
-        this.orderHistory[i].processor = processor;
+        this.orderHistory[i].order_processor = processor;
         this.teamDocData.order_history = JSON.stringify(this.orderHistory);
         await setDoc(this.teamDocRef, this.teamDocData);
         const buyerDocRef = doc(
@@ -66,7 +66,7 @@ const sellerFirebase = {
         const buyerOrderHistory = JSON.parse(buyerDocData.order_history);
         for (let j = 0; j < buyerOrderHistory.length; j++) {
           if (buyerOrderHistory[j].order_id === id) {
-            buyerOrderHistory[j].processor = processor;
+            buyerOrderHistory[j].order_processor = processor;
             buyerDocData.order_history = JSON.stringify(buyerOrderHistory);
             await setDoc(buyerDocRef, buyerDocData);
             break;
