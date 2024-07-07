@@ -15,6 +15,7 @@ import OrderElementKiosk from "../../components/kiosk/order-element-kiosk";
 import { useNavigate } from "react-router-dom";
 import { kioskFirebase } from "../../features/kiosk-firebase-interaction";
 import LogOutIcon from "../../images/LogOut.svg";
+import Loading from "../../components/loading";
 
 const Wrapper = styled.div`
   width: 100%;
@@ -158,6 +159,20 @@ export default function KioskHome() {
   const [kioskImage, setKioskImage] = useState("");
   const [orders, setOrders] = useState([]);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const init = async () => {
+      await CPUFirebase.init();
+      await CPUFirebase.kioskImageInit();
+      await kioskFirebase.init();
+      setKioskImage(CPUFirebase.kioskImageDownloadUrl);
+      setIsLoading(false);
+      if (CPUFirebase.userDocData.linked_buyer === "")
+        navigate("../kiosk-home/kiosk-cover");
+    };
+    init();
+  }, []);
+
   const changeOrderQuantity = (id, quantity) => {
     for (let i = 0; i < orders.length; i++) {
       if (id === orders[i].id) {
@@ -168,6 +183,7 @@ export default function KioskHome() {
       }
     }
   };
+
   const onAddToOrderClick = (e) => {
     const id = parseInt(e.target.id.substring(0, e.target.id.length - 4));
     for (let i = 0; i < orders.length; i++) {
@@ -186,31 +202,21 @@ export default function KioskHome() {
           menuName: CPUFirebase.menuList[i].menuName,
         });
         setOrders([...orders]);
-
         break;
       }
     }
   };
-  useEffect(() => {
-    const init = async () => {
-      await CPUFirebase.init();
-      await CPUFirebase.kioskImageInit();
-      await kioskFirebase.init();
-      setKioskImage(CPUFirebase.kioskImageDownloadUrl);
-      setIsLoading(false);
-      if (CPUFirebase.userDocData.linked_buyer === "")
-        navigate("../kiosk-home/kiosk-cover");
-    };
-    init();
-  }, []);
+
   const onAddQuantityButtonClick = (e) => {
     const id = parseInt(e.target.id.substring(0, e.target.id.length - 3));
     changeOrderQuantity(id, 1);
   };
+
   const onLowerQuantityButtonClick = (e) => {
     const id = parseInt(e.target.id.substring(0, e.target.id.length - 3));
     changeOrderQuantity(id, -1);
   };
+
   const onOrderElementKioskDelete = (e) => {
     const id = parseInt(e.target.id.substring(0, e.target.id.length - 3));
     for (let i = 0; i < orders.length; i++) {
@@ -222,11 +228,13 @@ export default function KioskHome() {
       }
     }
   };
+
   function getTotal() {
     let sum = 0;
     orders.forEach((val) => (sum += val.price * val.quantity));
     return sum;
   }
+
   const onPayClick = async () => {
     if (orders.length === 0) {
       alert("물품을 최소 1개 선택해주세요.");
@@ -237,11 +245,17 @@ export default function KioskHome() {
     await kioskFirebase.removeLinkedBuyer();
     navigate("./kiosk-thankyou"); // 이전 탭으로 돌아가지 못하게 해야 함?
   };
+
   const onLogoutBtnClick = async () => {
     if (!confirm("구매를 취소하시겠습니까?")) return;
     await kioskFirebase.removeLinkedBuyer();
     navigate("../../");
   };
+
+  if (isLoading) {
+    return <Loading />;
+  }
+
   return (
     <Wrapper>
       <DisplayBox>

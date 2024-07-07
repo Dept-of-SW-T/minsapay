@@ -14,6 +14,7 @@ import {
 import { CPUFirebase } from "../../features/CPU-firebase-interaction";
 import OrderElementCPU from "../../components/CPU/order-element-CPU";
 import { onSnapshot } from "firebase/firestore";
+import Loading from "../../components/loading";
 
 // border 다 추가하기
 
@@ -151,6 +152,7 @@ export default function CPUHome() {
   const [balance, setBalance] = useState(0);
   const [kioskImage, setKioskImage] = useState("");
   const [orderList, setOrderList] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
     let unsubscribe = null;
     const init = async () => {
@@ -194,6 +196,7 @@ export default function CPUHome() {
               />
             )),
         );
+        setIsLoading(false);
       });
     };
     init();
@@ -220,27 +223,31 @@ export default function CPUHome() {
     <Wrapper>
       <CPUHeader />
       <CPUHomeBox>
-        <TopDiv>
-          <Title style={{ backgroundImage: `url(${kioskImage})` }}>
-            <OpacityLayer>
-              <TeamName>{auth.currentUser.username}</TeamName>
-              <Balance>{balance}원</Balance>
-              <Label htmlFor="image-upload">
-                <Image src={ChangeKioskImage} />
-              </Label>
-              <ImageUpload
-                id="image-upload"
-                type="file"
-                accept="image/*"
-                onChange={onFileChange}
-              />
-            </OpacityLayer>
-          </Title>
-          <HeaderBtns>
-            <Btn onClick={onChangeMenuClick}>메뉴편집</Btn>
-            <Btn onClick={onRefundApprovalClick}>환불승인</Btn>
-          </HeaderBtns>
-        </TopDiv>
+        {isLoading ? (
+          <Loading />
+        ) : (
+          <TopDiv>
+            <Title style={{ backgroundImage: `url(${kioskImage})` }}>
+              <OpacityLayer>
+                <TeamName>{auth.currentUser.username}</TeamName>
+                <Balance>{balance}원</Balance>
+                <Label htmlFor="image-upload">
+                  <Image src={ChangeKioskImage} />
+                </Label>
+                <ImageUpload
+                  id="image-upload"
+                  type="file"
+                  accept="image/*"
+                  onChange={onFileChange}
+                />
+              </OpacityLayer>
+            </Title>
+            <HeaderBtns>
+              <Btn onClick={onChangeMenuClick}>메뉴편집</Btn>
+              <Btn onClick={onRefundApprovalClick}>환불승인</Btn>
+            </HeaderBtns>
+          </TopDiv>
+        )}
         <BodyDiv>
           <CoupleList dataList={orderList} />
         </BodyDiv>

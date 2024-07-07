@@ -5,6 +5,7 @@ import OrderElementCPU from "../../components/CPU/order-element-CPU";
 import { useEffect, useState } from "react";
 import { CPUFirebase } from "../../features/CPU-firebase-interaction";
 import { onSnapshot } from "firebase/firestore";
+import Loading from "../../components/loading";
 
 const Wrapper = styled.div`
   width: 100%;
@@ -18,6 +19,7 @@ const RefundApprovalBox = styled.div`
 `;
 export default function RefundApproval() {
   const [refundRequestList, setRefundRequestList] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
     let unsubscribe = null;
     const init = async () => {
@@ -72,6 +74,7 @@ export default function RefundApproval() {
             )),
         );
       });
+      setIsLoading(false);
     };
     init();
     return () => {
@@ -81,9 +84,13 @@ export default function RefundApproval() {
   return (
     <Wrapper>
       <CPUHeader />
-      <RefundApprovalBox>
-        <CoupleList dataList={refundRequestList} />
-      </RefundApprovalBox>
+      {isLoading ? (
+        <Loading />
+      ) : (
+        <RefundApprovalBox>
+          <CoupleList dataList={refundRequestList} />
+        </RefundApprovalBox>
+      )}
     </Wrapper>
   );
 }
