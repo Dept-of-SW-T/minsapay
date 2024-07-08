@@ -130,7 +130,6 @@ export default function ChangeMenu() {
       CPUFirebase.menuList.splice(index, 1);
       await CPUFirebase.updateFirebaseMenuList();
     }
-    window.location.reload();
   };
 
   const onPriceChange = (e) => {
@@ -238,125 +237,133 @@ export default function ChangeMenu() {
 
   return (
     <Wrapper>
-      {isLoading && <Loading />}
-      <StyledCPUHeader />
-      <Title>메뉴 추가 & 수정</Title>
-      <Form onSubmit={onMenuAddClick}>
-        <Input
-          type="text"
-          placeholder="메뉴명"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          required
-        />
-        <Input
-          type="text"
-          placeholder="가격"
-          value={price}
-          onChange={onPriceChange}
-          required
-        />
-        <FileInput
-          type="file"
-          accept="image/*"
-          onChange={(e) => setImage(e.target.files[0])}
-          ref={fileInputRef} // Add the ref to the file input
-        />
-        <Button type="submit">메뉴 추가</Button>
-      </Form>
-      <Table>
-        <thead>
-          <tr>
-            <Th>Photo</Th>
-            <Th>메뉴명</Th>
-            <Th>가격</Th>
-            <Th>편집</Th>
-          </tr>
-        </thead>
-        <tbody>
-          {menuList.map((menu, index) => (
-            <tr key={index}>
-              <Td>
-                {menu.imageDownloadUrl ? (
-                  <img
-                    src={menu.imageDownloadUrl}
-                    alt="Menu"
-                    width="50"
-                    height="50"
-                  />
-                ) : (
-                  "No Image"
-                )}
-                {editId === menu.id && (
-                  <FileInput
-                    type="file"
-                    accept="image/*"
-                    onChange={(e) => setEditImage(e.target.files[0])}
-                  />
-                )}
-              </Td>
-              <Td>
-                {editId === menu.id ? (
-                  <Input
-                    type="text"
-                    defaultValue={menu.menuName}
-                    onChange={(e) => (menu.menuName = e.target.value)}
-                  />
-                ) : (
-                  menu.menuName
-                )}
-              </Td>
-              <Td>
-                {editId === menu.id ? (
-                  <Input
-                    type="text"
-                    value={editPrice}
-                    onChange={(e) => {
-                      if (e.target.value === "") {
-                        setEditPrice(0);
-                        return;
-                      }
+      {isLoading ? (
+        <Loading />
+      ) : (
+        <>
+          <StyledCPUHeader />
+          <Title>메뉴 추가 & 수정</Title>
+          <Form onSubmit={onMenuAddClick}>
+            <Input
+              type="text"
+              placeholder="메뉴명"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              required
+            />
+            <Input
+              type="text"
+              placeholder="가격"
+              value={price}
+              onChange={onPriceChange}
+              required
+            />
+            <FileInput
+              type="file"
+              accept="image/*"
+              onChange={(e) => setImage(e.target.files[0])}
+              ref={fileInputRef} // Add the ref to the file input
+            />
+            <Button type="submit">메뉴 추가</Button>
+          </Form>
+          <Table>
+            <thead>
+              <tr>
+                <Th>Photo</Th>
+                <Th>메뉴명</Th>
+                <Th>가격</Th>
+                <Th>편집</Th>
+              </tr>
+            </thead>
+            <tbody>
+              {menuList.map((menu, index) => (
+                <tr key={index}>
+                  <Td>
+                    {menu.imageDownloadUrl ? (
+                      <img
+                        src={menu.imageDownloadUrl}
+                        alt="Menu"
+                        width="50"
+                        height="50"
+                      />
+                    ) : (
+                      "No Image"
+                    )}
+                    {editId === menu.id && (
+                      <FileInput
+                        type="file"
+                        accept="image/*"
+                        onChange={(e) => setEditImage(e.target.files[0])}
+                      />
+                    )}
+                  </Td>
+                  <Td>
+                    {editId === menu.id ? (
+                      <Input
+                        type="text"
+                        defaultValue={menu.menuName}
+                        onChange={(e) => (menu.menuName = e.target.value)}
+                      />
+                    ) : (
+                      menu.menuName
+                    )}
+                  </Td>
+                  <Td>
+                    {editId === menu.id ? (
+                      <Input
+                        type="text"
+                        value={editPrice}
+                        onChange={(e) => {
+                          if (e.target.value === "") {
+                            setEditPrice(0);
+                            return;
+                          }
 
-                      const isDigit = (char) => {
-                        return /\d/.test(char);
-                      };
+                          const isDigit = (char) => {
+                            return /\d/.test(char);
+                          };
 
-                      let isNumber = true;
-                      for (let i = 0; i < e.target.value.length; i++) {
-                        isNumber = isNumber && isDigit(e.target.value[i]);
-                      }
-                      if (!isNumber) return;
-                      const val = parseInt(e.target.value);
-                      if (val < 0 || val > 100000) return;
-                      setEditPrice(val);
-                      menu.price = val;
-                    }}
-                  />
-                ) : (
-                  `${menu.price}원`
-                )}
-              </Td>
-              <Td>
-                {editId === menu.id ? (
-                  <ActionButton edit onClick={() => handleSave(menu.id, menu)}>
-                    Save
-                  </ActionButton>
-                ) : (
-                  <ActionButton
-                    edit
-                    onClick={() => handleEdit(menu.id, menu.price)}
-                  >
-                    Edit
-                  </ActionButton>
-                )}
-                <ActionButton onClick={() => onDeleteButtonClick(menu.id)}>
-                  Delete
-                </ActionButton>
-              </Td>
-            </tr>
-          ))}
-        </tbody>
-      </Table>
+                          let isNumber = true;
+                          for (let i = 0; i < e.target.value.length; i++) {
+                            isNumber = isNumber && isDigit(e.target.value[i]);
+                          }
+                          if (!isNumber) return;
+                          const val = parseInt(e.target.value);
+                          if (val < 0 || val > 100000) return;
+                          setEditPrice(val);
+                          menu.price = val;
+                        }}
+                      />
+                    ) : (
+                      `${menu.price}원`
+                    )}
+                  </Td>
+                  <Td>
+                    {editId === menu.id ? (
+                      <ActionButton
+                        edit
+                        onClick={() => handleSave(menu.id, menu)}
+                      >
+                        Save
+                      </ActionButton>
+                    ) : (
+                      <ActionButton
+                        edit
+                        onClick={() => handleEdit(menu.id, menu.price)}
+                      >
+                        Edit
+                      </ActionButton>
+                    )}
+                    <ActionButton onClick={() => onDeleteButtonClick(menu.id)}>
+                      Delete
+                    </ActionButton>
+                  </Td>
+                </tr>
+              ))}
+            </tbody>
+          </Table>
+        </>
+      )}
     </Wrapper>
   );
 }
