@@ -97,7 +97,9 @@ export default function OrderElementCPU({
         {refundRequest == 0
           ? "특이사항 없음"
           : refundRequest == 1
-            ? "환불요청"
+            ? mode === "refund"
+              ? "환불 승인"
+              : "환불요청"
             : "환불완료"}
       </Text>
     </Wrapper>

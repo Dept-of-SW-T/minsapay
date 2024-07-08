@@ -26,14 +26,9 @@ export default function RefundApproval() {
       // 초기에 잔고, 이미지 로딩
       await CPUFirebase.init();
       await CPUFirebase.kioskImageInit();
-      let refundRequestHistory = [];
-      for (let i = 0; i < CPUFirebase.orderHistory.length; i++) {
-        if (CPUFirebase.orderHistory[i].current_state === "환불요청") {
-          refundRequestHistory.push(CPUFirebase.orderHistory[i]);
-        }
-      }
       setRefundRequestList(
-        refundRequestHistory
+        CPUFirebase.orderHistory
+          .filter((order) => order.refund_request !== 0)
           .toReversed()
           .map((val, index) => (
             <OrderElementCPU
@@ -55,14 +50,9 @@ export default function RefundApproval() {
         CPUFirebase.orderHistory = JSON.parse(
           CPUFirebase.userDocData.order_history,
         );
-        refundRequestHistory = [];
-        for (let i = 0; i < CPUFirebase.orderHistory.length; i++) {
-          if (CPUFirebase.orderHistory[i].refund_request !== 0) {
-            refundRequestHistory.push(CPUFirebase.orderHistory[i]);
-          }
-        }
         setRefundRequestList(
-          refundRequestHistory
+          CPUFirebase.orderHistory
+            .filter((order) => order.refund_request !== 0)
             .toReversed()
             .map((val, index) => (
               <OrderElementCPU
