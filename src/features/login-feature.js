@@ -38,7 +38,7 @@ const loginUtils = {
     );
   },
   isLoggedIn() {
-    return this.getCurrentUser !== null;
+    return this.getCurrentUser() !== null;
   },
   getUserClass() {
     const sessionValue = this.getCurrentUser().email;

@@ -171,7 +171,7 @@ export default function ChangePassword() {
           onChange={(e) => setCurrentPassword(e.target.value)}
           value={currentPassword}
           name="password"
-          placeholder="New Password"
+          placeholder="Current Password"
           type="password"
           required
         />
