@@ -7,7 +7,7 @@ import {
   setDoc,
 } from "firebase/firestore";
 import { database } from "../firebase";
-import { auth } from "./login-feature";
+import { loginUtils } from "./login-feature";
 
 // 실시간으로 바꾸기!!!!!
 
@@ -18,7 +18,7 @@ const buyerFirebase = {
   orderHistory: undefined,
 
   async init() {
-    this.userDocRef = doc(database, "Students", auth.currentUser.userID);
+    this.userDocRef = doc(database, "Students", loginUtils.getUserID());
     this.userDoc = await getDoc(this.userDocRef);
     this.userDocData = this.userDoc.data();
     this.orderHistory = JSON.parse(this.userDocData.order_history);
@@ -49,11 +49,13 @@ const buyerFirebase = {
     const teamOrderHistory = JSON.parse(teamDocData.order_history);
     for (let i = 0; i < teamOrderHistory.length; i++) {
       if (teamOrderHistory[i].order_id === orderID) {
-        teamOrderHistory[i].current_state = "환불요청";
+        // teamOrderHistory[i].current_state = "환불요청";
+        teamOrderHistory[i].refund_request = 1;
         teamDocData.order_history = JSON.stringify(teamOrderHistory);
         for (let i = 0; i < this.orderHistory.length; i++) {
           if (this.orderHistory[i].order_id === orderID) {
-            this.orderHistory[i].current_state = "환불요청";
+            // this.orderHistory[i].current_state = "환불요청";
+            this.orderHistory[i].refund_request = 1;
             this.userDocData.order_history = JSON.stringify(this.orderHistory);
             break;
           }

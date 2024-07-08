@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { auth } from "../../features/login-feature";
 import { useEffect, useState } from "react";
 import CoupleList from "../../components/CPU/couple-list";
 import { CPUHeader } from "../../components/CPU/cpu-header";
@@ -159,6 +158,7 @@ export default function CPUHome() {
       // 초기에 잔고, 이미지 로딩
       await CPUFirebase.init();
       await CPUFirebase.kioskImageInit();
+      setIsLoading(false);
       setBalance(CPUFirebase.userDocData.balance);
       setKioskImage(CPUFirebase.kioskImageDownloadUrl);
       setOrderList(
@@ -170,7 +170,9 @@ export default function CPUHome() {
               userName={val.buyer_name}
               time={val.reception_time}
               status={val.current_state}
+              refundRequest={val.refund_request}
               key={index}
+              mode={"display"}
             />
           )),
       );
@@ -192,7 +194,9 @@ export default function CPUHome() {
                 userName={val.buyer_name}
                 time={val.reception_time}
                 status={val.current_state}
+                refundRequest={val.refund_request}
                 key={index}
+                mode={"display"}
               />
             )),
         );
@@ -229,7 +233,9 @@ export default function CPUHome() {
           <TopDiv>
             <Title style={{ backgroundImage: `url(${kioskImage})` }}>
               <OpacityLayer>
-                <TeamName>{auth.currentUser.username}</TeamName>
+                <TeamName>
+                  {isLoading ? "" : CPUFirebase.userDocData.username}
+                </TeamName>
                 <Balance>{balance}원</Balance>
                 <Label htmlFor="image-upload">
                   <Image src={ChangeKioskImage} />

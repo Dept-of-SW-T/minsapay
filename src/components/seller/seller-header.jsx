@@ -3,7 +3,7 @@ import LogoRef from "../../images/LogoMinsapay.svg";
 import LogOutRef from "../../images/LogOut.svg";
 import GoHomeRef from "../../images/CPUHome.svg";
 import { useNavigate } from "react-router-dom";
-import { auth } from "../../features/login-feature";
+import { loginUtils } from "../../features/login-feature";
 
 const HeaderDiv = styled.div`
   width: 95%;
@@ -43,7 +43,7 @@ export function SellerHeader() {
   const onLogOutIconClick = async () => {
     // logout 누르면 confirm 띄우고 로그아웃 후 home으로 navigate --> 저절로 logout화면으로 protected routes를 통해 연결
     if (!confirm("로그아웃 하시겠습니까?")) return;
-    await auth.signOut();
+    await loginUtils.signOut();
     navigate("../../");
   };
   const onLogoHover = (e) => {

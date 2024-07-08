@@ -5,7 +5,6 @@ import { onSnapshot } from "firebase/firestore";
 import styled from "styled-components";
 import backgroundImagePhoneScreen from "../../images/bg-candidate-phone-screen.png";
 import backgroundImageWideScreen from "../../images/bg-candidate-wide-screen.jpg";
-import Loading from "../../components/loading";
 
 const OuterWrapper = styled.div`
   width: 100vw;
@@ -25,7 +24,6 @@ const OuterWrapper = styled.div`
 export default function KioskAuthentication() {
   const navigate = useNavigate();
   const [kioskAuthenticationNumber, setKioskAuthenticationNumber] = useState();
-  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     let unsubscribe = null;
@@ -35,7 +33,6 @@ export default function KioskAuthentication() {
       setKioskAuthenticationNumber(
         kioskFirebase.userDocData.kiosk_authentication_number,
       );
-      setIsLoading(false);
     };
     init();
     unsubscribe = onSnapshot(kioskFirebase.userDocRef, (doc) => {
@@ -47,14 +44,6 @@ export default function KioskAuthentication() {
       unsubscribe && unsubscribe();
     };
   }, []);
-
-  if (isLoading) {
-    return (
-      <OuterWrapper>
-        <Loading />
-      </OuterWrapper>
-    );
-  }
 
   return (
     <OuterWrapper>

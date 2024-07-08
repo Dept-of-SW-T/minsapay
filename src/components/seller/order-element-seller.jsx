@@ -6,7 +6,6 @@ import {
   ORDER_ONPROCESS,
   ORDER_REQUEST,
   REFUND_OR_RECEIPT_COMPLETE,
-  REFUND_REQUEST,
   MINSAPAY_TITLE,
 } from "../theme-definition";
 import { sellerFirebase } from "../../features/seller-firebase-interaction";
@@ -99,6 +98,7 @@ export default function OrderElementBuyer({
   buyer,
 }) {
   const [state, setState] = useState(status);
+  const [processorState, setProcessorState] = useState(processor);
 
   const backgroundColor = () => {
     switch (state) {
@@ -108,8 +108,6 @@ export default function OrderElementBuyer({
         return ORDER_ONPROCESS;
       case "처리완료":
         return ORDER_COMPLETE;
-      case "환불요청":
-        return REFUND_REQUEST;
       default:
         return REFUND_OR_RECEIPT_COMPLETE;
     }
@@ -147,6 +145,10 @@ export default function OrderElementBuyer({
 
   function onBackwardClick() {
     const nextState = indexToState(stateToIndex(state) - 1);
+    if (nextState === "주문요청") {
+      setProcessorState(null);
+      sellerFirebase.setProcessor(id, null);
+    }
     if (nextState === "NOSTATE") return;
     setState(nextState);
     statusChangeSync(nextState);
@@ -154,6 +156,10 @@ export default function OrderElementBuyer({
 
   function onForwardClick() {
     const nextState = indexToState(stateToIndex(state) + 1);
+    if (state === "주문요청") {
+      setProcessorState(sellerFirebase.userDocData.username);
+      sellerFirebase.setProcessor(id, sellerFirebase.userDocData.username);
+    }
     if (nextState === "NOSTATE") return;
     setState(nextState);
     statusChangeSync(nextState);
@@ -166,7 +172,7 @@ export default function OrderElementBuyer({
 
         <Text style={{ flexBasis: "20%" }}>{buyer}</Text>
         <Text style={{ flexBasis: "20%" }}>
-          {processor === null ? " 처리자 없음" : processor}
+          {processorState === null ? " 처리자 없음" : processorState}
         </Text>
         <Text style={{ flexBasis: "20%" }}>{state}</Text>
       </FlexWrapper>
@@ -174,7 +180,9 @@ export default function OrderElementBuyer({
         {state !== "주문요청" && (
           <StateButton onClick={onBackwardClick}>{"<"}</StateButton>
         )}
-        <StateButton onClick={onForwardClick}>{">"}</StateButton>
+        {state !== "처리완료" && (
+          <StateButton onClick={onForwardClick}>{">"}</StateButton>
+        )}
       </ButtonWrapper>
     </Wrapper>
   );

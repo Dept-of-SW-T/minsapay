@@ -1,5 +1,4 @@
 import { doc, getDoc, setDoc } from "firebase/firestore";
-import { auth } from "./login-feature";
 import {
   deleteObject,
   getDownloadURL,
@@ -7,6 +6,8 @@ import {
   uploadBytes,
 } from "firebase/storage";
 import { database, storage } from "../firebase";
+import { loginUtils } from "./login-feature";
+import { logger } from "./log-feature";
 
 const CPUFirebase = {
   userDocRef: undefined,
@@ -16,7 +17,7 @@ const CPUFirebase = {
   menuList: undefined,
   orderHistory: undefined,
   async init() {
-    this.userDocRef = doc(database, "Teams", auth.currentUser.userID);
+    this.userDocRef = doc(database, "Teams", loginUtils.getUserID());
     this.userDoc = await getDoc(this.userDocRef);
     this.userDocData = this.userDoc.data();
     this.menuList = JSON.parse(this.userDocData.menu_list);
@@ -31,7 +32,7 @@ const CPUFirebase = {
     await deleteObject(ref(storage, this.userDocData.kiosk_image));
     const locationRef = ref(
       storage,
-      `${auth.currentUser.userID}/kiosk_image/${file.name}`,
+      `${loginUtils.getUserID()}/kiosk_image/${file.name}`,
     );
     const result = await uploadBytes(locationRef, file);
     this.kioskImageDownloadUrl = await getDownloadURL(result.ref);
@@ -74,7 +75,7 @@ const CPUFirebase = {
     let buyerID = undefined;
     for (let i = 0; i < this.orderHistory.length; i++) {
       if (this.orderHistory[i].order_id === orderID) {
-        this.orderHistory[i].current_state = "환불완료";
+        this.orderHistory[i].refund_request = 2;
         this.userDocData.order_history = JSON.stringify(this.orderHistory);
         this.userDocData.balance -= this.orderHistory[i].price;
         buyerID = this.orderHistory[i].buyer_id;
@@ -84,12 +85,18 @@ const CPUFirebase = {
         const buyerOrderHistory = JSON.parse(buyerDocData.order_history);
         for (let j = 0; j < buyerOrderHistory.length; j++) {
           if (buyerOrderHistory[j].order_id === orderID) {
-            buyerOrderHistory[j].current_state = "환불완료";
+            buyerOrderHistory[j].refund_request = 2;
             buyerDocData.order_history = JSON.stringify(buyerOrderHistory);
             buyerDocData.balance += this.orderHistory[i].price;
             break;
           }
         }
+        await logger.log({
+          type: "transaction",
+          sender: this.userDoc.id,
+          reciever: buyerID,
+          amount: this.orderHistory[i].price,
+        });
         await setDoc(buyerDocRef, buyerDocData);
         await setDoc(this.userDocRef, this.userDocData);
         break;

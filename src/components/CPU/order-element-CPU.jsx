@@ -5,7 +5,6 @@ import {
   ORDER_ONPROCESS,
   ORDER_REQUEST,
   REFUND_OR_RECEIPT_COMPLETE,
-  REFUND_REQUEST,
   MINSAPAY_FONT,
 } from "../theme-definition";
 import { CPUFirebase } from "../../features/CPU-firebase-interaction";
@@ -24,7 +23,7 @@ const Wrapper = styled.span`
 const Text = styled.span`
   font-family: ${MINSAPAY_FONT};
   font-size: 1.2em;
-  width: 23.5%;
+  width: 18.5%;
   border-right: 3px solid ${BORDER_GRAY};
   display: flex;
   flex-direction: row;
@@ -49,6 +48,8 @@ export default function OrderElementCPU({
   userName,
   time,
   status,
+  refundRequest,
+  mode,
   id,
 }) {
   // 주문 요청을 띄우는 element
@@ -60,19 +61,19 @@ export default function OrderElementCPU({
         return ORDER_ONPROCESS;
       case "처리완료":
         return ORDER_COMPLETE;
-      case "환불요청":
-        return REFUND_REQUEST;
-      case "승인하기":
-        return REFUND_REQUEST;
+      // case "환불요청":
+      //   return REFUND_REQUEST;
+      // case "승인하기":
+      //   return REFUND_REQUEST;
       default:
         return REFUND_OR_RECEIPT_COMPLETE;
     }
   };
   async function onClick(e) {
-    if (status === "승인하기") {
+    if (mode === "refund") {
       if (!confirm("환불을 승인하시겠습니까?")) return;
       await CPUFirebase.refundOrder(e.target.id);
-      //alert("환불 승인 완료");
+      alert("환불 승인 완료");
     }
   }
   return (
@@ -80,12 +81,19 @@ export default function OrderElementCPU({
       <Text id="first-child">{menuName}</Text>
       <Text>{userName}</Text>
       <Text>{time}</Text>
+      <Text>{status}</Text>
       <Text
-        className={status === "승인하기" ? "approve-refund" : ""}
+        className={
+          mode === "refund" && refundRequest === 1 ? "approve-refund" : ""
+        }
         id={id}
-        onClick={onClick}
+        onClick={mode === "refund" && refundRequest === 1 ? onClick : null}
       >
-        {status}
+        {refundRequest == 0
+          ? "특이사항 없음"
+          : refundRequest == 1
+            ? "환불요청"
+            : "환불완료"}
       </Text>
     </Wrapper>
   );

@@ -5,7 +5,6 @@ import {
   ORDER_ONPROCESS,
   ORDER_REQUEST,
   REFUND_OR_RECEIPT_COMPLETE,
-  REFUND_REQUEST,
 } from "../theme-definition";
 import { buyerFirebase } from "../../features/buyer-firebase-interaction";
 
@@ -74,6 +73,7 @@ export default function OrderElementBuyer({
   teamName,
   price,
   status,
+  refundRequest,
   id,
 }) {
   // 주문 요청을 띄우는 element
@@ -85,8 +85,6 @@ export default function OrderElementBuyer({
         return ORDER_ONPROCESS;
       case "처리완료":
         return ORDER_COMPLETE;
-      case "환불요청":
-        return REFUND_REQUEST;
       default:
         return REFUND_OR_RECEIPT_COMPLETE;
     }
@@ -102,9 +100,10 @@ export default function OrderElementBuyer({
       <Text id="first-child">{teamName}</Text>
       <Text>{menuName}</Text>
       <Text className="price">{price}원</Text>
-      {status === "환불완료" ? (
+      <Text>{price}원</Text>
+      {refundRequest === 2 ? (
         <Text>환불 완료됨</Text>
-      ) : status === "환불요청" ? (
+      ) : refundRequest === 1 ? (
         <Text>환불 요청됨</Text>
       ) : (
         <Text onClick={onClick} className="refund-request" id={id}>

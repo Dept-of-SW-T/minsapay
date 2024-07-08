@@ -3,12 +3,12 @@ import { BORDER_GRAY } from "../theme-definition";
 
 const Wrapper = styled.span`
   width: 80%;
-  height: 5vw;
+  height: 5vh;
   border: 2px solid ${BORDER_GRAY};
   border-radius: 10px;
   display: flex;
   flex-direction: row;
-  margin-top: 0.3rem; // 아래쪽에 간격 추가
+  margin-top: 1rem;
   &:hover {
     cursor: pointer;
   }

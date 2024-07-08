@@ -7,6 +7,7 @@ import {
   MINSAPAY_FONT,
   MINSAPAY_TITLE,
 } from "../../components/theme-definition";
+import Loading from "../../components/loading";
 
 const Wrapper = styled.div`
   width: 50vh;
@@ -137,6 +138,7 @@ export default function BuyerPayment() {
   const navigate = useNavigate();
   const [kioskAuthenticationNumber, setKioskAuthenticationNumber] =
     useState("");
+  const [isLoading, setIsLoading] = useState(true);
   const onKioskAuthenticationNumberChange = async (e) => {
     const isDigit = (char) => {
       return /\d/.test(char);
@@ -171,66 +173,71 @@ export default function BuyerPayment() {
   useEffect(() => {
     const init = async () => {
       await buyerFirebase.init();
+      setIsLoading(false);
     };
     init();
   }, []);
   return (
     <Wrapper>
-      <PaymentBox>
-        <TitleDiv>
-          <Title>키오스크 결제 인증번호</Title>
-        </TitleDiv>
-        <Form onSubmit={onKioskAuthenticationNumberSumbit}>
-          <KioskAuthenticationNumberInput
-            onChange={onKioskAuthenticationNumberChange}
-            onKeyDown={blockArrowKey}
-            value={kioskAuthenticationNumber}
-            type="text"
-            id="priceState"
-            autoComplete="off"
-            autoFocus
-            onBlur={(e) => e.target.focus()}
-            inputMode="none"
-            maxLength={5}
-          />
-          <GridBox>
-            <KeypadButton type="button" onClick={onKeypadButtonClick}>
-              1
-            </KeypadButton>
-            <KeypadButton type="button" onClick={onKeypadButtonClick}>
-              2
-            </KeypadButton>
-            <KeypadButton type="button" onClick={onKeypadButtonClick}>
-              3
-            </KeypadButton>
-            <KeypadButton type="button" onClick={onKeypadButtonClick}>
-              4
-            </KeypadButton>
-            <KeypadButton type="button" onClick={onKeypadButtonClick}>
-              5
-            </KeypadButton>
-            <KeypadButton type="button" onClick={onKeypadButtonClick}>
-              6
-            </KeypadButton>
-            <KeypadButton type="button" onClick={onKeypadButtonClick}>
-              7
-            </KeypadButton>
-            <KeypadButton type="button" onClick={onKeypadButtonClick}>
-              8
-            </KeypadButton>
-            <KeypadButton type="button" onClick={onKeypadButtonClick}>
-              9
-            </KeypadButton>
-            <KeypadButton type="button" onClick={onKeypadButtonClick}>
-              C
-            </KeypadButton>
-            <KeypadButton type="button" onClick={onKeypadButtonClick}>
-              0
-            </KeypadButton>
-            <KeypadButton type="submit">OK</KeypadButton>
-          </GridBox>
-        </Form>
-      </PaymentBox>
+      {isLoading ? (
+        <Loading />
+      ) : (
+        <PaymentBox>
+          <TitleDiv>
+            <Title>키오스크 결제 인증번호</Title>
+          </TitleDiv>
+          <Form onSubmit={onKioskAuthenticationNumberSumbit}>
+            <KioskAuthenticationNumberInput
+              onChange={onKioskAuthenticationNumberChange}
+              onKeyDown={blockArrowKey}
+              value={kioskAuthenticationNumber}
+              type="text"
+              id="priceState"
+              autoComplete="off"
+              autoFocus
+              onBlur={(e) => e.target.focus()}
+              inputMode="none"
+              maxLength={5}
+            />
+            <GridBox>
+              <KeypadButton type="button" onClick={onKeypadButtonClick}>
+                1
+              </KeypadButton>
+              <KeypadButton type="button" onClick={onKeypadButtonClick}>
+                2
+              </KeypadButton>
+              <KeypadButton type="button" onClick={onKeypadButtonClick}>
+                3
+              </KeypadButton>
+              <KeypadButton type="button" onClick={onKeypadButtonClick}>
+                4
+              </KeypadButton>
+              <KeypadButton type="button" onClick={onKeypadButtonClick}>
+                5
+              </KeypadButton>
+              <KeypadButton type="button" onClick={onKeypadButtonClick}>
+                6
+              </KeypadButton>
+              <KeypadButton type="button" onClick={onKeypadButtonClick}>
+                7
+              </KeypadButton>
+              <KeypadButton type="button" onClick={onKeypadButtonClick}>
+                8
+              </KeypadButton>
+              <KeypadButton type="button" onClick={onKeypadButtonClick}>
+                9
+              </KeypadButton>
+              <KeypadButton type="button" onClick={onKeypadButtonClick}>
+                C
+              </KeypadButton>
+              <KeypadButton type="button" onClick={onKeypadButtonClick}>
+                0
+              </KeypadButton>
+              <KeypadButton type="submit">OK</KeypadButton>
+            </GridBox>
+          </Form>
+        </PaymentBox>
+      )}
       <FixedFooter>
         <HomeButton onClick={() => navigate("../buyer-home")} src={LogOutRef} />
       </FixedFooter>

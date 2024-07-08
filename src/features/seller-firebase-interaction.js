@@ -1,6 +1,6 @@
 import { doc, getDoc, setDoc } from "firebase/firestore";
 import { database } from "../firebase";
-import { auth } from "./login-feature";
+import { loginUtils } from "./login-feature";
 
 const sellerFirebase = {
   userDocRef: undefined, // 해당하는 document reference
@@ -13,7 +13,7 @@ const sellerFirebase = {
   teamDocData: undefined,
   orderHistory: undefined,
   async init() {
-    this.userDocRef = doc(database, "Students", auth.currentUser.userID);
+    this.userDocRef = doc(database, "Students", loginUtils.getUserID());
     this.userDoc = await getDoc(this.userDocRef);
     this.userDocData = this.userDoc.data();
     this.teamList = this.userDocData.team_list;
@@ -25,14 +25,11 @@ const sellerFirebase = {
     this.orderHistory = JSON.parse(this.teamDocData.order_history);
   },
   async setStatus(id, status) {
-    console.log(id, status);
     for (let i = 0; i < this.orderHistory.length; i++) {
       if (this.orderHistory[i].order_id === id) {
         this.orderHistory[i].current_state = status;
         this.teamDocData.order_history = JSON.stringify(this.orderHistory);
         await setDoc(this.teamDocRef, this.teamDocData);
-
-        console.log(this.orderHistory[i]);
         const buyerDocRef = doc(
           database,
           "Students",
@@ -49,11 +46,35 @@ const sellerFirebase = {
             break;
           }
         }
-        console.log("uploaded changed status to firebase");
         break;
       }
     }
-    console.log("end of function");
+  },
+  async setProcessor(id, processor) {
+    for (let i = 0; i < this.orderHistory.length; i++) {
+      if (this.orderHistory[i].order_id === id) {
+        this.orderHistory[i].order_processor = processor;
+        this.teamDocData.order_history = JSON.stringify(this.orderHistory);
+        await setDoc(this.teamDocRef, this.teamDocData);
+        const buyerDocRef = doc(
+          database,
+          "Students",
+          this.orderHistory[i].buyer_id,
+        );
+        const buyerDoc = await getDoc(buyerDocRef);
+        const buyerDocData = buyerDoc.data();
+        const buyerOrderHistory = JSON.parse(buyerDocData.order_history);
+        for (let j = 0; j < buyerOrderHistory.length; j++) {
+          if (buyerOrderHistory[j].order_id === id) {
+            buyerOrderHistory[j].order_processor = processor;
+            buyerDocData.order_history = JSON.stringify(buyerOrderHistory);
+            await setDoc(buyerDocRef, buyerDocData);
+            break;
+          }
+        }
+        break;
+      }
+    }
   },
 };
 
