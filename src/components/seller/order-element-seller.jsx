@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { useState } from "react";
 import {
   BORDER_GRAY,
   ORDER_COMPLETE,
@@ -97,8 +96,7 @@ export default function OrderElementBuyer({
   processor,
   buyer,
 }) {
-  const [state, setState] = useState(status);
-  const [processorState, setProcessorState] = useState(processor);
+  console.log(processor, status);
 
   const backgroundColor = () => {
     switch (status) {
@@ -134,6 +132,8 @@ export default function OrderElementBuyer({
         return "처리중";
       case 2:
         return "처리완료";
+      case 3:
+        return "수령완료";
       default:
         return "NOSTATE";
     }
@@ -143,26 +143,33 @@ export default function OrderElementBuyer({
     await sellerFirebase.setStatus(id, nextState);
   }
 
-  function onBackwardClick() {
-    const nextState = indexToState(stateToIndex(state) - 1);
-    if (nextState === "주문요청") {
-      setProcessorState(null);
-      sellerFirebase.setProcessor(id, null);
-    }
+  async function onBackwardClick() {
+    const nextState = indexToState(stateToIndex(status) - 1);
     if (nextState === "NOSTATE") return;
-    setState(nextState);
-    statusChangeSync(nextState);
+    await statusChangeSync(nextState);
+    if (nextState === "주문요청") {
+      await sellerFirebase.setProcessor(id, null);
+    } else {
+      await sellerFirebase.setProcessor(
+        id,
+        sellerFirebase.userDocData.username,
+      );
+    }
   }
 
-  function onForwardClick() {
-    const nextState = indexToState(stateToIndex(state) + 1);
-    if (state === "주문요청") {
-      setProcessorState(sellerFirebase.userDocData.username);
-      sellerFirebase.setProcessor(id, sellerFirebase.userDocData.username);
-    }
+  async function onForwardClick() {
+    const nextState = indexToState(stateToIndex(status) + 1);
     if (nextState === "NOSTATE") return;
-    setState(nextState);
-    statusChangeSync(nextState);
+    if (nextState === "수령완료") {
+      if (!confirm("주문상태를 변경을 완료하시겠습니까?")) return;
+      await sellerFirebase.setProcessor(id, null);
+    } else {
+      await sellerFirebase.setProcessor(
+        id,
+        sellerFirebase.userDocData.username,
+      );
+    }
+    await statusChangeSync(nextState);
   }
 
   return (
@@ -172,15 +179,15 @@ export default function OrderElementBuyer({
 
         <Text style={{ flexBasis: "20%" }}>{buyer}</Text>
         <Text style={{ flexBasis: "20%" }}>
-          {processorState === null ? " 처리자 없음" : processorState}
+          {processor === null ? "처리자 없음" : processor}
         </Text>
-        <Text style={{ flexBasis: "20%" }}>{state}</Text>
+        <Text style={{ flexBasis: "20%" }}>{status}</Text>
       </FlexWrapper>
       <ButtonWrapper>
-        {state !== "주문요청" && (
+        {status !== "주문요청" && status !== "수령완료" && (
           <StateButton onClick={onBackwardClick}>{"<"}</StateButton>
         )}
-        {state !== "처리완료" && (
+        {status !== "수령완료" && (
           <StateButton onClick={onForwardClick}>{">"}</StateButton>
         )}
       </ButtonWrapper>
