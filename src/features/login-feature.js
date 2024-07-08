@@ -72,7 +72,17 @@ const loginUtils = {
           resolve();
         })
         .catch((e) => {
-          this.error = e.message;
+          switch (e.message) {
+            case "Firebase: Error (auth/invalid-credential).":
+              this.error = "현재 비밀번호가 잘못되었습니다.";
+              break;
+            case "Firebase: Password should be at least 6 characters (auth/weak-password).":
+              this.error = "비밀번호가 최소 6자리이어야 합니다.";
+              break;
+            default:
+              this.error = e.message;
+              break;
+          }
           reject();
         });
     });

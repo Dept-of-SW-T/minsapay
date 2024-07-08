@@ -10,6 +10,7 @@ import {
 import LogOutRef from "../../images/LogOut.svg";
 import HomeIconRef from "../../images/CPUHome.svg";
 import { loginUtils } from "../../features/login-feature";
+import Loading from "../../components/loading";
 
 const OuterWrapper = styled.div`
   width: 100vw;
@@ -130,6 +131,7 @@ export default function ChangePassword() {
   const [newPassword, setNewPassword] = useState("");
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPasswordCheck, setNewPasswordCheck] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
   const navigate = useNavigate();
   const onLogOutIconClick = async (e) => {
@@ -143,57 +145,73 @@ export default function ChangePassword() {
     navigate("../buyer-home");
   };
   const onSubmit = async (e) => {
+    setIsLoading(true);
     e.preventDefault();
     setError("");
-    if (newPassword === "" || newPasswordCheck === "" || currentPassword === "")
+    if (
+      newPassword === "" ||
+      newPasswordCheck === "" ||
+      currentPassword === ""
+    ) {
+      setIsLoading(false);
       return;
+    }
     if (newPassword !== newPasswordCheck) {
+      setIsLoading(false);
       setError("비밀번호와 비밀번호 확인이 일치하지 않습니다");
       return;
     }
     try {
       await loginUtils.changePassword(currentPassword, newPassword);
+      setIsLoading(false);
       navigate("/"); // 비밀번호 변경 성공 시 홈으로 이동
     } catch {
+      setIsLoading(false);
       setError(loginUtils.error);
     }
   };
 
   return (
     <OuterWrapper>
-      <TitleDiv>
-        <ReturnHomeIcon onClick={onHomeIconClick} src={HomeIconRef} />
-        <Title>비밀번호 변경</Title>
-        <LogOutIcon onClick={onLogOutIconClick} src={LogOutRef} />
-      </TitleDiv>
-      <Form onSubmit={onSubmit}>
-        <Input
-          onChange={(e) => setCurrentPassword(e.target.value)}
-          value={currentPassword}
-          name="password"
-          placeholder="Current Password"
-          type="password"
-          required
-        />
-        <Input
-          onChange={(e) => setNewPassword(e.target.value)}
-          value={newPassword}
-          name="password"
-          placeholder="New Password"
-          type="password"
-          required
-        />
-        <Input
-          onChange={(e) => setNewPasswordCheck(e.target.value)}
-          value={newPasswordCheck}
-          name="newPassword"
-          placeholder="New Password Check"
-          type="password"
-          required
-        />
-        <Input type="submit" value={"비밀번호 변경"} />
-      </Form>
-      {error !== "" ? <Error>{error}</Error> : null}
+      {isLoading ? (
+        <Loading />
+      ) : (
+        <>
+          <TitleDiv>
+            <ReturnHomeIcon onClick={onHomeIconClick} src={HomeIconRef} />
+            <Title>비밀번호 변경</Title>
+            <LogOutIcon onClick={onLogOutIconClick} src={LogOutRef} />
+          </TitleDiv>
+          <Form onSubmit={onSubmit}>
+            <Input
+              onChange={(e) => setCurrentPassword(e.target.value)}
+              value={currentPassword}
+              name="password"
+              placeholder="Current Password"
+              type="password"
+              required
+            />
+            <Input
+              onChange={(e) => setNewPassword(e.target.value)}
+              value={newPassword}
+              name="password"
+              placeholder="New Password"
+              type="password"
+              required
+            />
+            <Input
+              onChange={(e) => setNewPasswordCheck(e.target.value)}
+              value={newPasswordCheck}
+              name="newPassword"
+              placeholder="New Password Check"
+              type="password"
+              required
+            />
+            <Input type="submit" value={"비밀번호 변경"} />
+          </Form>
+          {error !== "" ? <Error>{error}</Error> : null}
+        </>
+      )}
     </OuterWrapper>
   );
 }
