@@ -25,7 +25,7 @@ import DeveloperHome from "./developer/developer-home";
 import SellerSelect from "./routes/seller/seller-select";
 import SellerHome from "./routes/seller/seller-home";
 import BuyerSetting from "./routes/buyer/buyer-setting";
-import ModeratorHome from "./routes/Moderator/moderator-home";
+import ModeratorHome from "./routes/moderator/moderator-home";
 import LogHome from "./routes/log/log-home";
 
 const router = createBrowserRouter([
@@ -131,7 +131,7 @@ const router = createBrowserRouter([
     ),
   },
   {
-    path: "/seller-home/:id",
+    path: "/seller-home/seller-team/:id",
     element: (
       <ProtectedSeller>
         <SellerHome />

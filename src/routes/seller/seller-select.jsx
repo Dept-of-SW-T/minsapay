@@ -43,8 +43,7 @@ export default function SellerSelect() {
   const [isLoading, setIsLoading] = useState(true);
 
   const onTeamSelect = (e) => {
-    console.log(e.target.id);
-    navigate("../seller-home/" + e.target.id);
+    navigate("../seller-home/seller-team/" + e.target.id);
   };
 
   useEffect(() => {
@@ -58,20 +57,20 @@ export default function SellerSelect() {
           </TeamElement>
         )),
       );
+      unsubscribe = onSnapshot(sellerFirebase.userDocRef, (doc) => {
+        sellerFirebase.userDoc = doc;
+        sellerFirebase.userDocData = doc.data();
+        setTeamList(
+          sellerFirebase.userDocData.team_list.map((val, index) => (
+            <TeamElement key={index} onClick={onTeamSelect} id={val}>
+              {val}
+            </TeamElement>
+          )),
+        );
+      });
       setIsLoading(false);
     };
     init();
-    unsubscribe = onSnapshot(sellerFirebase.userDocRef, (doc) => {
-      sellerFirebase.userDoc = doc;
-      sellerFirebase.userDocData = doc.data();
-      setTeamList(
-        sellerFirebase.userDocData.team_list.map((val, index) => (
-          <TeamElement key={index} onClick={onTeamSelect} id={val}>
-            {val}
-          </TeamElement>
-        )),
-      );
-    });
     return () => {
       unsubscribe && unsubscribe();
     };

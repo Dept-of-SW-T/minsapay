@@ -27,13 +27,6 @@ import { EmailAuthProvider } from "firebase/auth/cordova";
 const loginUtils = {
   error: "", // auth 함수 처리 과정중의 모든 error들을 다 가져온다 --> if(auth.함수) { 에러 처리 코드 } // error를 초기화하고 함수를 돌리거나 함수 자체로 true false를 return하도록
 
-  isLoggedIn() {
-    return (
-      sessionStorage.getItem(
-        "firebase:authUser:AIzaSyCVstIqjEOq3xYlom7sMy4QQo157mjwvb4:[DEFAULT]",
-      ) !== null
-    );
-  },
   getLoginType() {
     return getCookie("user_type");
   },
@@ -43,6 +36,9 @@ const loginUtils = {
         "firebase:authUser:AIzaSyCVstIqjEOq3xYlom7sMy4QQo157mjwvb4:[DEFAULT]",
       ),
     );
+  },
+  isLoggedIn() {
+    return this.getCurrentUser !== null;
   },
   getUserClass() {
     const sessionValue = this.getCurrentUser().email;

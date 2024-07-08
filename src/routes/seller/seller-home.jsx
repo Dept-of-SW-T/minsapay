@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { sellerFirebase } from "../../features/seller-firebase-interaction";
 import OrderElementSeller from "../../components/seller/order-element-seller";
 import CoupleList from "../../components/CPU/couple-list";
@@ -21,10 +21,14 @@ export default function SellerHome() {
   const [orderList, setOrderList] = useState([]);
   const currentTeam = useParams().id;
   const [isLoading, setIsLoading] = useState(true);
+  const navigate = useNavigate();
   useEffect(() => {
     let unsubscribe = null;
     const init = async () => {
-      //await sellerFirebase.init();
+      await sellerFirebase.init();
+      if (!sellerFirebase.userDocData.team_list.includes(currentTeam)) {
+        navigate("../seller-home/seller-select");
+      }
       await sellerFirebase.getTeamData(currentTeam);
       setOrderList(
         sellerFirebase.orderHistory
@@ -42,32 +46,34 @@ export default function SellerHome() {
             />
           )),
       );
+      unsubscribe = onSnapshot(sellerFirebase.teamDocRef, (doc) => {
+        sellerFirebase.teamDoc = doc;
+        sellerFirebase.teamDocData = doc.data();
+        sellerFirebase.orderHistory = JSON.parse(
+          sellerFirebase.teamDocData.order_history,
+        );
+        setOrderList(
+          sellerFirebase.orderHistory
+            .filter(
+              (val) => val.refund_request !== 1 && val.refund_request !== 2,
+            )
+            .toReversed()
+            .map((val, index) => (
+              <OrderElementSeller
+                menuName={val.menu_name}
+                status={val.current_state}
+                id={val.order_id}
+                processor={val.order_processor}
+                buyer={val.buyer_name}
+                receptionTime={val.reception_time}
+                key={index}
+              />
+            )),
+        );
+      });
       setIsLoading(false);
     };
     init();
-    unsubscribe = onSnapshot(sellerFirebase.teamDocRef, (doc) => {
-      sellerFirebase.teamDoc = doc;
-      sellerFirebase.teamDocData = doc.data();
-      sellerFirebase.orderHistory = JSON.parse(
-        sellerFirebase.teamDocData.order_history,
-      );
-      setOrderList(
-        sellerFirebase.orderHistory
-          .filter((val) => val.refund_request !== 1 && val.refund_request !== 2)
-          .toReversed()
-          .map((val, index) => (
-            <OrderElementSeller
-              menuName={val.menu_name}
-              status={val.current_state}
-              id={val.order_id}
-              processor={val.order_processor}
-              buyer={val.buyer_name}
-              receptionTime={val.reception_time}
-              key={index}
-            />
-          )),
-      );
-    });
     return () => {
       unsubscribe && unsubscribe();
     };
