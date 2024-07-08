@@ -90,31 +90,27 @@ export default function MenuDisplayElement({
   return (
     <Wrapper>
       {menuImageUrl === "" ? (
-        <NoImage>
+        <NoImage onClick={onAddToOrderClick}>
           <p
             style={{
               width: "100%",
               textAlign: "center",
-              fontSize: "150%",
+              fontSize: "100%",
             }}
           >
             이미지 없음
           </p>
         </NoImage>
       ) : (
-        <MenuImage src={menuImageUrl} />
+        <MenuImage onClick={onAddToOrderClick} src={menuImageUrl} />
       )}
-      <BottomDiv>
+      <BottomDiv onClick={onAddToOrderClick}>
         <TextArea>
           <MenuName>{menuName}</MenuName>
           <MenuPrice>{price}원</MenuPrice>
         </TextArea>
         <AddOrderBox>
-          <AddOrder
-            src={AddToOrder}
-            id={id + ".svg"}
-            onClick={onAddToOrderClick}
-          />
+          <AddOrder src={AddToOrder} id={id + ".svg"} />
         </AddOrderBox>
       </BottomDiv>
     </Wrapper>

@@ -45,7 +45,12 @@ const CPUFirebase = {
       const imageRef = ref(storage, menuItem.imagePath);
       await deleteObject(imageRef);
     }
+    this.menuList.splice(index, 1);
+    await this.updateFirebaseMenuList();
+    // Ensure menuList is updated
+    await this.init();
   },
+
   async uploadMenuImage(boothId, id, file) {
     const storageRef = ref(
       storage,
