@@ -7,6 +7,7 @@ import {
 } from "firebase/storage";
 import { database, storage } from "../firebase";
 import { loginUtils } from "./login-feature";
+import { logger } from "./log-feature";
 
 const CPUFirebase = {
   userDocRef: undefined,
@@ -45,7 +46,12 @@ const CPUFirebase = {
       const imageRef = ref(storage, menuItem.imagePath);
       await deleteObject(imageRef);
     }
+    this.menuList.splice(index, 1);
+    await this.updateFirebaseMenuList();
+    // Ensure menuList is updated
+    await this.init();
   },
+
   async uploadMenuImage(boothId, id, file) {
     const storageRef = ref(
       storage,
@@ -85,6 +91,12 @@ const CPUFirebase = {
             break;
           }
         }
+        await logger.log({
+          type: "transaction",
+          sender: this.userDoc.id,
+          reciever: buyerID,
+          amount: this.orderHistory[i].price,
+        });
         await setDoc(buyerDocRef, buyerDocData);
         await setDoc(this.userDocRef, this.userDocData);
         break;

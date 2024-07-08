@@ -4,6 +4,7 @@ import { useEffect, useState, useRef } from "react";
 import { CPUFirebase } from "../../features/CPU-firebase-interaction";
 import { onSnapshot } from "firebase/firestore";
 import Loading from "../../components/loading";
+import { MINSAPAY_TITLE } from "../../components/theme-definition";
 import { loginUtils } from "../../features/login-feature";
 
 const Wrapper = styled.div`
@@ -17,6 +18,10 @@ const Wrapper = styled.div`
 const StyledCPUHeader = styled(CPUHeader)`
   width: 100%;
   margin: 0;
+  position: absolute;
+
+  top: 0; /* 상단에 고정 */
+  z-index: 1000; /* 다른 요소들 위에 표시되도록 */
 `;
 
 const Title = styled.h1`
@@ -70,6 +75,7 @@ const Table = styled.table`
   border-collapse: collapse;
   background-color: #fff;
   border: 1px solid #ccc;
+  font-family: ${MINSAPAY_TITLE};
 `;
 
 const Th = styled.th`
@@ -124,6 +130,7 @@ export default function ChangeMenu() {
       CPUFirebase.menuList.splice(index, 1);
       await CPUFirebase.updateFirebaseMenuList();
     }
+    window.location.reload();
   };
 
   const onPriceChange = (e) => {
@@ -172,6 +179,7 @@ export default function ChangeMenu() {
     });
 
     await CPUFirebase.updateFirebaseMenuList();
+    setMenuList([...CPUFirebase.menuList]);
     setName("");
     setPrice(0);
     setImage(null);
@@ -205,6 +213,7 @@ export default function ChangeMenu() {
       };
 
       await CPUFirebase.updateFirebaseMenuList();
+      setMenuList([...CPUFirebase.menuList]);
       setEditId(null);
       setEditImage(null);
     }

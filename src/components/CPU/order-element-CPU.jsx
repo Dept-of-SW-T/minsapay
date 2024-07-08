@@ -83,9 +83,11 @@ export default function OrderElementCPU({
       <Text>{time}</Text>
       <Text>{status}</Text>
       <Text
-        className={mode === "refund" ? "approve-refund" : ""}
+        className={
+          mode === "refund" && refundRequest === 1 ? "approve-refund" : ""
+        }
         id={id}
-        onClick={onClick}
+        onClick={mode === "refund" && refundRequest === 1 ? onClick : null}
       >
         {refundRequest == 0
           ? "특이사항 없음"

@@ -27,6 +27,7 @@ const MenuImage = styled.img`
 const NoImage = styled.div`
   height: 13vh;
   aspect-ratio: 1;
+  font-size: 2vh;
   border-top-left-radius: calc(1.5vw - 3px);
   border-bottom-left-radius: calc(1.5vw - 3px);
   display: flex;

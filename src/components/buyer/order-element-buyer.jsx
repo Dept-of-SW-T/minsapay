@@ -30,14 +30,40 @@ const Text = styled.span`
   justify-content: center;
   text-align: center;
   background-color: white;
-  &#first-child {
-    border-top-left-radius: 6px;
-    border-bottom-left-radius: 6px;
+  cursor: pointer; /* 마우스 포인터 모양으로 변경 */
+  transition: background-color 0.3s ease; /* 호버 시 부드러운 애니메이션 효과 */
+
+  /* 첫 번째 요소에만 적용되는 스타일 */
+  &:first-child {
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
+    padding-left: 10px; /* 좌측 여백 추가 */
   }
+  &:price {
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
+    padding-left: 10px; /* 좌측 여백 추가 */
+  }
+  /* 환불 요청 버튼 스타일 */
   &.refund-request {
+    background-color: #f44336; /* 배경색 */
+    color: white; /* 글자색 */
+    border: 2px solid transparent; /* 테두리 */
+    padding: 8px 16px; /* 내부 여백 */
+    border-radius: 18px; /* 모서리 둥글게 */
+    text-transform: uppercase; /* 대문자 변환 */
+    margin-left: 0.5vh;
+    margin-top: 0.5vh;
+    margin-bottom: 0.5vh;
+    outline: none; /* 포커스 테두리 제거 */
+    width: 35px;
+
     &:hover {
-      background-color: #eee;
-      cursor: pointer;
+      background-color: #d32f2f; /* 호버 시 배경색 변경 */
+    }
+
+    &:active {
+      background-color: #b71c1c; /* 클릭 시 배경색 변경 */
     }
   }
 `;
@@ -73,6 +99,7 @@ export default function OrderElementBuyer({
     <Wrapper style={{ backgroundColor: `${backgroundColor(status)}` }}>
       <Text id="first-child">{teamName}</Text>
       <Text>{menuName}</Text>
+      <Text className="price">{price}원</Text>
       <Text>{price}원</Text>
       {refundRequest === 2 ? (
         <Text>환불 완료됨</Text>
