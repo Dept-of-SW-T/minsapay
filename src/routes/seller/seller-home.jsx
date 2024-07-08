@@ -28,6 +28,7 @@ export default function SellerHome() {
       await sellerFirebase.getTeamData(currentTeam);
       setOrderList(
         sellerFirebase.orderHistory
+          .filter((val) => val.refund_request !== 1 && val.refund_request !== 2)
           .toReversed()
           .map((val, index) => (
             <OrderElementSeller
@@ -52,6 +53,7 @@ export default function SellerHome() {
       );
       setOrderList(
         sellerFirebase.orderHistory
+          .filter((val) => val.refund_request !== 1 && val.refund_request !== 2)
           .toReversed()
           .map((val, index) => (
             <OrderElementSeller
