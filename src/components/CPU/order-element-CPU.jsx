@@ -6,6 +6,7 @@ import {
   ORDER_REQUEST,
   REFUND_OR_RECEIPT_COMPLETE,
   MINSAPAY_FONT,
+  REFUND_REQUEST,
 } from "../theme-definition";
 import { CPUFirebase } from "../../features/CPU-firebase-interaction";
 
@@ -54,19 +55,23 @@ export default function OrderElementCPU({
 }) {
   // 주문 요청을 띄우는 element
   const backgroundColor = () => {
-    switch (status) {
-      case "주문요청":
-        return ORDER_REQUEST;
-      case "처리중":
-        return ORDER_ONPROCESS;
-      case "처리완료":
-        return ORDER_COMPLETE;
-      // case "환불요청":
-      //   return REFUND_REQUEST;
-      // case "승인하기":
-      //   return REFUND_REQUEST;
-      default:
+    switch (refundRequest) {
+      case 1:
+        return REFUND_REQUEST;
+      case 2:
         return REFUND_OR_RECEIPT_COMPLETE;
+      default: {
+        switch (status) {
+          case "주문요청":
+            return ORDER_REQUEST;
+          case "처리중":
+            return ORDER_ONPROCESS;
+          case "처리완료":
+            return ORDER_COMPLETE;
+          default:
+            return REFUND_OR_RECEIPT_COMPLETE;
+        }
+      }
     }
   };
   async function onClick(e) {
@@ -77,7 +82,7 @@ export default function OrderElementCPU({
     }
   }
   return (
-    <Wrapper style={{ backgroundColor: `${backgroundColor(status)}` }}>
+    <Wrapper style={{ backgroundColor: `${backgroundColor()}` }}>
       <Text id="first-child">{menuName}</Text>
       <Text>{userName}</Text>
       <Text>{time}</Text>

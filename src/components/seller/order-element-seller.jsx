@@ -101,7 +101,7 @@ export default function OrderElementBuyer({
   const [processorState, setProcessorState] = useState(processor);
 
   const backgroundColor = () => {
-    switch (state) {
+    switch (status) {
       case "주문요청":
         return ORDER_REQUEST;
       case "처리중":
@@ -166,7 +166,7 @@ export default function OrderElementBuyer({
   }
 
   return (
-    <Wrapper style={{ backgroundColor: backgroundColor(state) }}>
+    <Wrapper style={{ backgroundColor: backgroundColor() }}>
       <FlexWrapper>
         <Text style={{ flexBasis: "20%" }}>{menuName}</Text>
 
