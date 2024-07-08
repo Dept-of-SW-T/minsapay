@@ -5,6 +5,7 @@ import {
   ORDER_ONPROCESS,
   ORDER_REQUEST,
   REFUND_OR_RECEIPT_COMPLETE,
+  REFUND_REQUEST,
 } from "../theme-definition";
 import { buyerFirebase } from "../../features/buyer-firebase-interaction";
 
@@ -30,13 +31,13 @@ const Text = styled.span`
   justify-content: center;
   text-align: center;
   background-color: white;
-  cursor: pointer; /* 마우스 포인터 모양으로 변경 */
+  //cursor: pointer; /* 마우스 포인터 모양으로 변경 */
   transition: background-color 0.3s ease; /* 호버 시 부드러운 애니메이션 효과 */
 
   /* 첫 번째 요소에만 적용되는 스타일 */
   &:first-child {
-    border-top-left-radius: 8px;
-    border-bottom-left-radius: 8px;
+    border-top-left-radius: 6px;
+    border-bottom-left-radius: 6px;
     padding-left: 10px; /* 좌측 여백 추가 */
   }
   &:price {
@@ -57,8 +58,8 @@ const Text = styled.span`
     margin-bottom: 0.5vh;
     outline: none; /* 포커스 테두리 제거 */
     width: 35px;
-
     &:hover {
+      cursor: pointer;
       background-color: #d32f2f; /* 호버 시 배경색 변경 */
     }
 
@@ -78,15 +79,23 @@ export default function OrderElementBuyer({
 }) {
   // 주문 요청을 띄우는 element
   const backgroundColor = () => {
-    switch (status) {
-      case "주문요청":
-        return ORDER_REQUEST;
-      case "처리중":
-        return ORDER_ONPROCESS;
-      case "처리완료":
-        return ORDER_COMPLETE;
-      default:
+    switch (refundRequest) {
+      case 1:
+        return REFUND_REQUEST;
+      case 2:
         return REFUND_OR_RECEIPT_COMPLETE;
+      default: {
+        switch (status) {
+          case "주문요청":
+            return ORDER_REQUEST;
+          case "처리중":
+            return ORDER_ONPROCESS;
+          case "처리완료":
+            return ORDER_COMPLETE;
+          default:
+            return REFUND_OR_RECEIPT_COMPLETE;
+        }
+      }
     }
   };
   async function onClick(e) {
@@ -96,7 +105,7 @@ export default function OrderElementBuyer({
     }
   }
   return (
-    <Wrapper style={{ backgroundColor: `${backgroundColor(status)}` }}>
+    <Wrapper style={{ backgroundColor: `${backgroundColor()}` }}>
       <Text id="first-child">{teamName}</Text>
       <Text>{menuName}</Text>
       <Text className="price">{price}원</Text>

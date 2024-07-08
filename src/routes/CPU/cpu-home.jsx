@@ -149,7 +149,7 @@ const BodyDiv = styled.div`
 // add isloading to total page and image upload
 export default function CPUHome() {
   const [balance, setBalance] = useState(0);
-  const [kioskImage, setKioskImage] = useState("");
+  const [kioskImage, setKioskImage] = useState("khgyhgjhfg");
   const [orderList, setOrderList] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
