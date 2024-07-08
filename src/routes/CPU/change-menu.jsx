@@ -147,6 +147,7 @@ export default function ChangeMenu() {
   };
 
   const onMenuAddClick = async (e) => {
+    setIsLoading(true);
     e.preventDefault();
     const newId = Date.now();
     let imageDownloadUrl = "";
@@ -177,6 +178,7 @@ export default function ChangeMenu() {
     if (fileInputRef.current) {
       fileInputRef.current.value = ""; // Clear the file input field
     }
+    setIsLoading(false);
   };
 
   const handleEdit = (id, price) => {
