@@ -22,6 +22,10 @@ export function ProtectedRoute() {
       return <Navigate to="/login" />;
   }
 }
+export function ProtectedLoginSetting({ children }) {
+  if (!loginUtils.isLoggedIn()) return <Navigate to="/login" />;
+  else return children;
+}
 export function ProtectedDeveloper({ children }) {
   if (!loginUtils.isLoggedIn()) return <Navigate to="/login" />;
   const userClass = loginUtils.getUserClass();

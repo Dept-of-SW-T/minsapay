@@ -11,6 +11,7 @@ import {
   ProtectedRoute,
   ProtectedSeller,
   ProtectedLog,
+  ProtectedLoginSetting,
 } from "./components/protected-routes";
 import { BACKGROUND_GRAY } from "./components/theme-definition";
 import BuyerHome from "./routes/buyer/buyer-home";
@@ -25,9 +26,9 @@ import KioskThankYou from "./routes/kiosk/kiosk-thankyou";
 import DeveloperHome from "./developer/developer-home";
 import SellerSelect from "./routes/seller/seller-select";
 import SellerHome from "./routes/seller/seller-home";
-import BuyerSetting from "./routes/buyer/buyer-setting";
 import ModeratorHome from "./routes/moderator/moderator-home";
 import LogHome from "./routes/log/log-home";
+import ChangePassword from "./routes/change-password";
 
 const router = createBrowserRouter([
   // 루팅
@@ -44,6 +45,14 @@ const router = createBrowserRouter([
     element: <ProtectedRoute />, // 기본 화면으로 실제로는 절대로 display 되지는 않고 사용자를 다른 페이지로 보내는데 사용됨
   },
   {
+    path: "/login-setting", // 개발자용
+    element: (
+      <ProtectedLoginSetting>
+        <ChangePassword />
+      </ProtectedLoginSetting>
+    ),
+  },
+  {
     path: "/buyer-home", // 개발자용
     element: (
       <ProtectedBuyer>
@@ -56,14 +65,6 @@ const router = createBrowserRouter([
     element: (
       <ProtectedBuyer>
         <BuyerPayment />
-      </ProtectedBuyer>
-    ),
-  },
-  {
-    path: "/buyer-home/buyer-setting", // 개발자용
-    element: (
-      <ProtectedBuyer>
-        <BuyerSetting />
       </ProtectedBuyer>
     ),
   },
