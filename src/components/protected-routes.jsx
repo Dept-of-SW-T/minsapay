@@ -76,7 +76,7 @@ export function ProtectedModerator({ children }) {
 }
 
 export function ProtectedLog({ children }) {
-  if (!loginUtils.isLoggedIn()) return <Navigate to="login" />;
+  if (!loginUtils.isLoggedIn()) return <Navigate to="/login" />;
   const userClass = loginUtils.getUserClass();
   if (userClass !== "moderator" && userClass !== "developer") {
     return <Navigate to="/" />;
