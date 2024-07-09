@@ -126,7 +126,7 @@ const Error = styled.span`
   margin-top: 10px; /* 에러 메시지의 상단 여백 추가 */
 `;
 
-export default function ChangePassword() {
+export default function LoginSetting() {
   const [newPassword, setNewPassword] = useState("");
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPasswordCheck, setNewPasswordCheck] = useState("");

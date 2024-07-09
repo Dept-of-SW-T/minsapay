@@ -28,7 +28,7 @@ import SellerSelect from "./routes/seller/seller-select";
 import SellerHome from "./routes/seller/seller-home";
 import ModeratorHome from "./routes/moderator/moderator-home";
 import LogHome from "./routes/log/log-home";
-import ChangePassword from "./routes/change-password";
+import ChangePassword from "./routes/login-setting";
 
 const router = createBrowserRouter([
   // 루팅
