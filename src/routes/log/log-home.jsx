@@ -90,6 +90,14 @@ const TitleEl = styled.div`
   padding: calc(40px + 10vh) 0 40px 0;
 `;
 
+const IconWrapper = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  width: 50%;
+  height: 100%;
+`;
+
 const LogHeader = () => {
   const navigate = useNavigate();
   const onLogoClick = (e) => {
@@ -125,8 +133,10 @@ const LogHeader = () => {
         onMouseLeave={onLogoLeave}
         src={LogoRef}
       />
-      <BackIcon onClick={onBackIconClick} src={LogOutRef} />
-      <LogOutIcon onClick={onLogOutIconClick} src={LogOutRef} />
+      <IconWrapper>
+        <BackIcon onClick={onBackIconClick} src={LogOutRef} />
+        <LogOutIcon onClick={onLogOutIconClick} src={LogOutRef} />
+      </IconWrapper>
     </HeaderDiv>
   );
 };

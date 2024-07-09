@@ -26,6 +26,13 @@ const Logo = styled.img`
     cursor: pointer;
   }
 `;
+const IconWrapper = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  width: 50%;
+  height: 100%;
+`;
 const LogOutIcon = styled.img`
   height: 80%;
   /* margin-right: 11px; */
@@ -80,8 +87,10 @@ const ModeratorHeader = () => {
         onMouseLeave={onLogoLeave}
         src={LogoRef}
       />
-      <LogIcon onClick={onLogIconClick} src={LogOutRef} />
-      <LogOutIcon onClick={onLogOutIconClick} src={LogOutRef} />
+      <IconWrapper>
+        <LogIcon onClick={onLogIconClick} src={LogOutRef} />
+        <LogOutIcon onClick={onLogOutIconClick} src={LogOutRef} />
+      </IconWrapper>
     </HeaderDiv>
   );
 };
