@@ -69,7 +69,7 @@ const ButtonWrapper = styled.div`
   align-items: start;
 `;
 
-export function UserInfo({ userId }) {
+export function UserInfo({ userId, hideInfoPanel }) {
   const [balanceChangeVal, setBalanceChangeVal] = useState(0);
   const [selectedUser, setSelectedUser] = useState(
     moderatorFirebase.usersList[moderatorFirebase.usersIndex[userId]],
@@ -100,11 +100,13 @@ export function UserInfo({ userId }) {
     event.preventDefault();
     moderatorFirebase.changeBalance(userId, balanceChangeVal);
     setBalanceChangeVal(0);
+    hideInfoPanel();
   };
 
   const onClick = () => {
     moderatorFirebase.changeBalance(userId, balanceChangeVal);
     setBalanceChangeVal(0);
+    hideInfoPanel();
   };
 
   const buttonValues = [10000, 5000, 1000, 500];

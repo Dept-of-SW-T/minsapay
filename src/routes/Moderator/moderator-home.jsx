@@ -131,7 +131,14 @@ export default function ModeratorHome() {
       <SearchElement searchFunc={setNameFilter} inputLabel={"이름으로 검색"} />
       <BodyDiv>
         <SingleList dataList={userElementList} />
-        {selectedUser === null ? null : <UserInfo userId={selectedUser.id} />}
+        {selectedUser === null ? null : (
+          <UserInfo
+            userId={selectedUser.id}
+            hideInfoPanel={() => {
+              setSelectedUser(null);
+            }}
+          />
+        )}
       </BodyDiv>
     </Wrapper>
   );

@@ -2,10 +2,84 @@ import styled from "styled-components";
 import { logFirebase } from "../../features/log-firebase-interaction";
 import { onSnapshot, getDoc } from "firebase/firestore";
 import { useState, useEffect } from "react";
+import LogoRef from "../../images/NewLogo.png";
+import LogOutRef from "../../images/LogOut.svg";
+import GoHomeRef from "../../images/CPUHome.svg";
+import { useNavigate } from "react-router-dom";
+import { loginUtils } from "../../features/login-feature";
+
+const HeaderDiv = styled.div`
+  width: 95%;
+  margin: 0 auto;
+  height: 10vh;
+  padding: 0 2.5%;
+  background-color: white;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+`;
+const Logo = styled.img`
+  height: 90%;
+  /* margin-left: 11px; */
+  aspect-ratio: 1;
+  &:hover {
+    cursor: pointer;
+  }
+`;
+const LogOutIcon = styled.img`
+  height: 80%;
+  /* margin-right: 11px; */
+  aspect-ratio: 1;
+  /* margin-left: auto; */
+  &:hover {
+    cursor: pointer;
+  }
+`;
+
+const LogHeader = () => {
+  const navigate = useNavigate();
+  const onLogoClick = (e) => {
+    // logo 누르면 홈으로 navigate
+    e.preventDefault();
+    navigate("../cpu-home");
+  };
+  const onLogOutIconClick = async (e) => {
+    // logout 누르면 confirm 띄우고 로그아웃 후 home으로 navigate --> 저절로 logout화면으로 protected routes를 통해 연결
+    e.preventDefault();
+    if (!confirm("로그아웃 하시겠습니까?")) return;
+    await loginUtils.signOut();
+    navigate("../../");
+  };
+  const onLogoHover = (e) => {
+    const logoImage = e.target;
+    logoImage.src = GoHomeRef;
+  };
+  const onLogoLeave = (e) => {
+    const logoImage = e.target;
+    logoImage.src = LogoRef;
+  }; // logo에 hover하면 이미지가 바뀌도록
+
+  return (
+    <HeaderDiv>
+      <Logo
+        onClick={onLogoClick}
+        onMouseOver={onLogoHover}
+        onMouseLeave={onLogoLeave}
+        src={LogoRef}
+      />
+      <LogOutIcon onClick={onLogOutIconClick} src={LogOutRef} />
+    </HeaderDiv>
+  );
+};
 
 const Wrapper = styled.div`
   width: 100vw;
   height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-direction: column;
 `;
 
 const Table = styled.table`
@@ -53,13 +127,13 @@ export default function LogHome() {
 
   return (
     <Wrapper>
-      <h1>hi</h1>
+      <LogHeader />
       <Table>
         <thead>
           <tr>
             <Th>거래시간</Th>
-            <Th>받은사람</Th>
             <Th>보낸사람</Th>
+            <Th>받은사람</Th>
             <Th>거래액</Th>
           </tr>
         </thead>
@@ -67,8 +141,8 @@ export default function LogHome() {
           {log.map((logEl, index) => (
             <tr key={index}>
               <Td>{logEl.time}</Td>
-              <Td>{logEl.reciever}</Td>
               <Td>{logEl.sender}</Td>
+              <Td>{logEl.reciever}</Td>
               <Td>{logEl.amount}</Td>
             </tr>
           ))}
