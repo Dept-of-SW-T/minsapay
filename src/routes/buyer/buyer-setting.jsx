@@ -14,32 +14,37 @@ import Loading from "../../components/loading";
 
 const OuterWrapper = styled.div`
   width: 100vw;
+  height: 100vh; /* 전체 화면 높이 설정 */
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center; /* 세로로도 가운데 정렬 */
+  padding: 20px; /* 모바일에서 여백을 추가 */
+  box-sizing: border-box;
 `;
+
 const LogOutIcon = styled.img`
-  height: 80%;
-  /* margin-right: 11px; */
+  height: 40px;
+  width: 40px; /* 고정 크기 */
   aspect-ratio: 1;
-  /* margin-left: auto; */
+  margin-left: 10px; /* 제목과의 간격 조정 */
   &:hover {
     cursor: pointer;
   }
 `;
 
 const TitleDiv = styled.div`
-  margin-top: 20%;
+  margin-top: 20px;
   width: 100%;
-  height: 10%;
   display: flex;
   flex-direction: row;
-  justify-content: space-evenly;
+  justify-content: center; /* 가운데 정렬 */
   align-items: center;
+  padding: 0 20px; /* 좌우 여백 추가 */
 `;
 
 const Title = styled.span`
-  font-size: 7vw;
+  font-size: 6vh;
   @media only screen and (max-width: 1000px) {
     font-size: calc(0.3vw + 2em);
   }
@@ -47,27 +52,28 @@ const Title = styled.span`
 `;
 
 const Form = styled.form`
-  height: 50%;
-  padding-top: 20%;
-  margin-bottom: 1.6%;
+  width: 100%;
+  max-width: 600px; /* 최대 너비 설정 */
+  padding: 20px;
+  margin-top: 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 100%;
   font-family: ${MINSAPAY_FONT};
+  box-sizing: border-box;
 `;
 
 const Input = styled.input`
-  padding: 1.3% 0px;
+  padding: 10px;
   border: none;
-  width: 80%;
+  width: 100%;
   font-size: 3vh;
   @media only screen and (max-width: 700px) {
     font-size: 2vh;
   }
   outline: none;
   border-bottom: 3px solid ${BORDER_GRAY};
-  margin-top: 7%;
+  margin-top: 20px;
   font-family: ${MINSAPAY_FONT};
 
   &:focus {
@@ -81,23 +87,15 @@ const Input = styled.input`
     }
   }
   &[type="submit"] {
-    margin-top: 7%;
-    width: 20%;
-    @media only screen and (max-width: 700px) {
-      width: 25%;
-    }
-    height: 10%;
-    @media only screen and (max-width: 700px) {
-      height: 12%;
-    }
+    margin-top: 20px;
+    width: 100%;
+    max-width: 300px; /* 최대 너비 설정 */
+    height: 40px;
     border-radius: 50px;
     border-bottom: 0px;
     background-color: ${MINSAPAY_BLUE};
     color: white;
-    font-size: 3vh;
-    @media only screen and (max-width: 700px) {
-      font-size: calc(0.07vw + 0.78em);
-    }
+    font-size: 2vh;
     font-weight: normal;
     font-family: ${MINSAPAY_FONT};
     &:hover {
@@ -109,22 +107,23 @@ const Input = styled.input`
 `;
 
 const ReturnHomeIcon = styled.img`
-  height: 80%;
-  /* margin-right: 11px; */
+  height: 40px;
+  width: 40px; /* 고정 크기 */
   aspect-ratio: 1;
-  /* margin-left: auto; */
+  margin-right: 10px; /* 제목과의 간격 조정 */
   &:hover {
     cursor: pointer;
   }
 `;
+
 const Error = styled.span`
   font-size: 1.3vh;
   @media only screen and (max-width: 700px) {
-    font-size: calc(0.58em);
+    font-size: 2vh;
   }
   color: tomato;
   font-family: ${MINSAPAY_FONT};
-  margin-bottom: 4%;
+  margin-top: 10px; /* 에러 메시지의 상단 여백 추가 */
 `;
 
 export default function ChangePassword() {
