@@ -7,6 +7,7 @@ import LogOutRef from "../../images/LogOut.svg";
 import GoHomeRef from "../../images/CPUHome.svg";
 import { useNavigate } from "react-router-dom";
 import { loginUtils } from "../../features/login-feature";
+import { MINSAPAY_TITLE } from "../../components/theme-definition";
 
 const HeaderDiv = styled.div`
   width: 95%;
@@ -18,6 +19,9 @@ const HeaderDiv = styled.div`
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
+  position: fixed;
+  left: 0;
+  top: 0;
 `;
 const Logo = styled.img`
   height: 90%;
@@ -37,12 +41,51 @@ const LogOutIcon = styled.img`
   }
 `;
 
+const Wrapper = styled.div`
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-direction: column;
+  position: relative;
+`;
+
+const Table = styled.table`
+  width: 90%;
+  max-width: 800px;
+  margin-bottom: 50px;
+  border-collapse: collapse;
+  background-color: #fff;
+  border: 1px solid #ccc;
+`;
+
+const Th = styled.th`
+  padding: 10px;
+  border: 1px solid #ccc;
+  background-color: #f0f0f0;
+  font-size: 14px;
+`;
+const Td = styled.td`
+  padding: 10px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+  text-align: center; /* 텍스트 가운데 정렬 */
+  vertical-align: middle; /* 세로 가운데 정렬 */
+`;
+
+const TitleEl = styled.div`
+  font-size: 30px;
+  font-family: ${MINSAPAY_TITLE};
+  padding: calc(40px + 10vh) 0 40px 0;
+`;
+
 const LogHeader = () => {
   const navigate = useNavigate();
   const onLogoClick = (e) => {
     // logo 누르면 홈으로 navigate
     e.preventDefault();
-    navigate("../cpu-home");
+    navigate("../log");
   };
   const onLogOutIconClick = async (e) => {
     // logout 누르면 confirm 띄우고 로그아웃 후 home으로 navigate --> 저절로 logout화면으로 protected routes를 통해 연결
@@ -73,39 +116,6 @@ const LogHeader = () => {
   );
 };
 
-const Wrapper = styled.div`
-  width: 100vw;
-  height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  flex-direction: column;
-`;
-
-const Table = styled.table`
-  width: 90%;
-  max-width: 800px;
-  margin-top: 50px;
-  margin-bottom: 50px;
-  border-collapse: collapse;
-  background-color: #fff;
-  border: 1px solid #ccc;
-`;
-
-const Th = styled.th`
-  padding: 10px;
-  border: 1px solid #ccc;
-  background-color: #f0f0f0;
-  font-size: 14px;
-`;
-const Td = styled.td`
-  padding: 10px;
-  border: 1px solid #ccc;
-  font-size: 14px;
-  text-align: center; /* 텍스트 가운데 정렬 */
-  vertical-align: middle; /* 세로 가운데 정렬 */
-`;
-
 export default function LogHome() {
   const [log, setLog] = useState([]);
 
@@ -113,11 +123,11 @@ export default function LogHome() {
     let unsubscribe = null;
     const init = async () => {
       await logFirebase.init();
-      setLog((await getDoc(logFirebase.logRef)).data().log);
+      setLog((await getDoc(logFirebase.logRef)).data().log.toReversed());
     };
     init();
     unsubscribe = onSnapshot(logFirebase.logRef, (snapshot) => {
-      setLog(snapshot.data().log);
+      setLog(snapshot.data().log.toReversed());
     });
 
     return () => {
@@ -128,6 +138,7 @@ export default function LogHome() {
   return (
     <Wrapper>
       <LogHeader />
+      <TitleEl>Log</TitleEl>
       <Table>
         <thead>
           <tr>
