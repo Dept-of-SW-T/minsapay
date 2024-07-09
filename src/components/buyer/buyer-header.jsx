@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import LogoRef from "../../images/LogoMinsapay.svg";
+import LogoRef from "../../images/NewLogo.png";
 import SettingRef from "../../images/Setting.svg";
 import { useNavigate } from "react-router-dom";
 import { MINSAPAY_TITLE } from "../../components/theme-definition";
@@ -19,7 +19,7 @@ const HeaderDiv = styled.div`
   font-family: ${MINSAPAY_TITLE};
 `;
 const Logo = styled.img`
-  height: 60%;
+  height: 90%;
   /* margin-left: 11px; */
   aspect-ratio: 1;
   /*   &:hover {

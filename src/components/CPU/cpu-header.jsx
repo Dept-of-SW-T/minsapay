@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import LogoRef from "../../images/LogoMinsapay.svg";
+import LogoRef from "../../images/NewLogo.png";
 import LogOutRef from "../../images/LogOut.svg";
 import GoHomeRef from "../../images/CPUHome.svg";
 import { useNavigate } from "react-router-dom";
@@ -19,7 +19,7 @@ const HeaderDiv = styled.div`
   justify-content: space-between;
 `;
 const Logo = styled.img`
-  height: 80%;
+  height: 110%;
   /* margin-left: 11px; */
   aspect-ratio: 1;
   &:hover {

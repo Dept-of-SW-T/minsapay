@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { loginUtils } from "../features/login-feature";
 import styled from "styled-components";
-import Logo from "../images/LogoMinsapay.svg";
+import Logo from "../images/NewLogo.png";
 import { useNavigate } from "react-router-dom";
 import {
   BORDER_GRAY,
@@ -64,7 +64,7 @@ const TitleDiv = styled.div`
   flex-direction: column;
   justify-content: space-evenly;
   align-items: center;
-  margin-bottom: 10%;
+  margin-bottom: 1%5;
 `;
 const Title = styled.span`
   font-size: 2vw;
@@ -79,10 +79,11 @@ const ImgDiv = styled.div`
   flex-direction: row;
   justify-content: space-evenly;
   align-items: center;
-  margin-bottom: 12%;
+  margin-bottom: 10%;
+  margin-top: 10%;
 `;
 const Image = styled.img`
-  height: 140%;
+  height: 220%;
 `;
 const Form = styled.form`
   height: 50%;
