@@ -7,6 +7,7 @@ import {
 } from "../../components/theme-definition";
 import { moderatorFirebase } from "../../features/moderator-firebase-interaction";
 import { onSnapshot } from "firebase/firestore";
+import { MINSAPAY_FONT } from "../../components/theme-definition";
 
 const Wrapper = styled.div`
   width: 50%;
@@ -69,7 +70,27 @@ const ButtonWrapper = styled.div`
   align-items: start;
 `;
 
-export function UserInfo({ userId }) {
+const Input = styled.input.attrs({
+  type: "number",
+})`
+  padding: 10px;
+  border: none;
+  width: 100%;
+  font-size: 3vh;
+  @media only screen and (max-width: 700px) {
+    font-size: 2vh;
+  }
+  outline: none;
+  border-bottom: 3px solid ${BORDER_GRAY};
+  margin-top: 20px;
+  font-family: ${MINSAPAY_FONT};
+
+  &:focus {
+    border-bottom: 3px solid #444;
+  }
+`;
+
+export function UserInfo({ userId, hideInfoPanel }) {
   const [balanceChangeVal, setBalanceChangeVal] = useState(0);
   const [selectedUser, setSelectedUser] = useState(
     moderatorFirebase.usersList[moderatorFirebase.usersIndex[userId]],
@@ -100,11 +121,13 @@ export function UserInfo({ userId }) {
     event.preventDefault();
     moderatorFirebase.changeBalance(userId, balanceChangeVal);
     setBalanceChangeVal(0);
+    hideInfoPanel();
   };
 
   const onClick = () => {
     moderatorFirebase.changeBalance(userId, balanceChangeVal);
     setBalanceChangeVal(0);
+    hideInfoPanel();
   };
 
   const buttonValues = [10000, 5000, 1000, 500];
@@ -113,12 +136,12 @@ export function UserInfo({ userId }) {
       <Text>사용자: {selectedUser.data().username}</Text>
       <Text>보유 금액: {selectedUser.data().balance}</Text>
       <form onSubmit={onSubmit}>
-        <input
+        <Input
           type="number"
           onChange={onChange}
           value={balanceChangeVal}
           placeholder="변경할 금액 입력"
-        ></input>
+        ></Input>
       </form>
       <ButtonWrapper>
         {buttonValues.map((value) => {
@@ -134,7 +157,6 @@ export function UserInfo({ userId }) {
           );
         })}
       </ButtonWrapper>
-      <Btn onClick={() => setBalanceChangeVal(0)}>Clear</Btn>
       <ButtonWrapper>
         {buttonValues.map((value) => {
           return (
@@ -149,6 +171,7 @@ export function UserInfo({ userId }) {
           );
         })}
       </ButtonWrapper>
+      <Btn onClick={() => setBalanceChangeVal(0)}>Clear</Btn>
       <Btn onClick={onClick}>반영하기</Btn>
     </Wrapper>
   );
