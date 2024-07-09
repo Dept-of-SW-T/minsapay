@@ -10,8 +10,9 @@ const Wrapper = styled.div`
   width: 100vw;
 `;
 const KioskImage = styled.img`
-  width: 100%;
-  height: 100%;
+  height: 100%; // 부모 요소의 전체 높이
+  width: 100%; // 부모 요소의 전체 너비
+  object-fit: cover; // 이미지 비율을 유지하면서 크기를 조절
 `;
 
 export default function KioskCover() {

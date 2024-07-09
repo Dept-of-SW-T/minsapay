@@ -29,7 +29,7 @@ const FlexWrapper = styled.div`
 
 const Text = styled.span`
   font-family: ${MINSAPAY_TITLE};
-  font-size: 20px;
+  font-size: 15px;
   @media only screen and (max-width: 768px) {
     font-size: 1.85vh;
   }
@@ -82,7 +82,7 @@ const StateButton = styled.div`
   background-color: ${(props) => props.backgroundColor || "white"};
   align-items: center;
   display: flex;
-  border: 1px solid ${BORDER_GRAY};
+
   justify-content: center;
   cursor: pointer;
   border-radius: 50%;
