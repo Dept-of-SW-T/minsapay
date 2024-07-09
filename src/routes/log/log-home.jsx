@@ -41,6 +41,16 @@ const LogOutIcon = styled.img`
   }
 `;
 
+const BackIcon = styled.img`
+  height: 80%;
+  /* margin-right: 11px; */
+  aspect-ratio: 1;
+  /* margin-left: auto; */
+  &:hover {
+    cursor: pointer;
+  }
+`;
+
 const Wrapper = styled.div`
   width: 100vw;
   height: 100vh;
@@ -94,6 +104,10 @@ const LogHeader = () => {
     await loginUtils.signOut();
     navigate("../../");
   };
+  const onBackIconClick = () => {
+    const userClass = loginUtils.getUserClass();
+    if (userClass === "moderator") navigate("../moderator/home");
+  };
   const onLogoHover = (e) => {
     const logoImage = e.target;
     logoImage.src = GoHomeRef;
@@ -111,6 +125,7 @@ const LogHeader = () => {
         onMouseLeave={onLogoLeave}
         src={LogoRef}
       />
+      <BackIcon onClick={onBackIconClick} src={LogOutRef} />
       <LogOutIcon onClick={onLogOutIconClick} src={LogOutRef} />
     </HeaderDiv>
   );

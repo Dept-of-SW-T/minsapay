@@ -140,7 +140,7 @@ const router = createBrowserRouter([
     ),
   },
   {
-    path: "/moderator-home", //금정부 관리 페이지
+    path: "/moderator/home", //금정부 관리 페이지
     element: (
       <ProtectedModerator>
         <ModeratorHome />

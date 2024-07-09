@@ -17,7 +17,7 @@ export function ProtectedRoute() {
     case "seller":
       return <Navigate to="/seller-home/seller-select" />;
     case "moderator":
-      return <Navigate to="/moderator-home" />;
+      return <Navigate to="/moderator/home" />;
     default:
       return <Navigate to="/login" />;
   }
