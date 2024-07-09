@@ -74,3 +74,12 @@ export function ProtectedModerator({ children }) {
   }
   return children;
 }
+
+export function ProtectedLog({ children }) {
+  if (!loginUtils.isLoggedIn()) return <Navigate to="login" />;
+  const userClass = loginUtils.getUserClass();
+  if (userClass !== "moderator" && userClass !== "developer") {
+    return <Navigate to="/" />;
+  }
+  return children;
+}

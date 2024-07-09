@@ -10,6 +10,7 @@ import {
   ProtectedModerator,
   ProtectedRoute,
   ProtectedSeller,
+  ProtectedLog,
 } from "./components/protected-routes";
 import { BACKGROUND_GRAY } from "./components/theme-definition";
 import BuyerHome from "./routes/buyer/buyer-home";
@@ -148,7 +149,11 @@ const router = createBrowserRouter([
   },
   {
     path: "/log",
-    element: <LogHome />,
+    element: (
+      <ProtectedLog>
+        <LogHome />,
+      </ProtectedLog>
+    ),
   },
   {
     path: "/login", // 로그인 화면으로 아무런 보호 조치가 없다.

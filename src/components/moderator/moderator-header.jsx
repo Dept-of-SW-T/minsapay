@@ -35,6 +35,15 @@ const LogOutIcon = styled.img`
     cursor: pointer;
   }
 `;
+const LogIcon = styled.img`
+  height: 80%;
+  /* margin-right: 11px; */
+  aspect-ratio: 1;
+  /* margin-left: auto; */
+  &:hover {
+    cursor: pointer;
+  }
+`;
 
 const ModeratorHeader = () => {
   const navigate = useNavigate();
@@ -42,6 +51,10 @@ const ModeratorHeader = () => {
     // logo 누르면 홈으로 navigate
     e.preventDefault();
     navigate("../cpu-home");
+  };
+  const onLogIconClick = async (e) => {
+    e.preventDefault();
+    navigate("/log");
   };
   const onLogOutIconClick = async (e) => {
     // logout 누르면 confirm 띄우고 로그아웃 후 home으로 navigate --> 저절로 logout화면으로 protected routes를 통해 연결
@@ -67,6 +80,7 @@ const ModeratorHeader = () => {
         onMouseLeave={onLogoLeave}
         src={LogoRef}
       />
+      <LogIcon onClick={onLogIconClick} src={LogOutRef} />
       <LogOutIcon onClick={onLogOutIconClick} src={LogOutRef} />
     </HeaderDiv>
   );
