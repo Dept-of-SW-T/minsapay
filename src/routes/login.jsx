@@ -32,9 +32,7 @@ const OuterWrapper = styled.div`
 // figma 제대로 된 치수 필요
 const Wrapper = styled.div`
   width: 50vh;
-
   height: 100vh;
-
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -64,8 +62,11 @@ const TitleDiv = styled.div`
   flex-direction: column;
   justify-content: space-evenly;
   align-items: center;
-  margin-bottom: 1%5;
+  margin-bottom: 40px; /* 수정: "1%5" -> "15px" */
+  position: relative; /* 추가: 위치 지정 */
+  z-index: 1; /* 추가: 로그인 제목이 더 위에 렌더링되도록 설정 */
 `;
+
 const Title = styled.span`
   font-size: 2vw;
   @media only screen and (max-width: 1100px) {
@@ -125,7 +126,7 @@ const Input = styled.input`
   &[type="submit"] {
     // 로그인 버튼
     margin-top: 7%;
-    //margin-bottom: 10%;
+    margin-bottom: 0px;
 
     width: 30%;
     height: 17%;
