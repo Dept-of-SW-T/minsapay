@@ -31,7 +31,7 @@ const Text = styled.span`
   font-family: ${MINSAPAY_TITLE};
   font-size: 15px;
   @media only screen and (max-width: 768px) {
-    font-size: 1.85vh;
+    font-size: 1.7vh;
   }
   display: flex;
   flex-direction: row;
@@ -52,13 +52,6 @@ const Text = styled.span`
     border-top-right-radius: 15px;
     border-bottom-right-radius: 15px;
     border-right: none;
-  }
-
-  &.refund-request {
-    &:hover {
-      background-color: #eee;
-      cursor: pointer;
-    }
   }
 `;
 

@@ -21,6 +21,7 @@ const OuterWrapper = styled.div`
   justify-content: center; /* 세로로도 가운데 정렬 */
   padding: 20px; /* 모바일에서 여백을 추가 */
   box-sizing: border-box;
+  background-color: white;
 `;
 
 const LogOutIcon = styled.img`

@@ -17,9 +17,11 @@ const HeaderDiv = styled.div`
   align-items: center;
   justify-content: space-between;
   font-family: ${MINSAPAY_TITLE};
+  background-color: white;
+  margin-bottom: 20px;
 `;
 const Logo = styled.img`
-  height: 90%;
+  height: 60%;
   /* margin-left: 11px; */
   aspect-ratio: 1;
   /*   &:hover {
