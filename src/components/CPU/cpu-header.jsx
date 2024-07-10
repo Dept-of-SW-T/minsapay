@@ -53,6 +53,7 @@ export const CPUHeader = () => {
     e.preventDefault();
     navigate("../login-setting");
   };
+
   const onLogoHover = (e) => {
     const logoImage = e.target;
     logoImage.src = GoHomeRef;

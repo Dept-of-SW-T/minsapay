@@ -4,6 +4,7 @@ import CoupleList from "../../components/CPU/couple-list";
 import { CPUHeader } from "../../components/CPU/cpu-header";
 import { useNavigate } from "react-router-dom";
 import ChangeKioskImage from "../../images/ChangeKioskImage.svg";
+import AddSellerIcon from "../../images/AddSellerIcon.svg";
 import {
   BACKGROUND_GRAY,
   BORDER_GRAY,
@@ -215,6 +216,9 @@ export default function CPUHome() {
   const onRefundApprovalClick = () => {
     navigate("refund-approval");
   };
+  const onAddSellerIconClick = async () => {
+    navigate("add-seller");
+  };
   const onFileChange = async (e) => {
     if (!e.target.files) {
       return;
@@ -237,6 +241,7 @@ export default function CPUHome() {
                   {isLoading ? "" : CPUFirebase.userDocData.username}
                 </TeamName>
                 <Balance>{balance}원</Balance>
+                <Image src={AddSellerIcon} onClick={onAddSellerIconClick} />
                 <Label htmlFor="image-upload">
                   <Image src={ChangeKioskImage} />
                 </Label>
