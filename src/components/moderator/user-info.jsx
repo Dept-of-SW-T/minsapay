@@ -18,7 +18,7 @@ const Wrapper = styled.div`
 `;
 
 const Text = styled.span`
-  font-family: "BMDOHYEON";
+  font-family: "TheJamsil";
   font-size: 1.2em;
   /* width: 23.5%; */
   display: flex;

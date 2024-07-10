@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import LogoRef from "../../images/NewLogo.png";
 import LogOutRef from "../../images/LogOut.svg";
+import LogIconRef from "../../images/LogIcon.svg";
 import GoHomeRef from "../../images/CPUHome.svg";
 import { useNavigate } from "react-router-dom";
 import { loginUtils } from "../../features/login-feature";
@@ -19,7 +20,7 @@ const HeaderDiv = styled.div`
   justify-content: space-between;
 `;
 const Logo = styled.img`
-  height: 90%;
+  height: 60%;
   /* margin-left: 11px; */
   aspect-ratio: 1;
   &:hover {
@@ -34,7 +35,7 @@ const IconWrapper = styled.div`
   height: 100%;
 `;
 const LogOutIcon = styled.img`
-  height: 80%;
+  height: 70%;
   /* margin-right: 11px; */
   aspect-ratio: 1;
   /* margin-left: auto; */
@@ -43,7 +44,7 @@ const LogOutIcon = styled.img`
   }
 `;
 const LogIcon = styled.img`
-  height: 80%;
+  height: 70%;
   /* margin-right: 11px; */
   aspect-ratio: 1;
   /* margin-left: auto; */
@@ -88,7 +89,7 @@ const ModeratorHeader = () => {
         src={LogoRef}
       />
       <IconWrapper>
-        <LogIcon onClick={onLogIconClick} src={LogOutRef} />
+        <LogIcon onClick={onLogIconClick} src={LogIconRef} />
         <LogOutIcon onClick={onLogOutIconClick} src={LogOutRef} />
       </IconWrapper>
     </HeaderDiv>

@@ -15,7 +15,7 @@ const Wrapper = styled.span`
 `;
 
 const TextLeft = styled.span`
-  font-family: "BMDOHYEON";
+  font-family: "TheJamsil";
   font-size: 1.2em;
   flex: 1; // flex 속성을 사용하여 균등 분배
   border-right: 3px solid ${BORDER_GRAY};
@@ -29,7 +29,7 @@ const TextLeft = styled.span`
 `;
 
 const TextRight = styled.span`
-  font-family: "BMDOHYEON";
+  font-family: "TheJamsil";
   font-size: 1.2em;
   flex: 1; // flex 속성을 사용하여 균등 분배
   display: flex;
