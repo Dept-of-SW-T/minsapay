@@ -102,7 +102,8 @@ const Input = styled.input.attrs({
 `;
 
 const FormWrapper = styled.form`
-  margin-bottom: 20px; /* 폼과 버튼들 사이의 마진 추가 */
+  margin-bottom: 20px;
+  width: 47vw;
 `;
 
 export function UserInfo({ userId, hideInfoPanel }) {

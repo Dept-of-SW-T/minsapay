@@ -4,10 +4,13 @@ import { onSnapshot, getDoc } from "firebase/firestore";
 import { useState, useEffect } from "react";
 import LogoRef from "../../images/NewLogo.png";
 import LogOutRef from "../../images/LogOut.svg";
-import GoHomeRef from "../../images/CPUHome.svg";
+import BackIconRef from "../../images/CPUHome.svg";
 import { useNavigate } from "react-router-dom";
 import { loginUtils } from "../../features/login-feature";
-import { MINSAPAY_TITLE } from "../../components/theme-definition";
+import {
+  MINSAPAY_TITLE,
+  BACKGROUND_GRAY,
+} from "../../components/theme-definition";
 
 const HeaderDiv = styled.div`
   width: 95%;
@@ -24,7 +27,7 @@ const HeaderDiv = styled.div`
   top: 0;
 `;
 const Logo = styled.img`
-  height: 90%;
+  height: 60%;
   /* margin-left: 11px; */
   aspect-ratio: 1;
   &:hover {
@@ -32,7 +35,7 @@ const Logo = styled.img`
   }
 `;
 const LogOutIcon = styled.img`
-  height: 80%;
+  height: 60%;
   /* margin-right: 11px; */
   aspect-ratio: 1;
   /* margin-left: auto; */
@@ -42,7 +45,7 @@ const LogOutIcon = styled.img`
 `;
 
 const BackIcon = styled.img`
-  height: 80%;
+  height: 60%;
   /* margin-right: 11px; */
   aspect-ratio: 1;
   /* margin-left: auto; */
@@ -53,12 +56,13 @@ const BackIcon = styled.img`
 
 const Wrapper = styled.div`
   width: 100vw;
-  height: 100vh;
+  height: flex;
   display: flex;
   align-items: center;
   justify-content: flex-start;
   flex-direction: column;
   position: relative;
+  background-color: ${BACKGROUND_GRAY};
 `;
 
 const Table = styled.table`
@@ -66,14 +70,15 @@ const Table = styled.table`
   max-width: 800px;
   margin-bottom: 50px;
   border-collapse: collapse;
-  background-color: #fff;
+  background-color: #ffffff;
   border: 1px solid #ccc;
 `;
 
 const Th = styled.th`
   padding: 10px;
   border: 1px solid #ccc;
-  background-color: #f0f0f0;
+  background-color: #1c4664;
+  color: white;
   font-size: 14px;
 `;
 const Td = styled.td`
@@ -116,10 +121,7 @@ const LogHeader = () => {
     const userClass = loginUtils.getUserClass();
     if (userClass === "moderator") navigate("../moderator/home");
   };
-  const onLogoHover = (e) => {
-    const logoImage = e.target;
-    logoImage.src = GoHomeRef;
-  };
+
   const onLogoLeave = (e) => {
     const logoImage = e.target;
     logoImage.src = LogoRef;
@@ -127,14 +129,9 @@ const LogHeader = () => {
 
   return (
     <HeaderDiv>
-      <Logo
-        onClick={onLogoClick}
-        onMouseOver={onLogoHover}
-        onMouseLeave={onLogoLeave}
-        src={LogoRef}
-      />
+      <Logo onClick={onLogoClick} onMouseLeave={onLogoLeave} src={LogoRef} />
       <IconWrapper>
-        <BackIcon onClick={onBackIconClick} src={LogOutRef} />
+        <BackIcon onClick={onBackIconClick} src={BackIconRef} />
         <LogOutIcon onClick={onLogOutIconClick} src={LogOutRef} />
       </IconWrapper>
     </HeaderDiv>

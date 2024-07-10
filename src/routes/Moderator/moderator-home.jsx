@@ -23,10 +23,6 @@ const BodyDiv = styled.div`
   width: 100vw;
 `;
 
-// const ButtonsWrapper = styled.div`
-//   display: grid
-// `;
-
 export default function ModeratorHome() {
   const [userElementList, setUserElementList] = useState([]);
   const [selectedUser, setSelectedUser] = useState(null);
