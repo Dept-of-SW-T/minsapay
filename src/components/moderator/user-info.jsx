@@ -19,11 +19,32 @@ const Wrapper = styled.div`
 `;
 
 const TextWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
   background-color: white;
   border: 3px solid ${BORDER_GRAY};
-  padding: 10px;
   border-radius: 10px;
   margin-bottom: 20px; /* 텍스트 칸 간격 추가 */
+`;
+
+const Row = styled.div`
+  display: flex;
+  flex-direction: row;
+`;
+
+const Cell = styled.div`
+  flex: 1;
+  padding: 10px;
+  border-bottom: 1px solid ${BORDER_GRAY};
+  &:last-child {
+    border-bottom: none;
+  }
+  &:nth-child(odd) {
+    background-color: #f9f9f9;
+  }
+  &:nth-child(even) {
+    background-color: #e9e9e9;
+  }
 `;
 
 const Text = styled.span`
@@ -34,7 +55,6 @@ const Text = styled.span`
   align-items: center;
   justify-content: flex-start; /* 왼쪽 정렬 */
   text-align: left; /* 왼쪽 정렬 */
-  margin-bottom: 10px; /* 줄 간격 추가 */
 `;
 
 const Btn = styled.button`
@@ -124,8 +144,22 @@ export function UserInfo({ userId, hideInfoPanel }) {
   return (
     <Wrapper>
       <TextWrapper>
-        <Text>사용자: {selectedUser.data().username}</Text>
-        <Text>보유 금액: {selectedUser.data().balance}</Text>
+        <Row>
+          <Cell>
+            <Text>사용자</Text>
+          </Cell>
+          <Cell>
+            <Text>{selectedUser.data().username}</Text>
+          </Cell>
+        </Row>
+        <Row>
+          <Cell>
+            <Text>보유 금액</Text>
+          </Cell>
+          <Cell>
+            <Text>{selectedUser.data().balance}</Text>
+          </Cell>
+        </Row>
       </TextWrapper>
       <FormWrapper onSubmit={onSubmit}>
         <Input
