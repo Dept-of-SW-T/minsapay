@@ -137,6 +137,7 @@ export function UserInfo({ userId, hideInfoPanel }) {
   };
 
   const onClick = () => {
+    if (balanceChangeVal === 0) return;
     moderatorFirebase.changeBalance(userId, balanceChangeVal);
     setBalanceChangeVal(0);
     hideInfoPanel();

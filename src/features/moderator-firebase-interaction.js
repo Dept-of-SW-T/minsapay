@@ -34,7 +34,7 @@ const moderatorFirebase = {
     await logger.log({
       type: "transaction",
       sender: "moderator",
-      reciever: userId,
+      reciever: curUserData.username,
       amount: amount,
     });
     await setDoc(ref, curUserData);
