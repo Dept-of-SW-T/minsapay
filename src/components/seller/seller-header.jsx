@@ -1,9 +1,8 @@
 import styled from "styled-components";
 import LogoRef from "../../images/NewLogo.png";
-import LogOutRef from "../../images/LogOut.svg";
+import SettingRef from "../../images/Setting.svg";
 import GoHomeRef from "../../images/CPUHome.svg";
 import { useNavigate } from "react-router-dom";
-import { loginUtils } from "../../features/login-feature";
 
 const HeaderDiv = styled.div`
   width: 95%;
@@ -23,8 +22,8 @@ const Logo = styled.img`
     cursor: pointer;
   }
 `;
-const LogOutIcon = styled.img`
-  height: 80%;
+const SettingIcon = styled.img`
+  height: 60%;
   /* margin-right: 11px; */
   aspect-ratio: 1;
   /* margin-left: auto; */
@@ -40,11 +39,10 @@ export function SellerHeader() {
     e.preventDefault();
     navigate("../seller-home/seller-select");
   };
-  const onLogOutIconClick = async () => {
-    // logout 누르면 confirm 띄우고 로그아웃 후 home으로 navigate --> 저절로 logout화면으로 protected routes를 통해 연결
-    if (!confirm("로그아웃 하시겠습니까?")) return;
-    await loginUtils.signOut();
-    navigate("../../");
+  const onSettingClick = async (e) => {
+    // logo 누르면 설정으로 navigate
+    e.preventDefault();
+    navigate("../login-setting");
   };
   const onLogoHover = (e) => {
     const logoImage = e.target;
@@ -63,7 +61,7 @@ export function SellerHeader() {
         onMouseLeave={onLogoLeave}
         src={LogoRef}
       />
-      <LogOutIcon onClick={onLogOutIconClick} src={LogOutRef} />
+      <SettingIcon onClick={onSettingClick} src={SettingRef} />
     </HeaderDiv>
   );
 }
