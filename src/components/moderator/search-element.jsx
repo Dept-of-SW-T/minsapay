@@ -1,6 +1,7 @@
 import { useState } from "react";
 import styled from "styled-components";
 import { BORDER_GRAY } from "../theme-definition";
+import { useEffect } from "react";
 
 const Wrapper = styled.span`
   display: flex;
@@ -60,6 +61,8 @@ export function SearchElement({ searchFunc, inputLabel }) {
     e.preventDefault();
     searchFunc(searchVal);
   };
+
+  useEffect(() => searchFunc(searchVal), [searchVal]);
 
   return (
     <Wrapper>
