@@ -50,6 +50,7 @@ export const CPUHeader = () => {
     await loginUtils.signOut();
     navigate("../../");
   };
+
   const onLogoHover = (e) => {
     const logoImage = e.target;
     logoImage.src = GoHomeRef;
@@ -67,6 +68,7 @@ export const CPUHeader = () => {
         onMouseLeave={onLogoLeave}
         src={LogoRef}
       />
+
       <LogOutIcon onClick={onLogOutIconClick} src={LogOutRef} />
     </HeaderDiv>
   );

@@ -28,6 +28,7 @@ import SellerHome from "./routes/seller/seller-home";
 import BuyerSetting from "./routes/buyer/buyer-setting";
 import ModeratorHome from "./routes/moderator/moderator-home";
 import LogHome from "./routes/log/log-home";
+import AddSeller from "./routes/CPU/add-seller";
 
 const router = createBrowserRouter([
   // 루팅
@@ -91,6 +92,15 @@ const router = createBrowserRouter([
       </ProtectedCPU>
     ),
   },
+  {
+    path: "/cpu-home/add-seller", // 환불 승인 화면
+    element: (
+      <ProtectedCPU>
+        <AddSeller />
+      </ProtectedCPU>
+    ),
+  },
+
   {
     path: "/kiosk-home", // kiosk 홈화면
     element: (
