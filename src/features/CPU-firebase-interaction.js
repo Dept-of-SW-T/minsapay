@@ -24,15 +24,17 @@ const CPUFirebase = {
     this.orderHistory = JSON.parse(this.userDocData.order_history);
   },
   async kioskImageInit() {
-    this.kioskImageDownloadUrl = await getDownloadURL(
-      ref(storage, this.userDocData.kiosk_image),
-    );
+    if (this.userDocData.kiosk_image !== "")
+      this.kioskImageDownloadUrl = await getDownloadURL(
+        ref(storage, this.userDocData.kiosk_image),
+      );
   },
   async changeKioskImage(file) {
-    await deleteObject(ref(storage, this.userDocData.kiosk_image));
+    if (this.userDocData.kiosk_image !== "")
+      await deleteObject(ref(storage, this.userDocData.kiosk_image));
     const locationRef = ref(
       storage,
-      `${loginUtils.getUserID()}/kiosk_image/${file.name}`,
+      `booths/${loginUtils.getUserID()}/kiosk_image/${file.name}`,
     );
     const result = await uploadBytes(locationRef, file);
     this.kioskImageDownloadUrl = await getDownloadURL(result.ref);
@@ -47,9 +49,6 @@ const CPUFirebase = {
       await deleteObject(imageRef);
     }
     this.menuList.splice(index, 1);
-    await this.updateFirebaseMenuList();
-    // Ensure menuList is updated
-    await this.init();
   },
 
   async uploadMenuImage(boothId, id, file) {
