@@ -1,10 +1,6 @@
 import styled from "styled-components";
 import { useState, useEffect } from "react";
-import {
-  BORDER_GRAY,
-  MINSAPAY_BLUE,
-  BUTTON_SHADOW,
-} from "../../components/theme-definition";
+import { BORDER_GRAY, MINSAPAY_BLUE } from "../../components/theme-definition";
 import { moderatorFirebase } from "../../features/moderator-firebase-interaction";
 import { onSnapshot } from "firebase/firestore";
 import { MINSAPAY_FONT } from "../../components/theme-definition";
@@ -36,14 +32,15 @@ const Cell = styled.div`
   flex: 1;
   padding: 10px;
   border-bottom: 1px solid ${BORDER_GRAY};
+  border-radius: 7px;
   &:last-child {
     border-bottom: none;
   }
   &:nth-child(odd) {
-    background-color: #f9f9f9;
+    background-color: #e9e9e9;
   }
   &:nth-child(even) {
-    background-color: #e9e9e9;
+    background-color: #f9f9f9;
   }
 `;
 
@@ -61,7 +58,6 @@ const Btn = styled.button`
   border-radius: 20px; /* 버튼 크기 조정 */
   border: 2px solid ${BORDER_GRAY}; /* 테두리 두께 조정 */
   background-color: ${MINSAPAY_BLUE};
-  box-shadow: 0px 2px 2px 0px ${BUTTON_SHADOW}; /* 그림자 크기 조정 */
   color: white;
   text-align: center;
   font-size: 1em; /* 폰트 크기 조정 */
@@ -79,6 +75,11 @@ const ButtonWrapper = styled.div`
   align-items: center;
   gap: 10px; /* 버튼 간격 추가 */
   margin-bottom: 20px; /* 하단 마진 추가 */
+
+  & > div {
+    display: flex;
+    gap: 20px; /* 가로 간격 추가 */
+  }
 `;
 
 const Input = styled.input.attrs({
@@ -201,8 +202,10 @@ export function UserInfo({ userId, hideInfoPanel }) {
         </div>
       </ButtonWrapper>
       <ButtonWrapper>
-        <Btn onClick={() => setBalanceChangeVal(0)}>Clear</Btn>
-        <Btn onClick={onClick}>반영하기</Btn>
+        <div>
+          <Btn onClick={() => setBalanceChangeVal(0)}>Clear</Btn>
+          <Btn onClick={onClick}>반영하기</Btn>
+        </div>
       </ButtonWrapper>
     </Wrapper>
   );
