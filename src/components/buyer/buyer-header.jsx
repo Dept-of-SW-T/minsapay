@@ -47,7 +47,7 @@ export function BuyerHeader({ balance }) {
   const onSettingClick = async (e) => {
     // logo 누르면 설정으로 navigate
     e.preventDefault();
-    navigate("../buyer-home/buyer-setting");
+    navigate("../login-setting");
   };
   /*   const onLogoHover = (e) => {
     const logoImage = e.target;

@@ -1,9 +1,8 @@
 import styled from "styled-components";
 import LogoRef from "../../images/NewLogo.png";
-import LogOutRef from "../../images/LogOut.svg";
 import GoHomeRef from "../../images/CPUHome.svg";
 import { useNavigate } from "react-router-dom";
-import { loginUtils } from "../../features/login-feature";
+import SettingRef from "../../images/Setting.svg";
 
 // CPU의 모든 화면에 공통으로 들어가는 header으로, home으로 가는, logout하는 버튼을 가지고 있다.
 
@@ -26,8 +25,8 @@ const Logo = styled.img`
     cursor: pointer;
   }
 `;
-const LogOutIcon = styled.img`
-  height: 80%;
+const SettingIcon = styled.img`
+  height: 60%;
   /* margin-right: 11px; */
   aspect-ratio: 1;
   /* margin-left: auto; */
@@ -35,7 +34,6 @@ const LogOutIcon = styled.img`
     cursor: pointer;
   }
 `;
-
 export const CPUHeader = () => {
   const navigate = useNavigate();
   const onLogoClick = (e) => {
@@ -43,12 +41,17 @@ export const CPUHeader = () => {
     e.preventDefault();
     navigate("../cpu-home");
   };
-  const onLogOutIconClick = async (e) => {
+  /*   const onLogOutIconClick = async (e) => {
     // logout 누르면 confirm 띄우고 로그아웃 후 home으로 navigate --> 저절로 logout화면으로 protected routes를 통해 연결
     e.preventDefault();
     if (!confirm("로그아웃 하시겠습니까?")) return;
     await loginUtils.signOut();
     navigate("../../");
+  }; */
+  const onSettingClick = async (e) => {
+    // logo 누르면 설정으로 navigate
+    e.preventDefault();
+    navigate("../login-setting");
   };
 
   const onLogoHover = (e) => {
@@ -68,8 +71,7 @@ export const CPUHeader = () => {
         onMouseLeave={onLogoLeave}
         src={LogoRef}
       />
-
-      <LogOutIcon onClick={onLogOutIconClick} src={LogOutRef} />
+      <SettingIcon onClick={onSettingClick} src={SettingRef} />
     </HeaderDiv>
   );
 };

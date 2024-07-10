@@ -6,11 +6,11 @@ import {
   BUTTON_SHADOW,
   MINSAPAY_BLUE,
   MINSAPAY_FONT,
-} from "../../components/theme-definition";
-import LogOutRef from "../../images/LogOut.svg";
-import HomeIconRef from "../../images/CPUHome.svg";
-import { loginUtils } from "../../features/login-feature";
-import Loading from "../../components/loading";
+} from "../components/theme-definition";
+import LogOutRef from "../images/LogOut.svg";
+import HomeIconRef from "../images/CPUHome.svg";
+import { loginUtils } from "../features/login-feature";
+import Loading from "../components/loading";
 
 const OuterWrapper = styled.div`
   width: 100vw;
@@ -126,7 +126,7 @@ const Error = styled.span`
   margin-top: 10px; /* 에러 메시지의 상단 여백 추가 */
 `;
 
-export default function ChangePassword() {
+export default function LoginSetting() {
   const [newPassword, setNewPassword] = useState("");
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPasswordCheck, setNewPasswordCheck] = useState("");
@@ -141,7 +141,7 @@ export default function ChangePassword() {
   };
   const onHomeIconClick = async (e) => {
     e.preventDefault();
-    navigate("../buyer-home");
+    navigate("../");
   };
   const onSubmit = async (e) => {
     setIsLoading(true);
