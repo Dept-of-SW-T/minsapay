@@ -48,10 +48,6 @@ const GetDatabaseInfoButton = styled.div`
     opacity: 0.8;
   }
 `;
-const PasswordAndHashed = styled.input`
-  width: 40%;
-  text-align: center;
-`;
 const SubmitDatabaseInfoButton = styled.div`
   width: 40%;
   height: 5vh;
@@ -86,7 +82,6 @@ const Logout = styled.div`
 `;
 
 export default function DeveloperHome() {
-  const [hashedPassword, setHashedPassword] = useState("");
   const [data, setData] = useState({});
   const [remainingTime, setRemainingTime] = useState(0);
   const [clickable, setClickable] = useState(true);
@@ -161,10 +156,6 @@ export default function DeveloperHome() {
       }
     }, 1000);
   };
-  const onPasswordChange = (e) => {
-    if (e.target.value === "") setHashedPassword("");
-    else setHashedPassword(cryptoJS.SHA256(e.target.value).toString());
-  };
   const onSubmitDataClick = async () => {
     if (!confirm("firebase에 변경사항을 저장하시겠습니까?")) return;
     if (Object.keys(data).length === 0) {
@@ -202,12 +193,6 @@ export default function DeveloperHome() {
       <SubmitDatabaseInfoButton onClick={uploadable ? onSubmitDataClick : null}>
         {uploadable ? "Submit Database Info" : "Uploading"}
       </SubmitDatabaseInfoButton>
-      <PasswordAndHashed
-        onChange={onPasswordChange}
-        type="text"
-        placeholder="Enter Password"
-      />
-      <PasswordAndHashed type="text" value={hashedPassword} readOnly />
       <Logout onClick={onLogoutClick}>Log Out</Logout>
     </Wrapper>
   );
