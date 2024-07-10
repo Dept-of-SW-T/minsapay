@@ -99,7 +99,17 @@ const loginUtils = {
       setCookie("user_type", "developer");
     } catch (e) {
       if (e instanceof FirebaseError) {
-        this.error = e.message;
+        switch (e.message) {
+          case "Firebase: Error (auth/wrong-password).":
+            this.error = "비밀번호가 올바르지 않습니다.";
+            break;
+          case "Firebase: Error (auth/user-not-found).":
+            this.error = "사용자를 찾을 수 없습니다.";
+            break;
+          default:
+            this.error = e.message;
+            break;
+        }
         return false;
       }
     }
@@ -126,7 +136,15 @@ const loginUtils = {
         setCookie("user_type", "buyer");
       } catch (e) {
         if (e instanceof FirebaseError) {
-          this.error = e.message;
+          switch (e.message) {
+            case "Firebase: Error (auth/invalid-credential).":
+              this.error = "아이디 혹은 비밀번호가 올바르지 않습니다.";
+              break;
+
+            default:
+              this.error = e.message;
+              break;
+          }
           return false;
         }
       }
@@ -158,7 +176,14 @@ const loginUtils = {
           setCookie("user_type", "seller");
         } catch (e) {
           if (e instanceof FirebaseError) {
-            this.error = e.message;
+            switch (e.message) {
+              case "Firebase: Error (auth/invalid-credential).":
+                this.error = "아이디 혹은 비밀번호가 올바르지 않습니다.";
+                break;
+              default:
+                //this.error = e.message;
+                break;
+            }
             return false;
           }
         }
@@ -172,7 +197,15 @@ const loginUtils = {
           setCookie("user_type", "moderator");
         } catch (e) {
           if (e instanceof FirebaseError) {
-            this.error = e.message;
+            switch (e.message) {
+              case "Firebase: Error (auth/invalid-credential).":
+                this.error = "비밀번호 혹은 아이디가 올바르지 않습니다.";
+                break;
+
+              default:
+                this.error = e.message;
+                break;
+            }
             return false;
           }
         }
@@ -186,7 +219,15 @@ const loginUtils = {
           setCookie("user_type", userType);
         } catch (e) {
           if (e instanceof FirebaseError) {
-            this.error = e.message;
+            switch (e.message) {
+              case "Firebase: Error (auth/invalid-credential).":
+                this.error = "아이디 혹은 비밀번호가 올바르지 않습니다.";
+                break;
+
+              default:
+                this.error = e.message;
+                break;
+            }
             return false;
           }
         }

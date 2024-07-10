@@ -62,9 +62,9 @@ const TitleDiv = styled.div`
   flex-direction: column;
   justify-content: space-evenly;
   align-items: center;
-  margin-bottom: 40px; /* 수정: "1%5" -> "15px" */
-  position: relative; /* 추가: 위치 지정 */
-  z-index: 1; /* 추가: 로그인 제목이 더 위에 렌더링되도록 설정 */
+  margin-bottom: 40px;
+  position: relative;
+  z-index: 1;
 `;
 
 const Title = styled.span`
