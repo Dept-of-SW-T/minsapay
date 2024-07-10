@@ -124,12 +124,14 @@ export default function ChangeMenu() {
 
   const onDeleteButtonClick = async (id) => {
     if (!confirm("메뉴를 삭제하시겠습니까?")) return;
+    setIsLoading(true);
     const index = CPUFirebase.menuList.findIndex((item) => item.id === id);
     if (index !== -1) {
       await CPUFirebase.deleteMenuImage(index);
       CPUFirebase.menuList.splice(index, 1);
       await CPUFirebase.updateFirebaseMenuList();
     }
+    setIsLoading(false);
   };
 
   const onPriceChange = (e) => {
@@ -194,6 +196,7 @@ export default function ChangeMenu() {
   };
 
   const handleSave = async (id, updatedData) => {
+    setIsLoading(true);
     const index = CPUFirebase.menuList.findIndex((item) => item.id === id);
     if (index !== -1) {
       if (editImage) {
@@ -216,6 +219,7 @@ export default function ChangeMenu() {
       setEditId(null);
       setEditImage(null);
     }
+    setIsLoading(false);
   };
 
   useEffect(() => {
