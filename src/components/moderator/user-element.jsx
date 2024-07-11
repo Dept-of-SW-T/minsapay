@@ -1,65 +1,55 @@
 import styled from "styled-components";
-//import {BORDER_GRAY} from "../theme-definitiongit ";
+import { BORDER_GRAY } from "../theme-definition";
 
-const Wrapper = styled.div`
-  width: 100%;
+const Wrapper = styled.span`
+  width: 80%;
+  height: 5vh;
+  border: 2px solid ${BORDER_GRAY};
+  border-radius: 10px;
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  background-color: #f9f9f9;
-`;
-
-const Table = styled.table`
-  width: 90%;
-  max-width: 800px;
-  margin-top: 50px;
-  margin-bottom: 50px;
-  border-collapse: collapse;
-  background-color: #fff;
-  border: 1px solid #ccc;
-`;
-
-const Th = styled.th`
-  padding: 10px;
-  border: 1px solid #ccc;
-  background-color: #f0f0f0;
-  font-size: 14px;
-`;
-const Td = styled.td`
-  padding: 10px;
-  border: 1px solid #ccc;
-  font-size: 14px;
-  text-align: center; /* 텍스트 가운데 정렬 */
-  vertical-align: middle; /* 세로 가운데 정렬 */
+  flex-direction: row;
   margin-top: 1rem;
   &:hover {
     cursor: pointer;
   }
 `;
 
+const TextLeft = styled.span`
+  font-family: "TheJamsil";
+  font-size: 1.2em;
+  flex: 1; // flex 속성을 사용하여 균등 분배
+  border-right: 3px solid ${BORDER_GRAY};
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  background-color: white;
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+`;
+
+const TextRight = styled.span`
+  font-family: "TheJamsil";
+  font-size: 1.2em;
+  flex: 1; // flex 속성을 사용하여 균등 분배
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  background-color: white;
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+`;
+
 export function UserElement({ userName, balance, onUserSelect, id }) {
   return (
-    <Wrapper>
-      <Table>
-        <thead>
-          <tr>
-            <Th>이름</Th>
-            <Th>잔고</Th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <Td>{userName}</Td>
-            <Td
-              onClick={() => {
-                onUserSelect(id);
-              }}
-            >
-              {balance}
-            </Td>
-          </tr>
-        </tbody>
-      </Table>
+    <Wrapper
+      onClick={() => {
+        onUserSelect(id);
+      }}
+    >
+      <TextLeft>{userName}</TextLeft>
+      <TextRight>{balance}</TextRight>
     </Wrapper>
   );
 }
