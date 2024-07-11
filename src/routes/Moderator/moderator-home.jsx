@@ -26,7 +26,7 @@ const BodyDiv = styled.div`
 export default function ModeratorHome() {
   const [userElementList, setUserElementList] = useState([]);
   const [selectedUser, setSelectedUser] = useState(null);
-  const [idFilter, setIdFilter] = useState(null);
+  // const [idFilter, setIdFilter] = useState(null);
   const [nameFilter, setNameFilter] = useState(null);
 
   const onUserSelect = (id) => {
@@ -46,11 +46,11 @@ export default function ModeratorHome() {
   const changeUserElementList = () => {
     const tempList = [];
     for (let i = 0; i < moderatorFirebase.usersList.length; i++) {
-      if (
-        idFilter !== null &&
-        !contains(moderatorFirebase.usersList[i].id, idFilter.toString())
-      )
-        continue;
+      // if (
+      //   idFilter !== null &&
+      //   !contains(moderatorFirebase.usersList[i].id, idFilter.toString())
+      // )
+      // continue;
       if (
         nameFilter !== null &&
         !contains(
@@ -77,7 +77,7 @@ export default function ModeratorHome() {
     );
   };
 
-  useEffect(changeUserElementList, [idFilter]);
+  // useEffect(changeUserElementList, [idFilter]);
   useEffect(changeUserElementList, [nameFilter]);
 
   useEffect(() => {
@@ -123,7 +123,7 @@ export default function ModeratorHome() {
   return (
     <Wrapper>
       <ModeratorHeader />
-      <SearchElement searchFunc={setIdFilter} inputLabel={"학번으로 검색"} />
+      {/* <SearchElement searchFunc={setIdFilter} inputLabel={"학번으로 검색"} /> */}
       <SearchElement searchFunc={setNameFilter} inputLabel={"이름으로 검색"} />
       <BodyDiv>
         <SingleList dataList={userElementList} />

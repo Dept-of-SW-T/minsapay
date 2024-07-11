@@ -251,41 +251,43 @@ export default function CPUHome() {
     setKioskImage(CPUFirebase.kioskImageDownloadUrl); // 이미지 업로드 시 사진 바꾸기
   };
   return (
-    <Wrapper>
-      <CPUHeader />
-      <CPUHomeBox>
-        {isLoading ? (
-          <Loading />
-        ) : (
-          <TopDiv>
-            <Title style={{ backgroundImage: `url(${kioskImage})` }}>
-              <OpacityLayer>
-                <TeamName>
-                  {isLoading ? "" : CPUFirebase.userDocData.username}
-                </TeamName>
-                <Balance>{balance}원</Balance>
-                <Label htmlFor="image-upload">
-                  <Image src={ChangeKioskImage} />
-                </Label>
-                <ImageUpload
-                  id="image-upload"
-                  type="file"
-                  accept="image/*"
-                  onChange={onFileChange}
-                />
-              </OpacityLayer>
-            </Title>
-            <HeaderBtns>
-              <Btn onClick={onChangeMenuClick}>메뉴편집</Btn>
-              <Btn onClick={onAddSellerClick}>부원추가</Btn>
-            </HeaderBtns>
-          </TopDiv>
-        )}
-        <BodyDiv>
-          {/* <CoupleList dataList={orderList} /> */}
-          <MenuTable orderList={orderList} />
-        </BodyDiv>
-      </CPUHomeBox>
-    </Wrapper>
+    <>
+      {isLoading ? (
+        <Loading />
+      ) : (
+        <Wrapper>
+          <CPUHomeBox>
+            <CPUHeader />
+            <TopDiv>
+              <Title style={{ backgroundImage: `url(${kioskImage})` }}>
+                <OpacityLayer>
+                  <TeamName>
+                    {isLoading ? "" : CPUFirebase.userDocData.username}
+                  </TeamName>
+                  <Balance>{balance}원</Balance>
+                  <Label htmlFor="image-upload">
+                    <Image src={ChangeKioskImage} />
+                  </Label>
+                  <ImageUpload
+                    id="image-upload"
+                    type="file"
+                    accept="image/*"
+                    onChange={onFileChange}
+                  />
+                </OpacityLayer>
+              </Title>
+              <HeaderBtns>
+                <Btn onClick={onChangeMenuClick}>메뉴편집</Btn>
+                <Btn onClick={onAddSellerClick}>부원추가</Btn>
+              </HeaderBtns>
+            </TopDiv>
+            <BodyDiv>
+              {/* <CoupleList dataList={orderList} /> */}
+              <MenuTable orderList={orderList} />
+            </BodyDiv>
+          </CPUHomeBox>
+        </Wrapper>
+      )}
+    </>
   );
 }
