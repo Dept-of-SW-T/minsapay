@@ -9,8 +9,8 @@ import { UserInfo } from "../../components/moderator/user-info";
 import { SearchElement } from "../../components/moderator/search-element";
 
 const Wrapper = styled.div`
-  width: 100vw;
-  height: 100vh;
+  width: flex;
+  height: flex;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -22,10 +22,6 @@ const BodyDiv = styled.div`
   align-items: start;
   width: 100vw;
 `;
-
-// const ButtonsWrapper = styled.div`
-//   display: grid
-// `;
 
 export default function ModeratorHome() {
   const [userElementList, setUserElementList] = useState([]);
@@ -131,7 +127,14 @@ export default function ModeratorHome() {
       <SearchElement searchFunc={setNameFilter} inputLabel={"이름으로 검색"} />
       <BodyDiv>
         <SingleList dataList={userElementList} />
-        {selectedUser === null ? null : <UserInfo userId={selectedUser.id} />}
+        {selectedUser === null ? null : (
+          <UserInfo
+            userId={selectedUser.id}
+            hideInfoPanel={() => {
+              setSelectedUser(null);
+            }}
+          />
+        )}
       </BodyDiv>
     </Wrapper>
   );

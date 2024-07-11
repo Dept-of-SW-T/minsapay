@@ -21,7 +21,7 @@ const PayIconWrapper = styled.div`
   width: 100%;
   height: 9vh;
   display: flex;
-  //background-color: aliceblue;
+  background-color: white;
   display: flex;
   justify-content: center;
   align-items: center;

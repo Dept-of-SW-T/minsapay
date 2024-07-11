@@ -17,10 +17,14 @@ export function ProtectedRoute() {
     case "seller":
       return <Navigate to="/seller-home/seller-select" />;
     case "moderator":
-      return <Navigate to="/moderator-home" />;
+      return <Navigate to="/moderator/home" />;
     default:
       return <Navigate to="/login" />;
   }
+}
+export function ProtectedLoginSetting({ children }) {
+  if (!loginUtils.isLoggedIn()) return <Navigate to="/login" />;
+  else return children;
 }
 export function ProtectedDeveloper({ children }) {
   if (!loginUtils.isLoggedIn()) return <Navigate to="/login" />;
@@ -70,6 +74,15 @@ export function ProtectedModerator({ children }) {
   if (!loginUtils.isLoggedIn()) return <Navigate to="/login" />;
   const userClass = loginUtils.getUserClass();
   if (userClass !== "moderator") {
+    return <Navigate to="/" />;
+  }
+  return children;
+}
+
+export function ProtectedLog({ children }) {
+  if (!loginUtils.isLoggedIn()) return <Navigate to="/login" />;
+  const userClass = loginUtils.getUserClass();
+  if (userClass !== "moderator" && userClass !== "developer") {
     return <Navigate to="/" />;
   }
   return children;

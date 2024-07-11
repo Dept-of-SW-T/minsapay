@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import LogoRef from "../../images/LogoMinsapay.svg";
+import LogoRef from "../../images/NewLogo.png";
 import SettingRef from "../../images/Setting.svg";
 import { useNavigate } from "react-router-dom";
 import { MINSAPAY_TITLE } from "../../components/theme-definition";
@@ -17,6 +17,8 @@ const HeaderDiv = styled.div`
   align-items: center;
   justify-content: space-between;
   font-family: ${MINSAPAY_TITLE};
+  background-color: white;
+  margin-bottom: 20px;
 `;
 const Logo = styled.img`
   height: 60%;
@@ -47,7 +49,7 @@ export function BuyerHeader({ balance }) {
   const onSettingClick = async (e) => {
     // logo 누르면 설정으로 navigate
     e.preventDefault();
-    navigate("../buyer-home/buyer-setting");
+    navigate("../login-setting");
   };
   /*   const onLogoHover = (e) => {
     const logoImage = e.target;

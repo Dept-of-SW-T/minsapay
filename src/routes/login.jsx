@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { loginUtils } from "../features/login-feature";
 import styled from "styled-components";
-import Logo from "../images/LogoMinsapay.svg";
+import Logo from "../images/NewLogo.png";
 import { useNavigate } from "react-router-dom";
 import {
   BORDER_GRAY,
@@ -32,9 +32,7 @@ const OuterWrapper = styled.div`
 // figma 제대로 된 치수 필요
 const Wrapper = styled.div`
   width: 50vh;
-
   height: 100vh;
-
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -64,8 +62,11 @@ const TitleDiv = styled.div`
   flex-direction: column;
   justify-content: space-evenly;
   align-items: center;
-  margin-bottom: 10%;
+  margin-bottom: 40px;
+  position: relative;
+  z-index: 1;
 `;
+
 const Title = styled.span`
   font-size: 2vw;
   @media only screen and (max-width: 1100px) {
@@ -79,10 +80,11 @@ const ImgDiv = styled.div`
   flex-direction: row;
   justify-content: space-evenly;
   align-items: center;
-  margin-bottom: 12%;
+  margin-bottom: 10%;
+  margin-top: 10%;
 `;
 const Image = styled.img`
-  height: 140%;
+  height: 220%;
 `;
 const Form = styled.form`
   height: 50%;
@@ -124,7 +126,7 @@ const Input = styled.input`
   &[type="submit"] {
     // 로그인 버튼
     margin-top: 7%;
-    //margin-bottom: 10%;
+    margin-bottom: 0px;
 
     width: 30%;
     height: 17%;

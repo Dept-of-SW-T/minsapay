@@ -46,10 +46,8 @@ const TitleDiv = styled.div`
 `;
 
 const Title = styled.span`
-  font-size: 10vh;
-  @media only screen and (max-width: 2000px) {
-    font-size: calc(0.3vw + 1.8em);
-  }
+  font-size: 4vh;
+
   font-family: ${MINSAPAY_TITLE};
   text-align: center;
   margin: 10% auto;

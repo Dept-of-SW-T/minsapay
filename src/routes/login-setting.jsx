@@ -6,11 +6,11 @@ import {
   BUTTON_SHADOW,
   MINSAPAY_BLUE,
   MINSAPAY_FONT,
-} from "../../components/theme-definition";
-import LogOutRef from "../../images/LogOut.svg";
-import HomeIconRef from "../../images/CPUHome.svg";
-import { loginUtils } from "../../features/login-feature";
-import Loading from "../../components/loading";
+} from "../components/theme-definition";
+import LogOutRef from "../images/LogOut.svg";
+import HomeIconRef from "../images/CPUHome.svg";
+import { loginUtils } from "../features/login-feature";
+import Loading from "../components/loading";
 
 const OuterWrapper = styled.div`
   width: 100vw;
@@ -21,6 +21,7 @@ const OuterWrapper = styled.div`
   justify-content: center; /* 세로로도 가운데 정렬 */
   padding: 20px; /* 모바일에서 여백을 추가 */
   box-sizing: border-box;
+  background-color: white;
 `;
 
 const LogOutIcon = styled.img`
@@ -126,7 +127,7 @@ const Error = styled.span`
   margin-top: 10px; /* 에러 메시지의 상단 여백 추가 */
 `;
 
-export default function ChangePassword() {
+export default function LoginSetting() {
   const [newPassword, setNewPassword] = useState("");
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPasswordCheck, setNewPasswordCheck] = useState("");
@@ -141,7 +142,7 @@ export default function ChangePassword() {
   };
   const onHomeIconClick = async (e) => {
     e.preventDefault();
-    navigate("../buyer-home");
+    navigate("../");
   };
   const onSubmit = async (e) => {
     setIsLoading(true);

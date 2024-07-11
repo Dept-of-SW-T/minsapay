@@ -1,6 +1,7 @@
 import { useState } from "react";
 import styled from "styled-components";
 import { BORDER_GRAY } from "../theme-definition";
+import { useEffect } from "react";
 
 const Wrapper = styled.span`
   display: flex;
@@ -16,7 +17,7 @@ const Wrapper = styled.span`
 `;
 
 const Text = styled.span`
-  font-family: "BMDOHYEON";
+  font-family: "TheJamsil";
   font-size: 1em; // 글자 크기 줄이기
   padding: 0 10px;
   background-color: white;
@@ -60,6 +61,8 @@ export function SearchElement({ searchFunc, inputLabel }) {
     e.preventDefault();
     searchFunc(searchVal);
   };
+
+  useEffect(() => searchFunc(searchVal), [searchVal]);
 
   return (
     <Wrapper>

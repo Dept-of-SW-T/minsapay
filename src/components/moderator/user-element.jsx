@@ -1,4 +1,5 @@
 import styled from "styled-components";
+//import {BORDER_GRAY} from "../theme-definitiongit ";
 
 const Wrapper = styled.div`
   width: 100%;

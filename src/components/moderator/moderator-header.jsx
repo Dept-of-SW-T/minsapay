@@ -1,6 +1,7 @@
 import styled from "styled-components";
-import LogoRef from "../../images/LogoMinsapay.svg";
+import LogoRef from "../../images/NewLogo.png";
 import LogOutRef from "../../images/LogOut.svg";
+import LogIconRef from "../../images/LogIcon.svg";
 import GoHomeRef from "../../images/CPUHome.svg";
 import { useNavigate } from "react-router-dom";
 import { loginUtils } from "../../features/login-feature";
@@ -19,15 +20,31 @@ const HeaderDiv = styled.div`
   justify-content: space-between;
 `;
 const Logo = styled.img`
-  height: 80%;
+  height: 60%;
   /* margin-left: 11px; */
   aspect-ratio: 1;
   &:hover {
     cursor: pointer;
   }
 `;
+const IconWrapper = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  width: 50%;
+  height: 100%;
+`;
 const LogOutIcon = styled.img`
-  height: 80%;
+  height: 70%;
+  /* margin-right: 11px; */
+  aspect-ratio: 1;
+  /* margin-left: auto; */
+  &:hover {
+    cursor: pointer;
+  }
+`;
+const LogIcon = styled.img`
+  height: 70%;
   /* margin-right: 11px; */
   aspect-ratio: 1;
   /* margin-left: auto; */
@@ -42,6 +59,10 @@ const ModeratorHeader = () => {
     // logo 누르면 홈으로 navigate
     e.preventDefault();
     navigate("../cpu-home");
+  };
+  const onLogIconClick = async (e) => {
+    e.preventDefault();
+    navigate("/log");
   };
   const onLogOutIconClick = async (e) => {
     // logout 누르면 confirm 띄우고 로그아웃 후 home으로 navigate --> 저절로 logout화면으로 protected routes를 통해 연결
@@ -67,7 +88,10 @@ const ModeratorHeader = () => {
         onMouseLeave={onLogoLeave}
         src={LogoRef}
       />
-      <LogOutIcon onClick={onLogOutIconClick} src={LogOutRef} />
+      <IconWrapper>
+        <LogIcon onClick={onLogIconClick} src={LogIconRef} />
+        <LogOutIcon onClick={onLogOutIconClick} src={LogOutRef} />
+      </IconWrapper>
     </HeaderDiv>
   );
 };

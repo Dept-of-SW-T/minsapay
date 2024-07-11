@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { useEffect, useState } from "react";
-import CoupleList from "../../components/CPU/couple-list";
+// import CoupleList from "../../components/CPU/couple-list";
 import { CPUHeader } from "../../components/CPU/cpu-header";
 import { useNavigate } from "react-router-dom";
 import ChangeKioskImage from "../../images/ChangeKioskImage.svg";
@@ -11,9 +11,10 @@ import {
   MINSAPAY_TITLE,
 } from "../../components/theme-definition";
 import { CPUFirebase } from "../../features/CPU-firebase-interaction";
-import OrderElementCPU from "../../components/CPU/order-element-CPU";
+// import OrderElementCPU from "../../components/CPU/order-element-CPU";
 import { onSnapshot } from "firebase/firestore";
 import Loading from "../../components/loading";
+import MenuTable from "../../components/CPU/menu-table";
 
 // border 다 추가하기
 
@@ -28,13 +29,14 @@ const CPUHomeBox = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
-  /* margin-bottom: 20px; */
+  //margin-bottom: 20px;
 `;
 const TopDiv = styled.div`
-  width: 95%;
+  width: 90%;
   height: 20vh;
   display: flex;
   flex-direction: row;
+
   @media only screen and (max-width: 768px) {
     flex-direction: column;
     height: 25vh;
@@ -52,8 +54,8 @@ const Title = styled.div`
   /* width: 969px; */
   flex: 2 1 0;
   height: 100%;
-  border: 3px solid ${BORDER_GRAY};
-  border-radius: 20px;
+  //border: 3px solid ${BORDER_GRAY};
+  border-radius: 10px;
   background-size: cover;
   background-position: center;
 `;
@@ -120,8 +122,8 @@ const HeaderBtns = styled.div`
   align-items: flex-end;
 `;
 const Btn = styled.button`
-  border-radius: 40px;
-  border: 3px solid ${BORDER_GRAY};
+  border-radius: 10px;
+  border: 0px solid ${BORDER_GRAY};
   background-color: ${MINSAPAY_BLUE};
 
   color: white;
@@ -131,7 +133,7 @@ const Btn = styled.button`
   @media only screen and (max-width: 768px) {
     height: 100%;
   }
-  font-size: 1.7em;
+  font-size: 1.3em;
   &:hover {
     cursor: pointer;
     opacity: 0.8;
@@ -143,6 +145,34 @@ const BodyDiv = styled.div`
   height: 59vh;
   @media only screen and (max-width: 768px) {
     height: 56vh;
+  }
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+`;
+
+const Td = styled.td`
+  padding: 10px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+  text-align: center; /* 텍스트 가운데 정렬 */
+  vertical-align: middle; /* 세로 가운데 정렬 */
+`;
+
+const RefundButton = styled.button`
+  padding: 5px 10px;
+  font-size: 12px;
+  color: white;
+  background-color: #f44336;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin: 0 5px;
+  text-align: center; /* 버튼 가운데 정렬 */
+
+  &:hover {
+    background-color: #e53935;
   }
 `;
 
@@ -162,19 +192,17 @@ export default function CPUHome() {
       setBalance(CPUFirebase.userDocData.balance);
       setKioskImage(CPUFirebase.kioskImageDownloadUrl);
       setOrderList(
-        CPUFirebase.orderHistory
-          .toReversed()
-          .map((val, index) => (
-            <OrderElementCPU
-              menuName={val.menu_name}
-              userName={val.buyer_name}
-              time={val.reception_time}
-              status={val.current_state}
-              refundRequest={val.refund_request}
-              key={index}
-              mode={"display"}
-            />
-          )),
+        CPUFirebase.orderHistory.toReversed().map((val, index) => (
+          <tr key={index}>
+            <Td>{val.menu_name}</Td>
+            <Td>{val.buyer_name}</Td>
+            <Td>{val.reception_time}</Td>
+            <Td>{val.current_state}</Td>
+            <Td>
+              <RefundButton>Refund</RefundButton>
+            </Td>
+          </tr>
+        )),
       );
       unsubscribe = onSnapshot(CPUFirebase.userDocRef, (doc) => {
         // 나중에 features로 이관할 방법을 찾을 것임
@@ -186,19 +214,18 @@ export default function CPUHome() {
         setBalance(CPUFirebase.userDocData.balance);
         setKioskImage(CPUFirebase.kioskImageDownloadUrl);
         setOrderList(
-          CPUFirebase.orderHistory
-            .toReversed()
-            .map((val, index) => (
-              <OrderElementCPU
-                menuName={val.menu_name}
-                userName={val.buyer_name}
-                time={val.reception_time}
-                status={val.current_state}
-                refundRequest={val.refund_request}
-                key={index}
-                mode={"display"}
-              />
-            )),
+          CPUFirebase.orderHistory.toReversed().map((val, index) => (
+            <tr key={index}>
+              <Td>{index + 1}</Td>
+              <Td>{val.menu_name}</Td>
+              <Td>{val.buyer_name}</Td>
+              <Td>{val.reception_time}</Td>
+              <Td>{val.current_state}</Td>
+              <Td>
+                <RefundButton>Refund</RefundButton>
+              </Td>
+            </tr>
+          )),
         );
         setIsLoading(false);
       });
@@ -212,8 +239,8 @@ export default function CPUHome() {
   const onChangeMenuClick = () => {
     navigate("change-menu");
   };
-  const onRefundApprovalClick = () => {
-    navigate("refund-approval");
+  const onAddSellerClick = async () => {
+    navigate("add-seller");
   };
   const onFileChange = async (e) => {
     if (!e.target.files) {
@@ -250,12 +277,13 @@ export default function CPUHome() {
             </Title>
             <HeaderBtns>
               <Btn onClick={onChangeMenuClick}>메뉴편집</Btn>
-              <Btn onClick={onRefundApprovalClick}>환불승인</Btn>
+              <Btn onClick={onAddSellerClick}>부원추가</Btn>
             </HeaderBtns>
           </TopDiv>
         )}
         <BodyDiv>
-          <CoupleList dataList={orderList} />
+          {/* <CoupleList dataList={orderList} /> */}
+          <MenuTable orderList={orderList} />
         </BodyDiv>
       </CPUHomeBox>
     </Wrapper>

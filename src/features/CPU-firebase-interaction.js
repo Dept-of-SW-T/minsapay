@@ -24,15 +24,17 @@ const CPUFirebase = {
     this.orderHistory = JSON.parse(this.userDocData.order_history);
   },
   async kioskImageInit() {
-    this.kioskImageDownloadUrl = await getDownloadURL(
-      ref(storage, this.userDocData.kiosk_image),
-    );
+    if (this.userDocData.kiosk_image !== "")
+      this.kioskImageDownloadUrl = await getDownloadURL(
+        ref(storage, this.userDocData.kiosk_image),
+      );
   },
   async changeKioskImage(file) {
-    await deleteObject(ref(storage, this.userDocData.kiosk_image));
+    if (this.userDocData.kiosk_image !== "")
+      await deleteObject(ref(storage, this.userDocData.kiosk_image));
     const locationRef = ref(
       storage,
-      `${loginUtils.getUserID()}/kiosk_image/${file.name}`,
+      `booths/${loginUtils.getUserID()}/kiosk_image/${file.name}`,
     );
     const result = await uploadBytes(locationRef, file);
     this.kioskImageDownloadUrl = await getDownloadURL(result.ref);
@@ -47,9 +49,6 @@ const CPUFirebase = {
       await deleteObject(imageRef);
     }
     this.menuList.splice(index, 1);
-    await this.updateFirebaseMenuList();
-    // Ensure menuList is updated
-    await this.init();
   },
 
   async uploadMenuImage(boothId, id, file) {
@@ -73,12 +72,14 @@ const CPUFirebase = {
   },
   async refundOrder(orderID) {
     let buyerID = undefined;
+    let buyerUsername = undefined;
     for (let i = 0; i < this.orderHistory.length; i++) {
       if (this.orderHistory[i].order_id === orderID) {
         this.orderHistory[i].refund_request = 2;
         this.userDocData.order_history = JSON.stringify(this.orderHistory);
         this.userDocData.balance -= this.orderHistory[i].price;
         buyerID = this.orderHistory[i].buyer_id;
+        buyerUsername = this.orderHistory[i].username;
         const buyerDocRef = doc(database, "Students", buyerID);
         const buyerDoc = await getDoc(buyerDocRef);
         const buyerDocData = buyerDoc.data();
@@ -94,7 +95,7 @@ const CPUFirebase = {
         await logger.log({
           type: "transaction",
           sender: this.userDoc.id,
-          reciever: buyerID,
+          reciever: buyerUsername,
           amount: this.orderHistory[i].price,
         });
         await setDoc(buyerDocRef, buyerDocData);
