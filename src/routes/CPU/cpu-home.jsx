@@ -30,13 +30,14 @@ const CPUHomeBox = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
-  /* margin-bottom: 20px; */
+  //margin-bottom: 20px;
 `;
 const TopDiv = styled.div`
   width: 95%;
   height: 20vh;
   display: flex;
   flex-direction: row;
+
   @media only screen and (max-width: 768px) {
     flex-direction: column;
     height: 25vh;

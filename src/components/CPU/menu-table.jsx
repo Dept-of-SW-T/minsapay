@@ -4,7 +4,7 @@ import { MINSAPAY_TITLE } from "../theme-definition";
 export default function MenuTable({ orderList }) {
   const Table = styled.table`
     width: 90%;
-    max-width: 800px;
+    max-width: 100vw;
     margin-top: 50px;
     margin-bottom: 50px;
     border-collapse: collapse;
