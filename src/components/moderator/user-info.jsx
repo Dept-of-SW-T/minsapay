@@ -1,10 +1,6 @@
 import styled from "styled-components";
 import { useState, useEffect } from "react";
-import {
-  BORDER_GRAY,
-  MINSAPAY_BLUE,
-  BUTTON_SHADOW,
-} from "../../components/theme-definition";
+import { BORDER_GRAY, MINSAPAY_BLUE } from "../../components/theme-definition";
 import { moderatorFirebase } from "../../features/moderator-firebase-interaction";
 import { onSnapshot } from "firebase/firestore";
 import { MINSAPAY_FONT } from "../../components/theme-definition";
@@ -15,33 +11,57 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
+  margin: 20px; /* 마진 추가 */
+`;
+
+const TextWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  border: 3px solid ${BORDER_GRAY};
+  border-radius: 10px;
+  margin-bottom: 20px; /* 텍스트 칸 간격 추가 */
+`;
+
+const Row = styled.div`
+  display: flex;
+  flex-direction: row;
+`;
+
+const Cell = styled.div`
+  flex: 1;
+  padding: 10px;
+  border-bottom: 1px solid ${BORDER_GRAY};
+  border-radius: 7px;
+  &:last-child {
+    border-bottom: none;
+  }
+  &:nth-child(odd) {
+    background-color: #e9e9e9;
+  }
+  &:nth-child(even) {
+    background-color: #f9f9f9;
+  }
 `;
 
 const Text = styled.span`
   font-family: "TheJamsil";
-  font-size: 1.2em;
-  /* width: 23.5%; */
+  font-size: 1.5em;
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: center;
-  text-align: center;
-  background-color: white;
+  justify-content: flex-start; /* 왼쪽 정렬 */
+  text-align: left; /* 왼쪽 정렬 */
 `;
 
 const Btn = styled.button`
-  border-radius: 40px;
-  border: 3px solid ${BORDER_GRAY};
+  border-radius: 20px; /* 버튼 크기 조정 */
+  border: 2px solid ${BORDER_GRAY}; /* 테두리 두께 조정 */
   background-color: ${MINSAPAY_BLUE};
-  box-shadow: 0px 4px 4px 0px ${BUTTON_SHADOW};
   color: white;
   text-align: center;
-  /* width: %; */
-  /* height: 45%; */
-  @media only screen and (max-width: 768px) {
-    height: 100%;
-  }
-  font-size: 1.7em;
+  font-size: 1em; /* 폰트 크기 조정 */
+  padding: 10px; /* 패딩 추가 */
   &:hover {
     cursor: pointer;
     opacity: 0.8;
@@ -50,24 +70,16 @@ const Btn = styled.button`
 
 const ButtonWrapper = styled.div`
   width: 100%;
-  height: 100%;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  margin: 30px auto;
-  @media only screen and (max-width: 768px) {
-    grid-template-columns: 1fr;
+  display: flex;
+  flex-direction: column; /* 세로로 배열 */
+  align-items: center;
+  gap: 10px; /* 버튼 간격 추가 */
+  margin-bottom: 20px; /* 하단 마진 추가 */
+
+  & > div {
+    display: flex;
+    gap: 20px; /* 가로 간격 추가 */
   }
-  grid-template-rows: repeat(auto-fill, 1fr);
-  grid-auto-rows: max-content;
-  /* grid-template-rows: auto 1fr; */
-  gap: 2vw 1vw;
-  overflow: scroll;
-  -ms-overflow-style: none; /* IE and Edge */
-  scrollbar-width: none; /* Firefox */
-  &::-webkit-scrollbar {
-    display: none; /* Chrome, Safari, Opera*/
-  }
-  align-items: start;
 `;
 
 const Input = styled.input.attrs({
@@ -90,16 +102,16 @@ const Input = styled.input.attrs({
   }
 `;
 
+const FormWrapper = styled.form`
+  margin-bottom: 20px;
+  width: 47vw;
+`;
+
 export function UserInfo({ userId, hideInfoPanel }) {
   const [balanceChangeVal, setBalanceChangeVal] = useState(0);
   const [selectedUser, setSelectedUser] = useState(
     moderatorFirebase.usersList[moderatorFirebase.usersIndex[userId]],
   );
-
-  // useEffect(() => {
-  //   setSelectedUser();
-  //   console.log(selectedUser.data());
-  // }, [userId, selectedUser]);
 
   useEffect(() => {
     setSelectedUser(
@@ -125,6 +137,7 @@ export function UserInfo({ userId, hideInfoPanel }) {
   };
 
   const onClick = () => {
+    if (balanceChangeVal === 0) return;
     moderatorFirebase.changeBalance(userId, balanceChangeVal);
     setBalanceChangeVal(0);
     hideInfoPanel();
@@ -133,46 +146,68 @@ export function UserInfo({ userId, hideInfoPanel }) {
   const buttonValues = [10000, 5000, 1000, 500];
   return (
     <Wrapper>
-      <Text>사용자: {selectedUser.data().username}</Text>
-      <Text>보유 금액: {selectedUser.data().balance}</Text>
-      <form onSubmit={onSubmit}>
+      <TextWrapper>
+        <Row>
+          <Cell>
+            <Text>사용자</Text>
+          </Cell>
+          <Cell>
+            <Text>{selectedUser.data().username}</Text>
+          </Cell>
+        </Row>
+        <Row>
+          <Cell>
+            <Text>보유 금액</Text>
+          </Cell>
+          <Cell>
+            <Text>{selectedUser.data().balance}</Text>
+          </Cell>
+        </Row>
+      </TextWrapper>
+      <FormWrapper onSubmit={onSubmit}>
         <Input
           type="number"
           onChange={onChange}
           value={balanceChangeVal}
           placeholder="변경할 금액 입력"
         ></Input>
-      </form>
+      </FormWrapper>
       <ButtonWrapper>
-        {buttonValues.map((value) => {
-          return (
-            <Btn
-              key={"+" + value}
-              onClick={() => {
-                setBalanceChangeVal((balance) => parseInt(balance) + value);
-              }}
-            >
-              +{value}
-            </Btn>
-          );
-        })}
+        <div>
+          {buttonValues.map((value) => {
+            return (
+              <Btn
+                key={"+" + value}
+                onClick={() => {
+                  setBalanceChangeVal((balance) => parseInt(balance) + value);
+                }}
+              >
+                +{value}
+              </Btn>
+            );
+          })}
+        </div>
+        <div>
+          {buttonValues.map((value) => {
+            return (
+              <Btn
+                key={"-" + value}
+                onClick={() => {
+                  setBalanceChangeVal((balance) => parseInt(balance) - value);
+                }}
+              >
+                -{value}
+              </Btn>
+            );
+          })}
+        </div>
       </ButtonWrapper>
       <ButtonWrapper>
-        {buttonValues.map((value) => {
-          return (
-            <Btn
-              key={"-" + value}
-              onClick={() => {
-                setBalanceChangeVal((balance) => parseInt(balance) - value);
-              }}
-            >
-              -{value}
-            </Btn>
-          );
-        })}
+        <div>
+          <Btn onClick={() => setBalanceChangeVal(0)}>Clear</Btn>
+          <Btn onClick={onClick}>반영하기</Btn>
+        </div>
       </ButtonWrapper>
-      <Btn onClick={() => setBalanceChangeVal(0)}>Clear</Btn>
-      <Btn onClick={onClick}>반영하기</Btn>
     </Wrapper>
   );
 }

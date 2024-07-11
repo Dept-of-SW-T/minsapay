@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { useEffect, useState } from "react";
-import CoupleList from "../../components/CPU/couple-list";
+// import CoupleList from "../../components/CPU/couple-list";
 import { CPUHeader } from "../../components/CPU/cpu-header";
 import { useNavigate } from "react-router-dom";
 import ChangeKioskImage from "../../images/ChangeKioskImage.svg";
@@ -11,9 +11,10 @@ import {
   MINSAPAY_TITLE,
 } from "../../components/theme-definition";
 import { CPUFirebase } from "../../features/CPU-firebase-interaction";
-import OrderElementCPU from "../../components/CPU/order-element-CPU";
+// import OrderElementCPU from "../../components/CPU/order-element-CPU";
 import { onSnapshot } from "firebase/firestore";
 import Loading from "../../components/loading";
+import MenuTable from "../../components/CPU/menu-table";
 
 // border 다 추가하기
 
@@ -144,6 +145,34 @@ const BodyDiv = styled.div`
   @media only screen and (max-width: 768px) {
     height: 56vh;
   }
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+`;
+
+const Td = styled.td`
+  padding: 10px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+  text-align: center; /* 텍스트 가운데 정렬 */
+  vertical-align: middle; /* 세로 가운데 정렬 */
+`;
+
+const RefundButton = styled.button`
+  padding: 5px 10px;
+  font-size: 12px;
+  color: white;
+  background-color: #f44336;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin: 0 5px;
+  text-align: center; /* 버튼 가운데 정렬 */
+
+  &:hover {
+    background-color: #e53935;
+  }
 `;
 
 // add isloading to total page and image upload
@@ -162,19 +191,17 @@ export default function CPUHome() {
       setBalance(CPUFirebase.userDocData.balance);
       setKioskImage(CPUFirebase.kioskImageDownloadUrl);
       setOrderList(
-        CPUFirebase.orderHistory
-          .toReversed()
-          .map((val, index) => (
-            <OrderElementCPU
-              menuName={val.menu_name}
-              userName={val.buyer_name}
-              time={val.reception_time}
-              status={val.current_state}
-              refundRequest={val.refund_request}
-              key={index}
-              mode={"display"}
-            />
-          )),
+        CPUFirebase.orderHistory.toReversed().map((val, index) => (
+          <tr key={index}>
+            <Td>{val.menu_name}</Td>
+            <Td>{val.buyer_name}</Td>
+            <Td>{val.reception_time}</Td>
+            <Td>{val.current_state}</Td>
+            <Td>
+              <RefundButton>Refund</RefundButton>
+            </Td>
+          </tr>
+        )),
       );
       unsubscribe = onSnapshot(CPUFirebase.userDocRef, (doc) => {
         // 나중에 features로 이관할 방법을 찾을 것임
@@ -186,19 +213,17 @@ export default function CPUHome() {
         setBalance(CPUFirebase.userDocData.balance);
         setKioskImage(CPUFirebase.kioskImageDownloadUrl);
         setOrderList(
-          CPUFirebase.orderHistory
-            .toReversed()
-            .map((val, index) => (
-              <OrderElementCPU
-                menuName={val.menu_name}
-                userName={val.buyer_name}
-                time={val.reception_time}
-                status={val.current_state}
-                refundRequest={val.refund_request}
-                key={index}
-                mode={"display"}
-              />
-            )),
+          CPUFirebase.orderHistory.toReversed().map((val, index) => (
+            <tr key={index}>
+              <Td>{val.menu_name}</Td>
+              <Td>{val.buyer_name}</Td>
+              <Td>{val.reception_time}</Td>
+              <Td>{val.current_state}</Td>
+              <Td>
+                <RefundButton>Refund</RefundButton>
+              </Td>
+            </tr>
+          )),
         );
         setIsLoading(false);
       });
@@ -255,7 +280,8 @@ export default function CPUHome() {
           </TopDiv>
         )}
         <BodyDiv>
-          <CoupleList dataList={orderList} />
+          {/* <CoupleList dataList={orderList} /> */}
+          <MenuTable orderList={orderList} />
         </BodyDiv>
       </CPUHomeBox>
     </Wrapper>

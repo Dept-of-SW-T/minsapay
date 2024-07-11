@@ -102,7 +102,7 @@ const kioskFirebase = {
     linkedBuyerDocData.balance -= total;
     await logger.log({
       type: "transaction",
-      sender: linkedBuyerDoc.id,
+      sender: linkedBuyerDoc.username,
       reciever: this.userDoc.id,
       amount: total,
     });

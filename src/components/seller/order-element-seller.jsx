@@ -1,3 +1,4 @@
+import { useState } from "react";
 import styled from "styled-components";
 import {
   BORDER_GRAY,
@@ -8,6 +9,7 @@ import {
   MINSAPAY_TITLE,
 } from "../theme-definition";
 import { sellerFirebase } from "../../features/seller-firebase-interaction";
+import Spinner from "./menu-loading.jsx"; // Import the Spinner component
 
 const Wrapper = styled.div`
   width: 90%;
@@ -31,7 +33,7 @@ const Text = styled.span`
   font-family: ${MINSAPAY_TITLE};
   font-size: 15px;
   @media only screen and (max-width: 768px) {
-    font-size: 1.85vh;
+    font-size: 1.7vh;
   }
   display: flex;
   flex-direction: row;
@@ -52,13 +54,6 @@ const Text = styled.span`
     border-top-right-radius: 15px;
     border-bottom-right-radius: 15px;
     border-right: none;
-  }
-
-  &.refund-request {
-    &:hover {
-      background-color: #eee;
-      cursor: pointer;
-    }
   }
 `;
 
@@ -82,7 +77,6 @@ const StateButton = styled.div`
   background-color: ${(props) => props.backgroundColor || "white"};
   align-items: center;
   display: flex;
-
   justify-content: center;
   cursor: pointer;
   border-radius: 50%;
@@ -96,7 +90,8 @@ export default function OrderElementBuyer({
   processor,
   buyer,
 }) {
-  console.log(processor, status);
+  const [loadingProcessor, setLoadingProcessor] = useState(false);
+  const [loadingStatus, setLoadingStatus] = useState(false);
 
   const backgroundColor = () => {
     switch (status) {
@@ -140,12 +135,18 @@ export default function OrderElementBuyer({
   }
 
   async function statusChangeSync(nextState) {
+    setLoadingStatus(true);
     await sellerFirebase.setStatus(id, nextState);
+    setLoadingStatus(false);
   }
 
   async function onBackwardClick() {
+    setLoadingProcessor(true);
     const nextState = indexToState(stateToIndex(status) - 1);
-    if (nextState === "NOSTATE") return;
+    if (nextState === "NOSTATE") {
+      setLoadingProcessor(false);
+      return;
+    }
     await statusChangeSync(nextState);
     if (nextState === "주문요청") {
       await sellerFirebase.setProcessor(id, null);
@@ -155,13 +156,21 @@ export default function OrderElementBuyer({
         sellerFirebase.userDocData.username,
       );
     }
+    setLoadingProcessor(false);
   }
 
   async function onForwardClick() {
+    setLoadingProcessor(true);
     const nextState = indexToState(stateToIndex(status) + 1);
-    if (nextState === "NOSTATE") return;
+    if (nextState === "NOSTATE") {
+      setLoadingProcessor(false);
+      return;
+    }
     if (nextState === "수령완료") {
-      if (!confirm("주문상태를 변경을 완료하시겠습니까?")) return;
+      if (!confirm("주문상태를 변경을 완료하시겠습니까?")) {
+        setLoadingProcessor(false);
+        return;
+      }
       await sellerFirebase.setProcessor(id, null);
     } else {
       await sellerFirebase.setProcessor(
@@ -170,18 +179,26 @@ export default function OrderElementBuyer({
       );
     }
     await statusChangeSync(nextState);
+    setLoadingProcessor(false);
   }
 
   return (
     <Wrapper style={{ backgroundColor: backgroundColor() }}>
       <FlexWrapper>
         <Text style={{ flexBasis: "20%" }}>{menuName}</Text>
-
         <Text style={{ flexBasis: "20%" }}>{buyer}</Text>
         <Text style={{ flexBasis: "20%" }}>
-          {processor === null ? "처리자 없음" : processor}
+          {loadingProcessor ? (
+            <Spinner />
+          ) : processor === null ? (
+            "없음"
+          ) : (
+            processor
+          )}
         </Text>
-        <Text style={{ flexBasis: "20%" }}>{status}</Text>
+        <Text style={{ flexBasis: "20%" }}>
+          {loadingStatus ? <Spinner /> : status}
+        </Text>
       </FlexWrapper>
       <ButtonWrapper>
         {status !== "주문요청" && status !== "수령완료" && (

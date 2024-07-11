@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { CPUFirebase } from "../../features/CPU-firebase-interaction";
 import { onSnapshot } from "firebase/firestore";
 import Loading from "../../components/loading";
+import { MINSAPAY_FONT, BORDER_GRAY } from "../../components/theme-definition";
 
 const Wrapper = styled.div`
   width: 100%;
@@ -17,9 +18,31 @@ const RefundApprovalBox = styled.div`
   width: 100%;
   margin-top: 4vh;
 `;
+
+const Input = styled.input.attrs({
+  type: "text",
+})`
+  padding: 10px;
+  border: none;
+  width: 100%;
+  font-size: 3vh;
+  @media only screen and (max-width: 700px) {
+    font-size: 2vh;
+  }
+  outline: none;
+  border-bottom: 3px solid ${BORDER_GRAY};
+  margin-top: 20px;
+  font-family: ${MINSAPAY_FONT};
+
+  &:focus {
+    border-bottom: 3px solid #444;
+  }
+`;
+
 export default function RefundApproval() {
   const [refundRequestList, setRefundRequestList] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+
   useEffect(() => {
     let unsubscribe = null;
     const init = async () => {
@@ -75,9 +98,21 @@ export default function RefundApproval() {
       unsubscribe && unsubscribe();
     };
   }, []);
+
+  // const onChange = (event) => {
+  //   setBalanceChangeVal(event.target.value);
+  // };
+
   return (
     <Wrapper>
       <CPUHeader />
+      <form onSubmit={null}>
+        <Input
+          // onChange={onChange}
+          value={null}
+          placeholder="주문자로 검색"
+        ></Input>
+      </form>
       {isLoading ? (
         <Loading />
       ) : (
