@@ -22,7 +22,7 @@ const CPUFirebase = {
   userDocData: undefined,
   kioskImageDownloadUrl: undefined,
   menuList: undefined,
-  orderHistory: undefined,
+  orderHistory: [],
   async init() {
     this.userDocRef = doc(database, "Teams", loginUtils.getUserID());
     this.userDoc = await getDoc(this.userDocRef);

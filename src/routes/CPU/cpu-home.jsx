@@ -13,6 +13,9 @@ import { CPUFirebase } from "../../features/CPU-firebase-interaction";
 import { onSnapshot } from "firebase/firestore";
 import Loading from "../../components/loading";
 import MenuTable from "../../components/CPU/menu-table";
+import { SearchElement } from "../../components/moderator/search-element";
+
+// border 다 추가하기
 
 const Wrapper = styled.div`
   width: 100vw;
@@ -44,6 +47,14 @@ const TopDiv = styled.div`
     font-size: calc(0.05vw + 1.1em);
   }
 `;
+
+const BodyDiv = styled.div`
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: column;
+`;
+
 const Title = styled.div`
   flex: 2 1 0;
   height: 100%;
@@ -125,6 +136,7 @@ const TableWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: flex-start;
 `;
 
 export default function CPUHome() {
@@ -132,6 +144,51 @@ export default function CPUHome() {
   const [kioskImage, setKioskImage] = useState("khgyhgjhfg");
   const [orderList, setOrderList] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [nameFilter, setNameFilter] = useState(null);
+  const [menuFilter, setMenuFilter] = useState(null);
+
+  const applyFilter = function () {
+    const tempList = [];
+    console.log(CPUFirebase);
+    for (let i = 0; i < CPUFirebase.orderHistory.length; i++) {
+      if (
+        menuFilter !== null &&
+        !contains(CPUFirebase.orderHistory[i].menu_name, menuFilter.toString())
+      )
+        continue;
+      if (
+        nameFilter !== null &&
+        !contains(CPUFirebase.orderHistory[i].buyer_name, nameFilter.toString())
+      )
+        continue;
+      tempList.push(CPUFirebase.orderHistory[i]);
+    }
+
+    // setOrderList(
+    //   tempList.toReversed().map((val, index) => (
+    //     <tr key={index}>
+    //       <Td>{index + 1}</Td>
+    //       <Td>{val.menu_name}</Td>
+    //       <Td>{val.buyer_name}</Td>
+    //       <Td>{val.reception_time}</Td>
+    //       <Td>{val.current_state}</Td>
+    //       <Td>
+    //         <RefundButton>Refund</RefundButton>
+    //       </Td>
+    //     </tr>
+    //   )),
+    // );
+    setOrderList(
+      tempList.toReversed().map((val, index) => ({
+        id: index + 1,
+        menu_name: val.menu_name,
+        buyer_name: val.buyer_name,
+        reception_time: val.reception_time,
+        current_state: val.current_state,
+      })),
+    );
+  };
+
   useEffect(() => {
     let unsubscribe = null;
     const init = async () => {
@@ -157,15 +214,21 @@ export default function CPUHome() {
         );
         setBalance(CPUFirebase.userDocData.balance);
         setKioskImage(CPUFirebase.kioskImageDownloadUrl);
-        setOrderList(
-          CPUFirebase.orderHistory.toReversed().map((val, index) => ({
-            id: index + 1,
-            menu_name: val.menu_name,
-            buyer_name: val.buyer_name,
-            reception_time: val.reception_time,
-            current_state: val.current_state,
-          })),
-        );
+        // setOrderList(
+        //   CPUFirebase.orderHistory.toReversed().map((val, index) => (
+        //     <tr key={index}>
+        //       <Td>{index + 1}</Td>
+        //       <Td>{val.menu_name}</Td>
+        //       <Td>{val.buyer_name}</Td>
+        //       <Td>{val.reception_time}</Td>
+        //       <Td>{val.current_state}</Td>
+        //       <Td>
+        //         <RefundButton>Refund</RefundButton>
+        //       </Td>
+        //     </tr>
+        //   )),
+        // );
+        applyFilter();
         setIsLoading(false);
       });
     };
@@ -174,6 +237,10 @@ export default function CPUHome() {
       unsubscribe && unsubscribe();
     };
   }, []);
+
+  useEffect(applyFilter, [nameFilter]);
+  useEffect(applyFilter, [menuFilter]);
+
   const navigate = useNavigate();
   const onChangeMenuClick = () => {
     navigate("change-menu");
@@ -187,8 +254,16 @@ export default function CPUHome() {
     }
     const file = e.target.files[0];
     await CPUFirebase.changeKioskImage(file);
-    setKioskImage(CPUFirebase.kioskImageDownloadUrl);
+    setKioskImage(CPUFirebase.kioskImageDownloadUrl); // 이미지 업로드 시 사진 바꾸기
   };
+  const contains = (str1, str2) => {
+    for (let i = 0; i < str1.length; i++) {
+      if (i >= str2.length) return true;
+      if (str1.charAt(i) != str2.charAt(i)) return false;
+    }
+    return true;
+  };
+
   return (
     <>
       {isLoading ? (
@@ -220,10 +295,19 @@ export default function CPUHome() {
                 <Btn onClick={onAddSellerClick}>부원추가</Btn>
               </HeaderBtns>
             </TopDiv>
-            <TableWrapper>
-              <MenuTable orderList={orderList} />{" "}
-              {/* Use MenuTable component */}
-            </TableWrapper>
+            <BodyDiv>
+              <SearchElement
+                searchFunc={setNameFilter}
+                inputLabel="이름으로 필터링"
+              />
+              <SearchElement
+                searchFunc={setMenuFilter}
+                inputLabel="메뉴별로 필터링"
+              />
+              <TableWrapper>
+                <MenuTable orderList={orderList} />
+              </TableWrapper>
+            </BodyDiv>
           </CPUHomeBox>
         </Wrapper>
       )}
