@@ -125,8 +125,24 @@ export function UserInfo({ userId, hideInfoPanel }) {
     );
   });
 
-  const onChange = (event) => {
-    setBalanceChangeVal(event.target.value);
+  const onChange = (e) => {
+    if (e.target.value === "") {
+      setBalanceChangeVal(0);
+      return;
+    }
+
+    const isDigit = (char) => {
+      return /\d/.test(char);
+    };
+
+    let isNumber = true;
+    for (let i = 0; i < e.target.value.length; i++) {
+      isNumber = isNumber && isDigit(e.target.value[i]);
+    }
+    if (!isNumber) return;
+    const val = parseInt(e.target.value);
+    if (val < 0 || val > 100000) return;
+    setBalanceChangeVal(val);
   };
 
   const onSubmit = (event) => {
