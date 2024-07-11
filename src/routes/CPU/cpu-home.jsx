@@ -4,7 +4,6 @@ import CoupleList from "../../components/CPU/couple-list";
 import { CPUHeader } from "../../components/CPU/cpu-header";
 import { useNavigate } from "react-router-dom";
 import ChangeKioskImage from "../../images/ChangeKioskImage.svg";
-import AddSellerIcon from "../../images/AddSellerIcon.svg";
 import {
   BACKGROUND_GRAY,
   BORDER_GRAY,
@@ -213,10 +212,7 @@ export default function CPUHome() {
   const onChangeMenuClick = () => {
     navigate("change-menu");
   };
-  const onRefundApprovalClick = () => {
-    navigate("refund-approval");
-  };
-  const onAddSellerIconClick = async () => {
+  const onAddSellerClick = async () => {
     navigate("add-seller");
   };
   const onFileChange = async (e) => {
@@ -241,7 +237,6 @@ export default function CPUHome() {
                   {isLoading ? "" : CPUFirebase.userDocData.username}
                 </TeamName>
                 <Balance>{balance}원</Balance>
-                <Image src={AddSellerIcon} onClick={onAddSellerIconClick} />
                 <Label htmlFor="image-upload">
                   <Image src={ChangeKioskImage} />
                 </Label>
@@ -255,7 +250,7 @@ export default function CPUHome() {
             </Title>
             <HeaderBtns>
               <Btn onClick={onChangeMenuClick}>메뉴편집</Btn>
-              <Btn onClick={onRefundApprovalClick}>환불승인</Btn>
+              <Btn onClick={onAddSellerClick}>부원추가</Btn>
             </HeaderBtns>
           </TopDiv>
         )}

@@ -18,7 +18,6 @@ import BuyerHome from "./routes/buyer/buyer-home";
 import BuyerPayment from "./routes/buyer/buyer-payment";
 import CPUHome from "./routes/CPU/cpu-home";
 import ChangeMenu from "./routes/CPU/change-menu";
-import RefundApproval from "./routes/CPU/refund-approval";
 import KioskHome from "./routes/kiosk/kiosk-home";
 import KioskCover from "./routes/kiosk/kiosk-cover";
 import KioskAuthentiaction from "./routes/kiosk/kiosk-authentication";
@@ -84,14 +83,6 @@ const router = createBrowserRouter([
     element: (
       <ProtectedCPU>
         <ChangeMenu />
-      </ProtectedCPU>
-    ),
-  },
-  {
-    path: "/cpu-home/refund-approval", // 환불 승인 화면
-    element: (
-      <ProtectedCPU>
-        <RefundApproval />
       </ProtectedCPU>
     ),
   },
