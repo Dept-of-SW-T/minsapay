@@ -18,7 +18,6 @@ const kioskFirebase = {
     this.userDocRef = doc(database, "Teams", loginUtils.getUserID());
     this.userDoc = await getDoc(this.userDocRef);
     this.userDocData = this.userDoc.data();
-    console.log(this.userDocData);
   },
   async setKioskAuthenticationNumber() {
     const teamDocs = await getDocs(query(collection(database, "Teams")));
@@ -102,11 +101,10 @@ const kioskFirebase = {
     linkedBuyerDocData.balance -= total;
     await logger.log({
       type: "transaction",
-      sender: linkedBuyerDoc.username,
-      reciever: this.userDoc.id,
+      sender: linkedBuyerDocData.username,
+      reciever: this.userDocData.username,
       amount: total,
     });
-    console.log(this.userDocData.linked_buyer);
     await setDoc(this.userDocRef, this.userDocData);
     await setDoc(
       doc(database, "Students", this.userDocData.linked_buyer),
