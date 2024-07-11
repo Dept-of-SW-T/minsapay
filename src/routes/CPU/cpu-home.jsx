@@ -47,6 +47,14 @@ const TopDiv = styled.div`
     font-size: calc(0.05vw + 1.1em);
   }
 `;
+
+const BodyDiv = styled.div`
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: column;
+`;
+
 const Title = styled.div`
   flex: 2 1 0;
   height: 100%;
@@ -156,19 +164,28 @@ export default function CPUHome() {
       tempList.push(CPUFirebase.orderHistory[i]);
     }
 
+    // setOrderList(
+    //   tempList.toReversed().map((val, index) => (
+    //     <tr key={index}>
+    //       <Td>{index + 1}</Td>
+    //       <Td>{val.menu_name}</Td>
+    //       <Td>{val.buyer_name}</Td>
+    //       <Td>{val.reception_time}</Td>
+    //       <Td>{val.current_state}</Td>
+    //       <Td>
+    //         <RefundButton>Refund</RefundButton>
+    //       </Td>
+    //     </tr>
+    //   )),
+    // );
     setOrderList(
-      tempList.toReversed().map((val, index) => (
-        <tr key={index}>
-          <Td>{index + 1}</Td>
-          <Td>{val.menu_name}</Td>
-          <Td>{val.buyer_name}</Td>
-          <Td>{val.reception_time}</Td>
-          <Td>{val.current_state}</Td>
-          <Td>
-            <RefundButton>Refund</RefundButton>
-          </Td>
-        </tr>
-      )),
+      tempList.toReversed().map((val, index) => ({
+        id: index + 1,
+        menu_name: val.menu_name,
+        buyer_name: val.buyer_name,
+        reception_time: val.reception_time,
+        current_state: val.current_state,
+      })),
     );
   };
 
@@ -287,8 +304,9 @@ export default function CPUHome() {
                 searchFunc={setMenuFilter}
                 inputLabel="메뉴별로 필터링"
               />
-              {/* <CoupleList dataList={orderList} /> */}
-              <MenuTable orderList={orderList} />
+              <TableWrapper>
+                <MenuTable orderList={orderList} />
+              </TableWrapper>
             </BodyDiv>
           </CPUHomeBox>
         </Wrapper>
