@@ -106,6 +106,7 @@ const kioskFirebase = {
       reciever: this.userDoc.id,
       amount: total,
     });
+    console.log(this.userDocData.linked_buyer);
     await setDoc(this.userDocRef, this.userDocData);
     await setDoc(
       doc(database, "Students", this.userDocData.linked_buyer),

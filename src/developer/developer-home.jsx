@@ -134,7 +134,7 @@ export default function DeveloperHome() {
     });
     setData(resultdata);
     console.log(resultdata);
-    e.target.value = ""; // 같은 파일 입력해도 반복 실행
+    e.target.value = ""; // 같은 파일 입력해도 반복 실행 */
     setUploadable(true);
   };
   const onGetDataClick = async () => {
