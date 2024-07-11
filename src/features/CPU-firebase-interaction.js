@@ -1,4 +1,11 @@
-import { doc, getDoc, setDoc } from "firebase/firestore";
+import {
+  doc,
+  getDoc,
+  setDoc,
+  updateDoc,
+  arrayRemove,
+  arrayUnion,
+} from "firebase/firestore";
 import {
   deleteObject,
   getDownloadURL,
@@ -50,7 +57,6 @@ const CPUFirebase = {
     }
     this.menuList.splice(index, 1);
   },
-
   async uploadMenuImage(boothId, id, file) {
     const storageRef = ref(
       storage,
@@ -64,7 +70,6 @@ const CPUFirebase = {
       imagePath: storageRef.fullPath,
     };
   },
-
   async updateFirebaseMenuList() {
     this.userDocData.menu_list = JSON.stringify(this.menuList);
     await setDoc(this.userDocRef, this.userDocData);
@@ -103,6 +108,67 @@ const CPUFirebase = {
         break;
       }
     }
+  },
+  async addStudent(studentNumber) {
+    // Add student to the team's student_list
+    this.userDocData.student_list = this.userDocData.student_list || [];
+    this.userDocData.student_list.push(studentNumber);
+    await setDoc(this.userDocRef, this.userDocData);
+
+    // Add team to the student's team_list
+    const studentDocRef = doc(database, "Students", studentNumber);
+    const studentDoc = await getDoc(studentDocRef);
+    if (studentDoc.exists()) {
+      const studentData = studentDoc.data();
+      const teamList = studentData.team_list || [];
+      if (!teamList.includes(loginUtils.getUserID())) {
+        await updateDoc(studentDocRef, {
+          team_list: arrayUnion(loginUtils.getUserID()),
+        });
+      }
+      return {
+        studentNumber,
+        username: studentData.username,
+      };
+    } else {
+      throw new Error("Student not found");
+    }
+  },
+  async removeStudent(studentNumber) {
+    // Remove student from the team's student_list
+    this.userDocData.student_list = this.userDocData.student_list.filter(
+      (sn) => sn !== studentNumber,
+    );
+    await setDoc(this.userDocRef, this.userDocData);
+
+    // Remove team from the student's team_list
+    const studentDocRef = doc(database, "Students", studentNumber);
+    const studentDoc = await getDoc(studentDocRef);
+    if (studentDoc.exists()) {
+      await updateDoc(studentDocRef, {
+        team_list: arrayRemove(loginUtils.getUserID()),
+      });
+    } else {
+      throw new Error("Student not found");
+    }
+  },
+  async fetchStudentList() {
+    const studentList = this.userDocData.student_list || [];
+    const studentDetails = [];
+
+    for (const studentNumber of studentList) {
+      const studentDocRef = doc(database, "Students", studentNumber);
+      const studentDoc = await getDoc(studentDocRef);
+      if (studentDoc.exists()) {
+        const studentData = studentDoc.data();
+        studentDetails.push({
+          studentNumber,
+          username: studentData.username,
+        });
+      }
+    }
+
+    return studentDetails;
   },
 };
 

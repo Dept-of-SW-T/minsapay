@@ -12,7 +12,7 @@ import {
 import { CPUFirebase } from "../../features/CPU-firebase-interaction";
 import { onSnapshot } from "firebase/firestore";
 import Loading from "../../components/loading";
-import MenuTable from "../../components/CPU/menu-table"; // Import MenuTable component
+import MenuTable from "../../components/CPU/menu-table";
 
 const Wrapper = styled.div`
   width: 100vw;
