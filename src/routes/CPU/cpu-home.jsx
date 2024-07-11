@@ -216,6 +216,7 @@ export default function CPUHome() {
         setOrderList(
           CPUFirebase.orderHistory.toReversed().map((val, index) => (
             <tr key={index}>
+              <Td>{index + 1}</Td>
               <Td>{val.menu_name}</Td>
               <Td>{val.buyer_name}</Td>
               <Td>{val.reception_time}</Td>

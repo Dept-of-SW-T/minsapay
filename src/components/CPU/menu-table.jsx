@@ -24,6 +24,7 @@ export default function MenuTable({ orderList }) {
     <Table>
       <thead>
         <tr>
+          <Th>No.</Th>
           <Th>메뉴</Th>
           <Th>주문자명</Th>
           <Th>시간</Th>
