@@ -32,7 +32,7 @@ const CPUHomeBox = styled.div`
   //margin-bottom: 20px;
 `;
 const TopDiv = styled.div`
-  width: 95%;
+  width: 90%;
   height: 20vh;
   display: flex;
   flex-direction: row;
@@ -54,8 +54,8 @@ const Title = styled.div`
   /* width: 969px; */
   flex: 2 1 0;
   height: 100%;
-  border: 3px solid ${BORDER_GRAY};
-  border-radius: 20px;
+  //border: 3px solid ${BORDER_GRAY};
+  border-radius: 10px;
   background-size: cover;
   background-position: center;
 `;
@@ -122,8 +122,8 @@ const HeaderBtns = styled.div`
   align-items: flex-end;
 `;
 const Btn = styled.button`
-  border-radius: 40px;
-  border: 3px solid ${BORDER_GRAY};
+  border-radius: 10px;
+  border: 0px solid ${BORDER_GRAY};
   background-color: ${MINSAPAY_BLUE};
 
   color: white;
@@ -133,7 +133,7 @@ const Btn = styled.button`
   @media only screen and (max-width: 768px) {
     height: 100%;
   }
-  font-size: 1.7em;
+  font-size: 1.3em;
   &:hover {
     cursor: pointer;
     opacity: 0.8;
