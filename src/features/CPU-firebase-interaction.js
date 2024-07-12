@@ -111,15 +111,15 @@ const CPUFirebase = {
     }
   },
   async addStudent(studentNumber) {
-    // Add student to the team's student_list
-    this.userDocData.student_list = this.userDocData.student_list || [];
-    this.userDocData.student_list.push(studentNumber);
-    await setDoc(this.userDocRef, this.userDocData);
-
-    // Add team to the student's team_list
     const studentDocRef = doc(database, "Students", studentNumber);
     const studentDoc = await getDoc(studentDocRef);
     if (studentDoc.exists()) {
+      // Add student to the team's student_list
+      this.userDocData.student_list = this.userDocData.student_list || [];
+      this.userDocData.student_list.push(studentNumber);
+      await setDoc(this.userDocRef, this.userDocData);
+
+      // Add team to the student's team_list
       const studentData = studentDoc.data();
       const teamList = studentData.team_list || [];
       if (!teamList.includes(loginUtils.getUserID())) {
