@@ -80,26 +80,27 @@ const CPUFirebase = {
     let buyerUsername = undefined;
     for (let i = 0; i < this.orderHistory.length; i++) {
       if (this.orderHistory[i].order_id === orderID) {
-        this.orderHistory[i].refund_request = 2;
+        this.orderHistory[i].refund_request = 1;
         this.userDocData.order_history = JSON.stringify(this.orderHistory);
         this.userDocData.balance -= this.orderHistory[i].price;
         buyerID = this.orderHistory[i].buyer_id;
-        buyerUsername = this.orderHistory[i].username;
+        buyerUsername = this.orderHistory[i].buyer_name;
         const buyerDocRef = doc(database, "Students", buyerID);
         const buyerDoc = await getDoc(buyerDocRef);
         const buyerDocData = buyerDoc.data();
         const buyerOrderHistory = JSON.parse(buyerDocData.order_history);
         for (let j = 0; j < buyerOrderHistory.length; j++) {
           if (buyerOrderHistory[j].order_id === orderID) {
-            buyerOrderHistory[j].refund_request = 2;
+            buyerOrderHistory[j].refund_request = 1;
             buyerDocData.order_history = JSON.stringify(buyerOrderHistory);
             buyerDocData.balance += this.orderHistory[i].price;
             break;
           }
         }
+        console.log(this.userDocData.order_history);
         await logger.log({
           type: "transaction",
-          sender: this.userDoc.id,
+          sender: this.userDocData.username,
           reciever: buyerUsername,
           amount: this.orderHistory[i].price,
         });
