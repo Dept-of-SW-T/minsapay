@@ -110,7 +110,7 @@ buyer -주문내역   -물품/서비스 이름
 
 ### 3. buyer
 ![buyer home]()<!-- need to insert image --><br/>
-![menu]()<!-- need to insert image --><br/>
+![menu board]()<!-- need to insert image --><br/>
 ![buyer payment]()<!-- need to insert image --><br/>
 (설명 1. 구성요소(각각의 구성요소 설명) 2. 부스 권고 내용 3. 환불)
 
