@@ -12,7 +12,7 @@ const Wrapper = styled.span`
   padding: 0.3rem;
   margin-top: 1rem;
   background-color: #f9f9f9;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
   height: 2.5rem; // 고정된 높이 추가
 `;
 
