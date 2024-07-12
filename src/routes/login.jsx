@@ -174,9 +174,9 @@ const PicSource = styled.span`
   @media only screen and (max-width: 1000px) {
     bottom: 3%;
   }
-  right: 1%;
+  left: 1%;
   @media only screen and (max-width: 1000px) {
-    right: 3%;
+    left: 3%;
   }
 `;
 
