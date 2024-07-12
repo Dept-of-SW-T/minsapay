@@ -6,7 +6,7 @@
 <span style="color:gray;">본 문서는 과학기술부 내부에서 이 서비스에 대한 공통적인 이해를 	확립하기 위한 목적으로 작성되었다.</span>
 
 #### 목차
-  1. 민사페이 사용자종류 및 로그인정보
+  1. 민사페이 사용자종류
   2. 민사페이 외/내부 상호작용
   3. 사용자 메뉴얼
 
@@ -27,6 +27,7 @@
         -> 3. buyer
         -> 4. kiosk
 ```
+<!-- 추가정보 필요 -->
 1. firebase에서 아이디와 비밀번호가 맞는지 확인하고 각각의 아이디에 따라 4개의 화면으로 넘어간다
 2. 로그인 정보는 메뉴얼에서 확인
 
@@ -37,7 +38,7 @@ cpu -menu 편집    -> menu 편집 [kiosk의 메뉴판에 즉시 적용된다]
     -로그(번호, 메뉴, 주문자명, 시간, 상태, 환불)
         -Refund   -> 
 ```
-<!-- cpu 설명 듣기(부원추가, 환불) -->
+<!-- cpu 설명 듣기(부원추가, 환불) , 추가정보 필요-->
 1. 메뉴편집-firebase
 2. 부원추가-어떤메커니즘으로 추가되는지 seller에 어떻게, 어디에 작용하는지
 3. 로그-특히 환불 백엔드 설명
@@ -46,6 +47,7 @@ cpu -menu 편집    -> menu 편집 [kiosk의 메뉴판에 즉시 적용된다]
 ```
 부서/동아리 지정화면(cover) -> authentication -> menu 추가 및 결제(home)-> thankyou -> cover {순환}
 ```
+<!-- 추가 정보 필요 -->
 (설명 1. 지정화면 설정 - firebase
       2. authentication
       3. menu 결제
@@ -60,6 +62,7 @@ seller mobile -> 부스1(선택)->  -주문자
                                 -처리단계 변경 버튼[cpu]
               -> 부스2
 ```
+<!-- 추가 정보 필요 -->
 (설명 1. 주문자가 들어오는 과정
       2. 제품명이 들어오는 과정
       3. 처리단계에서 색이 바뀌는 과정
@@ -74,6 +77,7 @@ buyer -주문내역   -물품/서비스 이름
       -잔고
       -결제  -> keypad -> [kiosk authentication] -> buyer home
 ```
+<!-- 추가 정보 필요 -->
 (설명 1. 주문내역에서 물품서비스 이름이 연동되는 과정
       2. kiosk authentication)
 
@@ -88,19 +92,32 @@ buyer -주문내역   -물품/서비스 이름
 
 ### 2. 부스
   1. cpu <br/>
-      ![]() <!-- need to insert image -->
+      ![cpu home]() <!-- need to insert image --> <br/>
+      ![cpu add seller]() <!-- need to insert image --><br/>
+      ![cpu change menu]() <!-- need to insert image --><br/>
+      ![cpu change cover]() <!-- need to insert image --><br/>
       (설명 1. 구성요소(각각의 구성요소 설명) 2. 부스 권고 내용)
   2. kiosk <br/>
-      ![]() <!-- need to insert image -->
+      ![kiosk cover]() <!-- need to insert image --><br/>
+      ![kiosk authentication]()<!-- need to insert image --><br/>
+      ![kiosk home]()<!-- need to insert image --><br/>
+      ![kiosk thankyou]()<!-- need to insert image --><br/>
       (설명 1. 구성요소(각각의 구성요소 설명) 2. 부스 권고 내용)
   3. seller<br/>
-      ![]() <!-- need to insert image -->
+      ![seller sellect]() <!-- need to insert image --><br/>
+      ![seller home]()<!-- need to insert image --><br/>
       (설명 1. 구성요소(각각의 구성요소 설명) 2. 부스 권고 내용)
 
 ### 3. buyer
+![buyer home]()<!-- need to insert image --><br/>
+![menu]()<!-- need to insert image --><br/>
+![buyer payment]()<!-- need to insert image --><br/>
 (설명 1. 구성요소(각각의 구성요소 설명) 2. 부스 권고 내용 3. 환불)
 
-
+### 4. 공통화면
+#### setting
+![setting]()<!-- need to insert image --><br/>
+(설명 1. 구성요소(각각의 구성요소 설명))
 
 <br></br>
 # end of description
