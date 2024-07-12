@@ -155,7 +155,9 @@ export default function BuyerPayment() {
     const success = await buyerFirebase.submitKioskAuthenticationNumber(
       e.target[0].value,
     ); // 값 대조
-    if (success) navigate("../buyer-home"); // 성공 시 이동 */
+    if (success) {
+      navigate("../buyer-home"); // 성공 시 이동 */
+    }
   };
   const onKeypadButtonClick = (e) => {
     setKioskAuthenticationNumber((prev) => {

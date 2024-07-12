@@ -37,6 +37,9 @@ const buyerFirebase = {
         foundMatch = true;
         document.linked_buyer = this.userDoc.id;
         await setDoc(doc(database, "Teams", teams.docs[i].id), document);
+        const tmp = this.userDocData;
+        tmp.is_connected = true;
+        await setDoc(this.userDocRef, tmp);
         break;
       }
     }
