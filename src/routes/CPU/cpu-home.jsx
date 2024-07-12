@@ -150,7 +150,7 @@ export default function CPUHome() {
 
   const applyFilter = function () {
     const tempList = [];
-    console.log(CPUFirebase);
+    // console.log(CPUFirebase);
     for (let i = 0; i < CPUFirebase.orderHistory.length; i++) {
       if (
         menuFilter !== null &&

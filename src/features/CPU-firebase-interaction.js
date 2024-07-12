@@ -97,7 +97,7 @@ const CPUFirebase = {
             break;
           }
         }
-        console.log(this.userDocData.order_history);
+        // console.log(this.userDocData.order_history);
         await logger.log({
           type: "transaction",
           sender: this.userDocData.username,

@@ -133,7 +133,7 @@ export default function DeveloperHome() {
       });
     });
     setData(resultdata);
-    console.log(resultdata);
+    // console.log(resultdata);
     e.target.value = ""; // 같은 파일 입력해도 반복 실행 */
     setUploadable(true);
   };
@@ -162,7 +162,7 @@ export default function DeveloperHome() {
       alert("업로드된 데이터가 없습니다");
       return;
     }
-    console.log(data);
+    // console.log(data);
     await developerFirebase.init();
     await developerFirebase.writeDataToFirebase(data);
   };
