@@ -163,12 +163,21 @@ const Error = styled.span`
   }
 `;
 const PicSource = styled.span`
-  font-size: 1vh;
+  font-size: 2vh;
+  @media only screen and (max-width: 1000px) {
+    font-size: 1.5vh;
+  }
   color: aliceblue;
   font-family: ${MINSAPAY_FONT};
   position: fixed;
   bottom: 1%;
+  @media only screen and (max-width: 1000px) {
+    bottom: 3%;
+  }
   right: 1%;
+  @media only screen and (max-width: 1000px) {
+    right: 3%;
+  }
 `;
 
 export default function Login() {
@@ -230,7 +239,9 @@ export default function Login() {
           {error !== "" ? <Error>{error}</Error> : null}
         </LoginBox>
       </Wrapper>
-      <PicSource>사진 제공 TTL</PicSource>
+      <PicSource>
+        총괄 및 개발 2024 과학기술부 & 사진 제공 TTL & 로고 제공 28기 정윤홍
+      </PicSource>
     </OuterWrapper>
   );
 }
