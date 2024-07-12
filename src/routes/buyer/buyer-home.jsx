@@ -7,7 +7,9 @@ import { onSnapshot } from "firebase/firestore";
 import CoupleList from "../../components/CPU/couple-list";
 import { BuyerHeader } from "../../components/buyer/buyer-header";
 import PayIconRef from "../../images/go-to-buyer-payment.svg";
+import MenuIconRef from "../../images/LogIcon.svg"; // 메뉴 아이콘 이미지 경로 추가
 import Loading from "../../components/loading";
+import MenuImageRef from "../../images/MenuImage.png";
 
 const Wrapper = styled.div`
   width: 100vw;
@@ -22,9 +24,9 @@ const PayIconWrapper = styled.div`
   height: 9vh;
   display: flex;
   background-color: white;
-  display: flex;
-  justify-content: center;
+  justify-content: center; /* 아이콘을 중간으로 배치 */
   align-items: center;
+  position: relative; /* 위치 조정을 위한 relative 속성 추가 */
 `;
 
 const PayIcon = styled.img`
@@ -35,11 +37,50 @@ const PayIcon = styled.img`
     cursor: pointer;
   }
 `;
+
+const MenuIcon = styled.img`
+  height: 5vh; /* 메뉴 아이콘의 크기 설정 */
+  position: absolute;
+  right: 1rem; /* 오른쪽 끝에 배치 */
+  &:hover {
+    cursor: pointer;
+  }
+`;
+
+const MenuContainer = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: url(${MenuImageRef}) center/cover no-repeat;
+  display: ${(props) => (props.show ? "block" : "none")};
+`;
+
+const CloseButton = styled.button`
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: none;
+  border: none;
+  font-size: 2rem;
+  color: #272424;
+  cursor: pointer;
+  font-family: sans-serif;
+`;
+
+const OrderListContainer = styled.div`
+  flex: 1;
+  width: 100%;
+  overflow-y: auto;
+`;
+
 export default function BuyerHome() {
   const navigate = useNavigate();
   const [balance, setBalance] = useState(0);
   const [orderList, setOrderList] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [showMenu, setShowMenu] = useState(false); // 메뉴판 표시 상태 추가
 
   useEffect(() => {
     let unsubscribe = null;
@@ -92,6 +133,7 @@ export default function BuyerHome() {
       unsubscribe && unsubscribe();
     };
   }, []);
+
   return (
     <Wrapper>
       <BuyerHeader balance={balance} />
@@ -99,13 +141,22 @@ export default function BuyerHome() {
         <Loading />
       ) : (
         <>
-          <CoupleList dataList={orderList} />
+          <OrderListContainer>
+            <CoupleList dataList={orderList} />
+          </OrderListContainer>
           <PayIconWrapper>
             <PayIcon
               onClick={() => navigate("./buyer-payment")}
               src={PayIconRef}
             />
+            <MenuIcon
+              onClick={() => setShowMenu(true)}
+              src={MenuIconRef} // 메뉴 아이콘 이미지 추가
+            />
           </PayIconWrapper>
+          <MenuContainer show={showMenu}>
+            <CloseButton onClick={() => setShowMenu(false)}>X</CloseButton>
+          </MenuContainer>
         </>
       )}
     </Wrapper>
