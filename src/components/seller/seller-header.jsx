@@ -15,7 +15,7 @@ const HeaderDiv = styled.div`
   justify-content: space-between;
 `;
 const Logo = styled.img`
-  height: 60%;
+  height: 90%;
   /* margin-left: 11px; */
   aspect-ratio: 1;
   &:hover {
