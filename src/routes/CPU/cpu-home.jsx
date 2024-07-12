@@ -186,6 +186,8 @@ export default function CPUHome() {
         buyer_name: val.buyer_name,
         reception_time: val.reception_time,
         current_state: val.current_state,
+        order_id: val.order_id,
+        refund_request: val.refund_request,
       })),
     );
   };
@@ -205,6 +207,8 @@ export default function CPUHome() {
           buyer_name: val.buyer_name,
           reception_time: val.reception_time,
           current_state: val.current_state,
+          order_id: val.order_id,
+          refund_request: val.refund_request,
         })),
       );
       unsubscribe = onSnapshot(CPUFirebase.userDocRef, (doc) => {

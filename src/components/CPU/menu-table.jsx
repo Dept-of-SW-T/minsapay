@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { MINSAPAY_TITLE, MINSAPAY_BLUE } from "../theme-definition";
+import { CPUFirebase } from "../../features/CPU-firebase-interaction";
 
 const Table = styled.table`
   width: 90%;
@@ -50,7 +51,24 @@ const RefundButton = styled.button`
   }
 `;
 
+const RefundedEl = styled.span`
+  padding: 5px 10px;
+  font-size: 12px;
+  color: white;
+  background-color: #36f45c;
+  border: none;
+  border-radius: 4px;
+  margin: 0 5px;
+  text-align: center;
+`;
+
 export default function MenuTable({ orderList }) {
+  async function onClick(id) {
+    if (!confirm("환불을 승인하시겠습니까?")) return;
+    await CPUFirebase.refundOrder(id);
+    alert("환불 승인 완료");
+  }
+
   return (
     <Table>
       <thead>
@@ -72,7 +90,17 @@ export default function MenuTable({ orderList }) {
             <Td>{order.reception_time}</Td>
             <Td>{order.current_state}</Td>
             <Td>
-              <RefundButton>Refund</RefundButton>
+              {order.refund_request == 0 ? (
+                <RefundButton
+                  onClick={() => {
+                    onClick(order.order_id);
+                  }}
+                >
+                  환불하기
+                </RefundButton>
+              ) : (
+                <RefundedEl>환불됨</RefundedEl>
+              )}
             </Td>
           </tr>
         ))}
