@@ -55,7 +55,7 @@ const RefundedEl = styled.span`
   padding: 5px 10px;
   font-size: 12px;
   color: white;
-  background-color: #36f45c;
+  background-color: #4caf50;
   border: none;
   border-radius: 4px;
   margin: 0 5px;
