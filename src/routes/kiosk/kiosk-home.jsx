@@ -239,8 +239,11 @@ export default function KioskHome() {
       return;
     }
     if (!confirm("결제하시겠습니까?")) return;
+
+    setIsLoading(true);
     await kioskFirebase.submitOrders(orders, getTotal());
     await kioskFirebase.removeLinkedBuyer();
+    setIsLoading(false);
     navigate("./kiosk-thankyou"); // 이전 탭으로 돌아가지 못하게 해야 함?
   };
 
