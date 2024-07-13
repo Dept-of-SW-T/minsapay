@@ -297,6 +297,7 @@ export default function CPUHome() {
 
     setNameFilter(nameFilterArchive);
     setMenuFilter(menuFilterArchive);
+    applyFilter();
   }
 
   return (
