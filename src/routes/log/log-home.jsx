@@ -7,6 +7,7 @@ import LogOutRef from "../../images/LogOut.svg";
 import BackIconRef from "../../images/CPUHome.svg";
 import { useNavigate } from "react-router-dom";
 import { loginUtils } from "../../features/login-feature";
+import Loading from "../../components/loading";
 import {
   MINSAPAY_TITLE,
   BACKGROUND_GRAY,
@@ -140,12 +141,15 @@ const LogHeader = () => {
 
 export default function LogHome() {
   const [log, setLog] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     let unsubscribe = null;
     const init = async () => {
+      setIsLoading(true);
       await logFirebase.init();
       setLog((await getDoc(logFirebase.logRef)).data().log.toReversed());
+      setIsLoading(false);
     };
     init();
     unsubscribe = onSnapshot(logFirebase.logRef, (snapshot) => {
@@ -157,7 +161,9 @@ export default function LogHome() {
     };
   }, []);
 
-  return (
+  return isLoading ? (
+    <Loading />
+  ) : (
     <Wrapper>
       <LogHeader />
       <TitleEl>Log</TitleEl>

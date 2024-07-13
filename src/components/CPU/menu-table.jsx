@@ -1,7 +1,7 @@
-import { useState } from "react";
+// import { useState } from "react";
 import styled from "styled-components";
 import { MINSAPAY_TITLE, MINSAPAY_BLUE } from "../theme-definition";
-import { CPUFirebase } from "../../features/CPU-firebase-interaction";
+// import { CPUFirebase } from "../../features/CPU-firebase-interaction";
 
 const Table = styled.table`
   width: 90%;
@@ -74,27 +74,27 @@ const LoadingEl = styled.span`
   text-align: center;
 `;
 
-export default function MenuTable({ orderList }) {
-  const [loadingState, setLoadingState] = useState(orderList.map(() => false));
+export default function MenuTable({ orderList, onClick, loadingState }) {
+  // const [loadingState, setLoadingState] = useState(orderList.map(() => false));
 
-  async function onClick(index, id) {
-    if (!confirm("환불을 승인하시겠습니까?")) return;
+  // async function onClick(index, id) {
+  //   if (!confirm("환불을 승인하시겠습니까?")) return;
 
-    setLoadingState((prev) => {
-      const newLoadingState = [...prev];
-      newLoadingState[index] = true;
-      return newLoadingState;
-    });
+  //   setLoadingState((prev) => {
+  //     const newLoadingState = [...prev];
+  //     newLoadingState[index] = true;
+  //     return newLoadingState;
+  //   });
 
-    await CPUFirebase.refundOrder(id);
-    // alert("환불 승인 완료");
+  //   await CPUFirebase.refundOrder(id);
+  //   // alert("환불 승인 완료");
 
-    setLoadingState((prev) => {
-      const newLoadingState = [...prev];
-      newLoadingState[index] = false;
-      return newLoadingState;
-    });
-  }
+  //   setLoadingState((prev) => {
+  //     const newLoadingState = [...prev];
+  //     newLoadingState[index] = false;
+  //     return newLoadingState;
+  //   });
+  // }
 
   return (
     <Table>
