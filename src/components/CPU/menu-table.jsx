@@ -1,3 +1,4 @@
+import { useState } from "react";
 import styled from "styled-components";
 import { MINSAPAY_TITLE, MINSAPAY_BLUE } from "../theme-definition";
 import { CPUFirebase } from "../../features/CPU-firebase-interaction";
@@ -62,11 +63,37 @@ const RefundedEl = styled.span`
   text-align: center;
 `;
 
+const LoadingEl = styled.span`
+  padding: 5px 10px;
+  font-size: 12px;
+  color: white;
+  background-color: #ff9800;
+  border: none;
+  border-radius: 4px;
+  margin: 0 5px;
+  text-align: center;
+`;
+
 export default function MenuTable({ orderList }) {
-  async function onClick(id) {
+  const [loadingState, setLoadingState] = useState(orderList.map(() => false));
+
+  async function onClick(index, id) {
     if (!confirm("환불을 승인하시겠습니까?")) return;
+
+    setLoadingState((prev) => {
+      const newLoadingState = [...prev];
+      newLoadingState[index] = true;
+      return newLoadingState;
+    });
+
     await CPUFirebase.refundOrder(id);
     alert("환불 승인 완료");
+
+    setLoadingState((prev) => {
+      const newLoadingState = [...prev];
+      newLoadingState[index] = false;
+      return newLoadingState;
+    });
   }
 
   return (
@@ -90,14 +117,14 @@ export default function MenuTable({ orderList }) {
             <Td>{order.reception_time}</Td>
             <Td>{order.current_state}</Td>
             <Td>
-              {order.refund_request == 0 ? (
-                <RefundButton
-                  onClick={() => {
-                    onClick(order.order_id);
-                  }}
-                >
-                  환불하기
-                </RefundButton>
+              {order.refund_request === 0 ? (
+                loadingState[index] ? (
+                  <LoadingEl>로딩중...</LoadingEl>
+                ) : (
+                  <RefundButton onClick={() => onClick(index, order.order_id)}>
+                    환불하기
+                  </RefundButton>
+                )
               ) : (
                 <RefundedEl>환불됨</RefundedEl>
               )}
