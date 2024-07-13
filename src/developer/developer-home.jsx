@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { MINSAPAY_BLUE } from "../components/theme-definition";
-import { readXlOfEachSheet, writeXlFromData } from "./xlsx-conversion";
+import { readXlOfEachSheet /* writeXlFromData */ } from "./xlsx-conversion";
 import { developerFirebase } from "./developer-firebase";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -31,7 +31,7 @@ const DatabaseInfoButton = styled.label`
     opacity: 0.8;
   }
 `;
-const GetDatabaseInfoButton = styled.div`
+/* const GetDatabaseInfoButton = styled.div`
   width: 40%;
   height: 5vh;
   border-radius: 20px;
@@ -46,7 +46,7 @@ const GetDatabaseInfoButton = styled.div`
     cursor: pointer;
     opacity: 0.8;
   }
-`;
+`; */
 const SubmitDatabaseInfoButton = styled.div`
   width: 40%;
   height: 5vh;
@@ -82,8 +82,8 @@ const Logout = styled.div`
 
 export default function DeveloperHome() {
   const [subData, setSubData] = useState({});
-  const [remainingTime, setRemainingTime] = useState(0);
-  const [clickable, setClickable] = useState(true);
+  /* const [remainingTime, setRemainingTime] = useState(0);
+  const [clickable, setClickable] = useState(true); */
   const [uploadable, setUploadable] = useState(true);
   const navigate = useNavigate();
   const onXlUpload = async (e) => {
@@ -94,7 +94,7 @@ export default function DeveloperHome() {
     e.target.value = ""; // 같은 파일 입력해도 반복 실행 */
     setUploadable(true);
   };
-  const onGetDataClick = async () => {
+  /* const onGetDataClick = async () => {
     setClickable(false);
     const counterLimit = 5;
     setRemainingTime(counterLimit);
@@ -116,7 +116,7 @@ export default function DeveloperHome() {
         setRemainingTime(rm);
       }
     }, 1000);
-  };
+  }; */
   const onSubmitDataClick = async () => {
     if (!confirm("firebase에 변경사항을 저장하시겠습니까?")) return;
     if (Object.keys(subData).length === 0) {
@@ -134,11 +134,11 @@ export default function DeveloperHome() {
   return (
     <Wrapper>
       <p>Developer Home</p>
-      <GetDatabaseInfoButton onClick={clickable ? onGetDataClick : null}>
+      {/* <GetDatabaseInfoButton onClick={clickable ? onGetDataClick : null}>
         {remainingTime === 0
           ? "Get Database Info"
           : "Download starting in " + String(remainingTime) + " seconds"}
-      </GetDatabaseInfoButton>
+      </GetDatabaseInfoButton> */}
       <DatabaseInfoButton htmlFor="xl-submit">
         {uploadable ? "Upload Database Info" : "Uploading"}
       </DatabaseInfoButton>

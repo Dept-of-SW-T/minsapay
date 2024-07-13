@@ -1,6 +1,7 @@
 import { collection, getDocs, query } from "firebase/firestore";
-import { database } from "../firebase";
+import { authentication, database } from "../firebase";
 import cryptoJS from "crypto-js";
+import { createUserWithEmailAndPassword } from "firebase/auth";
 
 const developerFirebase = {
   userData: {},
@@ -139,9 +140,7 @@ const developerFirebase = {
         if (subData.Students[student].username !== undefined)
           resultUserDocumentData.Students[student].username =
             subData.Students[student].username;
-        if (subData.Students[student].password !== undefined) {
-          // Change Password
-        }
+        // cannot change password
       } else {
         // student does not already exist
         resultUserDocumentData.Students[student] = {
@@ -156,6 +155,11 @@ const developerFirebase = {
               ? "no-name"
               : subData.Students[student].username,
         };
+        await createUserWithEmailAndPassword(
+          authentication,
+          `${student}@student.com`,
+          subData.Students[student].password,
+        );
         // create account for user using `${student}@student.com` & subData.Students[student].password
       }
     }
@@ -170,10 +174,7 @@ const developerFirebase = {
         if (subData.Teams[team].username !== undefined)
           resultUserDocumentData.Teams[team].username =
             subData.Teams[team].username;
-        if (subData.Teams[team].password !== undefined) {
-          // Change Password
-          //updatePassword()
-        }
+        // cannot change password
       } else {
         // team does not already exist
         resultUserDocumentData.Teams[team] = {
@@ -192,9 +193,15 @@ const developerFirebase = {
               ? "no-name"
               : subData.Teams[team].username,
         };
+        await createUserWithEmailAndPassword(
+          authentication,
+          `${team}@team.com`,
+          subData.Teams[team].password,
+        );
         // create account for user using `${team}@team.com` & subData.Teams[team].password
       }
     }
+
     console.log(resultUserDocumentData);
   },
 };
