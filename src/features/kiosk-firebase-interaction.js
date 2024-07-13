@@ -87,7 +87,9 @@ const kioskFirebase = {
             "/" +
             String(index) +
             "@" +
-            String(i),
+            String(i) +
+            "$" +
+            String(time.getTime()),
           menu_name: val.menuName,
           price: val.price,
           current_state: "주문요청",
