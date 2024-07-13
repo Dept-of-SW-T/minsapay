@@ -9,7 +9,7 @@ import {
   MINSAPAY_TITLE,
 } from "../theme-definition";
 import { sellerFirebase } from "../../features/seller-firebase-interaction";
-import Spinner from "./menu-loading.jsx"; // Import the Spinner component
+import Spinner from "./menu-loading.jsx";
 
 const Wrapper = styled.div`
   width: 90%;
@@ -31,9 +31,9 @@ const FlexWrapper = styled.div`
 
 const Text = styled.span`
   font-family: ${MINSAPAY_TITLE};
-  font-size: 15px;
-  @media only screen and (max-width: 768px) {
-    font-size: 1.7vh;
+  font-size: 18px;
+  @media only screen and (max-width: 700px) {
+    font-size: 1.4vh;
   }
   display: flex;
   flex-direction: row;
