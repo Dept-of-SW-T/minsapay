@@ -3,7 +3,6 @@ import { MINSAPAY_BLUE } from "../components/theme-definition";
 import { readXlOfEachSheet, writeXlFromData } from "./xlsx-conversion";
 import { developerFirebase } from "./developer-firebase";
 import { useState } from "react";
-import cryptoJS from "crypto-js";
 import { useNavigate } from "react-router-dom";
 import { loginUtils } from "../features/login-feature";
 
@@ -82,7 +81,7 @@ const Logout = styled.div`
 `;
 
 export default function DeveloperHome() {
-  const [data, setData] = useState({});
+  const [subData, setSubData] = useState({});
   const [remainingTime, setRemainingTime] = useState(0);
   const [clickable, setClickable] = useState(true);
   const [uploadable, setUploadable] = useState(true);
@@ -91,65 +90,27 @@ export default function DeveloperHome() {
     setUploadable(false);
     const file = e.target.files[0];
     let xldata = await readXlOfEachSheet(file); // needs fix
-    /*  Empty cells of Excel files are converted to ""  */
-    let resultdata = {};
-    await developerFirebase.init();
-    developerFirebase.collectionNameList.forEach((collectionName) => {
-      resultdata[collectionName] = {};
-      xldata[collectionName].forEach((val, index) => {
-        if (val.user_id in developerFirebase.data[collectionName]) {
-          // original user
-          resultdata[collectionName][val.user_id] =
-            developerFirebase.data[collectionName][val.user_id];
-          for (const key of Object.keys(xldata[collectionName][index])) {
-            if (key === "user_id") continue;
-            if (key === "balance")
-              resultdata[collectionName][val.user_id][key] = parseInt(
-                xldata[collectionName][index][key],
-              );
-            else
-              resultdata[collectionName][val.user_id][key] = String(
-                xldata[collectionName][index][key],
-              );
-          }
-        } else {
-          resultdata[collectionName][val.user_id] =
-            developerFirebase.emptyUser(collectionName);
-          for (const key of Object.keys(xldata[collectionName][index])) {
-            if (key === "user_id") continue;
-            if (key === "balance")
-              resultdata[collectionName][val.user_id][key] = parseInt(
-                xldata[collectionName][index][key],
-              );
-            else
-              resultdata[collectionName][val.user_id][key] = String(
-                xldata[collectionName][index][key],
-              );
-          }
-        }
-        resultdata[collectionName][val.user_id]["password"] = cryptoJS
-          .SHA256(resultdata[collectionName][val.user_id]["password_unhashed"])
-          .toString();
-      });
-    });
-    setData(resultdata);
-    console.log(resultdata);
+    setSubData(developerFirebase.standardizeSubData(xldata));
     e.target.value = ""; // 같은 파일 입력해도 반복 실행 */
     setUploadable(true);
   };
   const onGetDataClick = async () => {
     setClickable(false);
-    setRemainingTime(5);
-    let rm = 5;
+    const counterLimit = 5;
+    setRemainingTime(counterLimit);
+    let rm = counterLimit;
     const intervalId = setInterval(async () => {
       if (rm < 0) {
         setClickable(true);
         clearInterval(intervalId);
       } else if (rm === 0) {
         rm--;
-        const fileName = "database_info.xlsx";
+        const date = new Date();
+        const fileName = "database_info("
+          .concat(date.toUTCString())
+          .concat(").xlsx");
         await developerFirebase.init();
-        await writeXlFromData(fileName, developerFirebase.subData);
+        await writeXlFromData(fileName, developerFirebase.userSubData);
       } else {
         rm--;
         setRemainingTime(rm);
@@ -158,13 +119,12 @@ export default function DeveloperHome() {
   };
   const onSubmitDataClick = async () => {
     if (!confirm("firebase에 변경사항을 저장하시겠습니까?")) return;
-    if (Object.keys(data).length === 0) {
+    if (Object.keys(subData).length === 0) {
       alert("업로드된 데이터가 없습니다");
       return;
     }
-    console.log(data);
     await developerFirebase.init();
-    await developerFirebase.writeDataToFirebase(data);
+    await developerFirebase.writeDataToFirebase(subData);
   };
   const onLogoutClick = async () => {
     if (!confirm("로그아웃 하시겠습니까?")) return;

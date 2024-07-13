@@ -21,11 +21,18 @@ const readXlOfEachSheet = (file) => {
     };
   });
 };
-const writeXlFromData = (fileName, data) => {
+const writeXlFromData = (fileName, subData) => {
   return new Promise((resolve) => {
     const wb = utils.book_new();
-    for (let key of Object.keys(data)) {
-      const ws = utils.json_to_sheet(data[key]);
+    for (let key of Object.keys(subData)) {
+      let writeData = [];
+      for (let user of Object.keys(subData[key])) {
+        let tmp = { user_id: user };
+        for (let prop of Object.keys(subData[key][user]))
+          tmp[prop] = subData[key][user][prop];
+        writeData.push(tmp);
+      }
+      const ws = utils.json_to_sheet(writeData);
       utils.book_append_sheet(wb, ws, key);
     }
     writeFile(wb, fileName);

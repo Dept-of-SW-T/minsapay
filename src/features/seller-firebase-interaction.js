@@ -55,6 +55,7 @@ const sellerFirebase = {
       if (this.orderHistory[i].order_id === id) {
         this.orderHistory[i].order_processor = processor;
         this.teamDocData.order_history = JSON.stringify(this.orderHistory);
+        console.log(this.teamDocData);
         await setDoc(this.teamDocRef, this.teamDocData);
         const buyerDocRef = doc(
           database,

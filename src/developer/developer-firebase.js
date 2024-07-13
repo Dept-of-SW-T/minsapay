@@ -1,124 +1,201 @@
-import {
-  collection,
-  deleteDoc,
-  doc,
-  getDocs,
-  setDoc,
-} from "firebase/firestore";
-import { database, storage } from "../firebase";
+import { collection, getDocs, query } from "firebase/firestore";
+import { database } from "../firebase";
 import cryptoJS from "crypto-js";
-import { deleteObject, ref, uploadBytes } from "firebase/storage";
 
 const developerFirebase = {
-  collectionNameList: undefined,
-  snapshotList: [],
-  data: {},
-  subData: {},
-  subDataKeys: [],
+  userData: {},
+  /* 
+    {
+      Students {
+        231133 {
+          documentSnapshot : <snapshot>
+          documentData : {
+            balance: <number>,
+            order_history: <string (JSON.stringify(), needs to be parsed for usage)>,
+            team_list: <array of team ids>,
+            username: <string>,
+          }
+        }
+        ...
+      }
+      Teams {
+        kwagibu {
+          documentSnapshot : <snapshot>
+          documentData : {
+            balance: <number>,
+            kiosk_authentication_number: <string of number>,
+            kiosk_image: <string of image storage path, given as default of 광어>,
+            linked_buyer: <string of buyer id>,
+            menu_list: <string (JSON.stringify(), needs to be parsed for usage)>,
+            order_history: <string (JSON.stringify(), needs to be parsed for usage)>,
+            student_list: <array of student ids>,
+            username: <string>,
+          }
+        }
+        ...
+      }
+    }
+  */
+  userSubData: {},
+  /* 
+    {
+      Students {
+        231133 {
+          balance: <number>,
+          username: <string>,
+          password: <string>
+        }
+        ...
+      }
+      Teams {
+        kwagibu {
+          balance: <number>,
+          username: <string>,
+          password: <string>
+        }
+        ...
+      }
+    }
+  */
   randomPassword() {
     return cryptoJS.SHA256(String(Math.random())).toString().substring(0, 6);
   },
-  emptyUser(collectionName) {
-    const rpw = this.randomPassword();
-    if (collectionName === "Students")
-      return {
-        username: "",
-        password: cryptoJS.SHA256(rpw).toString(),
-        password_unhashed: rpw,
-        logged_device: "",
-        balance: 0,
-        order_history: "[]",
-        team_list: [],
-      };
-    else
-      return {
-        username: "",
-        password: cryptoJS.SHA256(rpw).toString(),
-        password_unhashed: rpw,
-        logged_device: "",
-        logged_kiosk_device: "",
-        balance: 0,
-        kiosk_authentication_number: "",
-        kiosk_image: "",
-        linked_buyer: "",
-        menu_list: "[]",
-        student_list: [],
-        order_history: "[]",
-      };
-  },
   async init() {
-    this.snapshotList = [];
-    this.data = {};
-    this.collectionNameList = ["Students", "Teams"];
-    this.subDataKeys = ["user_id", "username", "password_unhashed", "balance"];
-    for (const val of this.collectionNameList) {
-      const snapshot = await getDocs(collection(database, val));
-      this.snapshotList.push(snapshot);
-    }
-    this.snapshotList.forEach((val, index) => {
-      const collectionName = this.collectionNameList[index];
-      this.data[collectionName] = {};
-      val.docs.forEach(
-        (doc) => (this.data[collectionName][doc.id] = doc.data()),
-      );
+    const studentQuery = query(collection(database, "Students"));
+    const studentSnapshot = await getDocs(studentQuery);
+    this.userData = {
+      Students: {},
+      Teams: {},
+    };
+    this.userSubData = {
+      Students: {},
+      Teams: {},
+    };
+    studentSnapshot.forEach((doc) => {
+      this.userData.Students[doc.id] = {};
+      this.userData.Students[doc.id].documentSnapshot = doc;
+      this.userData.Students[doc.id].documentData = doc.data();
+
+      this.userSubData.Students[doc.id] = {};
+      this.userSubData.Students[doc.id].balance =
+        this.userData.Students[doc.id].documentData.balance;
+      this.userSubData.Students[doc.id].username =
+        this.userData.Students[doc.id].documentData.username;
+      this.userSubData.Students[doc.id].password = "";
     });
-    let result = {};
-    this.collectionNameList.forEach((collectionName) => {
-      result[collectionName] = [];
-      for (const userId of Object.keys(this.data[collectionName])) {
-        let tmp = {};
-        this.subDataKeys.forEach((subDataKey) => {
-          if (subDataKey === "user_id") tmp[subDataKey] = userId;
-          else tmp[subDataKey] = this.data[collectionName][userId][subDataKey];
-        });
-        result[collectionName].push(tmp);
-      }
+    const teamQuery = query(collection(database, "Teams"));
+    const teamSnapshot = await getDocs(teamQuery);
+    teamSnapshot.forEach((doc) => {
+      this.userData.Teams[doc.id] = {};
+      this.userData.Teams[doc.id].documentSnapshot = doc;
+      this.userData.Teams[doc.id].documentData = doc.data();
+
+      this.userSubData.Teams[doc.id] = {};
+      this.userSubData.Teams[doc.id].balance =
+        this.userData.Teams[doc.id].documentData.balance;
+      this.userSubData.Teams[doc.id].username =
+        this.userData.Teams[doc.id].documentData.username;
+      this.userSubData.Teams[doc.id].password = "";
     });
-    this.subData = result;
   },
-  async writeDataToFirebase(data) {
-    /*Teams Storage Change*/
-    for (const teamUser of Object.keys(this.data["Teams"])) {
-      if (!(teamUser in data["Teams"])) {
-        // remove all files
-        await deleteObject(ref(storage, this.data.Teams[teamUser].kiosk_image));
-        const menuList = JSON.parse(this.data.Teams[teamUser].menu_list);
-        menuList.forEach(async (menu) => {
-          await deleteObject(ref(storage, menu.imagePath));
-        });
-      }
-    }
-    for (const teamUser of Object.keys(data["Teams"])) {
-      // adding or updating storage
-      if (!(teamUser in this.data["Teams"])) {
-        // if this team does not exist yet
-        const locationRef = ref(
-          storage,
-          `${teamUser}/kiosk_image/default_kiosk.jpg`,
-        );
-        const result = await uploadBytes(
-          locationRef,
-          new File([""], "filename"),
-        );
-        data.Teams[teamUser].kiosk_image = result.ref._location.path_;
-      }
-    }
-    /**********************/
-    this.collectionNameList.forEach(async (collectionName) => {
-      const collectionRef = collection(database, collectionName);
-      const snapshot = await getDocs(collectionRef);
-      snapshot.docs.forEach(async (doc) => {
-        await deleteDoc(doc.ref);
-      });
-      for (const userId of Object.keys(data[collectionName])) {
-        await setDoc(
-          doc(database, collectionName, userId),
-          data[collectionName][userId],
-        );
-      }
+  standardizeSubData(xldata) {
+    let resultData = { Students: {}, Teams: {} };
+    xldata.Students.forEach((student) => {
+      resultData.Students[student.user_id] = {};
+      resultData.Students[student.user_id].balance = student.balance;
+      resultData.Students[student.user_id].username =
+        typeof student.username === "number"
+          ? String(student.username)
+          : student.username;
+      resultData.Students[student.user_id].password =
+        typeof student.password === "number"
+          ? String(student.password)
+          : student.password;
     });
-    // need storage management
-    await this.init();
+    xldata.Teams.forEach((team) => {
+      resultData.Teams[team.user_id] = {};
+      resultData.Teams[team.user_id].balance = team.balance;
+      resultData.Teams[team.user_id].username =
+        typeof team.username === "number"
+          ? String(team.username)
+          : team.username;
+      resultData.Teams[team.user_id].password =
+        typeof team.password === "number"
+          ? String(team.password)
+          : team.password;
+    });
+    return resultData;
+  },
+  async writeDataToFirebase(subData) {
+    let resultUserDocumentData = { Students: {}, Teams: {} };
+    for (let student in subData.Students) {
+      if (student in this.userData.Students) {
+        // student already exists
+        resultUserDocumentData.Students[student] =
+          this.userData.Students[student].documentData;
+        if (subData.Students[student].balance !== undefined)
+          resultUserDocumentData.Students[student].balance =
+            subData.Students[student].balance;
+        if (subData.Students[student].username !== undefined)
+          resultUserDocumentData.Students[student].username =
+            subData.Students[student].username;
+        if (subData.Students[student].password !== undefined) {
+          // Change Password
+        }
+      } else {
+        // student does not already exist
+        resultUserDocumentData.Students[student] = {
+          balance:
+            subData.Students[student].balance === undefined
+              ? 0
+              : subData.Students[student].balance,
+          order_history: "[]",
+          team_list: [],
+          username:
+            subData.Students[student].username === undefined
+              ? "no-name"
+              : subData.Students[student].username,
+        };
+        // create account for user using `${student}@student.com` & subData.Students[student].password
+      }
+    }
+    for (let team in subData.Teams) {
+      if (team in this.userData.Teams) {
+        // team already exists
+        resultUserDocumentData.Teams[team] =
+          this.userData.Teams[team].documentData;
+        if (subData.Teams[team].balance !== undefined)
+          resultUserDocumentData.Teams[team].balance =
+            subData.Teams[team].balance;
+        if (subData.Teams[team].username !== undefined)
+          resultUserDocumentData.Teams[team].username =
+            subData.Teams[team].username;
+        if (subData.Teams[team].password !== undefined) {
+          // Change Password
+          //updatePassword()
+        }
+      } else {
+        // team does not already exist
+        resultUserDocumentData.Teams[team] = {
+          balance:
+            subData.Teams[team].balance === undefined
+              ? 0
+              : subData.Teams[team].balance,
+          kiosk_authentication_number: "",
+          kiosk_image: "defaultBooth/광어.jpg",
+          linked_buyer: "",
+          menu_list: "[]",
+          order_history: "[]",
+          student_list: [],
+          username:
+            subData.Teams[team].username === undefined
+              ? "no-name"
+              : subData.Teams[team].username,
+        };
+        // create account for user using `${team}@team.com` & subData.Teams[team].password
+      }
+    }
+    console.log(resultUserDocumentData);
   },
 };
 
