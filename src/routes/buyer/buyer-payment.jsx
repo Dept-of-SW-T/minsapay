@@ -152,12 +152,14 @@ export default function BuyerPayment() {
   };
   const onKioskAuthenticationNumberSumbit = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
     const success = await buyerFirebase.submitKioskAuthenticationNumber(
       e.target[0].value,
     ); // 값 대조
     if (success) {
       navigate("../buyer-home"); // 성공 시 이동 */
     }
+    setIsLoading(false);
   };
   const onKeypadButtonClick = (e) => {
     setKioskAuthenticationNumber((prev) => {
