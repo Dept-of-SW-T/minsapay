@@ -145,20 +145,20 @@ export default function CPUHome() {
   const [kioskImage, setKioskImage] = useState("");
   const [orderList, setOrderList] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [nameFilter, setNameFilter] = useState(null);
-  const [menuFilter, setMenuFilter] = useState(null);
+  const [nameFilter, setNameFilter] = useState("");
+  const [menuFilter, setMenuFilter] = useState("");
 
   const applyFilter = function () {
     const tempList = [];
     for (let i = 0; i < CPUFirebase.orderHistory.length; i++) {
       if (
-        menuFilter !== null &&
-        !contains(CPUFirebase.orderHistory[i].menu_name, menuFilter.toString())
+        menuFilter !== "" &&
+        !contains(CPUFirebase.orderHistory[i].menu_name, menuFilter)
       )
         continue;
       if (
-        nameFilter !== null &&
-        !contains(CPUFirebase.orderHistory[i].buyer_name, nameFilter.toString())
+        nameFilter !== "" &&
+        !contains(CPUFirebase.orderHistory[i].buyer_name, nameFilter)
       )
         continue;
       tempList.push(CPUFirebase.orderHistory[i]);
@@ -243,11 +243,10 @@ export default function CPUHome() {
     };
   }, []);
 
-  useEffect(applyFilter, [nameFilter]);
-  useEffect(applyFilter, [menuFilter]);
+  useEffect(applyFilter, [nameFilter, menuFilter]);
   useEffect(() => {
-    setNameFilter(null);
-    setMenuFilter(null);
+    setNameFilter("");
+    setMenuFilter("");
   }, []);
 
   const navigate = useNavigate();
@@ -272,6 +271,33 @@ export default function CPUHome() {
     }
     return true;
   };
+
+  const [loadingState, setLoadingState] = useState(orderList.map(() => false));
+
+  async function onRefundClick(index, id) {
+    if (!confirm("환불을 승인하시겠습니까?")) return;
+
+    const nameFilterArchive = nameFilter;
+    const menuFilterArchive = menuFilter;
+
+    setLoadingState((prev) => {
+      const newLoadingState = [...prev];
+      newLoadingState[index] = true;
+      return newLoadingState;
+    });
+
+    await CPUFirebase.refundOrder(id);
+    // alert("환불 승인 완료");
+
+    setLoadingState((prev) => {
+      const newLoadingState = [...prev];
+      newLoadingState[index] = false;
+      return newLoadingState;
+    });
+
+    setNameFilter(nameFilterArchive);
+    setMenuFilter(menuFilterArchive);
+  }
 
   return (
     <>
@@ -314,7 +340,11 @@ export default function CPUHome() {
                 inputLabel="메뉴별로 필터링"
               />
               <TableWrapper>
-                <MenuTable orderList={orderList} />
+                <MenuTable
+                  orderList={orderList}
+                  onClick={onRefundClick}
+                  loadingState={loadingState}
+                />
               </TableWrapper>
             </BodyDiv>
           </CPUHomeBox>

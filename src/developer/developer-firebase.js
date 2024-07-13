@@ -202,7 +202,7 @@ const developerFirebase = {
       }
     }
 
-    console.log(resultUserDocumentData);
+    // console.log(resultUserDocumentData);
   },
 };
 
