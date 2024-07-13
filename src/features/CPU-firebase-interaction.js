@@ -106,23 +106,11 @@ const CPUFirebase = {
           reciever: buyerUsername,
           amount: this.orderHistory[i].price,
         });
+        // await setDoc(buyerDocRef, buyerDocData);
+        // await setDoc(this.userDocRef, this.userDocData);
+
         await setDoc(buyerDocRef, buyerDocData);
         await setDoc(this.userDocRef, this.userDocData);
-
-        // Check if the transaction was successful
-        let checkUserDocData = (await getDoc(this.userDocRef)).data();
-        let checkBuyerDocData = (await getDoc(buyerDocRef)).data();
-
-        while (
-          checkUserDocData.balance !== checkBuyerDocData.balance ||
-          checkUserDocData.order_history !== this.userDocData.order_history ||
-          checkBuyerDocData.order_history !== buyerDocData.order_history
-        ) {
-          await setDoc(buyerDocRef, buyerDocData);
-          await setDoc(this.userDocRef, this.userDocData);
-          checkUserDocData = (await getDoc(this.userDocRef)).data();
-          checkBuyerDocData = (await getDoc(buyerDocRef)).data();
-        }
 
         break;
       }

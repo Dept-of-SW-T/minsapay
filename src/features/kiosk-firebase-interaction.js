@@ -109,28 +109,15 @@ const kioskFirebase = {
       reciever: this.userDocData.username,
       amount: total,
     });
-    await setDoc(this.userDocRef, this.userDocData);
-    const buyerDocRef = doc(
+
+    const linkedBuyerDocRef = doc(
       database,
       "Students",
       this.userDocData.linked_buyer,
     );
-    await setDoc(buyerDocRef, linkedBuyerDocData);
 
-    // Check if the transaction was successful
-    let checkUserDocData = (await getDoc(this.userDocRef)).data();
-    let checkBuyerDocData = (await getDoc(buyerDocRef)).data();
-
-    while (
-      checkUserDocData.balance !== checkBuyerDocData.balance ||
-      checkUserDocData.order_history !== this.userDocData.order_history ||
-      checkBuyerDocData.order_history !== linkedBuyerDocData.order_history
-    ) {
-      await setDoc(buyerDocRef, linkedBuyerDocData);
-      await setDoc(this.userDocRef, this.userDocData);
-      checkUserDocData = (await getDoc(this.userDocRef)).data();
-      checkBuyerDocData = (await getDoc(buyerDocRef)).data();
-    }
+    await setDoc(linkedBuyerDocRef, linkedBuyerDocData);
+    await setDoc(this.userDocRef, this.userDocData);
   },
 };
 
