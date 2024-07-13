@@ -7,6 +7,7 @@ import { SingleList } from "../../components/moderator/single-list";
 import { onSnapshot, doc } from "firebase/firestore";
 import { UserInfo } from "../../components/moderator/user-info";
 import { SearchElement } from "../../components/moderator/search-element";
+import Loading from "../../components/loading";
 
 const Wrapper = styled.div`
   width: flex;
@@ -28,6 +29,7 @@ export default function ModeratorHome() {
   const [selectedUser, setSelectedUser] = useState(null);
   // const [idFilter, setIdFilter] = useState(null);
   const [nameFilter, setNameFilter] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   const onUserSelect = (id) => {
     setSelectedUser(
@@ -61,7 +63,6 @@ export default function ModeratorHome() {
         continue;
       tempList.push(moderatorFirebase.usersList[i]);
     }
-
     setUserElementList(
       tempList.map((user) => {
         return (
@@ -83,17 +84,20 @@ export default function ModeratorHome() {
   useEffect(() => {
     let unsubscribe = null;
     const init = async () => {
+      setIsLoading(true);
       await moderatorFirebase.init();
-      setUserElementList(
-        moderatorFirebase.usersList.map((user) => {
-          return (
-            <UserElement
-              username={user.data().username}
-              key={user.data().username}
-            />
-          );
-        }),
-      );
+      // setUserElementList(
+      //   moderatorFirebase.usersList.map((user) => {
+      //     return (
+      //       <UserElement
+      //         username={user.data().username}
+      //         key={user.data().username}
+      //       />
+      //     );
+      //   }),
+      // );
+      changeUserElementList();
+      setIsLoading(false);
     };
     init();
     unsubscribe = onSnapshot(
@@ -120,7 +124,9 @@ export default function ModeratorHome() {
     };
   }, []);
 
-  return (
+  return isLoading ? (
+    <Loading />
+  ) : (
     <Wrapper>
       <ModeratorHeader />
       {/* <SearchElement searchFunc={setIdFilter} inputLabel={"학번으로 검색"} /> */}
