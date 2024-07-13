@@ -54,7 +54,7 @@ const MenuContainer = styled.div`
   width: 100vw;
   height: 100vh;
   background: url(${MenuImageRef}) center/cover no-repeat;
-  display: ${(props) => (props.show ? "block" : "none")};
+  display: ${(props) => (props.showMenu ? "block" : "none")};
 `;
 
 const CloseButton = styled.button`
@@ -154,7 +154,7 @@ export default function BuyerHome() {
               src={MenuIconRef} // 메뉴 아이콘 이미지 추가
             />
           </PayIconWrapper>
-          <MenuContainer show={showMenu}>
+          <MenuContainer {...showMenu}>
             <CloseButton onClick={() => setShowMenu(false)}>X</CloseButton>
           </MenuContainer>
         </>
