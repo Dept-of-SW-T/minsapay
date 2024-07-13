@@ -1,7 +1,7 @@
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
 import { getStorage } from "firebase/storage";
-import { getMessaging } from "firebase/messaging";
+/* import { getMessaging } from "firebase/messaging"; */
 import {
   browserSessionPersistence,
   getAuth,
@@ -21,11 +21,11 @@ const app = initializeApp(firebaseConfig);
 export const database = getFirestore(app);
 export const storage = getStorage(app);
 export const authentication = getAuth(app);
-const messaging = getMessaging(app);
+/* const messaging = getMessaging(app); */
 
 setPersistence(authentication, browserSessionPersistence).then(() => {});
 
-messaging.onMessage(async (payload) => {
+/* messaging.onMessage(async (payload) => {
   console.log("Message received. ", payload);
   if (payload.data.type === "logout") {
     await authentication.signOut();
@@ -33,4 +33,4 @@ messaging.onMessage(async (payload) => {
       "You have been logged out because you logged in from another device.",
     );
   }
-});
+}); */
