@@ -23,7 +23,7 @@ const HeaderDiv = styled.div`
   z-index: 1000; /* 다른 요소 위에 표시되도록 z-index 설정 */
 `;
 const Logo = styled.img`
-  height: 60%;
+  height: 90%;
   /* margin-left: 11px; */
   aspect-ratio: 1;
   &:hover {
