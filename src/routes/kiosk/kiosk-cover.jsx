@@ -28,23 +28,21 @@ export default function KioskCover() {
       await CPUFirebase.kioskImageInit();
       setKioskImageDownloadUrl(CPUFirebase.kioskImageDownloadUrl);
       setIsLoading(false);
-      if (CPUFirebase.userDocData.linked_buyer !== "")
-        navigate("../kiosk-home");
+      if (CPUFirebase.userDocData.linked_buyer !== "") navigate("/kiosk-home");
     };
     init();
     unsubscribe = onSnapshot(CPUFirebase.userDocRef, async (doc) => {
       CPUFirebase.userDocData = doc.data();
       await CPUFirebase.kioskImageInit();
       setKioskImageDownloadUrl(CPUFirebase.kioskImageDownloadUrl);
-      if (CPUFirebase.userDocData.linked_buyer !== "")
-        navigate("../kiosk-home");
+      if (CPUFirebase.userDocData.linked_buyer !== "") navigate("/kiosk-home");
     });
     return () => {
       unsubscribe && unsubscribe();
     };
   }, []);
   const handleClick = () => {
-    navigate("../kiosk-home/kiosk-authentication");
+    navigate("/kiosk-home/kiosk-authentication");
   };
 
   if (isLoading) {

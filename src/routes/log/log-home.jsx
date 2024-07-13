@@ -109,14 +109,14 @@ const LogHeader = () => {
   const onLogoClick = (e) => {
     // logo 누르면 홈으로 navigate
     e.preventDefault();
-    navigate("../log");
+    navigate("/log");
   };
   const onLogOutIconClick = async (e) => {
     // logout 누르면 confirm 띄우고 로그아웃 후 home으로 navigate --> 저절로 logout화면으로 protected routes를 통해 연결
     e.preventDefault();
     if (!confirm("로그아웃 하시겠습니까?")) return;
     await loginUtils.signOut();
-    navigate("../../");
+    navigate("/");
   };
   const onBackIconClick = () => {
     const userClass = loginUtils.getUserClass();

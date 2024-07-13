@@ -27,7 +27,7 @@ export default function SellerHome() {
     const init = async () => {
       await sellerFirebase.init();
       if (!sellerFirebase.userDocData.team_list.includes(currentTeam)) {
-        navigate("../seller-home/seller-select");
+        navigate("/seller-home/seller-select");
       }
       await sellerFirebase.getTeamData(currentTeam);
       setOrderList(

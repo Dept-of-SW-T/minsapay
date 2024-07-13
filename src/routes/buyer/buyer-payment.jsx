@@ -157,7 +157,7 @@ export default function BuyerPayment() {
       e.target[0].value,
     ); // 값 대조
     if (success) {
-      navigate("../buyer-home"); // 성공 시 이동 */
+      navigate("/buyer-home"); // 성공 시 이동 */
     }
     setIsLoading(false);
   };
@@ -241,7 +241,7 @@ export default function BuyerPayment() {
         </PaymentBox>
       )}
       <FixedFooter>
-        <HomeButton onClick={() => navigate("../buyer-home")} src={LogOutRef} />
+        <HomeButton onClick={() => navigate("/buyer-home")} src={LogOutRef} />
       </FixedFooter>
     </Wrapper>
   );

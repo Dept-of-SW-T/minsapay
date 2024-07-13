@@ -44,7 +44,7 @@ export const CPUHeader = () => {
   const onLogoClick = (e) => {
     // logo 누르면 홈으로 navigate
     e.preventDefault();
-    navigate("../cpu-home");
+    navigate("/cpu-home");
   };
   /*   const onLogOutIconClick = async (e) => {
     // logout 누르면 confirm 띄우고 로그아웃 후 home으로 navigate --> 저절로 logout화면으로 protected routes를 통해 연결
@@ -56,7 +56,7 @@ export const CPUHeader = () => {
   const onSettingClick = async (e) => {
     // logo 누르면 설정으로 navigate
     e.preventDefault();
-    navigate("../login-setting");
+    navigate("/login-setting");
   };
 
   const onLogoHover = (e) => {

@@ -35,16 +35,16 @@ import ChangePassword from "./routes/login-setting";
 const router = createBrowserRouter([
   // 루팅
   {
+    path: "/",
+    element: <ProtectedRoute />, // 기본 화면으로 실제로는 절대로 display 되지는 않고 사용자를 다른 페이지로 보내는데 사용됨
+  },
+  {
     path: "/developer-home",
     element: (
       <ProtectedDeveloper>
         <DeveloperHome />
       </ProtectedDeveloper>
     ), // 보안 추가해야 함
-  },
-  {
-    path: "/",
-    element: <ProtectedRoute />, // 기본 화면으로 실제로는 절대로 display 되지는 않고 사용자를 다른 페이지로 보내는데 사용됨
   },
   {
     path: "/login-setting", // 개발자용
