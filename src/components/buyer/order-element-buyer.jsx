@@ -4,6 +4,7 @@ import {
   ORDER_COMPLETE,
   ORDER_ONPROCESS,
   ORDER_REQUEST,
+  REFUND_OR_RECEIPT_COMPLETE,
 } from "../theme-definition";
 
 const Wrapper = styled.span`
@@ -67,7 +68,7 @@ export default function OrderElementBuyer({
       case "처리완료":
         return ORDER_COMPLETE;
       default:
-        return ORDER_COMPLETE;
+        return REFUND_OR_RECEIPT_COMPLETE;
     }
   };
 
