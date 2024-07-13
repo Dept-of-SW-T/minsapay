@@ -142,7 +142,7 @@ const TableWrapper = styled.div`
 
 export default function CPUHome() {
   const [balance, setBalance] = useState(0);
-  const [kioskImage, setKioskImage] = useState("khgyhgjhfg");
+  const [kioskImage, setKioskImage] = useState("");
   const [orderList, setOrderList] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [nameFilter, setNameFilter] = useState(null);
@@ -150,7 +150,6 @@ export default function CPUHome() {
 
   const applyFilter = function () {
     const tempList = [];
-    // console.log(CPUFirebase);
     for (let i = 0; i < CPUFirebase.orderHistory.length; i++) {
       if (
         menuFilter !== null &&
@@ -200,17 +199,18 @@ export default function CPUHome() {
       setIsLoading(false);
       setBalance(CPUFirebase.userDocData.balance);
       setKioskImage(CPUFirebase.kioskImageDownloadUrl);
-      setOrderList(
-        CPUFirebase.orderHistory.toReversed().map((val, index) => ({
-          id: index + 1,
-          menu_name: val.menu_name,
-          buyer_name: val.buyer_name,
-          reception_time: val.reception_time,
-          current_state: val.current_state,
-          order_id: val.order_id,
-          refund_request: val.refund_request,
-        })),
-      );
+      // setOrderList(
+      //   CPUFirebase.orderHistory.toReversed().map((val, index) => ({
+      //     id: index + 1,
+      //     menu_name: val.menu_name,
+      //     buyer_name: val.buyer_name,
+      //     reception_time: val.reception_time,
+      //     current_state: val.current_state,
+      //     order_id: val.order_id,
+      //     refund_request: val.refund_request,
+      //   })),
+      // );
+      applyFilter();
       unsubscribe = onSnapshot(CPUFirebase.userDocRef, (doc) => {
         CPUFirebase.userDoc = doc;
         CPUFirebase.userDocData = doc.data();
@@ -245,6 +245,10 @@ export default function CPUHome() {
 
   useEffect(applyFilter, [nameFilter]);
   useEffect(applyFilter, [menuFilter]);
+  useEffect(() => {
+    setNameFilter(null);
+    setMenuFilter(null);
+  }, []);
 
   const navigate = useNavigate();
   const onChangeMenuClick = () => {

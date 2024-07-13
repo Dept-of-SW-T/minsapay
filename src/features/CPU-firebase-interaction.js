@@ -76,10 +76,12 @@ const CPUFirebase = {
     this.userDoc = await getDoc(this.userDocRef);
   },
   async refundOrder(orderID) {
+    console.log(orderID);
     let buyerID = undefined;
     let buyerUsername = undefined;
     for (let i = 0; i < this.orderHistory.length; i++) {
       if (this.orderHistory[i].order_id === orderID) {
+        console.log(i);
         this.orderHistory[i].refund_request = 1;
         this.userDocData.order_history = JSON.stringify(this.orderHistory);
         this.userDocData.balance -= this.orderHistory[i].price;

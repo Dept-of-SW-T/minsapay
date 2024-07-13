@@ -87,7 +87,7 @@ export default function MenuTable({ orderList }) {
     });
 
     await CPUFirebase.refundOrder(id);
-    alert("환불 승인 완료");
+    // alert("환불 승인 완료");
 
     setLoadingState((prev) => {
       const newLoadingState = [...prev];

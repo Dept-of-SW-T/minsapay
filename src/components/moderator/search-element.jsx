@@ -57,12 +57,15 @@ export function SearchElement({ searchFunc, inputLabel }) {
     setSearchVal(event.target.value);
   };
 
-  const onSubmit = (e) => {
-    e.preventDefault();
-    searchFunc(searchVal);
+  const onSubmit = (event) => {
+    event.preventDefault();
+    // searchFunc(searchVal);
+    // setSearchVal(event.target.value);
   };
 
-  useEffect(() => searchFunc(searchVal), [searchVal]);
+  useEffect(() => {
+    searchFunc(searchVal);
+  }, [searchVal]);
 
   return (
     <Wrapper>
