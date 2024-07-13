@@ -58,9 +58,11 @@ export default function OrderElementBuyer({
   teamName,
   price,
   status,
+  refundRequest,
 }) {
+  const displayStatus = refundRequest === 1 ? "환불됨" : status;
   const backgroundColor = () => {
-    switch (status) {
+    switch (displayStatus) {
       case "주문요청":
         return ORDER_REQUEST;
       case "처리중":
@@ -77,7 +79,7 @@ export default function OrderElementBuyer({
       <Text id="first-child">{teamName}</Text>
       <Text>{menuName}</Text>
       <Text className="price">{price}원</Text>
-      <Text id="last-child">{status}</Text>
+      <Text id="last-child">{displayStatus}</Text>
     </Wrapper>
   );
 }
