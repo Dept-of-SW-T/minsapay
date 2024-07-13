@@ -14,38 +14,49 @@ import Loading from "../components/loading";
 
 const OuterWrapper = styled.div`
   width: 100vw;
-  height: 100vh; /* 전체 화면 높이 설정 */
+  height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center; /* 세로로도 가운데 정렬 */
-  padding: 20px; /* 모바일에서 여백을 추가 */
+  justify-content: center;
+  padding: 20px;
   box-sizing: border-box;
   background-color: white;
+  position: relative; /* Set relative position */
 `;
 
-const LogOutIcon = styled.img`
-  height: 40px;
-  width: 40px; /* 고정 크기 */
-  aspect-ratio: 1;
-  margin-left: 10px; /* 제목과의 간격 조정 */
-  &:hover {
-    cursor: pointer;
+const IconsDiv = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  position: absolute; /* Fix the icons div at the top */
+  top: 0;
+  left: 0;
+  box-sizing: border-box;
+`;
+
+const TitleBetweenIcons = styled.span`
+  font-size: 3vh;
+  font-family: ${MINSAPAY_FONT};
+  color: black;
+  @media only screen and (max-width: 700px) {
+    font-size: 3vh;
   }
 `;
 
 const TitleDiv = styled.div`
-  margin-top: 20px;
   width: 100%;
   display: flex;
-  flex-direction: row;
-  justify-content: center; /* 가운데 정렬 */
+  justify-content: center;
   align-items: center;
-  padding: 0 20px; /* 좌우 여백 추가 */
+  margin-top: 100px; /* Add margin to avoid overlap with fixed icons */
+  padding: 0 20px;
 `;
 
 const Title = styled.span`
-  font-size: 6vh;
+  font-size: 4vh;
   @media only screen and (max-width: 1000px) {
     font-size: calc(0.3vw + 2em);
   }
@@ -54,7 +65,7 @@ const Title = styled.span`
 
 const Form = styled.form`
   width: 100%;
-  max-width: 600px; /* 최대 너비 설정 */
+  max-width: 600px;
   padding: 20px;
   margin-top: 20px;
   display: flex;
@@ -67,7 +78,7 @@ const Form = styled.form`
 const Input = styled.input`
   padding: 10px;
   border: none;
-  width: 100%;
+  width: 70%;
   font-size: 3vh;
   @media only screen and (max-width: 700px) {
     font-size: 2vh;
@@ -89,14 +100,15 @@ const Input = styled.input`
   }
   &[type="submit"] {
     margin-top: 20px;
-    width: 100%;
-    max-width: 300px; /* 최대 너비 설정 */
+    width: 60%;
+    max-width: 300px;
     height: 40px;
     border-radius: 50px;
     border-bottom: 0px;
     background-color: ${MINSAPAY_BLUE};
     color: white;
-    font-size: 2vh;
+    font-size: calc(0.6rem + 0.6vw); /* Adjust font size */
+    /* Maximum font size */
     font-weight: normal;
     font-family: ${MINSAPAY_FONT};
     &:hover {
@@ -107,11 +119,19 @@ const Input = styled.input`
   }
 `;
 
+const LogOutIcon = styled.img`
+  height: 40px;
+  width: 40px;
+  aspect-ratio: 1;
+  &:hover {
+    cursor: pointer;
+  }
+`;
+
 const ReturnHomeIcon = styled.img`
   height: 40px;
-  width: 40px; /* 고정 크기 */
+  width: 40px;
   aspect-ratio: 1;
-  margin-right: 10px; /* 제목과의 간격 조정 */
   &:hover {
     cursor: pointer;
   }
@@ -124,7 +144,7 @@ const Error = styled.span`
   }
   color: tomato;
   font-family: ${MINSAPAY_FONT};
-  margin-top: 10px; /* 에러 메시지의 상단 여백 추가 */
+  margin-top: 10px;
 `;
 
 export default function LoginSetting() {
@@ -134,16 +154,19 @@ export default function LoginSetting() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
   const navigate = useNavigate();
+
   const onLogOutIconClick = async (e) => {
     e.preventDefault();
     if (!confirm("로그아웃 하시겠습니까?")) return;
     await loginUtils.signOut();
     navigate("../login");
   };
+
   const onHomeIconClick = async (e) => {
     e.preventDefault();
     navigate("../");
   };
+
   const onSubmit = async (e) => {
     setIsLoading(true);
     e.preventDefault();
@@ -177,10 +200,13 @@ export default function LoginSetting() {
         <Loading />
       ) : (
         <>
-          <TitleDiv>
+          <IconsDiv>
             <ReturnHomeIcon onClick={onHomeIconClick} src={HomeIconRef} />
-            <Title>비밀번호 변경</Title>
+            <TitleBetweenIcons>Setting</TitleBetweenIcons>
             <LogOutIcon onClick={onLogOutIconClick} src={LogOutRef} />
+          </IconsDiv>
+          <TitleDiv>
+            <Title>비밀번호 변경</Title>
           </TitleDiv>
           <Form onSubmit={onSubmit}>
             <Input
