@@ -129,7 +129,7 @@ export default function DeveloperHome() {
   const onLogoutClick = async () => {
     if (!confirm("로그아웃 하시겠습니까?")) return;
     await loginUtils.signOut();
-    navigate("../");
+    navigate("/");
   };
   return (
     <Wrapper>

@@ -79,12 +79,12 @@ const CPUFirebase = {
     this.userDoc = await getDoc(this.userDocRef);
   },
   async refundOrder(orderID) {
-    console.log(orderID);
+    // console.log(orderID);
     let buyerID = undefined;
     let buyerUsername = undefined;
     for (let i = 0; i < this.orderHistory.length; i++) {
       if (this.orderHistory[i].order_id === orderID) {
-        console.log(i);
+        // console.log(i);
         this.orderHistory[i].refund_request = 1;
         this.userDocData.order_history = JSON.stringify(this.orderHistory);
         this.userDocData.balance -= this.orderHistory[i].price;
@@ -109,23 +109,11 @@ const CPUFirebase = {
           reciever: buyerUsername,
           amount: this.orderHistory[i].price,
         });
+        // await setDoc(buyerDocRef, buyerDocData);
+        // await setDoc(this.userDocRef, this.userDocData);
+
         await setDoc(buyerDocRef, buyerDocData);
         await setDoc(this.userDocRef, this.userDocData);
-
-        // Check if the transaction was successful
-        let checkUserDocData = (await getDoc(this.userDocRef)).data();
-        let checkBuyerDocData = (await getDoc(buyerDocRef)).data();
-
-        while (
-          checkUserDocData.balance !== checkBuyerDocData.balance ||
-          checkUserDocData.order_history !== this.userDocData.order_history ||
-          checkBuyerDocData.order_history !== buyerDocData.order_history
-        ) {
-          await setDoc(buyerDocRef, buyerDocData);
-          await setDoc(this.userDocRef, this.userDocData);
-          checkUserDocData = (await getDoc(this.userDocRef)).data();
-          checkBuyerDocData = (await getDoc(buyerDocRef)).data();
-        }
 
         break;
       }

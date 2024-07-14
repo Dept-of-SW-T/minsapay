@@ -7,6 +7,7 @@ import LogOutRef from "../../images/LogOut.svg";
 import BackIconRef from "../../images/CPUHome.svg";
 import { useNavigate } from "react-router-dom";
 import { loginUtils } from "../../features/login-feature";
+import Loading from "../../components/loading";
 import {
   MINSAPAY_TITLE,
   BACKGROUND_GRAY,
@@ -108,14 +109,14 @@ const LogHeader = () => {
   const onLogoClick = (e) => {
     // logo 누르면 홈으로 navigate
     e.preventDefault();
-    navigate("../log");
+    navigate("/log");
   };
   const onLogOutIconClick = async (e) => {
     // logout 누르면 confirm 띄우고 로그아웃 후 home으로 navigate --> 저절로 logout화면으로 protected routes를 통해 연결
     e.preventDefault();
     if (!confirm("로그아웃 하시겠습니까?")) return;
     await loginUtils.signOut();
-    navigate("../../");
+    navigate("/");
   };
   const onBackIconClick = () => {
     const userClass = loginUtils.getUserClass();
@@ -140,12 +141,15 @@ const LogHeader = () => {
 
 export default function LogHome() {
   const [log, setLog] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     let unsubscribe = null;
     const init = async () => {
+      setIsLoading(true);
       await logFirebase.init();
       setLog((await getDoc(logFirebase.logRef)).data().log.toReversed());
+      setIsLoading(false);
     };
     init();
     unsubscribe = onSnapshot(logFirebase.logRef, (snapshot) => {
@@ -157,7 +161,9 @@ export default function LogHome() {
     };
   }, []);
 
-  return (
+  return isLoading ? (
+    <Loading />
+  ) : (
     <Wrapper>
       <LogHeader />
       <TitleEl>Log</TitleEl>

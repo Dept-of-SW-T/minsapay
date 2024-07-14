@@ -1,12 +1,9 @@
 import styled from "styled-components";
 import { BORDER_GRAY, BUTTON_SHADOW, MINSAPAY_FONT } from "../theme-definition";
 import AddToOrder from "../../images/AddToOrder.svg";
-//자세한 요소 반응형 필요함
 
 const Wrapper = styled.div`
-  // border radius 수정!!!
   display: flex;
-  flex-direction: flex;
   flex-direction: column;
   aspect-ratio: 3;
   border-radius: 10%;
@@ -14,24 +11,37 @@ const Wrapper = styled.div`
   width: 15vw;
   box-shadow: 0px 4px 6px 1px ${BUTTON_SHADOW};
 `;
-const NoImage = styled.div`
+
+const ImageWrapper = styled.div`
   width: 100%;
-  aspect-ratio: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  aspect-ratio: 1.2;
   border-bottom: 3px solid ${BORDER_GRAY};
   border-top-left-radius: 10%;
   border-top-right-radius: 10%;
-  font-family: ${MINSAPAY_FONT};
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
+
+const NoImage = styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: ${MINSAPAY_FONT};
+  border-top-left-radius: 10%;
+  border-top-right-radius: 10%;
+  background-color: #f0f0f0;
+`;
+
 const MenuImage = styled.img`
   width: 100%;
-  aspect-ratio: 1.2;
+  height: 100%;
   border-top-left-radius: 10%;
   border-top-right-radius: 10%;
 `;
+
 const BottomDiv = styled.div`
   width: 100%;
   height: 100%;
@@ -40,6 +50,7 @@ const BottomDiv = styled.div`
   align-items: center;
   justify-content: space-between;
 `;
+
 const AddOrderBox = styled.div`
   height: 100%;
   width: 25%;
@@ -47,6 +58,7 @@ const AddOrderBox = styled.div`
   align-items: center;
   justify-content: flex-start;
 `;
+
 const AddOrder = styled.img`
   width: 75%;
   &:hover {
@@ -54,6 +66,7 @@ const AddOrder = styled.img`
     cursor: pointer;
   }
 `;
+
 const TextArea = styled.div`
   width: 75%;
   height: 100%;
@@ -64,6 +77,7 @@ const TextArea = styled.div`
   padding-left: 7%;
   font-family: ${MINSAPAY_FONT};
 `;
+
 const MenuName = styled.div`
   height: 40%;
   width: 100%;
@@ -71,6 +85,7 @@ const MenuName = styled.div`
   display: flex;
   align-items: center;
 `;
+
 const MenuPrice = styled.div`
   height: 30%;
   width: 100%;
@@ -89,21 +104,23 @@ export default function MenuDisplayElement({
 }) {
   return (
     <Wrapper>
-      {menuImageUrl === "" ? (
-        <NoImage onClick={onAddToOrderClick}>
-          <p
-            style={{
-              width: "100%",
-              textAlign: "center",
-              fontSize: "100%",
-            }}
-          >
-            이미지 없음
-          </p>
-        </NoImage>
-      ) : (
-        <MenuImage onClick={onAddToOrderClick} src={menuImageUrl} />
-      )}
+      <ImageWrapper>
+        {menuImageUrl === "" ? (
+          <NoImage onClick={onAddToOrderClick}>
+            <p
+              style={{
+                width: "100%",
+                textAlign: "center",
+                fontSize: "100%",
+              }}
+            >
+              이미지 없음
+            </p>
+          </NoImage>
+        ) : (
+          <MenuImage onClick={onAddToOrderClick} src={menuImageUrl} />
+        )}
+      </ImageWrapper>
       <BottomDiv onClick={onAddToOrderClick}>
         <TextArea>
           <MenuName>{menuName}</MenuName>

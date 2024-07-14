@@ -159,12 +159,12 @@ export default function LoginSetting() {
     e.preventDefault();
     if (!confirm("로그아웃 하시겠습니까?")) return;
     await loginUtils.signOut();
-    navigate("../login");
+    navigate("/login");
   };
 
   const onHomeIconClick = async (e) => {
     e.preventDefault();
-    navigate("../");
+    navigate("/");
   };
 
   const onSubmit = async (e) => {

@@ -12,6 +12,7 @@ import {
 } from "../components/theme-definition";
 import backgroundImagePhoneScreen from "../images/bg-candidate-phone-screen.png";
 import backgroundImageWideScreen from "../images/bg-candidate-wide-screen.jpg";
+import Loading from "../components/loading";
 
 const OuterWrapper = styled.div`
   width: 100vw;
@@ -39,9 +40,9 @@ const Wrapper = styled.div`
   justify-content: center;
 `;
 const LoginBox = styled.div`
-  height: 60vh;
+  height: 70vh;
   @media only screen and (max-width: 1000px) {
-    height: calc(40vh);
+    height: calc(45vh);
   }
   width: 100%;
   @media only screen and (max-width: 1000px) {
@@ -85,6 +86,7 @@ const ImgDiv = styled.div`
 `;
 const Image = styled.img`
   height: 220%;
+  margin-top: 10%;
 `;
 const Form = styled.form`
   height: 50%;
@@ -184,12 +186,15 @@ export default function Login() {
   const [userID, setUserID] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
   const onSubmit = async (e) => {
     e.preventDefault();
     setError("");
     if (userID === "" || password === "") return;
+    setIsLoading(true);
     const successfulSignIn = await loginUtils.signIn(userID, password);
+    setIsLoading(false);
     if (successfulSignIn) {
       // 로그인에 성공하면
       navigate("/"); // 홈으로
@@ -206,7 +211,9 @@ export default function Login() {
       navigate("/");
     }
   };
-  return (
+  return isLoading ? (
+    <Loading />
+  ) : (
     <OuterWrapper>
       <Wrapper>
         <LoginBox>

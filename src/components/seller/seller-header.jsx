@@ -37,12 +37,12 @@ export function SellerHeader() {
   const onLogoClick = (e) => {
     // logo 누르면 홈으로 navigate
     e.preventDefault();
-    navigate("../seller-home/seller-select");
+    navigate("/seller-home/seller-select");
   };
   const onSettingClick = async (e) => {
     // logo 누르면 설정으로 navigate
     e.preventDefault();
-    navigate("../login-setting");
+    navigate("/login-setting");
   };
   const onLogoHover = (e) => {
     const logoImage = e.target;

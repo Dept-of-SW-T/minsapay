@@ -54,7 +54,7 @@ const MenuContainer = styled.div`
   width: 100vw;
   height: 100vh;
   background: url(${MenuImageRef}) center/cover no-repeat;
-  display: ${(props) => (props.show ? "block" : "none")};
+  display: ${(props) => props.showmenu};
 `;
 
 const CloseButton = styled.button`
@@ -80,7 +80,7 @@ export default function BuyerHome() {
   const [balance, setBalance] = useState(0);
   const [orderList, setOrderList] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [showMenu, setShowMenu] = useState(false); // 메뉴판 표시 상태 추가
+  const [showmenu, setShowmenu] = useState("none"); // 메뉴판 표시 상태 추가
 
   useEffect(() => {
     let unsubscribe = null;
@@ -146,16 +146,16 @@ export default function BuyerHome() {
           </OrderListContainer>
           <PayIconWrapper>
             <PayIcon
-              onClick={() => navigate("./buyer-payment")}
+              onClick={() => navigate("/buyer-home/buyer-payment")}
               src={PayIconRef}
             />
             <MenuIcon
-              onClick={() => setShowMenu(true)}
+              onClick={() => setShowmenu("block")}
               src={MenuIconRef} // 메뉴 아이콘 이미지 추가
             />
           </PayIconWrapper>
-          <MenuContainer show={showMenu}>
-            <CloseButton onClick={() => setShowMenu(false)}>X</CloseButton>
+          <MenuContainer showmenu={showmenu}>
+            <CloseButton onClick={() => setShowmenu("none")}>X</CloseButton>
           </MenuContainer>
         </>
       )}
