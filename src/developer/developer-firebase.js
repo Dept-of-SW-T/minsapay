@@ -218,28 +218,32 @@ const developerFirebase = {
     console.log(subData);
     let resultData = Object.assign({}, subData);
     for (let team of Object.keys(subData)) {
-      const rpw = this.randomPassword();
-      resultData[team].password = rpw;
+      const pw = this.randomPassword();
+      resultData[team].passowrd = pw;
       await setDoc(doc(database, "Teams", team), {
         balance: 0,
+        kiosk_authentication_number: "",
         order_history: "[]",
-        team_list: [],
+        kiosk_image: "defaultBooth/광어.jpg",
+        linked_buyer: "",
+        menu_list: "[]",
+        student_list: [],
         username: subData[team].username,
       });
       await createUserWithEmailAndPassword(
         authentication,
         `${team}@team.com`,
-        rpw,
+        pw,
       );
     }
     return resultData;
   },
   async submitData(subData) {
     const data1 = await this.submitStudentData(subData.Students);
-    const data2 = await this.submitTeamData(subData.Teams);
+    //const data2 = await this.submitTeamData(subData.Teams);
     return {
       Students: data1,
-      Teams: data2,
+      Teams: {},
     };
   },
 };
