@@ -1,6 +1,9 @@
 import styled from "styled-components";
 import { MINSAPAY_BLUE } from "../components/theme-definition";
-import { readXlOfEachSheet /* writeXlFromData */ } from "./xlsx-conversion";
+import {
+  readXlOfEachSheet /* writeXlFromData */,
+  writeXlFromData,
+} from "./xlsx-conversion";
 import { developerFirebase } from "./developer-firebase";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -127,21 +130,14 @@ export default function DeveloperHome() {
     await developerFirebase.init();
     await developerFirebase.writeDataToFirebase(subData);
   }; */
-  const onStudentSubmitDataClick = async () => {
+  const onSubmitDataClick = async () => {
     if (!confirm("firebase에 변경사항을 저장하시겠습니까?")) return;
     if (Object.keys(subData).length === 0) {
       alert("업로드된 데이터가 없습니다");
       return;
     }
-    await developerFirebase.submitStudentData(subData);
-  };
-  const onTeamSubmitDataClick = async () => {
-    if (!confirm("firebase에 변경사항을 저장하시겠습니까?")) return;
-    if (Object.keys(subData).length === 0) {
-      alert("업로드된 데이터가 없습니다");
-      return;
-    }
-    await developerFirebase.submitTeamData(subData);
+    const loginData = await developerFirebase.submitData(subData);
+    await writeXlFromData("login_info.xlsx", loginData);
   };
   const onLogoutClick = async () => {
     if (!confirm("로그아웃 하시겠습니까?")) return;
@@ -167,15 +163,8 @@ export default function DeveloperHome() {
         id="xl-submit"
         style={{ display: "none" }}
       />
-      <SubmitDatabaseInfoButton
-        onClick={uploadable ? onStudentSubmitDataClick : null}
-      >
-        {uploadable ? "Submit Student Database Info" : "Uploading"}
-      </SubmitDatabaseInfoButton>
-      <SubmitDatabaseInfoButton
-        onClick={uploadable ? onTeamSubmitDataClick : null}
-      >
-        {uploadable ? "Submit Team Database Info" : "Uploading"}
+      <SubmitDatabaseInfoButton onClick={uploadable ? onSubmitDataClick : null}>
+        {uploadable ? "Submit Database Info" : "Uploading"}
       </SubmitDatabaseInfoButton>
       <Logout onClick={onLogoutClick}>Log Out</Logout>
     </Wrapper>

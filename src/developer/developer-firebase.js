@@ -1,4 +1,4 @@
-import { collection, getDocs, query } from "firebase/firestore";
+import { doc, setDoc } from "firebase/firestore";
 import { authentication, database } from "../firebase";
 import cryptoJS from "crypto-js";
 import { createUserWithEmailAndPassword } from "firebase/auth";
@@ -61,7 +61,7 @@ const developerFirebase = {
   randomPassword() {
     return cryptoJS.SHA256(String(Math.random())).toString().substring(0, 6);
   },
-  async init() {
+  /* async init() {
     const studentQuery = query(collection(database, "Students"));
     const studentSnapshot = await getDocs(studentQuery);
     this.userData = {
@@ -98,36 +98,26 @@ const developerFirebase = {
         this.userData.Teams[doc.id].documentData.username;
       this.userSubData.Teams[doc.id].password = "";
     });
-  },
+  }, */
   standardizeSubData(xldata) {
     let resultData = { Students: {}, Teams: {} };
     xldata.Students.forEach((student) => {
       resultData.Students[student.user_id] = {};
-      resultData.Students[student.user_id].balance = student.balance;
       resultData.Students[student.user_id].username =
         typeof student.username === "number"
           ? String(student.username)
           : student.username;
-      resultData.Students[student.user_id].password =
-        typeof student.password === "number"
-          ? String(student.password)
-          : student.password;
     });
     xldata.Teams.forEach((team) => {
       resultData.Teams[team.user_id] = {};
-      resultData.Teams[team.user_id].balance = team.balance;
       resultData.Teams[team.user_id].username =
         typeof team.username === "number"
           ? String(team.username)
           : team.username;
-      resultData.Teams[team.user_id].password =
-        typeof team.password === "number"
-          ? String(team.password)
-          : team.password;
     });
     return resultData;
   },
-  async writeDataToFirebase(subData) {
+  /* async writeDataToFirebase(subData) {
     let resultUserDocumentData = { Students: {}, Teams: {} };
     for (let student in subData.Students) {
       if (student in this.userData.Students) {
@@ -203,12 +193,54 @@ const developerFirebase = {
     }
 
     // console.log(resultUserDocumentData);
-  },
+  }, */
   async submitStudentData(subData) {
-    subData;
+    console.log(subData);
+    let resultData = Object.assign({}, subData);
+    for (let student of Object.keys(subData)) {
+      const rpw = this.randomPassword();
+      resultData[student].password = rpw;
+      await setDoc(doc(database, "Students", student), {
+        balance: 0,
+        order_history: "[]",
+        team_list: [],
+        username: subData[student].username,
+      });
+      await createUserWithEmailAndPassword(
+        authentication,
+        `${student}@student.com`,
+        rpw,
+      );
+    }
+    return resultData;
   },
   async submitTeamData(subData) {
-    subData;
+    console.log(subData);
+    let resultData = Object.assign({}, subData);
+    for (let team of Object.keys(subData)) {
+      const rpw = this.randomPassword();
+      resultData[team].password = rpw;
+      await setDoc(doc(database, "Teams", team), {
+        balance: 0,
+        order_history: "[]",
+        team_list: [],
+        username: subData[team].username,
+      });
+      await createUserWithEmailAndPassword(
+        authentication,
+        `${team}@team.com`,
+        rpw,
+      );
+    }
+    return resultData;
+  },
+  async submitData(subData) {
+    const data1 = await this.submitStudentData(subData.Students);
+    const data2 = await this.submitTeamData(subData.Teams);
+    return {
+      Students: data1,
+      Teams: data2,
+    };
   },
 };
 
