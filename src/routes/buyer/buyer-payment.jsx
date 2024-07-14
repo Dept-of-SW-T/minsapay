@@ -130,6 +130,7 @@ const KeypadButton = styled.button`
   padding: auto;
   cursor: pointer;
   border-radius: 5vh;
+  color: black;
 `;
 
 export default function BuyerPayment() {
