@@ -91,6 +91,7 @@ export default function DeveloperHome() {
     const file = e.target.files[0];
     let xldata = await readXlOfEachSheet(file); // needs fix
     setSubData(developerFirebase.standardizeSubData(xldata));
+    console.log(developerFirebase.standardizeSubData(xldata));
     e.target.value = ""; // 같은 파일 입력해도 반복 실행 */
     setUploadable(true);
   };
@@ -117,7 +118,7 @@ export default function DeveloperHome() {
       }
     }, 1000);
   }; */
-  const onSubmitDataClick = async () => {
+  /*   const onSubmitDataClick = async () => {
     if (!confirm("firebase에 변경사항을 저장하시겠습니까?")) return;
     if (Object.keys(subData).length === 0) {
       alert("업로드된 데이터가 없습니다");
@@ -125,6 +126,22 @@ export default function DeveloperHome() {
     }
     await developerFirebase.init();
     await developerFirebase.writeDataToFirebase(subData);
+  }; */
+  const onStudentSubmitDataClick = async () => {
+    if (!confirm("firebase에 변경사항을 저장하시겠습니까?")) return;
+    if (Object.keys(subData).length === 0) {
+      alert("업로드된 데이터가 없습니다");
+      return;
+    }
+    await developerFirebase.submitStudentData(subData);
+  };
+  const onTeamSubmitDataClick = async () => {
+    if (!confirm("firebase에 변경사항을 저장하시겠습니까?")) return;
+    if (Object.keys(subData).length === 0) {
+      alert("업로드된 데이터가 없습니다");
+      return;
+    }
+    await developerFirebase.submitTeamData(subData);
   };
   const onLogoutClick = async () => {
     if (!confirm("로그아웃 하시겠습니까?")) return;
@@ -150,8 +167,15 @@ export default function DeveloperHome() {
         id="xl-submit"
         style={{ display: "none" }}
       />
-      <SubmitDatabaseInfoButton onClick={uploadable ? onSubmitDataClick : null}>
-        {uploadable ? "Submit Database Info" : "Uploading"}
+      <SubmitDatabaseInfoButton
+        onClick={uploadable ? onStudentSubmitDataClick : null}
+      >
+        {uploadable ? "Submit Student Database Info" : "Uploading"}
+      </SubmitDatabaseInfoButton>
+      <SubmitDatabaseInfoButton
+        onClick={uploadable ? onTeamSubmitDataClick : null}
+      >
+        {uploadable ? "Submit Team Database Info" : "Uploading"}
       </SubmitDatabaseInfoButton>
       <Logout onClick={onLogoutClick}>Log Out</Logout>
     </Wrapper>

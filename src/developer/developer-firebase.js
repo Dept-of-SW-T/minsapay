@@ -204,6 +204,12 @@ const developerFirebase = {
 
     // console.log(resultUserDocumentData);
   },
+  async submitStudentData(subData) {
+    subData;
+  },
+  async submitTeamData(subData) {
+    subData;
+  },
 };
 
 export { developerFirebase };
