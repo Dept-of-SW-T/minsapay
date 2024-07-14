@@ -158,6 +158,8 @@ export default function BuyerPayment() {
     ); // 값 대조
     if (success) {
       navigate("/buyer-home"); // 성공 시 이동 */
+    } else {
+      alert("인증 실패");
     }
     setIsLoading(false);
   };
