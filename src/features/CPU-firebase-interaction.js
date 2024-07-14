@@ -37,7 +37,10 @@ const CPUFirebase = {
       );
   },
   async changeKioskImage(file) {
-    if (this.userDocData.kiosk_image !== "")
+    if (
+      this.userDocData.kiosk_image !== "" ||
+      this.userDocData.kiosk_image !== "defaultBooth/광어.jpg"
+    )
       await deleteObject(ref(storage, this.userDocData.kiosk_image));
     const locationRef = ref(
       storage,
