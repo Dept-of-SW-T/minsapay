@@ -86,6 +86,7 @@ const ImgDiv = styled.div`
 `;
 const Image = styled.img`
   height: 220%;
+  margin-top: 10%;
 `;
 const Form = styled.form`
   height: 50%;
