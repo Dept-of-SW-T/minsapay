@@ -42,7 +42,6 @@ const loginUtils = {
   },
   getUserClass() {
     const sessionValue = this.getCurrentUser().email;
-    // console.log(typeof sessionValue);
     return sessionValue.substring(
       sessionValue.indexOf("@") + 1,
       sessionValue.indexOf("."),

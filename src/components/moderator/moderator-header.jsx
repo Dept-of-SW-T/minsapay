@@ -58,7 +58,7 @@ const ModeratorHeader = () => {
   const onLogoClick = (e) => {
     // logo 누르면 홈으로 navigate
     e.preventDefault();
-    navigate("../cpu-home");
+    navigate("/cpu-home");
   };
   const onLogIconClick = async (e) => {
     e.preventDefault();
@@ -69,7 +69,7 @@ const ModeratorHeader = () => {
     e.preventDefault();
     if (!confirm("로그아웃 하시겠습니까?")) return;
     await loginUtils.signOut();
-    navigate("../../");
+    navigate("/login");
   };
   const onLogoHover = (e) => {
     const logoImage = e.target;

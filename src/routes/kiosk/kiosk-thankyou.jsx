@@ -62,7 +62,7 @@ export default function KioskThankYou() {
 
   useEffect(() => {
     const navigateTimeout = setTimeout(() => {
-      navigate("../kiosk-home/kiosk-cover");
+      navigate("/kiosk-home/kiosk-cover");
     }, 10000);
 
     const timer = setInterval(() => {
@@ -82,7 +82,7 @@ export default function KioskThankYou() {
           감사합니다
           <br /> 남은 시간 {remainingTime}초
         </Message>
-        <Button onClick={() => navigate("../kiosk-home/kiosk-cover")}>
+        <Button onClick={() => navigate("/kiosk-home/kiosk-cover")}>
           돌아가기
         </Button>
       </InnerWrapper>

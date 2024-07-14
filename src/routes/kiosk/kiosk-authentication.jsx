@@ -38,7 +38,7 @@ export default function KioskAuthentication() {
     unsubscribe = onSnapshot(kioskFirebase.userDocRef, (doc) => {
       kioskFirebase.userDocData = doc.data();
       if (kioskFirebase.userDocData.linked_buyer !== "")
-        navigate("../kiosk-home");
+        navigate("/kiosk-home");
     });
     return () => {
       unsubscribe && unsubscribe();

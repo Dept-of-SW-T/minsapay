@@ -43,7 +43,7 @@ export default function SellerSelect() {
   const [isLoading, setIsLoading] = useState(true);
 
   const onTeamSelect = (e) => {
-    navigate("../seller-home/seller-team/" + e.target.id);
+    navigate("/seller-home/seller-team/" + e.target.id);
   };
 
   useEffect(() => {

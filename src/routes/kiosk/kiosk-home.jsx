@@ -167,7 +167,7 @@ export default function KioskHome() {
       setKioskImage(CPUFirebase.kioskImageDownloadUrl);
       setIsLoading(false);
       if (CPUFirebase.userDocData.linked_buyer === "")
-        navigate("../kiosk-home/kiosk-cover");
+        navigate("/kiosk-home/kiosk-cover");
     };
     init();
   }, []);
@@ -244,13 +244,13 @@ export default function KioskHome() {
     await kioskFirebase.submitOrders(orders, getTotal());
     await kioskFirebase.removeLinkedBuyer();
     setIsLoading(false);
-    navigate("./kiosk-thankyou"); // 이전 탭으로 돌아가지 못하게 해야 함?
+    navigate("/kiosk-home/kiosk-thankyou"); // 이전 탭으로 돌아가지 못하게 해야 함?
   };
 
   const onLogoutBtnClick = async () => {
     if (!confirm("구매를 취소하시겠습니까?")) return;
     await kioskFirebase.removeLinkedBuyer();
-    navigate("../../");
+    navigate("/kiosk-home/kiosk-cover");
   };
 
   if (isLoading) {

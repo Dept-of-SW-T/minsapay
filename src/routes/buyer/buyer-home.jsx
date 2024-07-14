@@ -146,7 +146,7 @@ export default function BuyerHome() {
           </OrderListContainer>
           <PayIconWrapper>
             <PayIcon
-              onClick={() => navigate("./buyer-payment")}
+              onClick={() => navigate("/buyer-home/buyer-payment")}
               src={PayIconRef}
             />
             <MenuIcon
