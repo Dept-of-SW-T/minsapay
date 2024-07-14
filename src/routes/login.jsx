@@ -39,9 +39,9 @@ const Wrapper = styled.div`
   justify-content: center;
 `;
 const LoginBox = styled.div`
-  height: 60vh;
+  height: 70vh;
   @media only screen and (max-width: 1000px) {
-    height: calc(40vh);
+    height: calc(45vh);
   }
   width: 100%;
   @media only screen and (max-width: 1000px) {
